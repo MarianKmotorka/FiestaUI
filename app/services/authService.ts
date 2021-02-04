@@ -1,5 +1,6 @@
 import api, { setAuthHeader } from '../api/HttpClient'
 import { IUser } from '@contextProviders/AuthProvider'
+import { IApiError } from 'types'
 
 export const logout = async () => {
   try {
@@ -36,12 +37,16 @@ export const getGoogleLoginUrl = (redirectedFrom?: string) => {
   return 'https://accounts.google.com/o/oauth2/v2/auth?' + queryParams
 }
 
-export const loginUsingGoogleCode = async (code: string) => {
+/**
+ *
+ * @returns true or error message
+ */
+export const loginUsingGoogleCode = async (code: string): Promise<string | true> => {
   try {
     const res = await api.post(`${window.location.origin}/api/google-login`, { code })
     setAuthHeader(res.data.accessToken)
     return true
   } catch (err) {
-    return false
+    return (err as IApiError).response.data.errorMessage
   }
 }
