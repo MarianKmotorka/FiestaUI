@@ -1,3 +1,13 @@
 {
-  "hello": "Hello"
+  "emailAddress": "Email address",
+  "login": "Login",
+  "password": "Password",
+
+  "validator": {
+    "invalidEmail": "Invalid email address",
+    "invalidEmailOrPassword": "Invalid email or password",
+    "maxLength": "Max {{maxLength}} characters",
+    "minLength": "Min {{minLength}} characters",
+    "required": "Required"
+  }
 }

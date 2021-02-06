@@ -1,16 +1,19 @@
 import { createMuiTheme } from '@material-ui/core/styles'
 import { Palette } from '@material-ui/core/styles/createPalette'
-import { yellow } from '@material-ui/core/colors'
 import red from '@material-ui/core/colors/red'
+
+export const SM = 480
+export const MD = 839
+export const LG = 1024
 
 export const lightTheme = createMuiTheme({
   palette: {
     type: 'light',
     primary: {
-      main: yellow[500]
+      main: '#007965'
     },
     secondary: {
-      main: '#19857b'
+      main: '#161d6f'
     },
     error: {
       main: red.A400
@@ -22,11 +25,10 @@ export const lightTheme = createMuiTheme({
       themeWhite: '#ffffff'
     },
     background: {
-      default: '#fff'
-      //   paper: '3c3c3c'
+      default: '#ffcc29'
     },
     bg: {
-      100: '#f1f1f1'
+      100: '#f4f4f4'
     }
   },
   typography: {

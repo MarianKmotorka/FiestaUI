@@ -1,3 +1,6 @@
+import { Translate } from 'next-translate'
+import { UseFormMethods } from 'react-hook-form'
+
 interface IApiErrorDetail {
   code: string
   customState: any
@@ -13,3 +16,9 @@ export interface IApiError {
     }
   }
 }
+
+export type Validator = (
+  value: any,
+  t: Translate,
+  form: UseFormMethods<Record<string, any>>
+) => string | undefined
