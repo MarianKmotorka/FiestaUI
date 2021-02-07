@@ -1,7 +1,13 @@
 import { useState } from 'react'
-import { useForm, FormProvider, UseFormMethods, DefaultValues } from 'react-hook-form'
+import {
+  useForm,
+  FormProvider,
+  UseFormMethods,
+  DefaultValues,
+  SubmitHandler
+} from 'react-hook-form'
 
-export type OnFormSubmit<T> = (values: DefaultValues<T>, form: UseFormMethods<T>) => Promise<void>
+export type OnFormSubmit<T> = (values: T, form: UseFormMethods<T>) => Promise<void>
 
 interface IFormProps<T> {
   defaultValues: DefaultValues<T>
@@ -20,7 +26,7 @@ export default function Form<T>({
     defaultValues
   })
 
-  const onSubmit = async (values: DefaultValues<T>) => {
+  const onSubmit = async (values: T) => {
     setSubmitting(true)
     await initialOnSubmit(values, form)
     setSubmitting(false)
@@ -28,7 +34,7 @@ export default function Form<T>({
 
   return (
     <FormProvider {...form}>
-      <form onSubmit={form.handleSubmit(onSubmit)}>
+      <form onSubmit={form.handleSubmit(onSubmit as SubmitHandler<T>)}>
         {typeof children === 'function' ? children({ submitting }) : children}
       </form>
     </FormProvider>

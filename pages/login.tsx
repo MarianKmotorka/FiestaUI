@@ -3,7 +3,7 @@ import LoginTemplate from '@templates/Login/LoginTemplate'
 
 const Login = () => {
   return (
-    <DefaultLayout>
+    <DefaultLayout title='Login | Fiesta'>
       <LoginTemplate />
     </DefaultLayout>
   )

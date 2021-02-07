@@ -1,6 +1,7 @@
 {
   "emailAddress": "Email address",
   "login": "Login",
+  "signup": "Sign up",
   "password": "Password",
 
   "validator": {

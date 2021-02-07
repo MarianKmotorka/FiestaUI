@@ -1,14 +1,8 @@
 import { createContext, FC, useCallback, useContext, useEffect, useState } from 'react'
+import { IUser } from 'domainTypes'
 import * as authService from 'services/authService'
 
 export const IS_SIGNED_IN_LOCAL_STORAGE_KEY = 'chatsample.is_signed_in'
-
-export interface IUser {
-  id: string
-  name: string
-  email: string
-  picture: string
-}
 
 type IAuthContextValue =
   | {

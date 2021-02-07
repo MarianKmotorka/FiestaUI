@@ -1,40 +1,44 @@
-import { useAppTheme } from '@contextProviders/AppThemeProvider'
-import { useAuth } from '@contextProviders/AuthProvider'
-import { AppBar, Button, ButtonGroup, makeStyles, Toolbar, Typography } from '@material-ui/core'
+import { Avatar, Button, ButtonGroup, Chip } from '@material-ui/core'
 import useTranslation from 'next-translate/useTranslation'
 import { useRouter } from 'next/dist/client/router'
-import Link from 'next/link'
-import styled from 'styled-components'
-import { getGoogleLoginUrl } from '../../../services/authService'
-import { locales } from '../../../../i18n.json'
-import cookie from 'js-cookie'
+
+import { useAppTheme } from '@contextProviders/AppThemeProvider'
+import { useAuth } from '@contextProviders/AuthProvider'
 import { Logo, StyledAppBar, StyledContainer } from './Navbar.styled'
 
 const Navbar = () => {
   const auth = useAuth()
-  const { query, push, asPath } = useRouter()
-  const { lang } = useTranslation()
+  const router = useRouter()
+  const { t } = useTranslation('common')
   const { switchTheme } = useAppTheme()
-
-  const handleGoogleLogin = () => {
-    const url = getGoogleLoginUrl(query.redirectedFrom as string)
-    window.location.assign(url)
-  }
 
   return (
     <StyledAppBar>
       <StyledContainer>
-        <Logo>Fiesta</Logo>
+        <Logo onClick={() => router.push('/')}>Fiesta</Logo>
 
-        <ButtonGroup>
-          <Button color='secondary' variant='outlined'>
-            Kill me
-          </Button>
+        {!auth.isLoggedIn && (
+          <ButtonGroup>
+            <Button color='secondary' variant='outlined' onClick={() => router.push('/login')}>
+              {t('login')}
+            </Button>
 
-          <Button color='primary' variant='contained'>
-            Fuck me
-          </Button>
-        </ButtonGroup>
+            <Button color='primary' variant='contained' onClick={() => router.push('/signup')}>
+              {t('signup')}
+            </Button>
+          </ButtonGroup>
+        )}
+
+        {auth.isLoggedIn && (
+          <>
+            <Chip
+              avatar={<Avatar src={auth.currentUser.pictureUrl} />}
+              label={auth.currentUser.fullName}
+              clickable
+              color='primary'
+            />
+          </>
+        )}
       </StyledContainer>
     </StyledAppBar>
   )

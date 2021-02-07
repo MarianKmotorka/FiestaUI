@@ -50,3 +50,13 @@ export const loginUsingGoogleCode = async (code: string): Promise<string | true>
     return (err as IApiError).response.data.errorMessage
   }
 }
+
+export const loginWithEmailAndPassword = async (body: { email: string; password: string }) => {
+  try {
+    const res = await api.post(`${window.location.origin}/api/login`, body)
+    setAuthHeader(res.data.accessToken)
+    return true
+  } catch (err) {
+    return (err as IApiError).response.data.errorMessage
+  }
+}

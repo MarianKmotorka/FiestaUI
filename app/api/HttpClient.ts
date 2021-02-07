@@ -19,7 +19,7 @@ createAuthRefreshInterceptor(client, failedRequest =>
     })
     .catch(_ => {
       localStorage.removeItem(IS_SIGNED_IN_LOCAL_STORAGE_KEY)
-      window.location.assign('/') // LOGIN LOCATION
+      window.location.assign('/login')
     })
 )
 

@@ -3,6 +3,7 @@ import { useEffect, useState } from 'react'
 import { useRouter } from 'next/dist/client/router'
 import { useAuth } from '@contextProviders/AuthProvider'
 import { loginUsingGoogleCode } from 'services/authService'
+import { getReturnUrlFromQuery } from 'utils/utils'
 
 const GoogleLoginCallback = () => {
   const [error, setError] = useState<string>()
@@ -15,13 +16,7 @@ const GoogleLoginCallback = () => {
       if (successOrError !== true) return setError(successOrError)
 
       await fetchUser()
-
-      try {
-        const returnUrl = JSON.parse(query.state as string).returnUrl
-        returnUrl && replace(returnUrl)
-      } catch (err) {
-        replace('/')
-      }
+      replace(getReturnUrlFromQuery(query) || '/home')
     }
 
     query.code && sendCodeToServer()

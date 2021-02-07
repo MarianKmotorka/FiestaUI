@@ -1,32 +1,30 @@
-import { CardContent } from '@material-ui/core'
+import { Card } from '@material-ui/core'
 import styled from 'styled-components'
 import { SM } from 'utils/theme'
 
-export const FormContent = styled(CardContent)`
+export const StyledCard = styled(Card)`
   display: flex;
-  margin: 50px;
   flex-direction: column;
+  padding: 50px;
+  width: 500px;
 
   > * + * {
     margin-top: 30px;
   }
 
-  input {
-    width: 300px;
-  }
-
   @media screen and (max-width: ${SM}px) {
-    margin: 17px;
-    input {
-      width: 240px;
-    }
+    width: 280px;
+    padding: 10px;
   }
 `
 
-export const Error = styled.div`
-  padding: 13px;
-  background-color: ${({ theme }) => theme.error.main};
-  color: ${({ theme }) => theme.themeText.white};
-  text-align: center;
-  font-size: 1.1rem;
+export const FormContent = styled.div`
+  display: flex;
+  flex-direction: column;
+  padding: 0;
+  padding-bottom: 0;
+
+  > * + * {
+    margin-top: 30px;
+  }
 `

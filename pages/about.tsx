@@ -39,7 +39,7 @@ const Page1 = () => {
   }
 
   return (
-    <DefaultLayout>
+    <DefaultLayout title='About'>
       <h1>{t('aboutTitle')}</h1>
       <h3>{t('common:hello')}</h3>
       <Link href='/'>Go Home</Link>
