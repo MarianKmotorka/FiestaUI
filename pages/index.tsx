@@ -1,7 +1,7 @@
 import DefaultLayout from '@layouts/DefaultLayout'
 
 const HomePage = () => {
-  return <DefaultLayout>PRODUCT PAGE</DefaultLayout>
+  return <DefaultLayout title='Fiesta'>PRODUCT PAGE</DefaultLayout>
 }
 
 export default HomePage

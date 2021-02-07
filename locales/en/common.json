@@ -1,4 +1,5 @@
 {
+  "back": "Back",
   "emailAddress": "Email address",
   "login": "Login",
   "signup": "Sign up",
@@ -6,6 +7,8 @@
 
   "validator": {
     "invalidEmail": "Invalid email address",
+    "invalidCode": "Invalid code. Try signing in again.",
+    "invalidAuthProvider": "Invalid auth provider. Use other sign in method.",
     "invalidEmailOrPassword": "Invalid email or password",
     "maxLength": "Max {{maxLength}} characters",
     "minLength": "Min {{minLength}} characters",

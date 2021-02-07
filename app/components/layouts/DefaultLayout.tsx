@@ -18,9 +18,9 @@ const StyledContainer = styled(Container)`
 const DefaultLayout: FC<IDefaultLayoutProps> = ({ children, title }) => {
   return (
     <>
-      {/* <Head>
+      <Head>
         <title>{title}</title>
-      </Head> */}
+      </Head>
 
       <Navbar />
 

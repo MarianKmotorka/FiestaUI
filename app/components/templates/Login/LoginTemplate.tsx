@@ -67,7 +67,7 @@ const LoginTemplate = () => {
                 validate={combineValidators([requiredValidator, minLengthValidator(6)])}
               />
 
-              <Button color='primary' variant='contained' type='submit' loading={submitting}>
+              <Button type='submit' loading={submitting}>
                 {t('login')}
               </Button>
             </FormContent>

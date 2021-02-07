@@ -1,6 +1,6 @@
 import api, { setAuthHeader } from '../api/HttpClient'
-import { IUser } from '@contextProviders/AuthProvider'
 import { IApiError } from 'types'
+import { IUser } from 'domainTypes'
 
 export const logout = async () => {
   try {

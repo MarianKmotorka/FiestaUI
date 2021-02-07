@@ -2,7 +2,6 @@ import { Avatar, Button, ButtonGroup, Chip } from '@material-ui/core'
 import useTranslation from 'next-translate/useTranslation'
 import { useRouter } from 'next/dist/client/router'
 
-import { useAppTheme } from '@contextProviders/AppThemeProvider'
 import { useAuth } from '@contextProviders/AuthProvider'
 import { Logo, StyledAppBar, StyledContainer } from './Navbar.styled'
 
@@ -10,12 +9,11 @@ const Navbar = () => {
   const auth = useAuth()
   const router = useRouter()
   const { t } = useTranslation('common')
-  const { switchTheme } = useAppTheme()
 
   return (
     <StyledAppBar>
       <StyledContainer>
-        <Logo onClick={() => router.push('/')}>Fiesta</Logo>
+        <Logo onClick={() => router.push('/')} />
 
         {!auth.isLoggedIn && (
           <ButtonGroup>
@@ -35,6 +33,7 @@ const Navbar = () => {
               avatar={<Avatar src={auth.currentUser.pictureUrl} />}
               label={auth.currentUser.fullName}
               clickable
+              onDelete={auth.logout}
               color='primary'
             />
           </>

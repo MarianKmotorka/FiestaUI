@@ -1,4 +1,5 @@
 import { Container } from '@elements/Container'
+import FiestaLogo from '@elements/FiestaLogo'
 import { AppBar } from '@material-ui/core'
 import styled from 'styled-components'
 import { SM } from 'utils/theme'
@@ -9,14 +10,14 @@ export const StyledAppBar = styled(AppBar)`
   background-color: ${({ theme }) => theme.bg[100]};
 `
 
-export const Logo = styled.h1`
+export const Logo = styled(FiestaLogo)`
   margin-right: auto;
   cursor: pointer;
-  color: ${({ theme }) => theme.primary.main};
-  font-size: 2.5rem;
+  font-size: 2.5rem !important;
+  text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.7) !important;
 
   @media screen and (max-width: ${SM}px) {
-    font-size: 1.9rem;
+    font-size: 1.7rem !important;
   }
 `
 
