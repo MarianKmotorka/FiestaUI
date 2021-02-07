@@ -1,4 +1,4 @@
-import { Button as MuiButton, ButtonTypeMap, ButtonProps } from '@material-ui/core'
+import { Button as MuiButton, ButtonProps } from '@material-ui/core'
 import { Spinner } from './Button.styled'
 import { faCompactDisc } from '@fortawesome/free-solid-svg-icons'
 

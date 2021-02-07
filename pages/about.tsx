@@ -1,7 +1,6 @@
 import Link from 'next/link'
 import DefaultLayout from '@layouts/DefaultLayout'
 import useT from 'next-translate/useTranslation'
-import { useDropzone } from 'react-dropzone'
 import api from '../app/api/HttpClient'
 import { Button, Input } from '@material-ui/core'
 import { ChangeEvent, useState } from 'react'
