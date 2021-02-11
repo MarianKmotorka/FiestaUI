@@ -77,7 +77,7 @@ const LoginTemplate = () => {
         <Divider />
 
         <Button color='secondary' onClick={handleGoogleLogin}>
-          Login with Google
+          {t('login:loginWithGoogle')}
         </Button>
       </StyledCard>
     </PageMinHeightWrapper>

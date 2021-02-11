@@ -6,9 +6,14 @@ interface IButtonProps extends ButtonProps {
   loading?: boolean
 }
 
-const Button = ({ loading, children, variant, color, ...rest }: IButtonProps) => {
+const Button = ({ loading, children, variant, color, disabled, ...rest }: IButtonProps) => {
   return (
-    <MuiButton {...rest} variant={variant || 'contained'} color={color || 'primary'}>
+    <MuiButton
+      {...rest}
+      variant={variant || 'contained'}
+      color={color || 'primary'}
+      disabled={disabled || loading}
+    >
       {loading ? <Spinner spin icon={faCompactDisc} /> : children}
     </MuiButton>
   )

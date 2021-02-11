@@ -11,12 +11,12 @@ const Overlay = styled.div`
   place-items: center;
 `
 
-const AuthorizedPage: FC = ({ children }) => {
+const UnauthorizedPage: FC = ({ children }) => {
   const auth = useAuth()
 
   const header = (
     <Head>
-      <title>Authorization check | Fiesta</title>
+      <title> Authorization check | Fiesta</title>
     </Head>
   )
 
@@ -28,8 +28,8 @@ const AuthorizedPage: FC = ({ children }) => {
       </Overlay>
     )
 
-  if (!auth.isLoggedIn) {
-    Router.replace(`/login?redirectedFrom=${Router.asPath}`)
+  if (auth.isLoggedIn) {
+    Router.replace('/home')
     return (
       <Overlay>
         {header}
@@ -47,4 +47,4 @@ const AuthorizedPage: FC = ({ children }) => {
   )
 }
 
-export default AuthorizedPage
+export default UnauthorizedPage

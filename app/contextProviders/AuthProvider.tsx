@@ -2,7 +2,7 @@ import { createContext, FC, useCallback, useContext, useEffect, useState } from 
 import { IUser } from 'domainTypes'
 import * as authService from 'services/authService'
 
-export const IS_SIGNED_IN_LOCAL_STORAGE_KEY = 'chatsample.is_signed_in'
+export const IS_SIGNED_IN_LOCAL_STORAGE_KEY = 'FIESTA.is_signed_in'
 
 type IAuthContextValue =
   | {

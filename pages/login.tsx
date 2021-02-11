@@ -1,11 +1,14 @@
 import DefaultLayout from '@layouts/DefaultLayout'
+import UnauthorizedPage from '@layouts/UnauthorizedPage'
 import LoginTemplate from '@templates/Login/LoginTemplate'
 
 const Login = () => {
   return (
-    <DefaultLayout title='Login | Fiesta'>
-      <LoginTemplate />
-    </DefaultLayout>
+    <UnauthorizedPage>
+      <DefaultLayout title='Login | Fiesta'>
+        <LoginTemplate />
+      </DefaultLayout>
+    </UnauthorizedPage>
   )
 }
 
