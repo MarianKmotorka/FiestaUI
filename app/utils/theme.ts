@@ -2,8 +2,8 @@ import { createMuiTheme } from '@material-ui/core/styles'
 import { Palette } from '@material-ui/core/styles/createPalette'
 import red from '@material-ui/core/colors/red'
 
-export const SM = 480
-export const MD = 839
+export const SM = 400
+export const MD = 750
 export const LG = 1024
 
 export const lightTheme = createMuiTheme({
@@ -21,11 +21,12 @@ export const lightTheme = createMuiTheme({
     themeText: {
       black: '#000000',
       white: '#ffffff',
+      gray: '#444444',
       themeBlack: '#000000',
       themeWhite: '#ffffff'
     },
     background: {
-      default: '#ffcc29'
+      default: '#ffa500'
     },
     bg: {
       100: '#f4f4f4'
@@ -68,6 +69,7 @@ declare module '@material-ui/core/styles/createPalette' {
     themeText: {
       black: string
       white: string
+      gray: string
       themeBlack: string
       themeWhite: string
     }
@@ -80,6 +82,7 @@ declare module '@material-ui/core/styles/createPalette' {
     themeText: {
       black: string
       white: string
+      gray: string
       themeBlack: string
       themeWhite: string
     }

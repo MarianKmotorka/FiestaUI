@@ -18,6 +18,7 @@
     "axios": "^0.21.1",
     "axios-auth-refresh": "^3.0.0",
     "cloudinary": "^1.24.0",
+    "framer-motion": "^3.3.0",
     "js-cookie": "^2.2.1",
     "next": "10.0.5",
     "next-translate": "^1.0.2",

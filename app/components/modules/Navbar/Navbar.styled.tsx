@@ -1,8 +1,9 @@
 import { Container } from '@elements/Container'
 import FiestaLogo from '@elements/FiestaLogo'
 import { AppBar } from '@material-ui/core'
+import { motion } from 'framer-motion'
 import styled from 'styled-components'
-import { SM } from 'utils/theme'
+import { MD, SM } from 'utils/theme'
 
 export const NAVBAR_HEIGHT = 80
 
@@ -27,4 +28,60 @@ export const StyledContainer = styled(Container)`
   align-items: center;
 
   justify-content: flex-end;
+`
+
+export const NavLink = styled.p`
+  color: ${({ theme }) => theme.themeText.gray};
+  font-size: 1.1rem;
+  margin-right: auto;
+  padding: 10px 20px;
+  font-weight: 500;
+  cursor: pointer;
+
+  :hover {
+    text-decoration: underline;
+  }
+
+  @media screen and (max-width: ${MD}px) {
+    font-size: 1.4rem;
+    width: 100%;
+    text-align: center;
+  }
+`
+
+export const Menu = styled(motion.div)`
+  display: flex;
+  align-items: center;
+
+  .MuiChip-root {
+    margin-left: 20px;
+  }
+
+  @media screen and (max-width: ${MD}px) {
+    position: fixed;
+    left: 0px;
+    width: 100vw;
+    height: calc(100vh - ${NAVBAR_HEIGHT}px);
+
+    background-color: rgba(220, 220, 220, 0.95);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 90px 0 50px;
+
+    .MuiChip-root {
+      position: absolute;
+      top: 20px;
+      right: 10%;
+
+      font-size: 0.9rem;
+      padding: 18px 0;
+      border-radius: 100px;
+
+      .MuiAvatar-root {
+        width: 30px;
+        height: 30px;
+      }
+    }
+  }
 `

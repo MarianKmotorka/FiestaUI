@@ -6,7 +6,8 @@ export const StyledCard = styled(Card)`
   display: flex;
   flex-direction: column;
   padding: 50px;
-  width: 500px;
+  max-width: 500px;
+  width: 100%;
 
   > * + * {
     margin-top: 30px;

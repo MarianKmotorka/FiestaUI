@@ -41,7 +41,7 @@ export const getGoogleLoginUrl = (redirectedFrom?: string) => {
  *
  * @returns true or error message
  */
-export const loginUsingGoogleCode = async (code: string): Promise<string | true> => {
+export const loginUsingGoogleCode = async (code: string) => {
   try {
     const res = await api.post(`${window.location.origin}/api/google-login`, { code })
     setAuthHeader(res.data.accessToken)
@@ -51,6 +51,10 @@ export const loginUsingGoogleCode = async (code: string): Promise<string | true>
   }
 }
 
+/**
+ *
+ * @returns true or error message
+ */
 export const loginWithEmailAndPassword = async (body: { email: string; password: string }) => {
   try {
     const res = await api.post(`${window.location.origin}/api/login`, body)
