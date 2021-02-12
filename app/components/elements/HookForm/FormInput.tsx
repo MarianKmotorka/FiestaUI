@@ -2,7 +2,7 @@ import { Controller, useFormContext } from 'react-hook-form'
 import useTranslation from 'next-translate/useTranslation'
 
 import { Validator } from 'types'
-import TextBox from '@elements/TextBox'
+import TextBox from '@elements/TextBox/TextBox'
 
 interface IFormInputProps {
   name: string

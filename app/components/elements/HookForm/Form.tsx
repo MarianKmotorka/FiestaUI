@@ -22,7 +22,7 @@ export default function Form<T>({
 }: IFormProps<T>) {
   const [submitting, setSubmitting] = useState(false)
   const form = useForm<T>({
-    mode: 'onBlur',
+    mode: 'onTouched',
     defaultValues
   })
 

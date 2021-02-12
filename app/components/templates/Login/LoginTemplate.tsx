@@ -51,7 +51,7 @@ const LoginTemplate = () => {
 
   return (
     <PageMinHeightWrapper center>
-      <StyledCard elevation={5}>
+      <StyledCard>
         <Form onSubmit={handleSubmitted} defaultValues={defaultValues}>
           {({ submitting }) => (
             <FormContent>

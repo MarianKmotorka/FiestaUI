@@ -3,13 +3,20 @@ import Link from 'next/link'
 import { AnimatePresence } from 'framer-motion'
 import useTranslation from 'next-translate/useTranslation'
 import { Menu as MenuIcon, Close as CloseIcon, WbSunny, NightsStay } from '@material-ui/icons'
-import { Avatar, Button, ButtonGroup, Chip, IconButton } from '@material-ui/core'
+import { Avatar, Button, Chip, IconButton } from '@material-ui/core'
 
 import useWindowSize from '@hooks/useWindowSize'
 import { useRouter } from 'next/dist/client/router'
 import { useAuth } from '@contextProviders/AuthProvider'
 
-import { Logo, Menu, NavLink, StyledAppBar, StyledContainer } from './Navbar.styled'
+import {
+  Logo,
+  Menu,
+  NavLink,
+  StyledAppBar,
+  StyledContainer,
+  StyledButtonGroup
+} from './Navbar.styled'
 import { useAppTheme } from '@contextProviders/AppThemeProvider'
 
 const Navbar = () => {
@@ -45,7 +52,7 @@ const Navbar = () => {
           {showMenu && (
             <Menu {...menuAnimations}>
               {!auth.isLoggedIn && (
-                <ButtonGroup size={maxMedium ? 'large' : 'medium'}>
+                <StyledButtonGroup size={maxMedium ? 'large' : 'medium'}>
                   <Button color='secondary' variant='contained' onClick={pushAndClose('/login')}>
                     {t('login')}
                   </Button>
@@ -53,7 +60,7 @@ const Navbar = () => {
                   <Button color='primary' variant='contained' onClick={pushAndClose('/signup')}>
                     {t('signup')}
                   </Button>
-                </ButtonGroup>
+                </StyledButtonGroup>
               )}
 
               {auth.isLoggedIn && (

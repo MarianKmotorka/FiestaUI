@@ -22,12 +22,13 @@ export const lightTheme = createMuiTheme({
     themeText: {
       black: '#000000',
       white: '#ffffff',
-      gray: '#444444',
+      themeGray: '#444444',
       themeBlack: '#000000',
       themeWhite: '#ffffff'
     },
     background: {
-      default: '#fcfcfc'
+      default: '#fcfcfc',
+      paper: '#ffffff'
     },
     bg: {
       100: '#fcfcfc'
@@ -48,7 +49,7 @@ export const darkTheme = createMuiTheme({
     type: 'dark',
     themeText: {
       ...lightTheme.palette.themeText,
-      gray: '#aaaaaa',
+      themeGray: '#aaaaaa',
       themeBlack: '#ffffff',
       themeWhite: '#000000'
     },
@@ -56,7 +57,8 @@ export const darkTheme = createMuiTheme({
       100: '#2c2c2c'
     },
     background: {
-      default: '#2c2c2c'
+      default: '#2c2c2c',
+      paper: '#424242'
     }
   }
 })
@@ -73,7 +75,7 @@ declare module '@material-ui/core/styles/createPalette' {
     themeText: {
       black: string
       white: string
-      gray: string
+      themeGray: string
       themeBlack: string
       themeWhite: string
     }
@@ -86,7 +88,7 @@ declare module '@material-ui/core/styles/createPalette' {
     themeText: {
       black: string
       white: string
-      gray: string
+      themeGray: string
       themeBlack: string
       themeWhite: string
     }

@@ -10,7 +10,7 @@ export const useObserver = <TElement extends HTMLElement>(
     (node: TElement) => {
       if (observer.current) observer.current.disconnect()
       observer.current = new IntersectionObserver(entries => {
-        if (entries[0].isIntersecting && canObserve) {
+        if (entries[0]?.isIntersecting && canObserve) {
           callback()
         }
       })

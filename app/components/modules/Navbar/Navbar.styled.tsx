@@ -1,6 +1,6 @@
 import { Container } from '@elements/Container'
 import FiestaLogo from '@elements/FiestaLogo'
-import { AppBar } from '@material-ui/core'
+import { AppBar, ButtonGroup } from '@material-ui/core'
 import { motion } from 'framer-motion'
 import styled from 'styled-components'
 import { MD, SM } from 'utils/theme'
@@ -31,7 +31,7 @@ export const StyledContainer = styled(Container)`
 `
 
 export const NavLink = styled.p`
-  color: ${({ theme }) => theme.themeText.gray};
+  color: ${({ theme }) => theme.themeText.themeGray};
   font-size: 1.1rem;
   margin-right: auto;
   padding: 10px 20px;
@@ -91,4 +91,8 @@ export const Menu = styled(motion.div)`
       left: 5%;
     }
   }
+`
+
+export const StyledButtonGroup = styled(ButtonGroup)`
+  margin-right: 10px;
 `

@@ -11,6 +11,7 @@ const FiestaH1 = styled.h1<{ fontSize?: string }>`
     display: block;
     height: 1em;
     width: 100%;
+    border-radius: 5px;
     background-color: ${({ theme }) => theme.primary.main};
 
     position: absolute;
