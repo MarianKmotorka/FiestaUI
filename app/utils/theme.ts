@@ -3,14 +3,15 @@ import { Palette } from '@material-ui/core/styles/createPalette'
 import red from '@material-ui/core/colors/red'
 
 export const SM = 400
-export const MD = 750
-export const LG = 1024
+export const MD = 700
+export const LG = 900
+export const XLG = 1024
 
 export const lightTheme = createMuiTheme({
   palette: {
     type: 'light',
     primary: {
-      main: '#ff4444'
+      main: '#fe2c55'
     },
     secondary: {
       main: '#2c2c2c'
@@ -45,14 +46,17 @@ export const darkTheme = createMuiTheme({
   palette: {
     ...lightTheme.palette,
     type: 'dark',
-    primary: red,
     themeText: {
       ...lightTheme.palette.themeText,
+      gray: '#aaaaaa',
       themeBlack: '#ffffff',
       themeWhite: '#000000'
     },
     bg: {
-      100: '#111111'
+      100: '#2c2c2c'
+    },
+    background: {
+      default: '#2c2c2c'
     }
   }
 })

@@ -1,5 +1,5 @@
 import { useEffect, useState, useCallback } from 'react'
-import { LG, MD, SM } from 'utils/theme'
+import { LG, MD, SM, XLG } from 'utils/theme'
 
 export const useWindowSize = () => {
   const isClient = typeof window === 'object'
@@ -14,8 +14,13 @@ export const useWindowSize = () => {
 
   const [windowSize, setWindowSize] = useState(getSize)
   const maxSmall = windowSize.width <= SM
+  const minSmall = windowSize.width > SM
   const maxMedium = windowSize.width <= MD
+  const minMedium = windowSize.width > MD
   const maxLarge = windowSize.width <= LG
+  const minLarge = windowSize.width > LG
+  const maxExtraLarge = windowSize.width <= XLG
+  const minExtraLarge = windowSize.width > XLG
 
   useEffect(() => {
     if (!isClient) return
@@ -28,7 +33,17 @@ export const useWindowSize = () => {
     return () => window.removeEventListener('resize', handleResize)
   }, [getSize, isClient])
 
-  return { ...windowSize, maxSmall, maxMedium, maxLarge }
+  return {
+    ...windowSize,
+    maxSmall,
+    maxMedium,
+    maxLarge,
+    maxExtraLarge,
+    minSmall,
+    minMedium,
+    minLarge,
+    minExtraLarge
+  }
 }
 
 export default useWindowSize

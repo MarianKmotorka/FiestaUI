@@ -2,7 +2,7 @@ import { useState } from 'react'
 import Link from 'next/link'
 import { AnimatePresence } from 'framer-motion'
 import useTranslation from 'next-translate/useTranslation'
-import { Menu as MenuIcon, Close as CloseIcon } from '@material-ui/icons'
+import { Menu as MenuIcon, Close as CloseIcon, WbSunny, NightsStay } from '@material-ui/icons'
 import { Avatar, Button, ButtonGroup, Chip, IconButton } from '@material-ui/core'
 
 import useWindowSize from '@hooks/useWindowSize'
@@ -10,12 +10,14 @@ import { useRouter } from 'next/dist/client/router'
 import { useAuth } from '@contextProviders/AuthProvider'
 
 import { Logo, Menu, NavLink, StyledAppBar, StyledContainer } from './Navbar.styled'
+import { useAppTheme } from '@contextProviders/AppThemeProvider'
 
 const Navbar = () => {
   const auth = useAuth()
   const router = useRouter()
   const { t } = useTranslation('common')
-  const { maxMedium } = useWindowSize()
+  const { switchTheme, isDark } = useAppTheme()
+  const { maxMedium, minMedium, maxLarge } = useWindowSize()
   const [menuOpen, setMenuOpen] = useState(false)
   const showMenu = !maxMedium || (maxMedium && menuOpen)
   const menuAnimations = maxMedium
@@ -67,15 +69,21 @@ const Navbar = () => {
                   <Link href='/people'>
                     <NavLink>People</NavLink>
                   </Link>
-
-                  <Chip
-                    avatar={<Avatar src={auth.currentUser.pictureUrl} />}
-                    label={auth.currentUser.fullName}
-                    clickable
-                    onDelete={auth.logout}
-                    color='primary'
-                  />
                 </>
+              )}
+
+              <IconButton onClick={switchTheme}>
+                {isDark ? <WbSunny color='primary' /> : <NightsStay />}
+              </IconButton>
+
+              {auth.isLoggedIn && (
+                <Chip
+                  avatar={<Avatar src={auth.currentUser.pictureUrl} />}
+                  label={minMedium && maxLarge ? '' : auth.currentUser.fullName}
+                  clickable
+                  onDelete={auth.logout}
+                  color='primary'
+                />
               )}
             </Menu>
           )}

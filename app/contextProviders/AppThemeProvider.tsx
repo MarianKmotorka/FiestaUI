@@ -15,13 +15,14 @@ const Hidden = styled.div`
 interface IAppThemeContextValue {
   switchTheme: () => void
   theme: Theme
+  isDark: boolean
 }
 
 const AppThemeContext = createContext<IAppThemeContextValue>(null!)
 export const useAppTheme = () => useContext(AppThemeContext)
 
 const AppThemeProvider: FC = ({ children }) => {
-  const [themeType, setThemeType] = useLocalStorage<'dark' | 'light'>('chatsample.theme', 'light')
+  const [themeType, setThemeType] = useLocalStorage<'dark' | 'light'>('FIESTA.theme', 'light')
   const [isMounted, setIsMounted] = useState(false)
 
   useEffect(() => {
@@ -36,7 +37,7 @@ const AppThemeProvider: FC = ({ children }) => {
   }, [themeType])
 
   const theme = themeType === 'light' ? lightTheme : darkTheme
-  const value: IAppThemeContextValue = { theme, switchTheme }
+  const value: IAppThemeContextValue = { theme, switchTheme, isDark: themeType === 'dark' }
 
   const body = (
     <StylesProvider injectFirst>

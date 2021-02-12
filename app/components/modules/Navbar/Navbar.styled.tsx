@@ -84,5 +84,11 @@ export const Menu = styled(motion.div)`
         height: 30px;
       }
     }
+
+    .MuiIconButton-root {
+      position: absolute;
+      top: 14px;
+      left: 5%;
+    }
   }
 `
