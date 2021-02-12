@@ -31,7 +31,7 @@ export const StyledContainer = styled(Container)`
   justify-content: flex-end;
 `
 
-export const NavLink = styled.p`
+export const LinkText = styled.p`
   color: ${({ theme }) => theme.themeText.themeGray};
   font-size: 1.1rem;
   margin-right: auto;
@@ -41,6 +41,11 @@ export const NavLink = styled.p`
 
   :hover {
     text-decoration: underline;
+  }
+
+  &.active {
+    text-decoration: underline;
+    text-decoration-color: ${({ theme }) => theme.primary.main};
   }
 
   @media screen and (max-width: ${MD}px) {
@@ -56,6 +61,10 @@ export const Menu = styled(motion.div)`
 
   .MuiChip-root {
     margin-left: 20px;
+    .MuiChip-label {
+      text-overflow: ellipsis;
+      max-width: 160px;
+    }
   }
 
   @media screen and (max-width: ${MD}px) {

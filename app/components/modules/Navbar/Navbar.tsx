@@ -1,10 +1,10 @@
 import { useState } from 'react'
-import Link from 'next/link'
 import { AnimatePresence } from 'framer-motion'
 import useTranslation from 'next-translate/useTranslation'
 import { WbSunny, NightsStay } from '@material-ui/icons'
 import { Avatar, Button, Chip, IconButton } from '@material-ui/core'
 
+import NavLink from '@elements/NavLink'
 import useWindowSize from '@hooks/useWindowSize'
 import { useRouter } from 'next/dist/client/router'
 import { useAuth } from '@contextProviders/AuthProvider'
@@ -13,7 +13,7 @@ import { useAppTheme } from '@contextProviders/AppThemeProvider'
 import {
   Logo,
   Menu,
-  NavLink,
+  LinkText,
   StyledAppBar,
   StyledContainer,
   StyledButtonGroup,
@@ -66,17 +66,17 @@ const Navbar = () => {
 
               {auth.isLoggedIn && (
                 <>
-                  <Link href='/home'>
-                    <NavLink>Home</NavLink>
-                  </Link>
+                  <NavLink href='/home'>
+                    <LinkText>Home</LinkText>
+                  </NavLink>
 
-                  <Link href='/places'>
-                    <NavLink>Places</NavLink>
-                  </Link>
+                  <NavLink href='/places'>
+                    <LinkText>Places</LinkText>
+                  </NavLink>
 
-                  <Link href='/people'>
-                    <NavLink>People</NavLink>
-                  </Link>
+                  <NavLink href='/people'>
+                    <LinkText>People</LinkText>
+                  </NavLink>
                 </>
               )}
 
