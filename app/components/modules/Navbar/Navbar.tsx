@@ -2,12 +2,13 @@ import { useState } from 'react'
 import Link from 'next/link'
 import { AnimatePresence } from 'framer-motion'
 import useTranslation from 'next-translate/useTranslation'
-import { Menu as MenuIcon, Close as CloseIcon, WbSunny, NightsStay } from '@material-ui/icons'
+import { WbSunny, NightsStay } from '@material-ui/icons'
 import { Avatar, Button, Chip, IconButton } from '@material-ui/core'
 
 import useWindowSize from '@hooks/useWindowSize'
 import { useRouter } from 'next/dist/client/router'
 import { useAuth } from '@contextProviders/AuthProvider'
+import { useAppTheme } from '@contextProviders/AppThemeProvider'
 
 import {
   Logo,
@@ -15,15 +16,15 @@ import {
   NavLink,
   StyledAppBar,
   StyledContainer,
-  StyledButtonGroup
+  StyledButtonGroup,
+  StyledBurger
 } from './Navbar.styled'
-import { useAppTheme } from '@contextProviders/AppThemeProvider'
 
 const Navbar = () => {
   const auth = useAuth()
   const router = useRouter()
   const { t } = useTranslation('common')
-  const { switchTheme, isDark } = useAppTheme()
+  const { switchTheme, isDark, theme } = useAppTheme()
   const { maxMedium, minMedium, maxLarge } = useWindowSize()
   const [menuOpen, setMenuOpen] = useState(false)
   const showMenu = !maxMedium || (maxMedium && menuOpen)
@@ -97,12 +98,16 @@ const Navbar = () => {
         </AnimatePresence>
 
         {maxMedium && (
-          <IconButton color='primary' onClick={() => setMenuOpen(prev => !prev)}>
-            {menuOpen ? (
-              <CloseIcon style={{ fontSize: '2rem' }} />
-            ) : (
-              <MenuIcon style={{ fontSize: '2rem' }} />
-            )}
+          <IconButton onClick={() => setMenuOpen(prev => !prev)}>
+            <StyledBurger
+              isOpen={menuOpen}
+              width={28}
+              height={17}
+              strokeWidth={3}
+              borderRadius={3}
+              menuClicked={() => {}}
+              color={theme.palette.primary.main}
+            />
           </IconButton>
         )}
       </StyledContainer>

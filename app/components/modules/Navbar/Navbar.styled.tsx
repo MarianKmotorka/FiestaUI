@@ -4,6 +4,7 @@ import { AppBar, ButtonGroup } from '@material-ui/core'
 import { motion } from 'framer-motion'
 import styled from 'styled-components'
 import { MD, SM } from 'utils/theme'
+import BurgerMenu from 'react-hamburger-menu'
 
 export const NAVBAR_HEIGHT = 80
 
@@ -95,4 +96,10 @@ export const Menu = styled(motion.div)`
 
 export const StyledButtonGroup = styled(ButtonGroup)`
   margin-right: 10px;
+`
+
+export const StyledBurger = styled(BurgerMenu)`
+  span {
+    margin-top: 0 !important;
+  }
 `
