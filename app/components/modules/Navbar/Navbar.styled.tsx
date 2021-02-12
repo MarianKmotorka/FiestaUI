@@ -61,9 +61,10 @@ export const Menu = styled(motion.div)`
     position: fixed;
     left: 0px;
     width: 100vw;
+    top: ${NAVBAR_HEIGHT}px;
     height: calc(100vh - ${NAVBAR_HEIGHT}px);
 
-    background-color: rgba(220, 220, 220, 0.95);
+    background-color: ${({ theme }) => theme.bg[100]};
     display: flex;
     flex-direction: column;
     align-items: center;

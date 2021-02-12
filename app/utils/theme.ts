@@ -10,10 +10,10 @@ export const lightTheme = createMuiTheme({
   palette: {
     type: 'light',
     primary: {
-      main: '#007965'
+      main: '#ff4444'
     },
     secondary: {
-      main: '#161d6f'
+      main: '#2c2c2c'
     },
     error: {
       main: red.A400
@@ -26,10 +26,10 @@ export const lightTheme = createMuiTheme({
       themeWhite: '#ffffff'
     },
     background: {
-      default: '#ffa500'
+      default: '#fcfcfc'
     },
     bg: {
-      100: '#f4f4f4'
+      100: '#fcfcfc'
     }
   },
   typography: {

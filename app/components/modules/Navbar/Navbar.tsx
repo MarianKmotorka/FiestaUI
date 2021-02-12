@@ -18,6 +18,16 @@ const Navbar = () => {
   const { maxMedium } = useWindowSize()
   const [menuOpen, setMenuOpen] = useState(false)
   const showMenu = !maxMedium || (maxMedium && menuOpen)
+  const menuAnimations = maxMedium
+    ? {
+        initial: { clipPath: 'circle(30%)', opacity: 0.1 },
+        animate: { clipPath: 'circle(100%)', opacity: 1 },
+        exit: { clipPath: 'circle(30%)', opacity: 0.1 },
+        transition: {
+          type: { damping: 0 }
+        }
+      }
+    : {}
 
   const pushAndClose = (path: string) => () => {
     setMenuOpen(false)
@@ -31,17 +41,10 @@ const Navbar = () => {
 
         <AnimatePresence>
           {showMenu && (
-            <Menu
-              initial={{ bottom: '100%' }}
-              animate={{ bottom: 0 }}
-              exit={{ bottom: '100%' }}
-              transition={{
-                type: { damping: 2 }
-              }}
-            >
+            <Menu {...menuAnimations}>
               {!auth.isLoggedIn && (
                 <ButtonGroup size={maxMedium ? 'large' : 'medium'}>
-                  <Button variant='contained' onClick={pushAndClose('/login')}>
+                  <Button color='secondary' variant='contained' onClick={pushAndClose('/login')}>
                     {t('login')}
                   </Button>
 

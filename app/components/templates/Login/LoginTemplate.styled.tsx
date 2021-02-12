@@ -14,8 +14,7 @@ export const StyledCard = styled(Card)`
   }
 
   @media screen and (max-width: ${SM}px) {
-    width: 280px;
-    padding: 10px;
+    padding: 50px 30px;
   }
 `
 
