@@ -106,6 +106,7 @@ const Navbar = () => {
               strokeWidth={3}
               borderRadius={3}
               menuClicked={() => {}}
+              animationDuration={0.15}
               color={theme.palette.primary.main}
             />
           </IconButton>

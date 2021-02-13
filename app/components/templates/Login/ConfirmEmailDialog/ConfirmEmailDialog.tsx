@@ -4,6 +4,7 @@ import { KeyboardArrowRight, Done } from '@material-ui/icons'
 import useTranslation from 'next-translate/useTranslation'
 import Trans from 'next-translate/Trans'
 
+import api from '@api/HttpClient'
 import Button from '@elements/Button/Button'
 
 import { StyledCard, Title } from './ConfirmEmailDialog.styled'
@@ -23,10 +24,7 @@ const ConfirmEmailDialog = ({ email, onClose }: IConfirmEmailDialogProps) => {
     if (state === 'sent') return
 
     setState('sending')
-
-    // Note: simulates api call delay
-    await new Promise(res => setTimeout(res, 3000))
-
+    await api.post('/auth/send-verification-email', { email })
     setState('sent')
   }
 
@@ -44,8 +42,8 @@ const ConfirmEmailDialog = ({ email, onClose }: IConfirmEmailDialogProps) => {
 
           <Button
             onClick={handleSent}
-            endIcon={state === 'sent' ? <Done /> : <KeyboardArrowRight />}
             loading={state === 'sending'}
+            endIcon={state === 'sent' ? <Done /> : <KeyboardArrowRight />}
           >
             {state === 'sent' ? t('success') : t('send')}
           </Button>
