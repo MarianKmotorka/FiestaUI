@@ -2,10 +2,13 @@
   "back": "Back",
   "emailAddress": "Email address",
   "login": "Login",
-  "signup": "Sign up",
   "password": "Password",
+  "send": "Send",
+  "signup": "Sign up",
+  "success": "Success",
 
   "validator": {
+    "emailIsNotVerified": "Email is not verified",
     "invalidEmail": "Invalid email address",
     "invalidCode": "Invalid code. Try signing in again.",
     "invalidAuthProvider": "Invalid auth provider. Use other sign in method.",

@@ -1,14 +1,16 @@
+import { useState } from 'react'
 import { useRouter } from 'next/router'
 import { Divider } from '@material-ui/core'
 import useTranslation from 'next-translate/useTranslation'
 
-import { getReturnUrlFromQuery } from 'utils/utils'
 import Button from '@elements/Button/Button'
+import { getReturnUrlFromQuery } from 'utils/utils'
 import FormInput from '@elements/HookForm/FormInput'
 import { useAuth } from '@contextProviders/AuthProvider'
 import Form, { OnFormSubmit } from '@elements/HookForm/Form'
-import { getGoogleLoginUrl, loginWithEmailAndPassword } from 'services/authService'
 import { PageMinHeightWrapper } from '@elements/PageMinHeightWrapper'
+import ConfirmEmailDialog from './ConfirmEmailDialog/ConfirmEmailDialog'
+import { getGoogleLoginUrl, loginWithEmailAndPassword } from 'services/authService'
 import {
   combineValidators,
   emailValidator,
@@ -32,6 +34,7 @@ const LoginTemplate = () => {
   const { t } = useTranslation('common')
   const { fetchUser } = useAuth()
   const router = useRouter()
+  const [emailToConfirm, setEmailToConfirm] = useState<string>()
 
   const handleGoogleLogin = () => {
     const url = getGoogleLoginUrl(router.query.redirectedFrom as string)
@@ -42,8 +45,10 @@ const LoginTemplate = () => {
     setError('email', { message: undefined })
     const successOrError = await loginWithEmailAndPassword(values)
 
-    if (successOrError !== true)
+    if (successOrError !== true) {
+      if (successOrError === 'emailIsNotVerified') setEmailToConfirm(values.email)
       return setError('email', { message: t(`validator.${successOrError}`) })
+    }
 
     await fetchUser()
     router.replace(getReturnUrlFromQuery(router.query) || '/home')
@@ -80,6 +85,10 @@ const LoginTemplate = () => {
           {t('login:loginWithGoogle')}
         </Button>
       </StyledCard>
+
+      {emailToConfirm && (
+        <ConfirmEmailDialog email={emailToConfirm} onClose={() => setEmailToConfirm(undefined)} />
+      )}
     </PageMinHeightWrapper>
   )
 }

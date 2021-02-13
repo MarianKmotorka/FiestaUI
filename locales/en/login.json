@@ -1,3 +1,5 @@
 {
-  "loginWithGoogle": "Login with Google"
+  "loginWithGoogle": "Login with Google",
+  "confirmYourEmail": "Confirm your email address",
+  "confirmationEmailWillBeSentTo": "<0>Confirmation email will be sent to <1>{{email}}</1></0>"
 }
