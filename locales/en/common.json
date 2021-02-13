@@ -1,16 +1,19 @@
 {
   "back": "Back",
   "emailAddress": "Email address",
+  "error": "Error",
   "login": "Login",
+  "loading": "Loading",
   "password": "Password",
   "send": "Send",
   "signup": "Sign up",
   "success": "Success",
 
   "validator": {
+    "emailAlreadyVerified": "Email is already verified",
     "emailIsNotVerified": "Email is not verified",
     "invalidEmail": "Invalid email address",
-    "invalidCode": "Invalid code. Try signing in again.",
+    "invalidCode": "Invalid code",
     "invalidAuthProvider": "Invalid auth provider. Use other sign in method.",
     "invalidEmailOrPassword": "Invalid email or password",
     "maxLength": "Max {{maxLength}} characters",
