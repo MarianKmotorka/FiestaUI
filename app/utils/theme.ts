@@ -47,6 +47,9 @@ export const darkTheme = createMuiTheme({
   palette: {
     ...lightTheme.palette,
     type: 'dark',
+    secondary: {
+      main: '#f9f9f9'
+    },
     themeText: {
       ...lightTheme.palette.themeText,
       themeGray: '#aaaaaa',
