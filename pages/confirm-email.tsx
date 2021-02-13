@@ -1,12 +1,14 @@
-import { useRouter } from 'next/router'
 import { useEffect, useState } from 'react'
+import Head from 'next/head'
+import styled from 'styled-components'
+import { useRouter } from 'next/router'
+import { Button, Card } from '@material-ui/core'
+import { KeyboardArrowRight } from '@material-ui/icons'
+import useTranslation from 'next-translate/useTranslation'
+
 import api from '@api/HttpClient'
 import { IApiError } from 'types'
-import styled from 'styled-components'
 import { PageMinHeightWrapper } from '@elements/PageMinHeightWrapper'
-import { Button, Card } from '@material-ui/core'
-import useTranslation from 'next-translate/useTranslation'
-import { KeyboardArrowRight } from '@material-ui/icons'
 
 const StyledCard = styled(Card)`
   padding: 40px 30px;
@@ -44,6 +46,10 @@ const ConfirmEmailPage = () => {
 
   return (
     <PageMinHeightWrapper center>
+      <Head>
+        <title>Confirm email</title>
+      </Head>
+
       <StyledCard>
         {loading && <p>{t('loading')}...</p>}
 
