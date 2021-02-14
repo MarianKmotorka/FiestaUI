@@ -17,6 +17,7 @@
     "invalidAuthProvider": "Invalid auth provider. Use other sign in method.",
     "invalidEmailOrPassword": "Invalid email or password",
     "maxLength": "Max {{maxLength}} characters",
+    "mustBeUnique": "Must be unique",
     "minLength": "Min {{minLength}} characters",
     "required": "Required"
   }

@@ -1,3 +1,4 @@
+import useTranslation from 'next-translate/useTranslation'
 import { useState } from 'react'
 import {
   useForm,
@@ -6,8 +7,13 @@ import {
   DefaultValues,
   SubmitHandler
 } from 'react-hook-form'
+import { createSubmitHandler, ISubmitHandlerParameters } from '../../../utils/utils'
 
-export type OnFormSubmit<T> = (values: T, form: UseFormMethods<T>) => Promise<void>
+export type OnFormSubmit<T> = (
+  values: T,
+  submitHandler: (params: ISubmitHandlerParameters) => Promise<void>,
+  form: UseFormMethods<T>
+) => Promise<void>
 
 interface IFormProps<T> {
   defaultValues: DefaultValues<T>
@@ -20,15 +26,18 @@ export default function Form<T>({
   children,
   onSubmit: initialOnSubmit
 }: IFormProps<T>) {
+  const { t } = useTranslation('common')
   const [submitting, setSubmitting] = useState(false)
   const form = useForm<T>({
     mode: 'onTouched',
     defaultValues
   })
 
+  const submitHandler = createSubmitHandler(form, t)
+
   const onSubmit = async (values: T) => {
     setSubmitting(true)
-    await initialOnSubmit(values, form)
+    await initialOnSubmit(values, submitHandler, form)
     setSubmitting(false)
   }
 

@@ -41,7 +41,7 @@ const LoginTemplate = () => {
     window.location.assign(url)
   }
 
-  const handleSubmitted: OnFormSubmit<IFormValues> = async (values, { setError }) => {
+  const handleSubmitted: OnFormSubmit<IFormValues> = async (values, _, { setError }) => {
     setError('email', { message: undefined })
     const successOrError = await loginWithEmailAndPassword(values)
 
