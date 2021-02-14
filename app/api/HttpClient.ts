@@ -3,7 +3,10 @@ import createAuthRefreshInterceptor from 'axios-auth-refresh'
 import { IS_SIGNED_IN_LOCAL_STORAGE_KEY } from '../contextProviders/AuthProvider'
 
 const client = axios.create({
-  baseURL: process.env.NEXT_PUBLIC_API_BASE_URL
+  baseURL:
+    process.env.NEXT_PUBLIC_USE_PROXY === 'true' && typeof window === 'object'
+      ? `${window.location.origin}/api`
+      : process.env.NEXT_PUBLIC_API_BASE_URL
 })
 
 client.interceptors.request.use(undefined, error => Promise.reject(error))

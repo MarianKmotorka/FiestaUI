@@ -21,28 +21,26 @@ interface IFormValues {
   lastName: string
   email: string
   password: string
+  repeatPassword: string
 }
 
 const defaultValues: IFormValues = {
   firstName: '',
   lastName: '',
   email: '',
-  password: ''
+  password: '',
+  repeatPassword: ''
 }
 
 const SignupTemplate = () => {
   const { t } = useTranslation('common')
-  const [success, setSuccess] = useState(false)
-  const [confirmationEmail, setConfirmationEmail] = useState('')
+  const [confirmationEmail, setConfirmationEmail] = useState<string>()
 
   const handleSubmitted: OnFormSubmit<IFormValues> = async (values, submitHandler) => {
     await submitHandler({
       data: values,
       url: '/auth/register',
-      successCallback: () => {
-        setSuccess(true)
-        setConfirmationEmail(values.email)
-      }
+      successCallback: () => setConfirmationEmail(values.email)
     })
   }
 
@@ -84,7 +82,7 @@ const SignupTemplate = () => {
         </Form>
       </StyledCard>
 
-      {success && <SignupSuccessDialog email={confirmationEmail} />}
+      {confirmationEmail && <SignupSuccessDialog email={confirmationEmail} />}
     </PageMinHeightWrapper>
   )
 }
