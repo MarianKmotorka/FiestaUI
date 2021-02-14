@@ -1,10 +1,14 @@
 {
   "back": "Back",
+  "confirmationEmailWillBeSentTo": "<0>Confirmation email will be sent to <1>{{email}}</1></0>",
   "emailAddress": "Email address",
   "error": "Error",
+  "firstName": "First name",
+  "lastName": "Last name",
   "login": "Login",
   "loading": "Loading",
   "password": "Password",
+  "repeatPassword": "Repeat password",
   "send": "Send",
   "signup": "Sign up",
   "success": "Success",
@@ -19,6 +23,7 @@
     "maxLength": "Max {{maxLength}} characters",
     "mustBeUnique": "Must be unique",
     "minLength": "Min {{minLength}} characters",
+    "passwordDoesNotMatch": "Password and repeat password does not match",
     "required": "Required"
   }
 }

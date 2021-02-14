@@ -35,7 +35,7 @@ const ConfirmEmailDialog = ({ email, onClose }: IConfirmEmailDialogProps) => {
           <Title>{t('login:confirmYourEmail')}</Title>
 
           <Trans
-            i18nKey='login:confirmationEmailWillBeSentTo'
+            i18nKey='common:confirmationEmailWillBeSentTo'
             values={{ email }}
             components={[<p />, <b />]}
           />
