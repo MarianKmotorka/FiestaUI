@@ -2,14 +2,13 @@ import { useState } from 'react'
 import { CardContent, Modal } from '@material-ui/core'
 import { KeyboardArrowRight, Done } from '@material-ui/icons'
 import useTranslation from 'next-translate/useTranslation'
-import Trans from 'next-translate/Trans'
 
+import { IApiError } from 'types'
 import api from '@api/HttpClient'
 import Button from '@elements/Button/Button'
+import TextBox from '@elements/TextBox/TextBox'
 
 import { StyledCard, Title } from './ForgotPasswordDialog.styled'
-import TextBox from '@elements/TextBox/TextBox'
-import { IApiError } from 'types'
 
 interface IConfirmEmailDialogProps {
   onClose: () => void
