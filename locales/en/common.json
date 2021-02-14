@@ -1,6 +1,7 @@
 {
   "back": "Back",
   "confirmationEmailWillBeSentTo": "<0>Confirmation email will be sent to <1>{{email}}</1></0>",
+  "checkYourEmail": "Check your email",
   "emailAddress": "Email address",
   "error": "Error",
   "firstName": "First name",

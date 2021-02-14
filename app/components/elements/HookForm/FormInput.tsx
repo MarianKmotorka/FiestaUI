@@ -2,9 +2,9 @@ import { Controller, useFormContext } from 'react-hook-form'
 import useTranslation from 'next-translate/useTranslation'
 
 import { Validator } from 'types'
-import TextBox from '@elements/TextBox/TextBox'
+import TextBox, { TextBoxProps } from '@elements/TextBox/TextBox'
 
-interface IFormInputProps {
+interface IFormInputProps extends Omit<TextBoxProps, 'value' | 'onChange'> {
   name: string
   label?: string
   type?: string
@@ -12,7 +12,7 @@ interface IFormInputProps {
   validate?: Validator
 }
 
-const FormInput = ({ name, label, type, validate: initialValidate }: IFormInputProps) => {
+const FormInput = ({ name, label, type, validate: initialValidate, ...rest }: IFormInputProps) => {
   const form = useFormContext()
   const { t } = useTranslation('common')
   const { errors } = form
@@ -25,6 +25,7 @@ const FormInput = ({ name, label, type, validate: initialValidate }: IFormInputP
       rules={{ validate }}
       as={
         <TextBox
+          {...rest}
           value=''
           name={name}
           type={type}

@@ -1,3 +1,4 @@
+import Button from '@elements/Button/Button'
 import { Card } from '@material-ui/core'
 import styled from 'styled-components'
 import { SM } from 'utils/theme'
@@ -31,4 +32,10 @@ export const FormContent = styled.div`
   > * + * {
     margin-top: 30px;
   }
+`
+
+export const StyledForgotPasswordButton = styled(Button)`
+  margin-top: 5px;
+  margin-bottom: -25px;
+  font-size: 0.9em;
 `

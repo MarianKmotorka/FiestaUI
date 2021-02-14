@@ -1,4 +1,6 @@
 {
+  "confirmYourEmail": "Confirm your email address",
+  "forgotPassword": "Forgot password",
   "loginWithGoogle": "Login with Google",
-  "confirmYourEmail": "Confirm your email address"
+  "resetYourPassword": "Reset your password"
 }

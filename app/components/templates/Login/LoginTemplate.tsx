@@ -10,6 +10,7 @@ import { useAuth } from '@contextProviders/AuthProvider'
 import Form, { OnFormSubmit } from '@elements/HookForm/Form'
 import { PageMinHeightWrapper } from '@elements/PageMinHeightWrapper'
 import ConfirmEmailDialog from './ConfirmEmailDialog/ConfirmEmailDialog'
+import ForgotPasswordDialog from './ForgotPasswordDialog/ForgotPasswordDialog'
 import { getGoogleLoginUrl, loginWithEmailAndPassword } from 'services/authService'
 import {
   combineValidators,
@@ -18,7 +19,7 @@ import {
   requiredValidator
 } from 'utils/validators'
 
-import { FormContent, StyledCard } from './LoginTemplate.styled'
+import { FormContent, StyledCard, StyledForgotPasswordButton } from './LoginTemplate.styled'
 
 interface IFormValues {
   email: string
@@ -35,6 +36,7 @@ const LoginTemplate = () => {
   const { fetchUser } = useAuth()
   const router = useRouter()
   const [emailToConfirm, setEmailToConfirm] = useState<string>()
+  const [showResetPasswordDialog, setShowResetPasswordDialog] = useState(false)
 
   const handleGoogleLogin = () => {
     const url = getGoogleLoginUrl(router.query.redirectedFrom as string)
@@ -79,6 +81,14 @@ const LoginTemplate = () => {
           )}
         </Form>
 
+        <StyledForgotPasswordButton
+          variant='text'
+          color='secondary'
+          onClick={() => setShowResetPasswordDialog(true)}
+        >
+          {t('login:forgotPassword')}?
+        </StyledForgotPasswordButton>
+
         <Divider />
 
         <Button color='secondary' onClick={handleGoogleLogin}>
@@ -88,6 +98,10 @@ const LoginTemplate = () => {
 
       {emailToConfirm && (
         <ConfirmEmailDialog email={emailToConfirm} onClose={() => setEmailToConfirm(undefined)} />
+      )}
+
+      {showResetPasswordDialog && (
+        <ForgotPasswordDialog onClose={() => setShowResetPasswordDialog(false)} />
       )}
     </PageMinHeightWrapper>
   )

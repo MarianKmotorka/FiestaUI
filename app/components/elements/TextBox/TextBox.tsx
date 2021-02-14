@@ -1,8 +1,8 @@
 import { forwardRef } from 'react'
-import { StandardTextFieldProps } from '@material-ui/core'
+import { TextFieldProps } from '@material-ui/core'
 import { StyledTextBox } from './TextBox.styled'
 
-interface ITextBoxProps extends Omit<StandardTextFieldProps, 'onChange' | 'error'> {
+export type TextBoxProps = Omit<TextFieldProps, 'onChange' | 'error'> & {
   name?: string
   label?: string
   value: string
@@ -13,7 +13,7 @@ interface ITextBoxProps extends Omit<StandardTextFieldProps, 'onChange' | 'error
 }
 
 const TextBox = forwardRef(
-  ({ name, label, value, error, onChange, onBlur, ...rest }: ITextBoxProps, forwardRef) => {
+  ({ name, label, value, error, onChange, onBlur, ...rest }: TextBoxProps, forwardRef) => {
     return (
       <StyledTextBox
         {...rest}
