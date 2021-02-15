@@ -8,11 +8,14 @@
   "lastName": "Last name",
   "login": "Login",
   "loading": "Loading",
+  "newPassword": "New password",
   "password": "Password",
   "repeatPassword": "Repeat password",
   "send": "Send",
+  "setUpNewPassword": "Set up new password",
   "signup": "Sign up",
   "success": "Success",
+  "submit": "Submit",
 
   "validator": {
     "emailAlreadyVerified": "Email is already verified",

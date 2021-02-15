@@ -17,8 +17,8 @@ export interface IApiError {
   }
 }
 
-export type Validator = (
+export type Validator<TFormValues = any> = (
   value: any,
   t: Translate,
-  form: UseFormMethods<Record<string, any>>
+  form: UseFormMethods<TFormValues>
 ) => string | undefined

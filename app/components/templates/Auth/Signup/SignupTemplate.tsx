@@ -16,7 +16,7 @@ import { repeatPasswordValidator } from './utils/validators'
 
 import { FormContent, StyledCard } from './SignupTemplate.styled'
 
-interface IFormValues {
+export interface ISignupFormValues {
   firstName: string
   lastName: string
   email: string
@@ -24,7 +24,7 @@ interface IFormValues {
   repeatPassword: string
 }
 
-const defaultValues: IFormValues = {
+const defaultValues: ISignupFormValues = {
   firstName: '',
   lastName: '',
   email: '',
@@ -36,7 +36,7 @@ const SignupTemplate = () => {
   const { t } = useTranslation('common')
   const [confirmationEmail, setConfirmationEmail] = useState<string>()
 
-  const handleSubmitted: OnFormSubmit<IFormValues> = async (values, submitHandler) => {
+  const handleSubmitted: OnFormSubmit<ISignupFormValues> = async (values, submitHandler) => {
     await submitHandler({
       data: values,
       url: '/auth/register',

@@ -9,7 +9,7 @@ interface IFormInputProps extends Omit<TextBoxProps, 'value' | 'onChange'> {
   label?: string
   type?: string
   placeholder?: string
-  validate?: Validator
+  validate?: Validator<any>
 }
 
 const FormInput = ({ name, label, type, validate: initialValidate, ...rest }: IFormInputProps) => {
