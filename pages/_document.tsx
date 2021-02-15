@@ -8,7 +8,7 @@ class MyDocument extends Document {
     return (
       <Html lang='en'>
         <Head>
-          <meta name='theme-color' content='#141212' />
+          <meta name='theme-color' content='#fe2c55' />
           <meta
             name='description'
             content='The simplest and most effective way for planning your next party.'

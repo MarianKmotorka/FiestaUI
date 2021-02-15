@@ -7,12 +7,12 @@ import Form, { OnFormSubmit } from '@elements/HookForm/Form'
 import { PageMinHeightWrapper } from '@elements/PageMinHeightWrapper'
 import SignupSuccessDialog from './SignupSuccessDialog/SignupSuccessDialog'
 import {
-  combineValidators,
   emailValidator,
+  requiredValidator,
+  combineValidators,
   minLengthValidator,
-  requiredValidator
+  createRepeatPasswordValidator
 } from 'utils/validators'
-import { repeatPasswordValidator } from './utils/validators'
 
 import { FormContent, StyledCard } from './SignupTemplate.styled'
 
@@ -71,7 +71,10 @@ const SignupTemplate = () => {
                 name='repeatPassword'
                 label={t('repeatPassword')}
                 type='password'
-                validate={combineValidators([requiredValidator, repeatPasswordValidator])}
+                validate={combineValidators([
+                  requiredValidator,
+                  createRepeatPasswordValidator('password')
+                ])}
               />
 
               <Button type='submit' loading={submitting}>

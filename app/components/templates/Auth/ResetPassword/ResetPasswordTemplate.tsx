@@ -7,8 +7,8 @@ import { ArrowForward, KeyboardArrowRight } from '@material-ui/icons'
 
 import Button from '@elements/Button/Button'
 import FormInput from '@elements/HookForm/FormInput'
-import { repeatPasswordValidator } from './validators'
 import Form, { OnFormSubmit } from '@elements/HookForm/Form'
+import { createRepeatPasswordValidator } from 'utils/validators'
 import { PageMinHeightWrapper } from '@elements/PageMinHeightWrapper'
 
 import { StyledCard, SuccessResetDialogCard } from './ResetPasswordTemplate.styled'
@@ -68,7 +68,7 @@ const ResetPasswordTemplate = () => {
                 variant='outlined'
                 name='repeatPassword'
                 label={t('repeatPassword')}
-                validate={repeatPasswordValidator}
+                validate={createRepeatPasswordValidator('newPassword')}
               />
 
               <Button

@@ -27,11 +27,11 @@ export const lightTheme = createMuiTheme({
       themeWhite: '#ffffff'
     },
     background: {
-      default: '#fcfcfc',
+      default: '#f7f7f7',
       paper: '#ffffff'
     },
     bg: {
-      100: '#fcfcfc'
+      100: '#f7f7f7'
     }
   },
   typography: {

@@ -27,3 +27,12 @@ export const requiredValidator: Validator = (value, t) =>
 export const minLengthValidator = (minLength: number): Validator => (value: string, t) => {
   if (value) return value.length < minLength ? t('validator.minLength', { minLength }) : undefined
 }
+
+export const createRepeatPasswordValidator = (otherPasswordFieldName: string): Validator => (
+  repeatPassword: string,
+  t,
+  { getValues }
+) => {
+  const otherPassword = getValues()[otherPasswordFieldName]
+  return repeatPassword !== otherPassword ? t('validator.passwordDoesNotMatch') : undefined
+}
