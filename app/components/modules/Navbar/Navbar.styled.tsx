@@ -1,10 +1,11 @@
+import styled from 'styled-components'
+import { motion } from 'framer-motion'
+import BurgerMenu from 'react-hamburger-menu'
+import { AppBar, ButtonGroup } from '@material-ui/core'
+
 import { Container } from '@elements/Container'
 import FiestaLogo from '@elements/FiestaLogo'
-import { AppBar, ButtonGroup } from '@material-ui/core'
-import { motion } from 'framer-motion'
-import styled from 'styled-components'
 import { MD, SM } from 'utils/theme'
-import BurgerMenu from 'react-hamburger-menu'
 
 export const NAVBAR_HEIGHT = 80
 
@@ -61,9 +62,11 @@ export const Menu = styled(motion.div)`
 
   .MuiChip-root {
     margin-left: 20px;
+    padding: 3px;
     .MuiChip-label {
       text-overflow: ellipsis;
       max-width: 160px;
+      font-size: 1.1em;
     }
   }
 
@@ -83,7 +86,9 @@ export const Menu = styled(motion.div)`
     .MuiChip-root {
       position: absolute;
       top: 20px;
-      right: 10%;
+      left: 50%;
+      transform: translateX(-50%);
+      margin: 0;
 
       font-size: 0.9rem;
       padding: 18px 0;
@@ -104,7 +109,11 @@ export const Menu = styled(motion.div)`
 `
 
 export const StyledButtonGroup = styled(ButtonGroup)`
-  margin-right: 10px;
+  margin-left: 10px;
+
+  > button {
+    min-width: 80px;
+  }
 `
 
 export const StyledBurger = styled(BurgerMenu)`

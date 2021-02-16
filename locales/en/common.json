@@ -7,6 +7,7 @@
   "firstName": "First name",
   "lastName": "Last name",
   "login": "Login",
+  "logout": "Logout",
   "loading": "Loading",
   "newPassword": "New password",
   "password": "Password",
@@ -16,6 +17,8 @@
   "signup": "Sign up",
   "success": "Success",
   "submit": "Submit",
+  "settings": "Settings",
+  "switchTheme": "Switch theme",
 
   "validator": {
     "emailAlreadyVerified": "Email is already verified",

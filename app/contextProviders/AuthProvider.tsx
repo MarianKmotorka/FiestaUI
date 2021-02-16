@@ -28,7 +28,8 @@ export const useAuthorizedUser = () => {
 
   return {
     currentUser: auth.currentUser,
-    isLoading: auth.isLoading
+    isLoading: auth.isLoading,
+    logout: auth.logout
   }
 }
 

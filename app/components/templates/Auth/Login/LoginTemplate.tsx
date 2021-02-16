@@ -1,8 +1,8 @@
 import { useState } from 'react'
 import { useRouter } from 'next/router'
-import { Divider } from '@material-ui/core'
 import useTranslation from 'next-translate/useTranslation'
 
+import Divider from '@elements/Divider'
 import Button from '@elements/Button/Button'
 import { getReturnUrlFromQuery } from 'utils/utils'
 import FormInput from '@elements/HookForm/FormInput'

@@ -1,13 +1,14 @@
 import { useState } from 'react'
 import { AnimatePresence } from 'framer-motion'
 import useTranslation from 'next-translate/useTranslation'
-import { WbSunny, NightsStay } from '@material-ui/icons'
 import { Avatar, Button, Chip, IconButton } from '@material-ui/core'
 
 import NavLink from '@elements/NavLink'
 import useWindowSize from '@hooks/useWindowSize'
 import { useRouter } from 'next/dist/client/router'
 import { useAuth } from '@contextProviders/AuthProvider'
+import { Brightness2, WbSunny } from '@material-ui/icons'
+import ProfileDropdown from './ProfileMenu/ProfileMenu'
 import { useAppTheme } from '@contextProviders/AppThemeProvider'
 
 import {
@@ -24,9 +25,10 @@ const Navbar = () => {
   const auth = useAuth()
   const router = useRouter()
   const { t } = useTranslation('common')
-  const { switchTheme, isDark, theme } = useAppTheme()
-  const { maxMedium, minMedium, maxLarge } = useWindowSize()
+  const { theme, isDark, switchTheme } = useAppTheme()
+  const { maxMedium } = useWindowSize()
   const [menuOpen, setMenuOpen] = useState(false)
+  const [profileChipEl, setProfileChipEl] = useState<HTMLElement>()
   const showMenu = !maxMedium || (maxMedium && menuOpen)
   const menuAnimations = maxMedium
     ? {
@@ -39,8 +41,13 @@ const Navbar = () => {
       }
     : {}
 
+  const toggleMenu = (value?: boolean) => {
+    setProfileChipEl(undefined)
+    setMenuOpen(prev => value || !prev)
+  }
+
   const pushAndClose = (path: string) => () => {
-    setMenuOpen(false)
+    toggleMenu(false)
     router.push(path)
   }
 
@@ -52,18 +59,6 @@ const Navbar = () => {
         <AnimatePresence>
           {showMenu && (
             <Menu {...menuAnimations}>
-              {!auth.isLoggedIn && (
-                <StyledButtonGroup size={maxMedium ? 'large' : 'medium'}>
-                  <Button color='secondary' variant='contained' onClick={pushAndClose('/login')}>
-                    {t('login')}
-                  </Button>
-
-                  <Button color='primary' variant='contained' onClick={pushAndClose('/signup')}>
-                    {t('signup')}
-                  </Button>
-                </StyledButtonGroup>
-              )}
-
               {auth.isLoggedIn && (
                 <>
                   <NavLink href='/home'>
@@ -77,28 +72,47 @@ const Navbar = () => {
                   <NavLink href='/people'>
                     <LinkText>People</LinkText>
                   </NavLink>
+
+                  <Chip
+                    avatar={<Avatar src={auth.currentUser.pictureUrl} />}
+                    label={auth.currentUser.fullName}
+                    clickable
+                    color='primary'
+                    onClick={e => setProfileChipEl(prev => (prev ? undefined : e.currentTarget))}
+                  />
+
+                  {profileChipEl && (
+                    <ProfileDropdown
+                      onClose={() => setProfileChipEl(undefined)}
+                      anchorEl={profileChipEl}
+                    />
+                  )}
                 </>
               )}
 
-              <IconButton onClick={switchTheme}>
-                {isDark ? <WbSunny color='primary' /> : <NightsStay />}
-              </IconButton>
+              {!auth.isLoggedIn && (
+                <>
+                  <IconButton onClick={switchTheme}>
+                    {isDark ? <WbSunny color='primary' /> : <Brightness2 />}
+                  </IconButton>
 
-              {auth.isLoggedIn && (
-                <Chip
-                  avatar={<Avatar src={auth.currentUser.pictureUrl} />}
-                  label={minMedium && maxLarge ? '' : auth.currentUser.fullName}
-                  clickable
-                  onDelete={auth.logout}
-                  color='primary'
-                />
+                  <StyledButtonGroup size={maxMedium ? 'large' : 'medium'}>
+                    <Button color='secondary' variant='contained' onClick={pushAndClose('/login')}>
+                      {t('login')}
+                    </Button>
+
+                    <Button color='primary' variant='contained' onClick={pushAndClose('/signup')}>
+                      {t('signup')}
+                    </Button>
+                  </StyledButtonGroup>
+                </>
               )}
             </Menu>
           )}
         </AnimatePresence>
 
         {maxMedium && (
-          <IconButton onClick={() => setMenuOpen(prev => !prev)}>
+          <IconButton onClick={() => toggleMenu()}>
             <StyledBurger
               isOpen={menuOpen}
               width={28}
