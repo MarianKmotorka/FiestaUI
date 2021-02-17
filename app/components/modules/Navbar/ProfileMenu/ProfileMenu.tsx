@@ -47,10 +47,12 @@ const ProfileDropdown = ({ anchorEl, onClose }: IProfileDropdownProps) => {
           {isDark ? <WbSunny id='lightThemeIcon' /> : <Brightness2 />}
         </StyledMenuItem>
 
-        <StyledMenuItem>
-          {t('settings')}
-          <Settings />
-        </StyledMenuItem>
+        <Link href='/settings'>
+          <StyledMenuItem>
+            {t('settings')}
+            <Settings />
+          </StyledMenuItem>
+        </Link>
 
         <StyledMenuItem onClick={logout}>
           {t('logout')}

@@ -1,4 +1,4 @@
-import ResetPasswordTemplate from '@templates/Auth/ResetPassword/ResetPasswordTemplate'
+import ResetPasswordTemplate from '@templates/Account/ResetPassword/ResetPasswordTemplate'
 import Head from 'next/head'
 
 const ResetPassword = () => {
