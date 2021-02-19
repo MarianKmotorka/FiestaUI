@@ -23,6 +23,7 @@
   "submit": "Submit",
   "settings": "Settings",
   "switchTheme": "Switch theme",
+  "currentPassword": "Current password",
 
   "validator": {
     "emailAlreadyVerified": "Email is already verified",
@@ -35,6 +36,7 @@
     "mustBeUnique": "Must be unique",
     "minLength": "Min {{minLength}} characters",
     "passwordDoesNotMatch": "Password and repeat password does not match",
-    "required": "Required"
+    "required": "Required",
+    "invalidPassword": "Invalid password"
   }
 }

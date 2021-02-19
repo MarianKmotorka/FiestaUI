@@ -1,10 +1,18 @@
-import TabPanel from '@elements/TabPanel/TabPanel'
+import useTranslation from 'next-translate/useTranslation'
+import { useState } from 'react'
+
 import useWindowSize from '@hooks/useWindowSize'
 import { Tabs } from '@material-ui/core'
 import { AccountCircle, DeleteForever, Language, VpnKey } from '@material-ui/icons'
-import useTranslation from 'next-translate/useTranslation'
-import { useState } from 'react'
-import { TabPanelContainer, TabsContainer, StyledTab, Wrapper } from './SettingsTemplate.styled'
+import ChangePasswordTab from './Tabs/ChangePasswordTab/ChangePasswordTab'
+
+import {
+  TabPanelContainer,
+  TabsContainer,
+  StyledTab,
+  StyledPanel,
+  Wrapper
+} from './SettingsTemplate.styled'
 
 const SettingsTemplate = () => {
   const [currTab, setCurrTab] = useState(0)
@@ -41,21 +49,21 @@ const SettingsTemplate = () => {
       </TabsContainer>
 
       <TabPanelContainer>
-        <TabPanel index={0} value={currTab}>
+        <StyledPanel index={0} value={currTab}>
           Tab number: {currTab + 1}
-        </TabPanel>
+        </StyledPanel>
 
-        <TabPanel index={1} value={currTab}>
-          Tab number: {currTab + 1}
-        </TabPanel>
+        <StyledPanel index={1} value={currTab}>
+          <ChangePasswordTab />
+        </StyledPanel>
 
-        <TabPanel index={2} value={currTab}>
+        <StyledPanel index={2} value={currTab}>
           {new Array(500).fill(null).map(_ => 'Sample text, sample text, sample text')}
-        </TabPanel>
+        </StyledPanel>
 
-        <TabPanel index={3} value={currTab}>
+        <StyledPanel index={3} value={currTab}>
           Tab number {currTab + 1}
-        </TabPanel>
+        </StyledPanel>
       </TabPanelContainer>
     </Wrapper>
   )

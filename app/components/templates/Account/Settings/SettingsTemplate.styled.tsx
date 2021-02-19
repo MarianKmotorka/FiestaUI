@@ -1,4 +1,5 @@
 import { PageMinHeightWrapper } from '@elements/PageMinHeightWrapper'
+import TabPanel from '@elements/TabPanel/TabPanel'
 import { Tab } from '@material-ui/core'
 import { NAVBAR_HEIGHT } from '@modules/Navbar/Navbar.styled'
 import styled from 'styled-components'
@@ -48,23 +49,23 @@ export const TabsContainer = styled.div`
 
 export const TabPanelContainer = styled.div`
   flex: 3;
-
-  > div {
-    height: calc(100vh - ${NAVBAR_HEIGHT}px);
-    overflow: auto;
-
-    ::-webkit-scrollbar {
-      display: none;
-    }
-
-    @media screen and (max-width: ${MD}px) {
-      height: calc(100vh - ${NAVBAR_HEIGHT}px - 60px);
-    }
-  }
 `
 
 export const StyledTab = styled(Tab)`
   font-size: 0.9rem;
   text-align: start;
   padding: 15px 0;
+`
+
+export const StyledPanel = styled(TabPanel)`
+  height: calc(100vh - ${NAVBAR_HEIGHT}px);
+  overflow: auto;
+
+  ::-webkit-scrollbar {
+    display: none;
+  }
+
+  @media screen and (max-width: ${MD}px) {
+    height: calc(100vh - ${NAVBAR_HEIGHT}px - 60px);
+  }
 `
