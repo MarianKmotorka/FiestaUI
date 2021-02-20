@@ -2,6 +2,7 @@ import useTranslation from 'next-translate/useTranslation'
 import { useState } from 'react'
 
 import Button from '@elements/Button/Button'
+import Snackbar from '@elements/Snackbar/Snackbar'
 import FormInput from '@elements/HookForm/FormInput'
 import Form, { OnFormSubmit } from '@elements/HookForm/Form'
 import {
@@ -11,7 +12,6 @@ import {
   createRepeatPasswordValidator
 } from 'utils/validators'
 import { useAuthorizedUser } from '@contextProviders/AuthProvider'
-import SuccessSnackbar from '@elements/Snackbars/SuccessSnackbar'
 
 import { FormContent, Wrapper } from './ChangePasswordTab.styled'
 
@@ -85,7 +85,8 @@ const ChangePasswordTab = () => {
           </FormContent>
         )}
       </Form>
-      {success && <SuccessSnackbar onClose={() => setSuccess(false)} />}
+
+      {success && <Snackbar onClose={() => setSuccess(false)} translationKey='success' />}
     </Wrapper>
   )
 }

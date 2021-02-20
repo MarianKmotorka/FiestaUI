@@ -1,10 +1,13 @@
-import useTranslation from 'next-translate/useTranslation'
 import { useState } from 'react'
+import useTranslation from 'next-translate/useTranslation'
 
-import useWindowSize from '@hooks/useWindowSize'
+import { hasFlag } from 'utils/utils'
 import { Tabs } from '@material-ui/core'
-import { AccountCircle, DeleteForever, Language, VpnKey } from '@material-ui/icons'
+import { AuthProviderFlags } from 'domainTypes'
+import useWindowSize from '@hooks/useWindowSize'
+import { useAuthorizedUser } from '@contextProviders/AuthProvider'
 import ChangePasswordTab from './Tabs/ChangePasswordTab/ChangePasswordTab'
+import { AccountCircle, DeleteForever, Language, VpnKey } from '@material-ui/icons'
 
 import {
   TabPanelContainer,
@@ -15,9 +18,10 @@ import {
 } from './SettingsTemplate.styled'
 
 const SettingsTemplate = () => {
-  const [currTab, setCurrTab] = useState(0)
+  const [currTab, setCurrTab] = useState('editProfile')
   const { t } = useTranslation('common')
   const { maxMedium } = useWindowSize()
+  const { currentUser } = useAuthorizedUser()
 
   return (
     <Wrapper>
@@ -30,18 +34,27 @@ const SettingsTemplate = () => {
           orientation={maxMedium ? 'horizontal' : 'vertical'}
         >
           <StyledTab
+            value='editProfile'
             label={!maxMedium && t('editProfile')}
             icon={maxMedium ? <AccountCircle /> : undefined}
           />
+
+          {hasFlag(currentUser.authProvider, AuthProviderFlags.EmailAndPassword) && (
+            <StyledTab
+              value='changePassword'
+              label={!maxMedium && t('changePassword')}
+              icon={maxMedium ? <VpnKey /> : undefined}
+            />
+          )}
+
           <StyledTab
-            label={!maxMedium && t('changePassword')}
-            icon={maxMedium ? <VpnKey /> : undefined}
-          />
-          <StyledTab
+            value='language'
             label={!maxMedium && t('language')}
             icon={maxMedium ? <Language /> : undefined}
           />
+
           <StyledTab
+            value='deleteAccount'
             label={!maxMedium && t('deleteAccount')}
             icon={maxMedium ? <DeleteForever /> : undefined}
           />
@@ -49,19 +62,19 @@ const SettingsTemplate = () => {
       </TabsContainer>
 
       <TabPanelContainer>
-        <StyledPanel index={0} value={currTab}>
+        <StyledPanel index='editProfile' value={currTab}>
           Tab number: {currTab + 1}
         </StyledPanel>
 
-        <StyledPanel index={1} value={currTab}>
+        <StyledPanel index='changePassword' value={currTab}>
           <ChangePasswordTab />
         </StyledPanel>
 
-        <StyledPanel index={2} value={currTab}>
-          {new Array(500).fill(null).map(_ => 'Sample text, sample text, sample text')}
+        <StyledPanel index='language' value={currTab}>
+          lang
         </StyledPanel>
 
-        <StyledPanel index={3} value={currTab}>
+        <StyledPanel index='deleteAccount' value={currTab}>
           Tab number {currTab + 1}
         </StyledPanel>
       </TabPanelContainer>
