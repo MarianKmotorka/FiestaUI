@@ -1,7 +1,7 @@
 import { useState } from 'react'
 import useTranslation from 'next-translate/useTranslation'
 
-import { hasFlag } from 'utils/utils'
+import { hasAuthProvider } from 'utils/utils'
 import { Tabs } from '@material-ui/core'
 import { AuthProviderFlags } from 'domainTypes'
 import useWindowSize from '@hooks/useWindowSize'
@@ -39,7 +39,7 @@ const SettingsTemplate = () => {
             icon={maxMedium ? <AccountCircle /> : undefined}
           />
 
-          {hasFlag(currentUser.authProvider, AuthProviderFlags.EmailAndPassword) && (
+          {hasAuthProvider(currentUser, AuthProviderFlags.EmailAndPassword) && (
             <StyledTab
               value='changePassword'
               label={!maxMedium && t('changePassword')}

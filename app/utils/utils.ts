@@ -4,7 +4,7 @@ import { Translate } from 'next-translate'
 
 import { IApiError } from 'types'
 import api from '@api/HttpClient'
-import { AuthProviderFlags } from 'domainTypes'
+import { AuthProviderFlags, IUser } from 'domainTypes'
 
 export const IS_BROWSER = typeof window !== undefined
 
@@ -51,6 +51,6 @@ export const createSubmitHandler = ({ setError }: UseFormMethods<any>, t: Transl
   }
 }
 
-export const hasFlag = (value: AuthProviderFlags, flag: AuthProviderFlags) => {
-  return (value & flag) === flag
+export const hasAuthProvider = ({ authProvider }: IUser, flag: AuthProviderFlags) => {
+  return (authProvider & flag) === flag
 }
