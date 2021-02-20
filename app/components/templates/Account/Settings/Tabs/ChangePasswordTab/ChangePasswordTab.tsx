@@ -5,25 +5,23 @@ import Button from '@elements/Button/Button'
 import Snackbar from '@elements/Snackbar/Snackbar'
 import FormInput from '@elements/HookForm/FormInput'
 import Form, { OnFormSubmit } from '@elements/HookForm/Form'
+import { useAuthorizedUser } from '@contextProviders/AuthProvider'
 import {
   requiredValidator,
   combineValidators,
   minLengthValidator,
   createRepeatPasswordValidator
 } from 'utils/validators'
-import { useAuthorizedUser } from '@contextProviders/AuthProvider'
 
 import { FormContent, Wrapper } from './ChangePasswordTab.styled'
 
-export interface IChangePasswordValues {
-  userId: string
+interface IChangePasswordValues {
   currentPassword: string
   newPassword: string
   repeatPassword: string
 }
 
 const defaultValues: IChangePasswordValues = {
-  userId: '',
   currentPassword: '',
   newPassword: '',
   repeatPassword: ''
