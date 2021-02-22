@@ -20,7 +20,7 @@ const AuthorizedPage: FC = ({ children }) => {
     </Head>
   )
 
-  if (auth.isLoading)
+  if (auth.isLoading && !auth.isLoggedIn)
     return (
       <Overlay>
         {header}

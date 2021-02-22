@@ -1,5 +1,7 @@
 {
+  "add": "Add",
   "back": "Back",
+  "connect": "Connect",
   "confirmationEmailWillBeSentTo": "<0>Confirmation email will be sent to <1>{{email}}</1></0>",
   "checkYourEmail": "Check your email",
   "changePassword": "Change password",
@@ -22,11 +24,13 @@
   "success": "Success",
   "submit": "Submit",
   "settings": "Settings",
+  "signInMethods": "Sign in methods",
   "switchTheme": "Switch theme",
   "currentPassword": "Current password",
 
   "validator": {
     "emailAlreadyVerified": "Email is already verified",
+    "emailAlreadyInUse": "Email is already in use",
     "emailIsNotVerified": "Email is not verified",
     "invalidEmail": "Invalid email address",
     "invalidCode": "Invalid code",

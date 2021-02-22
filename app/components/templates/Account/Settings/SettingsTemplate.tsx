@@ -1,13 +1,15 @@
 import { useState } from 'react'
+import { useRouter } from 'next/router'
+import { Tabs } from '@material-ui/core'
 import useTranslation from 'next-translate/useTranslation'
 
 import { hasAuthProvider } from 'utils/utils'
-import { Tabs } from '@material-ui/core'
 import { AuthProviderFlags } from 'domainTypes'
 import useWindowSize from '@hooks/useWindowSize'
 import { useAuthorizedUser } from '@contextProviders/AuthProvider'
+import SignInMethodsTab from './Tabs/SignInMethodsTab/SignInMethodsTab'
 import ChangePasswordTab from './Tabs/ChangePasswordTab/ChangePasswordTab'
-import { AccountCircle, DeleteForever, Language, VpnKey } from '@material-ui/icons'
+import { AccountCircle, DeleteForever, LockOpen, VpnKey } from '@material-ui/icons'
 
 import {
   TabPanelContainer,
@@ -18,10 +20,16 @@ import {
 } from './SettingsTemplate.styled'
 
 const SettingsTemplate = () => {
-  const [currTab, setCurrTab] = useState('editProfile')
+  const router = useRouter()
+  const [currTab, setCurrTab] = useState((router.query.tab as string) || 'editProfile')
   const { t } = useTranslation('common')
   const { maxMedium } = useWindowSize()
   const { currentUser } = useAuthorizedUser()
+
+  const changeTab = (value: string) => {
+    setCurrTab(value)
+    router.push({ pathname: router.pathname, query: { tab: value } }, undefined, { shallow: true })
+  }
 
   return (
     <Wrapper>
@@ -30,7 +38,7 @@ const SettingsTemplate = () => {
           value={currTab}
           textColor='inherit'
           indicatorColor='primary'
-          onChange={(_, value) => setCurrTab(value)}
+          onChange={(_, value) => changeTab(value)}
           orientation={maxMedium ? 'horizontal' : 'vertical'}
         >
           <StyledTab
@@ -48,9 +56,9 @@ const SettingsTemplate = () => {
           )}
 
           <StyledTab
-            value='language'
-            label={!maxMedium && t('language')}
-            icon={maxMedium ? <Language /> : undefined}
+            value='signInMethods'
+            label={!maxMedium && t('signInMethods')}
+            icon={maxMedium ? <LockOpen /> : undefined}
           />
 
           <StyledTab
@@ -70,8 +78,8 @@ const SettingsTemplate = () => {
           <ChangePasswordTab />
         </StyledPanel>
 
-        <StyledPanel index='language' value={currTab}>
-          lang
+        <StyledPanel index='signInMethods' value={currTab}>
+          <SignInMethodsTab />
         </StyledPanel>
 
         <StyledPanel index='deleteAccount' value={currTab}>
