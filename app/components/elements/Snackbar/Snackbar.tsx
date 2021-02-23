@@ -1,6 +1,6 @@
 import useTranslation from 'next-translate/useTranslation'
-import { Snackbar as MuiSnackbar } from '@material-ui/core'
 import Alert, { AlertProps } from '@material-ui/lab/Alert'
+import { StyledSnackBar } from './Snackbar.styled'
 
 interface ISuccessSnackbarProps {
   onClose: () => void
@@ -12,7 +12,7 @@ const Snackbar = ({ severity, translationKey, onClose }: ISuccessSnackbarProps) 
   const { t } = useTranslation('common')
 
   return (
-    <MuiSnackbar
+    <StyledSnackBar
       open
       autoHideDuration={6000}
       onClose={onClose}
@@ -21,7 +21,7 @@ const Snackbar = ({ severity, translationKey, onClose }: ISuccessSnackbarProps) 
       <Alert onClose={onClose} severity={severity || 'success'} variant='outlined' elevation={10}>
         {t(translationKey)}
       </Alert>
-    </MuiSnackbar>
+    </StyledSnackBar>
   )
 }
 

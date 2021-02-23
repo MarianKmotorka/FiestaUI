@@ -51,12 +51,20 @@ export const Title = styled.h1`
 
 export const InfoText = styled.p`
   color: ${({ theme }) => theme.success.main};
-  font-size: 1.1rem;
+  font-size: 1rem;
   display: flex;
   align-items: center;
+  flex-wrap: wrap;
+  margin: 0;
+  margin-bottom: 8px;
+  gap: 10px;
+
+  .MuiChip-root {
+    background-color: ${({ theme }) => theme.success.light};
+    color: ${({ theme }) => theme.themeText.black};
+  }
 
   svg {
-    margin-left: 9px;
     color: ${({ theme }) => theme.themeText.themeGray};
   }
 

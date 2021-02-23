@@ -2,7 +2,7 @@ import { useState } from 'react'
 import { useRouter } from 'next/router'
 import { Done, ExpandMore } from '@material-ui/icons'
 import useTranslation from 'next-translate/useTranslation'
-import { Accordion, AccordionDetails, AccordionSummary } from '@material-ui/core'
+import { Accordion, AccordionDetails, AccordionSummary, Chip } from '@material-ui/core'
 
 import { hasAuthProvider } from 'utils/utils'
 import { AuthProviderFlags } from 'domainTypes'
@@ -47,6 +47,7 @@ const SignInMethodsTab = () => {
         <AccordionDetails>
           {hasGoogleAccount ? (
             <InfoText>
+              <Chip label={currentUser.googleEmail} />
               {t('googleAccountConnected')} <Done />
             </InfoText>
           ) : (

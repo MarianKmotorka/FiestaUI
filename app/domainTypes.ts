@@ -7,6 +7,7 @@ export interface IUser {
   pictureUrl: string
   authProvider: AuthProviderFlags
   role: RoleEnum
+  googleEmail?: string
 }
 
 export enum AuthProviderFlags {

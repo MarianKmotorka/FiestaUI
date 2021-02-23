@@ -63,6 +63,12 @@ export const Menu = styled(motion.div)`
   .MuiChip-root {
     margin-left: 20px;
     padding: 3px;
+
+    svg {
+      pointer-events: none;
+      color: ${({ theme }) => theme.themeText.white};
+    }
+
     .MuiChip-label {
       text-overflow: ellipsis;
       max-width: 160px;

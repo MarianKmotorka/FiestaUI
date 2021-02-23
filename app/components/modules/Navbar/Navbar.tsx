@@ -1,13 +1,13 @@
 import { useState } from 'react'
 import { AnimatePresence } from 'framer-motion'
+import { useRouter } from 'next/dist/client/router'
 import useTranslation from 'next-translate/useTranslation'
 import { Avatar, Button, Chip, IconButton } from '@material-ui/core'
+import { Brightness2, ExpandLess, ExpandMore, WbSunny } from '@material-ui/icons'
 
 import NavLink from '@elements/NavLink'
 import useWindowSize from '@hooks/useWindowSize'
-import { useRouter } from 'next/dist/client/router'
 import { useAuth } from '@contextProviders/AuthProvider'
-import { Brightness2, WbSunny } from '@material-ui/icons'
 import ProfileDropdown from './ProfileMenu/ProfileMenu'
 import { useAppTheme } from '@contextProviders/AppThemeProvider'
 
@@ -76,8 +76,10 @@ const Navbar = () => {
                   <Chip
                     avatar={<Avatar src={auth.currentUser.pictureUrl} />}
                     label={auth.currentUser.fullName}
+                    onDelete={() => {}}
                     clickable
                     color='primary'
+                    deleteIcon={profileChipEl ? <ExpandLess /> : <ExpandMore />}
                     onClick={e => setProfileChipEl(prev => (prev ? undefined : e.currentTarget))}
                   />
 

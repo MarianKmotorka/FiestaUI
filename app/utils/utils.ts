@@ -18,10 +18,10 @@ export const getReturnUrlFromQuery = (query: ParsedUrlQuery) => {
 }
 
 export interface ISubmitHandlerParameters {
-  data: any
+  data: Record<string, any>
   url: string
   params?: Record<string, any>
-  method?: 'post' | 'patch' | 'put'
+  method?: 'post' | 'patch' | 'put' | 'delete'
   successCallback?: <TResponse>(data: TResponse) => void
   errorCallback?: (error: IApiError['response']['data']) => void
 }
@@ -36,8 +36,13 @@ export const createSubmitHandler = ({ setError }: UseFormMethods<any>, t: Transl
 }: ISubmitHandlerParameters) => {
   const method = initialMethod || 'post'
 
+  const responsePromise =
+    method === 'delete'
+      ? api.delete(url, { params: { ...data, ...params } })
+      : api[method](url, data, { params })
+
   try {
-    const response = await api[method](url, data, { params })
+    const response = await responsePromise
     successCallback?.(response.data)
   } catch (err) {
     const errors = (err as IApiError).response.data.errorDetails
