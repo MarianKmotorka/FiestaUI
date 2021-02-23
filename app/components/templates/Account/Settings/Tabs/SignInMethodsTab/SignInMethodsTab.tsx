@@ -1,3 +1,5 @@
+import { useState } from 'react'
+import { useRouter } from 'next/router'
 import { Done, ExpandMore } from '@material-ui/icons'
 import useTranslation from 'next-translate/useTranslation'
 import { Accordion, AccordionDetails, AccordionSummary } from '@material-ui/core'
@@ -9,16 +11,12 @@ import ConnectGoogleAccount from './ConnectGoogleAccount'
 import { useAuthorizedUser } from '@contextProviders/AuthProvider'
 
 import { InfoText, Title, Wrapper } from './SignInMethodsTab.styled'
-import { useState } from 'react'
-import { useRouter } from 'next/router'
 
 const SignInMethodsTab = () => {
   const { t } = useTranslation('settings')
   const { query } = useRouter()
   const { currentUser } = useAuthorizedUser()
-
-  //Note: google callback will append "state" query parameter so I know it is a callback
-  const [googleExpanded, setGoogleExpanded] = useState(!!query.state)
+  const [googleExpanded, setGoogleExpanded] = useState(!!query.code)
 
   const hasPassword = hasAuthProvider(currentUser, AuthProviderFlags.EmailAndPassword)
   const hasGoogleAccount = hasAuthProvider(currentUser, AuthProviderFlags.Google)

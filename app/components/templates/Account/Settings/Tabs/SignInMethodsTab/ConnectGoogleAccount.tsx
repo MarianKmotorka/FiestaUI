@@ -16,8 +16,7 @@ const getGoogleRedirectUrl = () => {
     `redirect_uri=${redirectUri}`,
     'response_type=code',
     'scope=openid profile email',
-    'access_type=offline',
-    `state=dummyValue` // Note: adding state so it is part of a return URL, check SignInMethodsTab.tsx for usage
+    'access_type=offline'
   ]
     .filter(x => !!x)
     .join('&')
