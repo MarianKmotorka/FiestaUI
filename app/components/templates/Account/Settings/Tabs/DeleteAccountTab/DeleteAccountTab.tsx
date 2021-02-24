@@ -1,6 +1,6 @@
 import { useState } from 'react'
 import { useRouter } from 'next/router'
-import { Warning, ExpandMore } from '@material-ui/icons'
+import { ExpandMore } from '@material-ui/icons'
 import useTranslation from 'next-translate/useTranslation'
 import { Accordion, AccordionDetails, AccordionSummary } from '@material-ui/core'
 
@@ -10,7 +10,8 @@ import { useAuthorizedUser } from '@contextProviders/AuthProvider'
 import DeleteWithPassword from './DeleteWithPassword'
 import DeleteAccountWithGoogle from './DeleteAccountWithGoogle'
 
-import { InfoText, Title, Wrapper } from './DeleteAccountTab.styled'
+import { Title, Wrapper } from './DeleteAccountTab.styled'
+import { StyledSettingsAlert } from '../../SettingsTemplate.styled'
 
 const DeleteAccountTab = () => {
   const { t } = useTranslation('settings')
@@ -30,12 +31,16 @@ const DeleteAccountTab = () => {
 
         <AccordionDetails>
           {hasPassword ? (
-            <DeleteWithPassword />
+            <>
+              <StyledSettingsAlert severity='warning'>
+                {t('common:warning')}: {t('afterYouEnterValidPasswordAccountWillBeDeleted')}.
+              </StyledSettingsAlert>
+              <DeleteWithPassword />
+            </>
           ) : (
-            <InfoText>
-              <Warning />
+            <StyledSettingsAlert severity='warning'>
               {t('deleteWithpasswordNotAccessible')}
-            </InfoText>
+            </StyledSettingsAlert>
           )}
         </AccordionDetails>
       </Accordion>
@@ -47,12 +52,16 @@ const DeleteAccountTab = () => {
 
         <AccordionDetails>
           {hasGoogleAccount ? (
-            <DeleteAccountWithGoogle />
+            <>
+              <StyledSettingsAlert severity='warning'>
+                {t('common:warning')}: {t('afterYouPickGoogleAccountAccountWillBeDeleted')}.
+              </StyledSettingsAlert>
+              <DeleteAccountWithGoogle />
+            </>
           ) : (
-            <InfoText>
-              <Warning />
+            <StyledSettingsAlert severity='warning'>
               {t('deleteWithGoogleNotAccessible')}
-            </InfoText>
+            </StyledSettingsAlert>
           )}
         </AccordionDetails>
       </Accordion>

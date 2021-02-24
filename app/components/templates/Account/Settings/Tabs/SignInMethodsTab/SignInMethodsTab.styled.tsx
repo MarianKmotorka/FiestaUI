@@ -6,6 +6,14 @@ export const Wrapper = styled.div`
     color: ${({ theme }) => theme.themeText.themeGray};
   }
 
+  .MuiAccordionDetails-root {
+    display: block;
+  }
+
+  .MuiChip-root {
+    margin-bottom: 10px;
+  }
+
   form {
     display: flex;
     flex-direction: column;
@@ -46,29 +54,5 @@ export const Title = styled.h1`
 
   @media screen and (max-width: ${MD}px) {
     font-size: 1rem;
-  }
-`
-
-export const InfoText = styled.p`
-  color: ${({ theme }) => theme.success.main};
-  font-size: 1rem;
-  display: flex;
-  align-items: center;
-  flex-wrap: wrap;
-  margin: 0;
-  margin-bottom: 8px;
-  gap: 10px;
-
-  .MuiChip-root {
-    background-color: ${({ theme }) => theme.success.light};
-    color: ${({ theme }) => theme.themeText.black};
-  }
-
-  svg {
-    color: ${({ theme }) => theme.themeText.themeGray};
-  }
-
-  @media screen and (max-width: ${MD}px) {
-    font-size: 0.9rem;
   }
 `

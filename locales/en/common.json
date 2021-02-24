@@ -28,6 +28,7 @@
   "signInMethods": "Sign in methods",
   "switchTheme": "Switch theme",
   "currentPassword": "Current password",
+  "warning": "Warning",
 
   "validator": {
     "emailAlreadyVerified": "Email is already verified",

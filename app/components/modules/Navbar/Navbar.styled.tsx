@@ -10,7 +10,7 @@ import { MD, SM } from 'utils/theme'
 export const NAVBAR_HEIGHT = 80
 
 export const StyledAppBar = styled(AppBar)`
-  background-color: ${({ theme }) => theme.bg[100]};
+  background-color: ${({ theme }) => theme.background.default};
 `
 
 export const Logo = styled(FiestaLogo)`
@@ -83,7 +83,7 @@ export const Menu = styled(motion.div)`
     top: ${NAVBAR_HEIGHT}px;
     height: calc(100vh - ${NAVBAR_HEIGHT}px);
 
-    background-color: ${({ theme }) => theme.bg[100]};
+    background-color: ${({ theme }) => theme.background.default};
     display: flex;
     flex-direction: column;
     align-items: center;

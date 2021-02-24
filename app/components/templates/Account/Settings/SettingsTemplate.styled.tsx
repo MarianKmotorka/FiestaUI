@@ -1,9 +1,11 @@
+import styled from 'styled-components'
+import { Tab } from '@material-ui/core'
+
 import { PageMinHeightWrapper } from '@elements/PageMinHeightWrapper'
 import TabPanel from '@elements/TabPanel/TabPanel'
-import { Tab } from '@material-ui/core'
-import { NAVBAR_HEIGHT } from '@modules/Navbar/Navbar.styled'
-import styled from 'styled-components'
+import Alert from '@material-ui/lab/Alert'
 import { MD } from 'utils/theme'
+import { NAVBAR_HEIGHT } from '@modules/Navbar/Navbar.styled'
 
 export const Wrapper = styled(PageMinHeightWrapper)`
   display: flex;
@@ -64,4 +66,11 @@ export const StyledPanel = styled(TabPanel)`
   @media screen and (max-width: ${MD}px) {
     height: calc(100vh - ${NAVBAR_HEIGHT}px - 60px);
   }
+`
+
+export const StyledSettingsAlert = styled(Alert)`
+  padding: 6px 9px;
+  margin-bottom: 10px;
+  font-weight: 300;
+  font-size: 0.95em;
 `

@@ -1,6 +1,6 @@
 import { useState } from 'react'
 import { useRouter } from 'next/router'
-import { Done, ExpandMore } from '@material-ui/icons'
+import { ExpandMore } from '@material-ui/icons'
 import useTranslation from 'next-translate/useTranslation'
 import { Accordion, AccordionDetails, AccordionSummary, Chip } from '@material-ui/core'
 
@@ -10,7 +10,8 @@ import AddPasswordForm from './AddPasswordForm'
 import ConnectGoogleAccount from './ConnectGoogleAccount'
 import { useAuthorizedUser } from '@contextProviders/AuthProvider'
 
-import { InfoText, Title, Wrapper } from './SignInMethodsTab.styled'
+import { Title, Wrapper } from './SignInMethodsTab.styled'
+import { StyledSettingsAlert } from '../../SettingsTemplate.styled'
 
 const SignInMethodsTab = () => {
   const { t } = useTranslation('settings')
@@ -30,11 +31,14 @@ const SignInMethodsTab = () => {
 
         <AccordionDetails>
           {hasPassword ? (
-            <InfoText>
-              {t('passwordSignInIsSetUp')} <Done />
-            </InfoText>
+            <StyledSettingsAlert>{t('passwordSignInIsSetUp')}.</StyledSettingsAlert>
           ) : (
-            <AddPasswordForm />
+            <>
+              <StyledSettingsAlert severity='info'>
+                {t('createPasswordForYourAccount')}.
+              </StyledSettingsAlert>
+              <AddPasswordForm />
+            </>
           )}
         </AccordionDetails>
       </Accordion>
@@ -46,12 +50,17 @@ const SignInMethodsTab = () => {
 
         <AccordionDetails>
           {hasGoogleAccount ? (
-            <InfoText>
+            <>
               <Chip label={currentUser.googleEmail} />
-              {t('googleAccountConnected')} <Done />
-            </InfoText>
+              <StyledSettingsAlert>{t('googleAccountConnected')}.</StyledSettingsAlert>
+            </>
           ) : (
-            <ConnectGoogleAccount />
+            <>
+              <StyledSettingsAlert severity='info'>
+                {t('connectYourGoogleAccountSoYouCanSignIn')}.
+              </StyledSettingsAlert>
+              <ConnectGoogleAccount />
+            </>
           )}
         </AccordionDetails>
       </Accordion>

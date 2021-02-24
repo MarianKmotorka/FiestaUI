@@ -17,7 +17,7 @@ export const lightTheme = createMuiTheme({
       main: '#2c2c2c'
     },
     error: {
-      main: red.A400
+      main: red.A700
     },
     themeText: {
       black: '#000000',
@@ -29,9 +29,6 @@ export const lightTheme = createMuiTheme({
     background: {
       default: '#f7f7f7',
       paper: '#ffffff'
-    },
-    bg: {
-      100: '#f7f7f7'
     }
   },
   typography: {
@@ -56,12 +53,9 @@ export const darkTheme = createMuiTheme({
       themeBlack: '#ffffff',
       themeWhite: '#000000'
     },
-    bg: {
-      100: '#2c2c2c'
-    },
     background: {
-      default: '#2c2c2c',
-      paper: '#424242'
+      default: '#242424',
+      paper: '#313131'
     }
   }
 })
@@ -72,9 +66,6 @@ declare module 'styled-components' {
 
 declare module '@material-ui/core/styles/createPalette' {
   interface Palette {
-    bg: {
-      100: string
-    }
     themeText: {
       black: string
       white: string
@@ -85,9 +76,6 @@ declare module '@material-ui/core/styles/createPalette' {
   }
 
   interface PaletteOptions {
-    bg: {
-      100: string
-    }
     themeText: {
       black: string
       white: string

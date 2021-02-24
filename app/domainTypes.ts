@@ -4,7 +4,7 @@ export interface IUser {
   lastName: string
   fullName: string
   email: string
-  pictureUrl: string
+  pictureUrl?: string
   authProvider: AuthProviderFlags
   role: RoleEnum
   googleEmail?: string
