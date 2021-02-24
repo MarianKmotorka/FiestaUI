@@ -5,6 +5,7 @@
   "confirmationEmailWillBeSentTo": "<0>Confirmation email will be sent to <1>{{email}}</1></0>",
   "checkYourEmail": "Check your email",
   "changePassword": "Change password",
+  "delete": "Delete",
   "deleteAccount": "Delete account",
   "editProfile": "Edit profile",
   "emailAddress": "Email address",
@@ -41,6 +42,7 @@
     "minLength": "Min {{minLength}} characters",
     "passwordDoesNotMatch": "Password and repeat password does not match",
     "required": "Required",
-    "invalidPassword": "Invalid password"
+    "invalidPassword": "Invalid password",
+    "thisGoogleAccountIsNotConnected": "Picked Google account is not connected to your account"
   }
 }

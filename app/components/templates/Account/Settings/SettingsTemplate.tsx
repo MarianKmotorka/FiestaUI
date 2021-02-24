@@ -9,6 +9,7 @@ import useWindowSize from '@hooks/useWindowSize'
 import { useAuthorizedUser } from '@contextProviders/AuthProvider'
 import SignInMethodsTab from './Tabs/SignInMethodsTab/SignInMethodsTab'
 import ChangePasswordTab from './Tabs/ChangePasswordTab/ChangePasswordTab'
+import DeleteAccountTab from './Tabs/DeleteAccountTab/DeleteAccountTab'
 import { AccountCircle, DeleteForever, LockOpen, VpnKey } from '@material-ui/icons'
 
 import {
@@ -83,7 +84,7 @@ const SettingsTemplate = () => {
         </StyledPanel>
 
         <StyledPanel index='deleteAccount' value={currTab}>
-          Tab number {currTab + 1}
+          <DeleteAccountTab />
         </StyledPanel>
       </TabPanelContainer>
     </Wrapper>
