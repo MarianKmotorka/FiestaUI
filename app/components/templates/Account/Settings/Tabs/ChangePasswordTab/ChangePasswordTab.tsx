@@ -1,5 +1,7 @@
-import useTranslation from 'next-translate/useTranslation'
 import { useState } from 'react'
+import { ExpandMore } from '@material-ui/icons'
+import useTranslation from 'next-translate/useTranslation'
+import { Accordion, AccordionDetails, AccordionSummary } from '@material-ui/core'
 
 import Button from '@elements/Button/Button'
 import Snackbar from '@elements/Snackbar/Snackbar'
@@ -13,7 +15,8 @@ import {
   createRepeatPasswordValidator
 } from 'utils/validators'
 
-import { FormContent, Wrapper } from './ChangePasswordTab.styled'
+import { AccordionTitle } from '../../SettingsTemplate.styled'
+import { Wrapper } from './ChangePasswordTab.styled'
 
 interface IChangePasswordValues {
   currentPassword: string
@@ -30,6 +33,7 @@ const defaultValues: IChangePasswordValues = {
 const ChangePasswordTab = () => {
   const { t } = useTranslation('common')
   const [success, setSuccess] = useState(false)
+  const [expanded, setExpanded] = useState(true)
   const { currentUser } = useAuthorizedUser()
 
   const handleSubmitted: OnFormSubmit<IChangePasswordValues> = async (
@@ -50,39 +54,47 @@ const ChangePasswordTab = () => {
 
   return (
     <Wrapper>
-      <Form onSubmit={handleSubmitted} defaultValues={defaultValues}>
-        {({ submitting }) => (
-          <FormContent>
-            <FormInput
-              name='currentPassword'
-              label={t('currentPassword')}
-              type='password'
-              validate={requiredValidator}
-            />
+      <Accordion expanded={expanded} onChange={(_, value) => setExpanded(value)}>
+        <AccordionSummary expandIcon={<ExpandMore />}>
+          <AccordionTitle>{t('changePassword')}</AccordionTitle>
+        </AccordionSummary>
 
-            <FormInput
-              name='newPassword'
-              label={t('newPassword')}
-              type='password'
-              validate={combineValidators([requiredValidator, minLengthValidator(6)])}
-            />
+        <AccordionDetails>
+          <Form onSubmit={handleSubmitted} defaultValues={defaultValues}>
+            {({ submitting }) => (
+              <>
+                <FormInput
+                  name='currentPassword'
+                  label={t('currentPassword')}
+                  type='password'
+                  validate={requiredValidator}
+                />
 
-            <FormInput
-              name='repeatPassword'
-              label={t('repeatPassword')}
-              type='password'
-              validate={combineValidators([
-                requiredValidator,
-                createRepeatPasswordValidator('newPassword')
-              ])}
-            />
+                <FormInput
+                  name='newPassword'
+                  label={t('newPassword')}
+                  type='password'
+                  validate={combineValidators([requiredValidator, minLengthValidator(6)])}
+                />
 
-            <Button type='submit' loading={submitting}>
-              {t('changePassword')}
-            </Button>
-          </FormContent>
-        )}
-      </Form>
+                <FormInput
+                  name='repeatPassword'
+                  label={t('repeatPassword')}
+                  type='password'
+                  validate={combineValidators([
+                    requiredValidator,
+                    createRepeatPasswordValidator('newPassword')
+                  ])}
+                />
+
+                <Button variant='outlined' type='submit' loading={submitting}>
+                  {t('changePassword')}
+                </Button>
+              </>
+            )}
+          </Form>
+        </AccordionDetails>
+      </Accordion>
 
       {success && <Snackbar onClose={() => setSuccess(false)} translationKey='success' />}
     </Wrapper>

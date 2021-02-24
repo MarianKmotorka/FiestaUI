@@ -10,23 +10,26 @@ import AddPasswordForm from './AddPasswordForm'
 import ConnectGoogleAccount from './ConnectGoogleAccount'
 import { useAuthorizedUser } from '@contextProviders/AuthProvider'
 
-import { Title, Wrapper } from './SignInMethodsTab.styled'
-import { StyledSettingsAlert } from '../../SettingsTemplate.styled'
+import { Wrapper } from './SignInMethodsTab.styled'
+import { AccordionTitle, StyledSettingsAlert } from '../../SettingsTemplate.styled'
 
 const SignInMethodsTab = () => {
   const { t } = useTranslation('settings')
   const { query } = useRouter()
   const { currentUser } = useAuthorizedUser()
-  const [googleExpanded, setGoogleExpanded] = useState(!!query.code)
+  const [expanded, setExpanded] = useState<string | false>(!!query.code && 'googleSignIn')
 
   const hasPassword = hasAuthProvider(currentUser, AuthProviderFlags.EmailAndPassword)
   const hasGoogleAccount = hasAuthProvider(currentUser, AuthProviderFlags.Google)
 
   return (
     <Wrapper>
-      <Accordion>
+      <Accordion
+        expanded={expanded === 'passwordSignIn'}
+        onChange={(_, value) => setExpanded(value && 'passwordSignIn')}
+      >
         <AccordionSummary expandIcon={<ExpandMore />}>
-          <Title>{t('emailAndPasswordSignIn')}</Title>
+          <AccordionTitle>{t('emailAndPasswordSignIn')}</AccordionTitle>
         </AccordionSummary>
 
         <AccordionDetails>
@@ -43,9 +46,12 @@ const SignInMethodsTab = () => {
         </AccordionDetails>
       </Accordion>
 
-      <Accordion expanded={googleExpanded} onChange={(_, value) => setGoogleExpanded(value)}>
+      <Accordion
+        expanded={expanded === 'googleSignIn'}
+        onChange={(_, value) => setExpanded(value && 'googleSignIn')}
+      >
         <AccordionSummary expandIcon={<ExpandMore />}>
-          <Title>{t('googleAccountSignIn')}</Title>
+          <AccordionTitle>{t('googleAccountSignIn')}</AccordionTitle>
         </AccordionSummary>
 
         <AccordionDetails>

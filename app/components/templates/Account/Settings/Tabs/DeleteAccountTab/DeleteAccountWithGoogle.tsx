@@ -48,7 +48,11 @@ const DeleteAccountWithGoogle = () => {
 
   return (
     <>
-      <Button loading={deleting} onClick={() => window.location.assign(getGoogleRedirectUrl())}>
+      <Button
+        variant='outlined'
+        loading={deleting}
+        onClick={() => window.location.assign(getGoogleRedirectUrl())}
+      >
         {t('deleteWithGoogle')}
       </Button>
 

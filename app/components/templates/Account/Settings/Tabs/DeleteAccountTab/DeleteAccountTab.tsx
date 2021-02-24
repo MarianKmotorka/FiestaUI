@@ -10,23 +10,26 @@ import { useAuthorizedUser } from '@contextProviders/AuthProvider'
 import DeleteWithPassword from './DeleteWithPassword'
 import DeleteAccountWithGoogle from './DeleteAccountWithGoogle'
 
-import { Title, Wrapper } from './DeleteAccountTab.styled'
-import { StyledSettingsAlert } from '../../SettingsTemplate.styled'
+import { Wrapper } from './DeleteAccountTab.styled'
+import { AccordionTitle, StyledSettingsAlert } from '../../SettingsTemplate.styled'
 
 const DeleteAccountTab = () => {
   const { t } = useTranslation('settings')
   const { query } = useRouter()
   const { currentUser } = useAuthorizedUser()
-  const [googleExpanded, setGoogleExpanded] = useState(!!query.code)
+  const [expanded, setExpanded] = useState<string | false>(!!query.code && 'googleDelete')
 
   const hasPassword = hasAuthProvider(currentUser, AuthProviderFlags.EmailAndPassword)
   const hasGoogleAccount = hasAuthProvider(currentUser, AuthProviderFlags.Google)
 
   return (
     <Wrapper>
-      <Accordion>
+      <Accordion
+        expanded={expanded === 'passwordDelete'}
+        onChange={(_, value) => setExpanded(value && 'passwordDelete')}
+      >
         <AccordionSummary expandIcon={<ExpandMore />}>
-          <Title>{t('deleteWithpassword')}</Title>
+          <AccordionTitle>{t('deleteWithpassword')}</AccordionTitle>
         </AccordionSummary>
 
         <AccordionDetails>
@@ -45,9 +48,12 @@ const DeleteAccountTab = () => {
         </AccordionDetails>
       </Accordion>
 
-      <Accordion expanded={googleExpanded} onChange={(_, value) => setGoogleExpanded(value)}>
+      <Accordion
+        expanded={expanded === 'googleDelete'}
+        onChange={(_, value) => setExpanded(value && 'googleDelete')}
+      >
         <AccordionSummary expandIcon={<ExpandMore />}>
-          <Title>{t('deleteWithGoogle')}</Title>
+          <AccordionTitle>{t('deleteWithGoogle')}</AccordionTitle>
         </AccordionSummary>
 
         <AccordionDetails>

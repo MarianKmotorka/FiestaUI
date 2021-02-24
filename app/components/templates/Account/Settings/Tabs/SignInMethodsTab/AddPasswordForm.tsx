@@ -53,7 +53,7 @@ const AddPasswordForm = () => {
             label={t('repeatPassword')}
             validate={createRepeatPasswordValidator('password')}
           />
-          <Button type='submit' loading={submitting}>
+          <Button variant='outlined' type='submit' loading={submitting}>
             {t('add')}
           </Button>
         </>

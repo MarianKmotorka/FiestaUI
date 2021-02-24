@@ -9,4 +9,8 @@ export const StyledTextBox = styled(TextField)`
   .MuiInputBase-input {
     color: ${({ theme }) => theme.themeText.themeBlack};
   }
+
+  .MuiFormLabel-root {
+    font-weight: 300;
+  }
 `

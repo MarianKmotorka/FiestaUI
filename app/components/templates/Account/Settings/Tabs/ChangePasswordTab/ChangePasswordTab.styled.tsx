@@ -1,27 +1,40 @@
 import styled from 'styled-components'
-import { SM } from 'utils/theme'
+import { MD } from 'utils/theme'
 
 export const Wrapper = styled.div`
-  width: 100%;
-  height: 100%;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-`
-
-export const FormContent = styled.div`
-  display: flex;
-  flex-direction: column;
-  max-width: 500px;
-  min-width: 300px;
-  width: 100%;
-
-  > * + * {
-    margin-top: 30px;
+  .MuiAccordionSummary-root svg {
+    color: ${({ theme }) => theme.themeText.themeGray};
   }
 
-  @media screen and (max-width: ${SM}px) {
-    padding: 50px 30px;
+  .MuiAccordionDetails-root {
+    display: block;
+  }
+
+  .MuiAccordion-root {
+    padding: 0 7px 10px;
+  }
+
+  form {
+    display: flex;
+    flex-direction: column;
+    max-width: 350px;
+    width: 100%;
+
+    > * + * {
+      margin-top: 10px;
+    }
+
+    button {
+      width: 150px;
+      margin-top: 20px;
+    }
+  }
+
+  @media screen and (min-width: ${MD}px) {
+    padding-left: 30px;
+  }
+
+  @media screen and (max-width: ${MD}px) {
+    padding: 0;
   }
 `

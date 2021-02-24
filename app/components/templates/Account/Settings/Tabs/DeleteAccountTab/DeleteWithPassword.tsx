@@ -44,7 +44,7 @@ const DeleteWithPassword = () => {
             label={t('password')}
             validate={requiredValidator}
           />
-          <Button type='submit' loading={submitting}>
+          <Button variant='outlined' type='submit' loading={submitting}>
             {t('delete')}
           </Button>
         </>

@@ -48,7 +48,11 @@ const ConnectGoogleAccount = () => {
 
   return (
     <>
-      <Button loading={connecting} onClick={() => window.location.assign(getGoogleRedirectUrl())}>
+      <Button
+        variant='outlined'
+        loading={connecting}
+        onClick={() => window.location.assign(getGoogleRedirectUrl())}
+      >
         {t('connectGoogleAccount')}
       </Button>
 

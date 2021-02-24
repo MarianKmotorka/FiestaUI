@@ -1,5 +1,5 @@
 import styled from 'styled-components'
-import { LG, MD } from 'utils/theme'
+import { MD } from 'utils/theme'
 
 export const Wrapper = styled.div`
   .MuiAccordionSummary-root svg {
@@ -12,6 +12,10 @@ export const Wrapper = styled.div`
 
   .MuiChip-root {
     margin-bottom: 10px;
+  }
+
+  .MuiAccordion-root {
+    padding: 0 7px 10px;
   }
 
   form {
@@ -34,25 +38,7 @@ export const Wrapper = styled.div`
     padding-left: 30px;
   }
 
-  .MuiAccordion-root {
-    padding: 0 7px 10px;
-
-    @media screen and (max-width: ${MD}px) {
-      padding: 0;
-    }
-  }
-`
-
-export const Title = styled.h1`
-  font-weight: 300;
-  color: ${({ theme }) => theme.themeText.themeBlack};
-  font-size: 1.2rem;
-
-  @media screen and (max-width: ${LG}px) {
-    font-size: 1.1rem;
-  }
-
   @media screen and (max-width: ${MD}px) {
-    font-size: 1rem;
+    padding: 0;
   }
 `

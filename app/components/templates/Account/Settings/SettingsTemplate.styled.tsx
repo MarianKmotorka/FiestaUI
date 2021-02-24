@@ -4,7 +4,7 @@ import { Tab } from '@material-ui/core'
 import { PageMinHeightWrapper } from '@elements/PageMinHeightWrapper'
 import TabPanel from '@elements/TabPanel/TabPanel'
 import Alert from '@material-ui/lab/Alert'
-import { MD } from 'utils/theme'
+import { LG, MD } from 'utils/theme'
 import { NAVBAR_HEIGHT } from '@modules/Navbar/Navbar.styled'
 
 export const Wrapper = styled(PageMinHeightWrapper)`
@@ -73,4 +73,18 @@ export const StyledSettingsAlert = styled(Alert)`
   margin-bottom: 10px;
   font-weight: 300;
   font-size: 0.95em;
+`
+
+export const AccordionTitle = styled.h1`
+  font-weight: 300;
+  color: ${({ theme }) => theme.themeText.themeBlack};
+  font-size: 1.2rem;
+
+  @media screen and (max-width: ${LG}px) {
+    font-size: 1.1rem;
+  }
+
+  @media screen and (max-width: ${MD}px) {
+    font-size: 1rem;
+  }
 `
