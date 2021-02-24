@@ -41,6 +41,7 @@ const SettingsTemplate = () => {
           indicatorColor='primary'
           onChange={(_, value) => changeTab(value)}
           orientation={maxMedium ? 'horizontal' : 'vertical'}
+          variant={maxMedium ? 'fullWidth' : 'standard'}
         >
           <StyledTab
             value='editProfile'

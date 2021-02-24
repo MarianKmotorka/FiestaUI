@@ -40,10 +40,6 @@ export const TabsContainer = styled.div`
     .MuiTab-root {
       min-width: 70px;
     }
-
-    .MuiTabs-root {
-      margin: 0 auto;
-    }
   }
 `
 
