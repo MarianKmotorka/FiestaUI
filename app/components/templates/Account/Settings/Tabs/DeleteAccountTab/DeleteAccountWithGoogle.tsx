@@ -34,7 +34,7 @@ const DeleteAccountWithGoogle = () => {
   useEffect(() => {
     const deleteAccount = async () => {
       try {
-        await api.delete(`/auth/delete-account-with-code?code=${query.code}`)
+        await api.delete(`/auth/delete-account-with-google?code=${query.code}`)
         await logout()
       } catch (err) {
         const message = (err as IApiError).response.data.errorMessage
