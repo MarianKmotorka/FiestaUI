@@ -1,7 +1,7 @@
 import { useState } from 'react'
 import { ExpandMore } from '@material-ui/icons'
 import useTranslation from 'next-translate/useTranslation'
-import { Accordion, AccordionDetails, AccordionSummary } from '@material-ui/core'
+import { AccordionDetails, AccordionSummary } from '@material-ui/core'
 
 import Button from '@elements/Button/Button'
 import Snackbar from '@elements/Snackbar/Snackbar'
@@ -17,6 +17,7 @@ import {
 
 import { AccordionTitle } from '../../SettingsTemplate.styled'
 import { Wrapper } from './ChangePasswordTab.styled'
+import { SettingsAccordion } from '../common.styled'
 
 interface IChangePasswordValues {
   currentPassword: string
@@ -54,7 +55,7 @@ const ChangePasswordTab = () => {
 
   return (
     <Wrapper>
-      <Accordion expanded={expanded} onChange={(_, value) => setExpanded(value)}>
+      <SettingsAccordion expanded={expanded} onChange={(_, value) => setExpanded(value)}>
         <AccordionSummary expandIcon={<ExpandMore />}>
           <AccordionTitle>{t('changePassword')}</AccordionTitle>
         </AccordionSummary>
@@ -94,7 +95,7 @@ const ChangePasswordTab = () => {
             )}
           </Form>
         </AccordionDetails>
-      </Accordion>
+      </SettingsAccordion>
 
       {success && <Snackbar onClose={() => setSuccess(false)} translationKey='success' />}
     </Wrapper>

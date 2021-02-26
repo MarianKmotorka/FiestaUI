@@ -2,18 +2,6 @@ import styled from 'styled-components'
 import { MD } from 'utils/theme'
 
 export const Wrapper = styled.div`
-  .MuiAccordionSummary-root svg {
-    color: ${({ theme }) => theme.themeText.themeGray};
-  }
-
-  .MuiAccordionDetails-root {
-    display: block;
-  }
-
-  .MuiAccordion-root {
-    padding: 0 7px 10px;
-  }
-
   form {
     display: flex;
     flex-direction: column;
@@ -26,15 +14,11 @@ export const Wrapper = styled.div`
 
     button {
       width: 150px;
-      margin-top: 20px;
+      margin-top: 30px;
     }
   }
 
   @media screen and (min-width: ${MD}px) {
     padding-left: 30px;
-  }
-
-  @media screen and (max-width: ${MD}px) {
-    padding: 0;
   }
 `

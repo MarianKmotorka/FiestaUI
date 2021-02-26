@@ -2,7 +2,7 @@ import { useState } from 'react'
 import { useRouter } from 'next/router'
 import { ExpandMore } from '@material-ui/icons'
 import useTranslation from 'next-translate/useTranslation'
-import { Accordion, AccordionDetails, AccordionSummary, Chip } from '@material-ui/core'
+import { AccordionDetails, AccordionSummary, Chip } from '@material-ui/core'
 
 import { hasAuthProvider } from 'utils/utils'
 import { AuthProviderFlags } from 'domainTypes'
@@ -12,6 +12,7 @@ import { useAuthorizedUser } from '@contextProviders/AuthProvider'
 
 import { Wrapper } from './SignInMethodsTab.styled'
 import { AccordionTitle, StyledSettingsAlert } from '../../SettingsTemplate.styled'
+import { SettingsAccordion } from '../common.styled'
 
 const SignInMethodsTab = () => {
   const { t } = useTranslation('settings')
@@ -24,7 +25,7 @@ const SignInMethodsTab = () => {
 
   return (
     <Wrapper>
-      <Accordion
+      <SettingsAccordion
         expanded={expanded === 'passwordSignIn'}
         onChange={(_, value) => setExpanded(value && 'passwordSignIn')}
       >
@@ -44,9 +45,9 @@ const SignInMethodsTab = () => {
             </>
           )}
         </AccordionDetails>
-      </Accordion>
+      </SettingsAccordion>
 
-      <Accordion
+      <SettingsAccordion
         expanded={expanded === 'googleSignIn'}
         onChange={(_, value) => setExpanded(value && 'googleSignIn')}
       >
@@ -69,7 +70,7 @@ const SignInMethodsTab = () => {
             </>
           )}
         </AccordionDetails>
-      </Accordion>
+      </SettingsAccordion>
     </Wrapper>
   )
 }

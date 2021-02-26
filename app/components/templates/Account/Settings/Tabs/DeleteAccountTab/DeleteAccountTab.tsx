@@ -2,7 +2,7 @@ import { useState } from 'react'
 import { useRouter } from 'next/router'
 import { ExpandMore } from '@material-ui/icons'
 import useTranslation from 'next-translate/useTranslation'
-import { Accordion, AccordionDetails, AccordionSummary } from '@material-ui/core'
+import { AccordionDetails, AccordionSummary } from '@material-ui/core'
 
 import { hasAuthProvider } from 'utils/utils'
 import { AuthProviderFlags } from 'domainTypes'
@@ -11,6 +11,7 @@ import DeleteWithPassword from './DeleteWithPassword'
 import DeleteAccountWithGoogle from './DeleteAccountWithGoogle'
 
 import { Wrapper } from './DeleteAccountTab.styled'
+import { SettingsAccordion } from '../common.styled'
 import { AccordionTitle, StyledSettingsAlert } from '../../SettingsTemplate.styled'
 
 const DeleteAccountTab = () => {
@@ -24,7 +25,7 @@ const DeleteAccountTab = () => {
 
   return (
     <Wrapper>
-      <Accordion
+      <SettingsAccordion
         expanded={expanded === 'passwordDelete'}
         onChange={(_, value) => setExpanded(value && 'passwordDelete')}
       >
@@ -46,9 +47,9 @@ const DeleteAccountTab = () => {
             </StyledSettingsAlert>
           )}
         </AccordionDetails>
-      </Accordion>
+      </SettingsAccordion>
 
-      <Accordion
+      <SettingsAccordion
         expanded={expanded === 'googleDelete'}
         onChange={(_, value) => setExpanded(value && 'googleDelete')}
       >
@@ -70,7 +71,7 @@ const DeleteAccountTab = () => {
             </StyledSettingsAlert>
           )}
         </AccordionDetails>
-      </Accordion>
+      </SettingsAccordion>
     </Wrapper>
   )
 }
