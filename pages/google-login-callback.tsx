@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react'
+import { ParsedUrlQuery } from 'querystring'
 import useTranslation from 'next-translate/useTranslation'
 import { KeyboardArrowLeft } from '@material-ui/icons'
 import { Card, CardContent } from '@material-ui/core'
@@ -8,7 +9,6 @@ import Head from 'next/head'
 
 import { loginUsingGoogleCode } from 'services/authService'
 import { useAuth } from '@contextProviders/AuthProvider'
-import { getReturnUrlFromQuery } from 'utils/utils'
 import FiestaLogo from '@elements/FiestaLogo'
 import Button from '@elements/Button/Button'
 
@@ -24,6 +24,15 @@ const Overlay = styled.div`
     color: ${({ theme }) => theme.error.main};
   }
 `
+
+const getReturnUrlFromQuery = (query: ParsedUrlQuery) => {
+  try {
+    const returnUrl = JSON.parse(query.state as string).returnUrl
+    if (returnUrl) return returnUrl as string
+  } catch (err) {
+    return undefined
+  }
+}
 
 const GoogleLoginCallback = () => {
   const [error, setError] = useState<string>()

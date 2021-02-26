@@ -1,4 +1,3 @@
-import { ParsedUrlQuery } from 'querystring'
 import { UseFormMethods } from 'react-hook-form'
 import { Translate } from 'next-translate'
 
@@ -7,15 +6,6 @@ import api from '@api/HttpClient'
 import { AuthProviderFlags, IUser } from 'domainTypes'
 
 export const IS_BROWSER = typeof window !== undefined
-
-export const getReturnUrlFromQuery = (query: ParsedUrlQuery) => {
-  try {
-    const returnUrl = JSON.parse(query.state as string).returnUrl
-    if (returnUrl) return returnUrl as string
-  } catch (err) {
-    return undefined
-  }
-}
 
 export interface ISubmitHandlerParameters {
   data: Record<string, any>

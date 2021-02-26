@@ -4,7 +4,6 @@ import useTranslation from 'next-translate/useTranslation'
 
 import Divider from '@elements/Divider'
 import Button from '@elements/Button/Button'
-import { getReturnUrlFromQuery } from 'utils/utils'
 import FormInput from '@elements/HookForm/FormInput'
 import { useAuth } from '@contextProviders/AuthProvider'
 import Form, { OnFormSubmit } from '@elements/HookForm/Form'
@@ -53,7 +52,7 @@ const LoginTemplate = () => {
     }
 
     await fetchUser()
-    router.replace(getReturnUrlFromQuery(router.query) || '/home')
+    router.replace((router.query.redirectedFrom as string) || '/home')
   }
 
   return (
