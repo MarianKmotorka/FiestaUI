@@ -3,10 +3,10 @@ import { useRouter } from 'next/router'
 import useTranslation from 'next-translate/useTranslation'
 
 import Divider from '@elements/Divider'
+import Form, { IFormProps } from '@elements/HookForm/Form'
 import Button from '@elements/Button/Button'
 import FormInput from '@elements/HookForm/FormInput'
 import { useAuth } from '@contextProviders/AuthProvider'
-import Form, { OnFormSubmit } from '@elements/HookForm/Form'
 import { PageMinHeightWrapper } from '@elements/PageMinHeightWrapper'
 import ConfirmEmailDialog from './ConfirmEmailDialog/ConfirmEmailDialog'
 import ForgotPasswordDialog from './ForgotPasswordDialog/ForgotPasswordDialog'
@@ -34,6 +34,7 @@ const LoginTemplate = () => {
   const { t } = useTranslation('common')
   const { fetchUser } = useAuth()
   const router = useRouter()
+  const [submitting, setSubmitting] = useState(false)
   const [emailToConfirm, setEmailToConfirm] = useState<string>()
   const [showResetPasswordDialog, setShowResetPasswordDialog] = useState(false)
 
@@ -42,11 +43,12 @@ const LoginTemplate = () => {
     window.location.assign(url)
   }
 
-  const handleSubmitted: OnFormSubmit<IFormValues> = async (values, _, { setError }) => {
-    setError('email', { message: undefined })
+  const handleSubmit: IFormProps<IFormValues>['onSubmit'] = async (values, { setError }) => {
+    setSubmitting(true)
     const successOrError = await loginWithEmailAndPassword(values)
 
     if (successOrError !== true) {
+      setSubmitting(false)
       if (successOrError === 'emailIsNotVerified') setEmailToConfirm(values.email)
       return setError('email', { message: t(`validator.${successOrError}`) })
     }
@@ -58,26 +60,24 @@ const LoginTemplate = () => {
   return (
     <PageMinHeightWrapper center>
       <StyledCard>
-        <Form onSubmit={handleSubmitted} defaultValues={defaultValues}>
-          {({ submitting }) => (
-            <FormContent>
-              <FormInput
-                name='email'
-                label={t('emailAddress')}
-                validate={combineValidators([requiredValidator, emailValidator])}
-              />
-              <FormInput
-                name='password'
-                label={t('password')}
-                type='password'
-                validate={combineValidators([requiredValidator, minLengthValidator(6)])}
-              />
+        <Form onSubmit={handleSubmit} defaultValues={defaultValues}>
+          <FormContent>
+            <FormInput
+              name='email'
+              label={t('emailAddress')}
+              validate={combineValidators([requiredValidator, emailValidator])}
+            />
+            <FormInput
+              name='password'
+              label={t('password')}
+              type='password'
+              validate={combineValidators([requiredValidator, minLengthValidator(6)])}
+            />
 
-              <Button type='submit' loading={submitting}>
-                {t('login')}
-              </Button>
-            </FormContent>
-          )}
+            <Button type='submit' loading={submitting}>
+              {t('login')}
+            </Button>
+          </FormContent>
         </Form>
 
         <StyledForgotPasswordButton

@@ -3,7 +3,8 @@ import useTranslation from 'next-translate/useTranslation'
 import Button from '@elements/Button/Button'
 import FormInput from '@elements/HookForm/FormInput'
 import { useAuth } from '@contextProviders/AuthProvider'
-import Form, { OnFormSubmit } from '@elements/HookForm/Form'
+import Form from '@elements/HookForm/Form'
+import { useSubmitForm } from '@elements/HookForm/hooks/useSubmitForm'
 import {
   combineValidators,
   createRepeatPasswordValidator,
@@ -25,39 +26,30 @@ const AddPasswordForm = () => {
   const { t } = useTranslation('common')
   const { fetchUser } = useAuth()
 
-  const handleSubmitted: OnFormSubmit<IFormValues> = async ({ password }, submit) => {
-    await submit({
-      data: {
-        password
-      },
-      url: '/auth/add-password',
-      successCallback: fetchUser
-    })
-  }
+  const { onSubmit, submitting } = useSubmitForm<IFormValues>({
+    url: '/auth/add-password',
+    successCallback: fetchUser
+  })
 
   return (
-    <Form defaultValues={defaultValues} onSubmit={handleSubmitted}>
-      {({ submitting }) => (
-        <>
-          <FormInput
-            fullWidth
-            name='password'
-            type='password'
-            label={t('password')}
-            validate={combineValidators([requiredValidator, minLengthValidator(6)])}
-          />
-          <FormInput
-            fullWidth
-            type='password'
-            name='repeatPassword'
-            label={t('repeatPassword')}
-            validate={createRepeatPasswordValidator('password')}
-          />
-          <Button variant='outlined' type='submit' loading={submitting}>
-            {t('add')}
-          </Button>
-        </>
-      )}
+    <Form defaultValues={defaultValues} onSubmit={onSubmit}>
+      <FormInput
+        fullWidth
+        name='password'
+        type='password'
+        label={t('password')}
+        validate={combineValidators([requiredValidator, minLengthValidator(6)])}
+      />
+      <FormInput
+        fullWidth
+        type='password'
+        name='repeatPassword'
+        label={t('repeatPassword')}
+        validate={createRepeatPasswordValidator('password')}
+      />
+      <Button variant='outlined' type='submit' loading={submitting}>
+        {t('add')}
+      </Button>
     </Form>
   )
 }

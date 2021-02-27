@@ -5,13 +5,14 @@ import { CardContent, Modal } from '@material-ui/core'
 import useTranslation from 'next-translate/useTranslation'
 import { ArrowForward, KeyboardArrowRight } from '@material-ui/icons'
 
+import Form from '@elements/HookForm/Form'
 import Button from '@elements/Button/Button'
 import FormInput from '@elements/HookForm/FormInput'
-import Form, { OnFormSubmit } from '@elements/HookForm/Form'
 import { createRepeatPasswordValidator } from 'utils/validators'
 import { PageMinHeightWrapper } from '@elements/PageMinHeightWrapper'
 
 import { StyledCard, SuccessResetDialogCard } from './ResetPasswordTemplate.styled'
+import { useSubmitForm } from '@elements/HookForm/hooks/useSubmitForm'
 
 export interface IFormValues {
   newPassword: string
@@ -24,63 +25,48 @@ const defaultValues: IFormValues = {
 }
 
 const ResetPasswordTemplate = () => {
-  const { t } = useTranslation('common')
   const { query } = useRouter()
+  const { t } = useTranslation('common')
   const [success, setSuccess] = useState(false)
 
-  const handleSubmitted: OnFormSubmit<IFormValues> = async ({ newPassword }, submit) => {
-    await submit({
-      data: {
-        newPassword,
-        email: query.email,
-        token: query.token
-      },
-      url: '/auth/reset-password',
-      successCallback: () => setSuccess(true),
-      errorCallback: err => {
-        if (err.errorDetails.length === 0)
-          alert('Something went wrong: ' + JSON.stringify(err, null, 2))
-      }
-    })
-  }
+  const { onSubmit, submitting } = useSubmitForm<IFormValues>({
+    url: '/auth/reset-password',
+    formatter: ({ newPassword }) => ({ newPassword, email: query.email, token: query.token }),
+    successCallback: () => setSuccess(true),
+    errorCallback: err => {
+      if (err.errorDetails.length === 0)
+        alert('Something went wrong: ' + JSON.stringify(err, null, 2))
+    }
+  })
 
   return (
     <PageMinHeightWrapper center>
       <StyledCard>
         <h1>{t('setUpNewPassword')}</h1>
 
-        <Form defaultValues={defaultValues} onSubmit={handleSubmitted}>
-          {({ submitting }) => (
-            <>
-              <FormInput
-                fullWidth
-                type='password'
-                color='secondary'
-                name='newPassword'
-                variant='outlined'
-                label={t('newPassword')}
-              />
+        <Form defaultValues={defaultValues} onSubmit={onSubmit}>
+          <FormInput
+            fullWidth
+            type='password'
+            color='secondary'
+            name='newPassword'
+            variant='outlined'
+            label={t('newPassword')}
+          />
 
-              <FormInput
-                fullWidth
-                type='password'
-                color='secondary'
-                variant='outlined'
-                name='repeatPassword'
-                label={t('repeatPassword')}
-                validate={createRepeatPasswordValidator('newPassword')}
-              />
+          <FormInput
+            fullWidth
+            type='password'
+            color='secondary'
+            variant='outlined'
+            name='repeatPassword'
+            label={t('repeatPassword')}
+            validate={createRepeatPasswordValidator('newPassword')}
+          />
 
-              <Button
-                size='large'
-                type='submit'
-                loading={submitting}
-                endIcon={<KeyboardArrowRight />}
-              >
-                {t('submit')}
-              </Button>
-            </>
-          )}
+          <Button size='large' type='submit' loading={submitting} endIcon={<KeyboardArrowRight />}>
+            {t('submit')}
+          </Button>
         </Form>
       </StyledCard>
 

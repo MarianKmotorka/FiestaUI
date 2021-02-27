@@ -6,8 +6,9 @@ import { AccordionDetails, AccordionSummary } from '@material-ui/core'
 import Button from '@elements/Button/Button'
 import Snackbar from '@elements/Snackbar/Snackbar'
 import FormInput from '@elements/HookForm/FormInput'
-import Form, { OnFormSubmit } from '@elements/HookForm/Form'
+import Form from '@elements/HookForm/Form'
 import { useAuthorizedUser } from '@contextProviders/AuthProvider'
+import { useSubmitForm } from '@elements/HookForm/hooks/useSubmitForm'
 import {
   requiredValidator,
   combineValidators,
@@ -37,21 +38,15 @@ const ChangePasswordTab = () => {
   const [expanded, setExpanded] = useState(true)
   const { currentUser } = useAuthorizedUser()
 
-  const handleSubmitted: OnFormSubmit<IChangePasswordValues> = async (
-    values,
-    submitHandler,
-    { setError }
-  ) => {
-    await submitHandler({
-      data: { ...values, userId: currentUser.id },
-      url: '/auth/change-password',
-      successCallback: () => setSuccess(true),
-      errorCallback: err => {
-        if (err.errorDetails.length === 0)
-          setError('currentPassword', { message: t(`validator.${err.errorMessage}`) })
-      }
-    })
-  }
+  const { onSubmit, submitting } = useSubmitForm<IChangePasswordValues>({
+    url: '/auth/change-password',
+    formatter: values => ({ ...values, userId: currentUser.id }),
+    successCallback: () => setSuccess(true),
+    errorCallback: (err, { setError }) => {
+      if (err.errorDetails.length === 0)
+        setError('currentPassword', { message: t(`validator.${err.errorMessage}`) })
+    }
+  })
 
   return (
     <Wrapper>
@@ -61,38 +56,34 @@ const ChangePasswordTab = () => {
         </AccordionSummary>
 
         <AccordionDetails>
-          <Form onSubmit={handleSubmitted} defaultValues={defaultValues}>
-            {({ submitting }) => (
-              <>
-                <FormInput
-                  name='currentPassword'
-                  label={t('currentPassword')}
-                  type='password'
-                  validate={requiredValidator}
-                />
+          <Form onSubmit={onSubmit} defaultValues={defaultValues}>
+            <FormInput
+              name='currentPassword'
+              label={t('currentPassword')}
+              type='password'
+              validate={requiredValidator}
+            />
 
-                <FormInput
-                  name='newPassword'
-                  label={t('newPassword')}
-                  type='password'
-                  validate={combineValidators([requiredValidator, minLengthValidator(6)])}
-                />
+            <FormInput
+              name='newPassword'
+              label={t('newPassword')}
+              type='password'
+              validate={combineValidators([requiredValidator, minLengthValidator(6)])}
+            />
 
-                <FormInput
-                  name='repeatPassword'
-                  label={t('repeatPassword')}
-                  type='password'
-                  validate={combineValidators([
-                    requiredValidator,
-                    createRepeatPasswordValidator('newPassword')
-                  ])}
-                />
+            <FormInput
+              name='repeatPassword'
+              label={t('repeatPassword')}
+              type='password'
+              validate={combineValidators([
+                requiredValidator,
+                createRepeatPasswordValidator('newPassword')
+              ])}
+            />
 
-                <Button variant='outlined' type='submit' loading={submitting}>
-                  {t('changePassword')}
-                </Button>
-              </>
-            )}
+            <Button variant='outlined' type='submit' loading={submitting}>
+              {t('changePassword')}
+            </Button>
           </Form>
         </AccordionDetails>
       </SettingsAccordion>
