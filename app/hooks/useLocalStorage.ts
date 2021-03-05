@@ -1,9 +1,9 @@
-import { useEffect, useState } from 'react'
+import { useCallback, useEffect, useState } from 'react'
 
 type ReturnType<T> = [T, (value: T | ((val: T) => T)) => void]
 
 function useLocalStorage<T>(key: string, initialValue: T): ReturnType<T> {
-  const readValue = () => {
+  const readValue = useCallback(() => {
     if (typeof window === 'undefined') {
       return initialValue
     }
@@ -15,7 +15,7 @@ function useLocalStorage<T>(key: string, initialValue: T): ReturnType<T> {
       console.warn(`Error reading localStorage key “${key}”:`, error)
       return initialValue
     }
-  }
+  }, [initialValue, key])
 
   const [storedValue, setStoredValue] = useState<T>(readValue)
 
@@ -38,7 +38,7 @@ function useLocalStorage<T>(key: string, initialValue: T): ReturnType<T> {
 
   useEffect(() => {
     setStoredValue(readValue())
-  }, [])
+  }, [readValue])
 
   useEffect(() => {
     const handleStorageChange = () => {
@@ -50,7 +50,7 @@ function useLocalStorage<T>(key: string, initialValue: T): ReturnType<T> {
       window.removeEventListener('storage', handleStorageChange)
       window.removeEventListener('local-storage', handleStorageChange)
     }
-  }, [])
+  }, [readValue])
 
   return [storedValue, setValue]
 }

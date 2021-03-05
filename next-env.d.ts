@@ -6,5 +6,7 @@ declare namespace NodeJS {
     NEXT_PUBLIC_API_BASE_URL: string
     NEXT_PUBLIC_CLOUDINARY_API_KEY: string
     NEXT_PUBLIC_USE_PROXY: 'true' | 'false'
+    NEXT_PUBLIC_GOOGLE_MAPS_API_KEY: string
+    NEXT_PUBLIC_GOOGLE_GEOCODE_API_KEY: string
   }
 }

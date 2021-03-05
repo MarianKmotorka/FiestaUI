@@ -44,7 +44,7 @@ const ConnectGoogleAccount = () => {
     }
 
     query.code && connect()
-  }, [query.code])
+  }, [query.code, fetchUser])
 
   return (
     <>

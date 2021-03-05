@@ -50,7 +50,7 @@ const GoogleLoginCallback = () => {
     }
 
     query.code && sendCodeToServer()
-  }, [query])
+  }, [query, fetchUser, replace])
 
   return (
     <Overlay>

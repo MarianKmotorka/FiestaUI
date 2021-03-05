@@ -23,7 +23,7 @@ const SignupSuccessDialog = ({ email }: ISignupSuccessDialogProps) => {
           <Trans
             i18nKey='common:confirmationEmailWillBeSentTo'
             values={{ email }}
-            components={[<p />, <b />]}
+            components={[<p key='0' />, <b key='1' />]}
           />
 
           <Link href='/login'>

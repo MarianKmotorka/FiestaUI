@@ -44,7 +44,7 @@ const DeleteAccountWithGoogle = () => {
     }
 
     query.code && deleteAccount()
-  }, [query.code])
+  }, [query.code, logout])
 
   return (
     <>

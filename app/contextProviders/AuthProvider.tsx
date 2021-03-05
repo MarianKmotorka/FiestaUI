@@ -60,7 +60,7 @@ const AuthProvider: FC = ({ children }) => {
     }
 
     initialLoad()
-  }, [])
+  }, [fetchUser])
 
   const logout = useCallback(async () => {
     await authService.logout()

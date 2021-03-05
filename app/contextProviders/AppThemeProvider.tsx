@@ -34,7 +34,8 @@ const AppThemeProvider: FC = ({ children }) => {
 
   const switchTheme = useCallback(() => {
     setThemeType(prev => (prev === 'light' ? 'dark' : 'light'))
-  }, [themeType])
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [themeType]) // TODO: check this problem
 
   const theme = themeType === 'light' ? lightTheme : darkTheme
   const value: IAppThemeContextValue = { theme, switchTheme, isDark: themeType === 'dark' }
