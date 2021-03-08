@@ -1,6 +1,7 @@
 import { TextField } from '@material-ui/core'
 import { LocationOn } from '@material-ui/icons'
 import { Autocomplete } from '@material-ui/lab'
+import useTranslation from 'next-translate/useTranslation'
 import usePlacesAutocomplete, { getDetails } from 'use-places-autocomplete'
 import { getLocation, IGoogleMapLocation } from 'utils/googleUtils'
 import { Wrapper, OptionText, Option } from './Search.styled'
@@ -10,6 +11,7 @@ interface IProps {
 }
 
 const Search = ({ onSelected }: IProps) => {
+  const { t } = useTranslation('common')
   const {
     ready,
     value,
@@ -55,7 +57,7 @@ const Search = ({ onSelected }: IProps) => {
             value={value}
             variant='outlined'
             color='secondary'
-            placeholder='Search...'
+            placeholder={`${t('search')}...`}
           />
         )}
       />
