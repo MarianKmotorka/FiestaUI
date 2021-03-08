@@ -4,10 +4,11 @@ import { UseFormMethods } from 'react-hook-form'
 import useTranslation from 'next-translate/useTranslation'
 import api from '@api/HttpClient'
 
+export type SubmitFormatter<T> = (values: T, form: UseFormMethods<T>) => Record<string, any>
 interface ISubmitFormParameters<T> {
   url: string
   method?: 'post' | 'patch' | 'put' | 'delete'
-  formatter?: (values: T, form: UseFormMethods<T>) => Record<string, any>
+  formatter?: SubmitFormatter<T>
   successCallback?: <TResponse>(data: TResponse, form: UseFormMethods<T>) => void
   errorCallback?: (error: IApiError['response']['data'], form: UseFormMethods<T>) => void
 }

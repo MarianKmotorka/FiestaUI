@@ -3,10 +3,11 @@ import styled from 'styled-components'
 export const Wrapper = styled.div`
   .MuiAutocomplete-root {
     position: absolute;
-    top: 30px;
-    left: 30px;
+    top: 0px;
+    left: 0px;
     z-index: 2;
-    width: 300px;
+    max-width: 300px;
+    width: 100%;
 
     .MuiInputBase-root {
       background-color: ${({ theme }) => theme.background.default};

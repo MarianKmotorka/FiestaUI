@@ -4,11 +4,12 @@ import { StyledSnackBar } from './Snackbar.styled'
 
 interface ISuccessSnackbarProps {
   onClose: () => void
-  translationKey: string
+  translationKey?: string
+  text?: string
   severity?: AlertProps['severity']
 }
 
-const Snackbar = ({ severity, translationKey, onClose }: ISuccessSnackbarProps) => {
+const Snackbar = ({ severity, translationKey, text, onClose }: ISuccessSnackbarProps) => {
   const { t } = useTranslation('common')
 
   return (
@@ -19,7 +20,7 @@ const Snackbar = ({ severity, translationKey, onClose }: ISuccessSnackbarProps) 
       anchorOrigin={{ horizontal: 'center', vertical: 'bottom' }}
     >
       <Alert onClose={onClose} severity={severity || 'success'} variant='outlined' elevation={10}>
-        {t(translationKey)}
+        {translationKey ? t(translationKey) : text}
       </Alert>
     </StyledSnackBar>
   )

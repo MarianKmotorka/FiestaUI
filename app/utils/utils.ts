@@ -49,3 +49,13 @@ export const createSubmitHandler = ({ setError }: UseFormMethods<any>, t: Transl
 export const hasAuthProvider = ({ authProvider }: IUser, flag: AuthProviderFlags) => {
   return (authProvider & flag) === flag
 }
+
+export const stringIsNumber = (value: any) => {
+  return isNaN(Number(value)) === false
+}
+
+export const enumToKeyValueArray = (_enum: any) => {
+  return Object.keys(_enum)
+    .filter(x => !stringIsNumber(x))
+    .map(key => ({ key, value: _enum[key] }))
+}

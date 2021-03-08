@@ -21,7 +21,7 @@
     "body": [
       "import styled from 'styled-components'",
       "",
-      "export const ${1:Wrapper} = styled.${2:div}",
+      "export const ${1:Wrapper} = styled.${2:div}``",
       "${3}",
       ""
     ],

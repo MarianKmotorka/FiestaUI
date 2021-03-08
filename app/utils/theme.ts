@@ -5,7 +5,8 @@ import red from '@material-ui/core/colors/red'
 export const SM = 400
 export const MD = 700
 export const LG = 900
-export const XLG = 1024
+export const XL = 1024
+export const XXL = 1320
 
 export const lightTheme = createMuiTheme({
   palette: {
@@ -36,6 +37,9 @@ export const lightTheme = createMuiTheme({
       textTransform: 'none',
       fontWeight: 400
     }
+  },
+  breakpoints: {
+    values: { sm: MD, lg: XL, md: LG, xl: XXL, xs: SM }
   }
 })
 

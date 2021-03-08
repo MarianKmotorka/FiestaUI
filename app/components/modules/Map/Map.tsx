@@ -1,36 +1,61 @@
-import { useMemo } from 'react'
+import { useCallback, useMemo, useRef, useState } from 'react'
 import { LatLon } from 'use-places-autocomplete'
 import { GoogleMap, useLoadScript, Marker } from '@react-google-maps/api'
 import { Libraries } from '@react-google-maps/api/dist/utils/make-load-script-url'
 
 import Search from './Search/Search'
-import { IGoogleMapLocation } from 'utils/googleUtils'
+import { getLocation, IGoogleMapLocation } from 'utils/googleUtils'
 import { lightMapStyle, darkMapStyle } from './mapStyles'
 import { useAppTheme } from '@contextProviders/AppThemeProvider'
 
 import { Wrapper } from './Map.styled'
 
 const libraries: Libraries = ['places']
+const defaultCenter = { lat: 48, lng: 12 }
+
 interface IMapProps {
-  latLng?: LatLon
-  center: LatLon
-  onLoad: (map: any) => void
-  onClick: (latlng: LatLon) => Promise<void>
-  onSearch: (location: IGoogleMapLocation) => void
+  value?: IGoogleMapLocation
+  onChange: (address: IGoogleMapLocation) => void
 }
 
-const Map = ({ latLng, center, onClick, onLoad, onSearch }: IMapProps) => {
+const Map = ({ value, onChange }: IMapProps) => {
   const { isDark } = useAppTheme()
+  const mapRef = useRef<any>()
+  const initialValue = useRef(value)
+  const [, setFetching] = useState(false) // TODO: use to indicate loading
+  const [markerPosition, setMarkerPosition] = useState(initialValue.current?.latLng)
   const { isLoaded, loadError } = useLoadScript({
     googleMapsApiKey: process.env.NEXT_PUBLIC_GOOGLE_MAPS_API_KEY,
     libraries
   })
 
+  const handleMapLoaded = useCallback(map => (mapRef.current = map), [])
+
+  const handleMapClicked = useCallback(
+    async (latLng: LatLon) => {
+      setMarkerPosition(latLng)
+      setFetching(true)
+      onChange(await getLocation(latLng))
+      setFetching(false)
+    },
+    [onChange]
+  )
+
+  const handleSearch = useCallback(
+    (location: IGoogleMapLocation) => {
+      mapRef.current.panTo(location.latLng)
+      mapRef.current.setZoom(14)
+      onChange(location)
+      setMarkerPosition(location.latLng)
+    },
+    [onChange]
+  )
+
   const mapOptions = useMemo(
     () => ({
       styles: isDark ? darkMapStyle : lightMapStyle,
       disableDefaultUI: true,
-      zoomControl: true
+      fullscreenControl: true
     }),
     [isDark]
   )
@@ -40,17 +65,19 @@ const Map = ({ latLng, center, onClick, onLoad, onSearch }: IMapProps) => {
 
   return (
     <Wrapper>
-      <Search onSelected={onSearch} />
+      <Search onSelected={handleSearch} />
 
       <GoogleMap
         id='googleMap'
         options={mapOptions}
-        center={center}
+        center={initialValue.current?.latLng || defaultCenter}
         zoom={4}
-        onClick={({ latLng }) => onClick({ lat: latLng.lat(), lng: latLng.lng() })}
-        onLoad={onLoad}
+        onClick={async ({ latLng }) =>
+          await handleMapClicked({ lat: latLng.lat(), lng: latLng.lng() })
+        }
+        onLoad={handleMapLoaded}
       >
-        {latLng && <Marker position={latLng} />}
+        {markerPosition && <Marker position={markerPosition} />}
       </GoogleMap>
     </Wrapper>
   )

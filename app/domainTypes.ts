@@ -21,3 +21,9 @@ export enum RoleEnum {
   PremiumUser = 2,
   Admin = 3
 }
+
+export enum AccessibilityTypeEnum {
+  Public = 0,
+  Private = 1,
+  FriendsOnly = 2
+}

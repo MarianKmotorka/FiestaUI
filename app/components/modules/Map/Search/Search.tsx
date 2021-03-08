@@ -41,6 +41,7 @@ const Search = ({ onSelected }: IProps) => {
         loading={loading}
         disabled={!ready}
         getOptionLabel={x => x.description}
+        getOptionSelected={(option, curr) => option.description === curr.description}
         renderOption={option => (
           <Option>
             <LocationOn />
@@ -54,6 +55,7 @@ const Search = ({ onSelected }: IProps) => {
             value={value}
             variant='outlined'
             color='secondary'
+            placeholder='Search...'
           />
         )}
       />

@@ -28,6 +28,10 @@ export const minLengthValidator = (minLength: number): Validator => (value: stri
   if (value) return value.length < minLength ? t('validator.minLength', { minLength }) : undefined
 }
 
+export const maxLengthValidator = (maxLength: number): Validator => (value: string, t) => {
+  if (value) return value.length > maxLength ? t('validator.maxLength', { maxLength }) : undefined
+}
+
 export const createRepeatPasswordValidator = (otherPasswordFieldName: string): Validator => (
   repeatPassword: string,
   t,
@@ -35,4 +39,12 @@ export const createRepeatPasswordValidator = (otherPasswordFieldName: string): V
 ) => {
   const otherPassword = getValues()[otherPasswordFieldName]
   return repeatPassword !== otherPassword ? t('validator.passwordDoesNotMatch') : undefined
+}
+
+export const minNumericValue = (min: number): Validator => (value: number, t) => {
+  if (value) return value < min ? t('validator.min', { min }) : undefined
+}
+
+export const maxNumericValue = (max: number): Validator => (value: number, t) => {
+  if (value) return value > max ? t('validator.min', { max }) : undefined
 }

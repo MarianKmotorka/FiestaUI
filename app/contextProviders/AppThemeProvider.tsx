@@ -1,17 +1,22 @@
 import { createContext, FC, useCallback, useContext, useEffect, useState } from 'react'
-import styled, { ThemeProvider as StyledThemeProvider } from 'styled-components'
+import { ThemeProvider as StyledThemeProvider, createGlobalStyle } from 'styled-components'
 import {
   CssBaseline,
   StylesProvider,
   Theme,
   ThemeProvider as MuiThemeProvider
 } from '@material-ui/core'
-import { lightTheme, darkTheme } from 'utils/theme'
-import useLocalStorage from '@hooks/useLocalStorage'
 
-const Hidden = styled.div`
-  visibility: hidden;
+import useLocalStorage from '@hooks/useLocalStorage'
+import Hidden from '@elements/Hidden'
+import { lightTheme, darkTheme } from 'utils/theme'
+
+const GlobalStyles = createGlobalStyle`
+.MuiMenuItem-root{
+  color:${({ theme }) => theme.themeText.themeBlack};
+}
 `
+
 interface IAppThemeContextValue {
   switchTheme: () => void
   theme: Theme
@@ -46,6 +51,7 @@ const AppThemeProvider: FC = ({ children }) => {
         <StyledThemeProvider theme={theme.palette}>
           <AppThemeContext.Provider value={value}>
             <CssBaseline />
+            <GlobalStyles />
 
             {children}
           </AppThemeContext.Provider>
@@ -54,7 +60,7 @@ const AppThemeProvider: FC = ({ children }) => {
     </StylesProvider>
   )
 
-  return isMounted ? body : <Hidden>{body}</Hidden> // This can cause problems
+  return isMounted ? body : <Hidden hidden>{body}</Hidden> // This can cause problems
 }
 
 export default AppThemeProvider
