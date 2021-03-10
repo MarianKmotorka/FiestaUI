@@ -1,6 +1,5 @@
 import { Button as MuiButton, ButtonProps } from '@material-ui/core'
-import { Spinner } from './Button.styled'
-import { faCompactDisc } from '@fortawesome/free-solid-svg-icons'
+import Spinner from '@elements/Spinner'
 
 interface IButtonProps extends ButtonProps {
   loading?: boolean
@@ -14,7 +13,7 @@ const Button = ({ loading, children, variant, color, disabled, ...rest }: IButto
       color={color || 'primary'}
       disabled={disabled || loading}
     >
-      {loading ? <Spinner spin icon={faCompactDisc} /> : children}
+      {loading ? <Spinner /> : children}
     </MuiButton>
   )
 }

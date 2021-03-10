@@ -59,7 +59,7 @@ export const darkTheme = createMuiTheme({
     },
     background: {
       default: '#242424',
-      paper: '#313131'
+      paper: '#2f2f2f'
     }
   }
 })

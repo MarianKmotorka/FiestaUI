@@ -27,6 +27,7 @@
   "maxNumberOfPeople": "Maximum number of people",
   "name": "Name",
   "next": "Next",
+  "nothingFound": "Nothing found",
   "newPassword": "New password",
   "password": "Password",
   "provideEventInfo": "Provide event info",
