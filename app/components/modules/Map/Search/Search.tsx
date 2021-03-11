@@ -2,35 +2,29 @@ import { TextField } from '@material-ui/core'
 import { LocationOn } from '@material-ui/icons'
 import { Autocomplete } from '@material-ui/lab'
 import useTranslation from 'next-translate/useTranslation'
-import usePlacesAutocomplete, { getDetails } from 'use-places-autocomplete'
+import { getDetails, Suggestions } from 'use-places-autocomplete'
 
 import { getLocation, IGoogleMapLocation } from 'utils/googleUtils'
 import { Wrapper, OptionText, Option } from './Search.styled'
 
 interface IProps {
-  onSelected: (location: IGoogleMapLocation) => void
+  value: string
+  suggestions: Suggestions
+  onChange: (location: IGoogleMapLocation) => void
+  setValue: (value: string, shouldFetch?: boolean) => void
 }
 
-const Search = ({ onSelected }: IProps) => {
+const Search = ({ value, suggestions: { loading, data, status }, setValue, onChange }: IProps) => {
   const { t } = useTranslation('common')
-  const {
-    ready,
-    value,
-    suggestions: { loading, status, data },
-    setValue,
-    clearSuggestions
-  } = usePlacesAutocomplete()
 
   const handleSelected = async (value: any) => {
     if (!value) return
-    setValue(value.description)
-    clearSuggestions()
 
     try {
       const { geometry } = await getDetails({ placeId: value.place_id })
       const { lat, lng } = geometry.location
       const location = await getLocation({ lat: lat(), lng: lng() })
-      onSelected(location)
+      onChange(location)
     } catch (error) {
       console.log('Error: ', error)
     }
@@ -40,7 +34,6 @@ const Search = ({ onSelected }: IProps) => {
     <Wrapper>
       <Autocomplete
         loading={loading}
-        disabled={!ready}
         getOptionLabel={x => x.description}
         options={status === 'OK' ? data : []}
         onChange={(_, value) => handleSelected(value)}
@@ -55,7 +48,7 @@ const Search = ({ onSelected }: IProps) => {
           <TextField
             {...props}
             onChange={e => setValue(e.target.value)}
-            value={value}
+            value={value} // this value is not reflected when set using "setValue()" prop, autocomplete replacement needed
             variant='outlined'
             color='secondary'
             placeholder={`${t('search')}...`}
