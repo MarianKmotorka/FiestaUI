@@ -28,6 +28,7 @@ const SearchableDropdown = <
   icon,
   error,
   maxHeight,
+  disabled,
   onChange,
   optionRenderer,
   keyProp = 'id',
@@ -40,8 +41,15 @@ const SearchableDropdown = <
   const [fetching, setFetching] = useState(false)
   const [search, setSearch] = useState<string | undefined>(value?.[valueProp])
   const debouncedSearch = useDebounce(search, isArray(initialOptions) ? 0 : 500)
+
+  const toggleExpanded = (expanded?: boolean) => {
+    if (disabled) return
+    if (expanded !== undefined) setExpanded(expanded)
+    else setExpanded(x => !x)
+  }
+
   const wrapperRef = useOnClickOutside<HTMLDivElement>(() => {
-    setExpanded(false)
+    toggleExpanded(false)
     setSearch(value?.[valueProp])
   })
 
@@ -84,6 +92,7 @@ const SearchableDropdown = <
   }
 
   const handleClear = () => {
+    if (disabled) return
     onChange(undefined)
     setSearch('')
   }
@@ -94,11 +103,12 @@ const SearchableDropdown = <
         variant='outlined'
         color='secondary'
         {...rest}
-        error={expanded ? undefined : error}
+        fullWidth
+        disabled={disabled}
         value={search || ''}
         onChange={setSearch}
         onFocus={() => setExpanded(true)}
-        fullWidth
+        error={expanded ? undefined : error}
         InputProps={{
           startAdornment: icon ? <StartIconWrapper>{icon}</StartIconWrapper> : undefined,
           endAdornment: (
@@ -106,9 +116,9 @@ const SearchableDropdown = <
               {search && <Clear fontSize='small' id='clear-icon' onClick={handleClear} />}
 
               {expanded ? (
-                <ExpandLess onClick={() => setExpanded(false)} />
+                <ExpandLess onClick={() => toggleExpanded()} />
               ) : (
-                <ExpandMore onClick={() => setExpanded(true)} />
+                <ExpandMore onClick={() => toggleExpanded()} />
               )}
             </ClearAndExpandIcons>
           )

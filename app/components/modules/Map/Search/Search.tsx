@@ -3,11 +3,12 @@ import { LocationOn } from '@material-ui/icons'
 import { Autocomplete } from '@material-ui/lab'
 import useTranslation from 'next-translate/useTranslation'
 import usePlacesAutocomplete, { getDetails } from 'use-places-autocomplete'
+
 import { getLocation, IGoogleMapLocation } from 'utils/googleUtils'
 import { Wrapper, OptionText, Option } from './Search.styled'
 
 interface IProps {
-  onSelected: (address: IGoogleMapLocation) => void
+  onSelected: (location: IGoogleMapLocation) => void
 }
 
 const Search = ({ onSelected }: IProps) => {
@@ -20,16 +21,16 @@ const Search = ({ onSelected }: IProps) => {
     clearSuggestions
   } = usePlacesAutocomplete()
 
-  const handleSelect = async (value: any) => {
+  const handleSelected = async (value: any) => {
     if (!value) return
-    setValue(value.description, false)
+    setValue(value.description)
     clearSuggestions()
 
     try {
       const { geometry } = await getDetails({ placeId: value.place_id })
       const { lat, lng } = geometry.location
-      const address = await getLocation({ lat: lat(), lng: lng() })
-      onSelected(address)
+      const location = await getLocation({ lat: lat(), lng: lng() })
+      onSelected(location)
     } catch (error) {
       console.log('Error: ', error)
     }
@@ -38,12 +39,12 @@ const Search = ({ onSelected }: IProps) => {
   return (
     <Wrapper>
       <Autocomplete
-        options={status === 'OK' ? data : []}
-        onChange={(_, value) => handleSelect(value)}
         loading={loading}
         disabled={!ready}
         getOptionLabel={x => x.description}
-        getOptionSelected={(option, curr) => option.description === curr.description}
+        options={status === 'OK' ? data : []}
+        onChange={(_, value) => handleSelected(value)}
+        getOptionSelected={(option, curr) => option.place_id === curr.place_id}
         renderOption={option => (
           <Option>
             <LocationOn />
@@ -60,6 +61,8 @@ const Search = ({ onSelected }: IProps) => {
             placeholder={`${t('search')}...`}
           />
         )}
+        loadingText={<OptionText>{t('loading')}...</OptionText>}
+        noOptionsText={<OptionText>{t('nothingFound')}</OptionText>}
       />
     </Wrapper>
   )

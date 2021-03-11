@@ -33,7 +33,6 @@ export const Expander = styled(Card)<{ maxHeight?: string }>`
   left: 0;
   width: 100%;
   padding: 10px 0;
-  z-index: 5;
   overflow: auto;
   max-height: ${({ maxHeight }) => maxHeight || '350px'};
 `

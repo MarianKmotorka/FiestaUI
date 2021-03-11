@@ -15,6 +15,7 @@ export interface ISearchableDropdownProps<TValue, TFormatted> {
   label?: string
   error?: string
   icon?: ReactNode
+  disabled?: boolean
   variant?: TextBoxProps['variant']
   maxHeight?: string
   className?: string

@@ -50,12 +50,12 @@ export const hasAuthProvider = ({ authProvider }: IUser, flag: AuthProviderFlags
   return (authProvider & flag) === flag
 }
 
-export const stringIsNumber = (value: any) => {
+export const isStringNumber = (value: any) => {
   return isNaN(Number(value)) === false
 }
 
 export const enumToKeyValueArray = (_enum: any) => {
   return Object.keys(_enum)
-    .filter(x => !stringIsNumber(x))
+    .filter(x => !isStringNumber(x))
     .map(key => ({ key, value: _enum[key] }))
 }

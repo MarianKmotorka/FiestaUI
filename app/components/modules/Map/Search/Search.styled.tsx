@@ -3,15 +3,18 @@ import styled from 'styled-components'
 export const Wrapper = styled.div`
   .MuiAutocomplete-root {
     position: absolute;
-    top: 0px;
-    left: 0px;
+    top: 10px;
+    left: 50%;
+    transform: translateX(-50%);
     z-index: 2;
-    max-width: 300px;
-    width: 100%;
+    max-width: 500px;
+    width: 95%;
 
     .MuiInputBase-root {
-      background-color: ${({ theme }) => theme.background.default};
+      background-color: ${({ theme }) => theme.background.default + 'dd'};
       color: ${({ theme }) => theme.themeText.themeBlack};
+      border-radius: 100vh;
+      padding-left: 15px;
 
       svg {
         color: ${({ theme }) => theme.themeText.themeGray};
