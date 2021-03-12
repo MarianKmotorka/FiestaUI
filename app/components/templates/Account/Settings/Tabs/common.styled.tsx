@@ -11,6 +11,7 @@ export const SettingsAccordion = styled(Accordion)`
     display: block;
   }
 
+  box-shadow: none;
   padding: 0 7px 10px;
 
   @media screen and (max-width: ${MD}px) {
