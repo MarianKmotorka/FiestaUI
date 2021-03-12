@@ -1,5 +1,6 @@
 import { DateTimePickerProps as MuiDateTimePickerProps } from '@material-ui/pickers'
-import { StyledPicker } from './DateTimePicker.styled'
+import useTranslation from 'next-translate/useTranslation'
+import { PickerGlobalStyle, StyledPicker } from './DateTimePicker.styled'
 
 export type DateTimePickerProps = MuiDateTimePickerProps & {
   name?: string
@@ -11,16 +12,24 @@ export type DateTimePickerProps = MuiDateTimePickerProps & {
 }
 
 const DateTimePicker = ({ name, label, value, error, onChange, ...rest }: DateTimePickerProps) => {
+  const { t } = useTranslation('common')
+
   return (
-    <StyledPicker
-      {...rest}
-      name={name}
-      label={label}
-      value={value || null}
-      onChange={x => onChange(x?.toDate())}
-      error={!!error}
-      helperText={error}
-    />
+    <>
+      <PickerGlobalStyle />
+
+      <StyledPicker
+        {...rest}
+        name={name}
+        label={label}
+        value={value || null}
+        onChange={x => onChange(x?.toDate())}
+        error={!!error}
+        helperText={error}
+        clearLabel={t('clear')}
+        cancelLabel={t('cancel')}
+      />
+    </>
   )
 }
 
