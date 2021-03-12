@@ -5,30 +5,18 @@ import api from '../app/api/HttpClient'
 import { Button, Input } from '@material-ui/core'
 import { ChangeEvent, useState } from 'react'
 
-const url = `https://api.cloudinary.com/v1_1/fiestaplanner/image/upload`
-
 const Page1 = () => {
   const { t } = useT('about')
   const [img, setImg] = useState<File>()
 
   const uploadImage = async () => {
-    const response = await api.get('/auth/cloudinary-signature')
+    const formData = new FormData()
+    formData.append('profilePicture', img as Blob)
+
+    const response = await api.put('/users/me', formData)
     if (response.status >= 300) return
 
-    const { timestamp, signature } = response.data
-
-    const formData = new FormData()
-    formData.append('file', img as Blob)
-    formData.append('signature', signature)
-    formData.append('timestamp', timestamp)
-    formData.append('api_key', process.env.NEXT_PUBLIC_CLOUDINARY_API_KEY)
-
-    const res = await fetch(url, {
-      method: 'post',
-      body: formData
-    })
-
-    const data = await res.json()
+    const data = await response.data.json()
     console.log(data)
   }
 
