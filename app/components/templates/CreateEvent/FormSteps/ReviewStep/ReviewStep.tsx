@@ -7,10 +7,10 @@ import { Box, Card, CardContent, Grid, IconButton } from '@material-ui/core'
 import Button from '@elements/Button/Button'
 import { AccessibilityTypeEnum } from 'domainTypes'
 import KeyValueRow from '@elements/KeyValueRow/KeyValueRow'
+import { redirectToStepByErrorFieldName } from '../../utils'
 import { ICreateEventFormValues } from '@templates/CreateEvent/CreateEventTemplate'
 
 import { Title, Wrapper } from './ReviewStep.styled'
-import { redirectToStepByErrorFieldName } from '../utils'
 
 interface IReviewStepProps {
   submitting: boolean

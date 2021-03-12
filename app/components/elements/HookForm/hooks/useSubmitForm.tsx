@@ -8,6 +8,7 @@ export type SubmitFormatter<T> = (values: T, form: UseFormMethods<T>) => Record<
 interface ISubmitFormParameters<T> {
   url: string
   method?: 'post' | 'patch' | 'put' | 'delete'
+  canSubmit?: boolean
   formatter?: SubmitFormatter<T>
   successCallback?: <TResponse>(data: TResponse, form: UseFormMethods<T>) => void
   errorCallback?: (error: IApiError['response']['data'], form: UseFormMethods<T>) => void
@@ -18,7 +19,16 @@ export function useSubmitForm<T>(params: ISubmitFormParameters<T>) {
   const [submitting, setSubmitting] = useState(false)
 
   const onSubmit = async (values: T, form: UseFormMethods<T>) => {
-    const { url, method = 'post', formatter = (x: T) => x, successCallback, errorCallback } = params
+    const {
+      url,
+      canSubmit,
+      method = 'post',
+      formatter = (x: T) => x,
+      successCallback,
+      errorCallback
+    } = params
+
+    if (canSubmit === false) return
 
     setSubmitting(true)
     const data = formatter(values, form)

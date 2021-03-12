@@ -5,7 +5,7 @@ import useTranslation from 'next-translate/useTranslation'
 import { KeyboardArrowLeft, KeyboardArrowRight } from '@material-ui/icons'
 
 import Button from '@elements/Button/Button'
-import { locationValidator } from '../utils'
+import { locationValidator } from '../../utils'
 import LocationModal from './LocationModal/LocationModal'
 import FormGoogleMap from '@elements/HookForm/FormGoogleMap'
 

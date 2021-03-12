@@ -5,7 +5,7 @@ import { Box, MenuItem } from '@material-ui/core'
 import useTranslation from 'next-translate/useTranslation'
 import { Group, KeyboardArrowRight, Lock, Public } from '@material-ui/icons'
 
-import { endDateValidator } from '../utils'
+import { endDateValidator } from '../../utils'
 import Button from '@elements/Button/Button'
 import { enumToKeyValueArray } from 'utils/utils'
 import { AccessibilityTypeEnum } from 'domainTypes'

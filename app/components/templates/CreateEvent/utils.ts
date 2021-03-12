@@ -2,8 +2,8 @@ import { SubmitFormatter } from '@elements/HookForm/hooks/useSubmitForm'
 import { omit } from 'lodash'
 import { Validator } from 'types'
 import { IGoogleMapLocation } from 'utils/googleUtils'
-import { ICreateEventFormValues } from '../CreateEventTemplate'
-import { eventInfoFormFields } from './EventInfoStep/EventInfoStep'
+import { ICreateEventFormValues } from './CreateEventTemplate'
+import { eventInfoFormFields } from './FormSteps/EventInfoStep/EventInfoStep'
 
 export const locationValidator: Validator<ICreateEventFormValues, IGoogleMapLocation> = (
   value,

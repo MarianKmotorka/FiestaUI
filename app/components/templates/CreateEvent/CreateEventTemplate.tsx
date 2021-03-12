@@ -10,7 +10,7 @@ import {
   stepIndexes,
   stepTitles,
   submitFormatter
-} from './FormSteps/utils'
+} from './utils'
 import Hidden from '@elements/Hidden'
 import Form from '@elements/HookForm/Form'
 import { AccessibilityTypeEnum } from 'domainTypes'
@@ -55,6 +55,7 @@ const CreateEvent = () => {
 
   const { onSubmit, submitting } = useSubmitForm<ICreateEventFormValues>({
     url: '/events/create',
+    canSubmit: step === stepIndexes.reviewStep,
     formatter: submitFormatter,
     errorCallback: ({ errorDetails }) => {
       redirectToStepByErrorFieldName(
