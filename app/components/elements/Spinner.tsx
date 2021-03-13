@@ -8,10 +8,11 @@ const StyledSpinner = styled(FontAwesomeIcon)<ISpinnerProps>`
 
 interface ISpinnerProps {
   fontSize?: string
+  className?: string
 }
 
-const Spinner = ({ fontSize }: ISpinnerProps) => (
-  <StyledSpinner spin icon={faCompactDisc} fontSize={fontSize} />
+const Spinner = ({ fontSize, className }: ISpinnerProps) => (
+  <StyledSpinner spin icon={faCompactDisc} fontSize={fontSize} className={className} />
 )
 
 export default Spinner
