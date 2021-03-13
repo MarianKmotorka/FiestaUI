@@ -10,6 +10,7 @@ import { useAuthorizedUser } from '@contextProviders/AuthProvider'
 import SignInMethodsTab from './Tabs/SignInMethodsTab/SignInMethodsTab'
 import ChangePasswordTab from './Tabs/ChangePasswordTab/ChangePasswordTab'
 import DeleteAccountTab from './Tabs/DeleteAccountTab/DeleteAccountTab'
+import EditProfileTab from './Tabs/EditProfileTab/EditProfileTab'
 import { AccountCircle, DeleteForever, LockOpen, VpnKey } from '@material-ui/icons'
 
 import {
@@ -73,7 +74,7 @@ const SettingsTemplate = () => {
 
       <TabPanelContainer>
         <StyledPanel index='editProfile' value={currTab}>
-          Tab number: {currTab + 1}
+          <EditProfileTab />
         </StyledPanel>
 
         <StyledPanel index='changePassword' value={currTab}>

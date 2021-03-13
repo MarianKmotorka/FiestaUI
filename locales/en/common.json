@@ -53,6 +53,8 @@
   "switchTheme": "Switch theme",
   "currentPassword": "Current password",
   "warning": "Warning",
+  "uploadPicture": "Upload picture",
+  "removePicture": "Remove picture",
 
   "validator": {
     "emailAlreadyVerified": "Email is already verified",
@@ -72,7 +74,9 @@
     "passwordDoesNotMatch": "Password and repeat password does not match",
     "required": "Required",
     "invalidPassword": "Invalid password",
-    "thisGoogleAccountIsNotConnected": "Picked Google account is not connected to your account"
+    "thisGoogleAccountIsNotConnected": "Picked Google account is not connected to your account",
+    "maxSize": "Maximum file size: {{maxSize}}",
+    "unsupportedMediaType": "Unsupported media type"
   },
 
   "enum": {
