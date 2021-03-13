@@ -4,7 +4,7 @@ import { useRef, ChangeEvent } from 'react'
 
 import api from '@api/HttpClient'
 import { IApiError } from '../../../../../../../types'
-import { useAuth } from '@contextProviders/AuthProvider'
+import { useAuthorizedUser } from '@contextProviders/AuthProvider'
 
 import { MenuContent, StyledInput, StyledMenu, StyledMenuItem } from './ProfilePictureMenu.styled'
 
@@ -13,17 +13,19 @@ interface IProfilePictureMenuProps {
   setLoading: (loading: boolean) => void
   setError: (error?: string) => void
   onClose: () => void
+  setSuccess: () => void
 }
 
 const ProfilePictureMenu = ({
   anchorEl,
   onClose,
   setLoading,
-  setError
+  setError,
+  setSuccess
 }: IProfilePictureMenuProps) => {
   const { t } = useTranslation('common')
   const inputRef = useRef<HTMLInputElement>(null!)
-  const { fetchUser } = useAuth()
+  const { updateUser } = useAuthorizedUser()
 
   const onInputFile = () => {
     if (inputRef.current != null) {
@@ -37,7 +39,8 @@ const ProfilePictureMenu = ({
       setLoading(true)
       onClose()
       await api.delete('/users/me/profile-picture')
-      await fetchUser()
+      updateUser({ pictureUrl: undefined })
+      setSuccess()
     } catch (error) {
       const errors = (error as IApiError).response.data.errorDetails
       setError(errors?.[0]?.code)
@@ -56,8 +59,9 @@ const ProfilePictureMenu = ({
 
     try {
       setLoading(true)
-      await api.put('/users/me/profile-picture', formData)
-      await fetchUser()
+      const { data } = await api.put('/users/me/profile-picture', formData)
+      updateUser(data)
+      setSuccess()
     } catch (error) {
       const errors = (error as IApiError).response.data.errorDetails
       const translatedError = t(`validator.${errors?.[0]?.code}`, errors?.[0]?.customState)

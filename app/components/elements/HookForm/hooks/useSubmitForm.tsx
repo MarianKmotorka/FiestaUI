@@ -5,25 +5,27 @@ import useTranslation from 'next-translate/useTranslation'
 import api from '@api/HttpClient'
 
 export type SubmitFormatter<T> = (values: T, form: UseFormMethods<T>) => Record<string, any>
-interface ISubmitFormParameters<T> {
+interface ISubmitFormParameters<TValues, TResponse> {
   url: string
   method?: 'post' | 'patch' | 'put' | 'delete'
   canSubmit?: boolean
-  formatter?: SubmitFormatter<T>
-  successCallback?: <TResponse>(data: TResponse, form: UseFormMethods<T>) => void
-  errorCallback?: (error: IApiError['response']['data'], form: UseFormMethods<T>) => void
+  formatter?: SubmitFormatter<TValues>
+  successCallback?: (data: TResponse, form: UseFormMethods<TValues>) => void
+  errorCallback?: (error: IApiError['response']['data'], form: UseFormMethods<TValues>) => void
 }
 
-export function useSubmitForm<T>(params: ISubmitFormParameters<T>) {
+export function useSubmitForm<TValues, TResponse = any>(
+  params: ISubmitFormParameters<TValues, TResponse>
+) {
   const { t } = useTranslation('common')
   const [submitting, setSubmitting] = useState(false)
 
-  const onSubmit = async (values: T, form: UseFormMethods<T>) => {
+  const onSubmit = async (values: TValues, form: UseFormMethods<TValues>) => {
     const {
       url,
       canSubmit,
       method = 'post',
-      formatter = (x: T) => x,
+      formatter = (x: TValues) => x,
       successCallback,
       errorCallback
     } = params

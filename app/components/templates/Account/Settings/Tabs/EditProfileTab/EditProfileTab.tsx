@@ -20,6 +20,13 @@ import ProfilePictureMenu from './ProfilePictureMenu/ProfilePictureMenu'
 import { AccordionTitle, SettingsAccordion } from '../common.styled'
 import { Wrapper, StyledAvatar, StyledDivider, StyledSpinner } from './EditProfileTab.styled'
 
+interface IEditResponse {
+  id: string
+  firstName: string
+  lastName: string
+  fullName: string
+}
+
 interface IEditProfileValues {
   firstName: string
   lastName: string
@@ -29,11 +36,19 @@ const EditProfileTab = () => {
   const { t } = useTranslation('common')
   const [expanded, setExpanded] = useState(true)
   const [profilePictureEl, setProfilePictureEl] = useState<HTMLElement>()
-  const { currentUser } = useAuthorizedUser()
+  const { currentUser, updateUser } = useAuthorizedUser()
   const [profilePictureLoading, setProfilePictureLoading] = useState(false)
   const [error, setError] = useState<string>()
+  const [success, setSuccess] = useState(false)
 
-  const { onSubmit, submitting } = useSubmitForm<IEditProfileValues>({ url: '' })
+  const { onSubmit, submitting } = useSubmitForm<IEditProfileValues, IEditResponse>({
+    method: 'put',
+    url: '/users/me',
+    successCallback: response => {
+      setSuccess(true)
+      updateUser(response)
+    }
+  })
 
   return (
     <Wrapper>
@@ -44,7 +59,7 @@ const EditProfileTab = () => {
 
         <AccordionDetails>
           {profilePictureLoading ? (
-            <StyledSpinner></StyledSpinner>
+            <StyledSpinner />
           ) : (
             <StyledAvatar
               src={currentUser.pictureUrl}
@@ -84,10 +99,12 @@ const EditProfileTab = () => {
             anchorEl={profilePictureEl}
             setLoading={setProfilePictureLoading}
             setError={setError}
+            setSuccess={() => setSuccess(true)}
           />
         </AccordionDetails>
       </SettingsAccordion>
 
+      {success && <Snackbar onClose={() => setSuccess(false)} translationKey='saved' />}
       {error && <Snackbar severity='error' onClose={() => setError(undefined)} text={error} />}
     </Wrapper>
   )

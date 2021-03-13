@@ -16,6 +16,7 @@ type IAuthContextValue =
       currentUser: IUser
       logout: () => Promise<void>
       fetchUser: () => Promise<void>
+      updateUser: (newValues: Partial<IUser>) => void
     }
 
 const AuthContext = createContext<IAuthContextValue>(null!)
@@ -29,7 +30,8 @@ export const useAuthorizedUser = () => {
   return {
     currentUser: auth.currentUser,
     isLoading: auth.isLoading,
-    logout: auth.logout
+    logout: auth.logout,
+    updateUser: auth.updateUser
   }
 }
 
@@ -68,11 +70,19 @@ const AuthProvider: FC = ({ children }) => {
     setUser(undefined)
   }, [])
 
+  const updateUser = useCallback(
+    (newValues: Partial<IUser>) => {
+      if (user) setUser({ ...user, ...newValues })
+    },
+    [user]
+  )
+
   const value: IAuthContextValue = user
     ? {
         currentUser: user,
         isLoggedIn: true,
         isLoading: loading,
+        updateUser,
         fetchUser,
         logout
       }
