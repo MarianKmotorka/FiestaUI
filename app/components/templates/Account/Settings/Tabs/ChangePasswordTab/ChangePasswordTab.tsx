@@ -16,9 +16,8 @@ import {
   createRepeatPasswordValidator
 } from 'utils/validators'
 
-import { AccordionTitle } from '../../SettingsTemplate.styled'
 import { Wrapper } from './ChangePasswordTab.styled'
-import { SettingsAccordion } from '../common.styled'
+import { SettingsAccordion, AccordionTitle } from '../common.styled'
 
 interface IChangePasswordValues {
   currentPassword: string

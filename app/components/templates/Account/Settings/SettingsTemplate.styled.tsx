@@ -3,8 +3,7 @@ import { Tab } from '@material-ui/core'
 
 import { PageMinHeightWrapper } from '@elements/PageMinHeightWrapper'
 import TabPanel from '@elements/TabPanel/TabPanel'
-import Alert from '@material-ui/lab/Alert'
-import { LG, MD } from 'utils/theme'
+import { MD } from 'utils/theme'
 import { NAVBAR_HEIGHT } from '@modules/Navbar/Navbar.styled'
 
 export const Wrapper = styled(PageMinHeightWrapper)`
@@ -51,8 +50,16 @@ export const TabPanelContainer = styled.div`
 
 export const StyledTab = styled(Tab)`
   font-size: 0.9rem;
-  text-align: start;
-  padding: 15px 0;
+  padding: 17px 0;
+
+  @media screen and (min-width: ${MD}px) {
+    padding-left: 10px;
+    justify-content: flex-start;
+    .MuiTab-wrapper {
+      display: block;
+      width: auto;
+    }
+  }
 `
 
 export const StyledPanel = styled(TabPanel)`
@@ -65,26 +72,5 @@ export const StyledPanel = styled(TabPanel)`
 
   @media screen and (max-width: ${MD}px) {
     height: calc(100vh - ${NAVBAR_HEIGHT}px - 60px);
-  }
-`
-
-export const StyledSettingsAlert = styled(Alert)`
-  padding: 6px 9px;
-  margin-bottom: 10px;
-  font-weight: 300;
-  font-size: 0.95em;
-`
-
-export const AccordionTitle = styled.h1`
-  font-weight: 300;
-  color: ${({ theme }) => theme.themeText.themeBlack};
-  font-size: 1.2rem;
-
-  @media screen and (max-width: ${LG}px) {
-    font-size: 1.1rem;
-  }
-
-  @media screen and (max-width: ${MD}px) {
-    font-size: 1rem;
   }
 `

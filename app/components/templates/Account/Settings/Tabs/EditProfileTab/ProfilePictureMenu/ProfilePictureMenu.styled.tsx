@@ -1,4 +1,4 @@
-import { Menu, MenuItem, Input } from '@material-ui/core'
+import { Menu, MenuItem } from '@material-ui/core'
 import styled from 'styled-components'
 
 export const StyledMenu = styled(Menu)`
@@ -7,11 +7,11 @@ export const StyledMenu = styled(Menu)`
   }
 
   .MuiPaper-rounded {
-    border-radius: 12px;
+    border-radius: 8px;
   }
 
   .MuiMenu-paper {
-    background-color: ${({ theme }) => (theme.type == 'dark' ? theme.grey[700] : theme.grey[200])};
+    background-color: ${({ theme }) => (theme.type == 'dark' ? theme.grey[900] : theme.grey[100])};
   }
 `
 export const MenuContent = styled.div`
@@ -28,12 +28,12 @@ export const StyledMenuItem = styled(MenuItem)`
   align-items: center;
   font-size: 1.05rem;
 
-  gap: 7px;
+  gap: 10px;
 
   :last-child svg {
     color: ${({ theme }) => theme.error.light};
   }
 `
-export const StyledInput = styled(Input)`
+export const StyledInput = styled.input`
   display: none;
 `

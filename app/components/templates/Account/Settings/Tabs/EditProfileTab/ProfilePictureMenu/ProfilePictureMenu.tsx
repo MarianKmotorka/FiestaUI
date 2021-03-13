@@ -1,4 +1,4 @@
-import { Delete, Publish } from '@material-ui/icons'
+import { DeleteOutline, Publish } from '@material-ui/icons'
 import useTranslation from 'next-translate/useTranslation'
 import { useRef, ChangeEvent } from 'react'
 
@@ -22,13 +22,13 @@ const ProfilePictureMenu = ({
   setError
 }: IProfilePictureMenuProps) => {
   const { t } = useTranslation('common')
-  const inputFile = useRef<HTMLInputElement>(null)
+  const inputRef = useRef<HTMLInputElement>(null!)
   const { fetchUser } = useAuth()
 
   const onInputFile = () => {
-    if (inputFile.current != null) {
+    if (inputRef.current != null) {
       onClose()
-      inputFile.current.click()
+      inputRef.current.click()
     }
   }
 
@@ -75,14 +75,15 @@ const ProfilePictureMenu = ({
       onClose={onClose}
     >
       <MenuContent>
-        <StyledInput type='file' inputRef={inputFile} onChange={handleInputChanged} />
+        <StyledInput type='file' accept='image/*' ref={inputRef} onChange={handleInputChanged} />
 
         <StyledMenuItem onClick={onInputFile}>
           <Publish />
           {t('uploadPicture')}
         </StyledMenuItem>
+
         <StyledMenuItem onClick={onRemovePicture}>
-          <Delete />
+          <DeleteOutline />
           {t('removePicture')}
         </StyledMenuItem>
       </MenuContent>

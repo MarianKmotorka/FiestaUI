@@ -11,8 +11,7 @@ import ConnectGoogleAccount from './ConnectGoogleAccount'
 import { useAuthorizedUser } from '@contextProviders/AuthProvider'
 
 import { Wrapper } from './SignInMethodsTab.styled'
-import { AccordionTitle, StyledSettingsAlert } from '../../SettingsTemplate.styled'
-import { SettingsAccordion } from '../common.styled'
+import { AccordionTitle, StyledSettingsAlert, SettingsAccordion } from '../common.styled'
 
 const SignInMethodsTab = () => {
   const { t } = useTranslation('settings')

@@ -11,8 +11,7 @@ import DeleteWithPassword from './DeleteWithPassword'
 import DeleteAccountWithGoogle from './DeleteAccountWithGoogle'
 
 import { Wrapper } from './DeleteAccountTab.styled'
-import { SettingsAccordion } from '../common.styled'
-import { AccordionTitle, StyledSettingsAlert } from '../../SettingsTemplate.styled'
+import { SettingsAccordion, AccordionTitle, StyledSettingsAlert } from '../common.styled'
 
 const DeleteAccountTab = () => {
   const { t } = useTranslation('settings')

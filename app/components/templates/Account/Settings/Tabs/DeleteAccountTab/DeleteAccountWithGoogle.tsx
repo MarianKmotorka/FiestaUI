@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react'
+import { Box } from '@material-ui/core'
 import { useRouter } from 'next/router'
 import useTranslation from 'next-translate/useTranslation'
 
@@ -48,13 +49,15 @@ const DeleteAccountWithGoogle = () => {
 
   return (
     <>
-      <Button
-        variant='outlined'
-        loading={deleting}
-        onClick={() => window.location.assign(getGoogleRedirectUrl())}
-      >
-        {t('deleteWithGoogle')}
-      </Button>
+      <Box marginTop='30px'>
+        <Button
+          variant='outlined'
+          loading={deleting}
+          onClick={() => window.location.assign(getGoogleRedirectUrl())}
+        >
+          {t('deleteWithGoogle')}
+        </Button>
+      </Box>
 
       {error && (
         <Snackbar

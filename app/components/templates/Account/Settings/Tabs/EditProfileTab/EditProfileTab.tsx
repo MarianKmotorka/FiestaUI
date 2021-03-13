@@ -17,9 +17,8 @@ import {
 } from 'utils/validators'
 import ProfilePictureMenu from './ProfilePictureMenu/ProfilePictureMenu'
 
-import { AccordionTitle } from '../../SettingsTemplate.styled'
+import { AccordionTitle, SettingsAccordion } from '../common.styled'
 import { Wrapper, StyledAvatar, StyledDivider, StyledSpinner } from './EditProfileTab.styled'
-import { SettingsAccordion } from '../common.styled'
 
 interface IEditProfileValues {
   firstName: string
