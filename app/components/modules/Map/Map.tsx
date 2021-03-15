@@ -1,4 +1,4 @@
-import { useCallback, useMemo, useRef, useState } from 'react'
+import { useCallback, useEffect, useMemo, useRef, useState } from 'react'
 import usePlacesAutocomplete, { LatLon } from 'use-places-autocomplete'
 import { GoogleMap, useLoadScript, Marker } from '@react-google-maps/api'
 import { Libraries } from '@react-google-maps/api/dist/utils/make-load-script-url'
@@ -25,13 +25,26 @@ const Map = ({ value, onChange }: IMapProps) => {
   const initialValue = useRef(value)
   const [, setFetching] = useState(false) // TODO: use to indicate loading
   const [markerPosition, setMarkerPosition] = useState(initialValue.current?.latLng)
-  const { value: searchValue, suggestions, setValue: setSearchValue } = usePlacesAutocomplete({
-    debounce: 500
-  })
+
   const { isLoaded, loadError } = useLoadScript({
     googleMapsApiKey: process.env.NEXT_PUBLIC_GOOGLE_MAPS_API_KEY,
     libraries
   })
+
+  const {
+    init,
+    value: searchValue,
+    suggestions,
+    setValue: setSearchValue,
+    ready: autocompleteReady
+  } = usePlacesAutocomplete({
+    debounce: 300,
+    initOnMount: false
+  })
+
+  useEffect(() => {
+    isLoaded && init()
+  }, [isLoaded, init])
 
   const handleMapLoaded = useCallback(map => (mapRef.current = map), [])
 
@@ -81,6 +94,7 @@ const Map = ({ value, onChange }: IMapProps) => {
       <Search
         value={searchValue}
         suggestions={suggestions}
+        ready={autocompleteReady}
         setValue={setSearchValue}
         onChange={handleSearched}
       />

@@ -9,12 +9,19 @@ import { Wrapper, OptionText, Option } from './Search.styled'
 
 interface IProps {
   value: string
+  ready: boolean
   suggestions: Suggestions
   onChange: (location: IGoogleMapLocation) => void
   setValue: (value: string, shouldFetch?: boolean) => void
 }
 
-const Search = ({ value, suggestions: { loading, data, status }, setValue, onChange }: IProps) => {
+const Search = ({
+  value,
+  ready,
+  suggestions: { loading, data, status },
+  setValue,
+  onChange
+}: IProps) => {
   const { t } = useTranslation('common')
 
   const handleSelected = async (value: any) => {
@@ -33,11 +40,13 @@ const Search = ({ value, suggestions: { loading, data, status }, setValue, onCha
   return (
     <Wrapper>
       <Autocomplete
+        disabled={!ready}
         loading={loading}
+        inputValue={value}
         getOptionLabel={x => x.description}
         options={status === 'OK' ? data : []}
         onChange={(_, value) => handleSelected(value)}
-        getOptionSelected={(option, curr) => option.place_id === curr.place_id}
+        onInputChange={(_, value) => setValue(value)}
         renderOption={option => (
           <Option>
             <LocationOn />
@@ -47,8 +56,6 @@ const Search = ({ value, suggestions: { loading, data, status }, setValue, onCha
         renderInput={props => (
           <TextField
             {...props}
-            onChange={e => setValue(e.target.value)}
-            value={value} // this value is not reflected when set using "setValue()" prop, autocomplete replacement needed
             variant='outlined'
             color='secondary'
             placeholder={`${t('search')}...`}

@@ -23,17 +23,9 @@ const FormInput = ({ name, label, type, validate: initialValidate, ...rest }: IF
     <Controller
       name={name}
       rules={{ validate }}
-      as={
-        <TextBox
-          {...rest}
-          value=''
-          name={name}
-          type={type}
-          label={label}
-          onChange={x => x}
-          error={errors[name]?.message}
-        />
-      }
+      render={props => (
+        <TextBox {...props} {...rest} type={type} label={label} error={errors[name]?.message} />
+      )}
     />
   )
 }

@@ -33,7 +33,8 @@ export interface ICreateEventFormValues {
 
 const defaultValues: Partial<ICreateEventFormValues> = {
   name: '',
-  accessibilityType: AccessibilityTypeEnum.Public
+  accessibilityType: AccessibilityTypeEnum.Public,
+  capacity: 2
 }
 
 const CreateEvent = () => {

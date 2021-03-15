@@ -24,7 +24,7 @@ const FormDateTimePicker = ({
     <Controller
       name={name}
       rules={{ validate }}
-      render={({ value, onChange, ...other }) => (
+      render={({ value, onChange, ref, ...other }) => (
         <DateTimePicker
           {...rest}
           {...other}
