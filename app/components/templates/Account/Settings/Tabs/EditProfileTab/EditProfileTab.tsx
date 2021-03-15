@@ -66,6 +66,7 @@ const EditProfileTab = () => {
               onClick={e => setProfilePictureEl(profilePictureEl ? undefined : e.currentTarget)}
             />
           )}
+
           <StyledDivider />
 
           <Form onSubmit={onSubmit} defaultValues={currentUser}>

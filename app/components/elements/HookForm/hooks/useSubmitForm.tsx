@@ -25,7 +25,7 @@ export function useSubmitForm<TValues, TResponse = any>(
       url,
       canSubmit,
       method = 'post',
-      formatter = (x: TValues) => x,
+      formatter = x => x,
       successCallback,
       errorCallback
     } = params

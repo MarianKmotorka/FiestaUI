@@ -1,20 +1,25 @@
 import '../public/globals.css'
 import { AppProps } from 'next/app'
-import AppThemeProvider from '@contextProviders/AppThemeProvider'
-import AuthProvider from '@contextProviders/AuthProvider'
-import { MuiPickersUtilsProvider } from '@material-ui/pickers'
 import MomentUtils from '@date-io/moment'
+import AuthProvider from '@contextProviders/AuthProvider'
+import { QueryClient, QueryClientProvider } from 'react-query'
+import { MuiPickersUtilsProvider } from '@material-ui/pickers'
+import AppThemeProvider from '@contextProviders/AppThemeProvider'
+
+const queryClient = new QueryClient()
 
 const MyApp = ({ Component, pageProps }: AppProps) => {
   // Note: Keep AppThemeProvider close to the Component
   return (
-    <AuthProvider>
-      <AppThemeProvider>
+    <QueryClientProvider client={queryClient}>
+      <AuthProvider>
         <MuiPickersUtilsProvider utils={MomentUtils}>
-          <Component {...pageProps} />
+          <AppThemeProvider>
+            <Component {...pageProps} />
+          </AppThemeProvider>
         </MuiPickersUtilsProvider>
-      </AppThemeProvider>
-    </AuthProvider>
+      </AuthProvider>
+    </QueryClientProvider>
   )
 }
 

@@ -25,16 +25,15 @@ const ProfilePictureMenu = ({
 }: IProfilePictureMenuProps) => {
   const { t } = useTranslation('common')
   const inputRef = useRef<HTMLInputElement>(null!)
-  const { updateUser } = useAuthorizedUser()
+  const { updateUser, currentUser } = useAuthorizedUser()
 
-  const onInputFile = () => {
-    if (inputRef.current != null) {
-      onClose()
-      inputRef.current.click()
-    }
+  const handleUploadPictureClicked = () => {
+    if (!inputRef.current) return
+    inputRef.current.click()
+    onClose()
   }
 
-  const onRemovePicture = async () => {
+  const handleRemovePictureClicked = async () => {
     try {
       setLoading(true)
       onClose()
@@ -46,14 +45,13 @@ const ProfilePictureMenu = ({
       setError(errors?.[0]?.code)
     }
     setLoading(false)
+    inputRef.current.value = ''
   }
 
-  const handleInputChanged = (e: ChangeEvent<HTMLInputElement>) => {
+  const handleInputChanged = async (e: ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0]
-    file && uploadImage(file)
-  }
+    if (!file) return
 
-  const uploadImage = async (file: File) => {
     const formData = new FormData()
     formData.append('profilePicture', file as Blob)
 
@@ -68,6 +66,7 @@ const ProfilePictureMenu = ({
       setError(translatedError)
     }
     setLoading(false)
+    inputRef.current.value = ''
   }
 
   return (
@@ -81,15 +80,17 @@ const ProfilePictureMenu = ({
       <MenuContent>
         <StyledInput type='file' accept='image/*' ref={inputRef} onChange={handleInputChanged} />
 
-        <StyledMenuItem onClick={onInputFile}>
+        <StyledMenuItem onClick={handleUploadPictureClicked}>
           <Publish />
           {t('uploadPicture')}
         </StyledMenuItem>
 
-        <StyledMenuItem onClick={onRemovePicture}>
-          <DeleteOutline />
-          {t('removePicture')}
-        </StyledMenuItem>
+        {currentUser.pictureUrl && (
+          <StyledMenuItem id='deleteMenuItem' onClick={handleRemovePictureClicked}>
+            <DeleteOutline />
+            {t('removePicture')}
+          </StyledMenuItem>
+        )}
       </MenuContent>
     </StyledMenu>
   )

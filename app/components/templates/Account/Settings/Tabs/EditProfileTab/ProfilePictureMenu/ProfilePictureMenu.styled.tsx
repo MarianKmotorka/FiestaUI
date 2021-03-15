@@ -30,7 +30,7 @@ export const StyledMenuItem = styled(MenuItem)`
 
   gap: 10px;
 
-  :last-child svg {
+  &#deleteMenuItem svg {
     color: ${({ theme }) => theme.error.light};
   }
 `
