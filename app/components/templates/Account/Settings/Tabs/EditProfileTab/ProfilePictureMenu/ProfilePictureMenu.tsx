@@ -37,7 +37,7 @@ const ProfilePictureMenu = ({
     try {
       setLoading(true)
       onClose()
-      await api.delete('/users/me/profile-picture')
+      await api.delete(`/users/${currentUser.id}/profile-picture`)
       updateUser({ pictureUrl: undefined })
       setSuccess()
     } catch (error) {
@@ -57,7 +57,7 @@ const ProfilePictureMenu = ({
 
     try {
       setLoading(true)
-      const { data } = await api.post('/users/me/profile-picture', formData)
+      const { data } = await api.post(`/users/${currentUser.id}/profile-picture`, formData)
       updateUser(data)
       setSuccess()
     } catch (error) {

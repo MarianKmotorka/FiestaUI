@@ -43,7 +43,7 @@ const EditProfileTab = () => {
 
   const { onSubmit, submitting } = useSubmitForm<IEditProfileValues, IEditResponse>({
     method: 'patch',
-    url: '/users/me',
+    url: `/users/${currentUser.id}`,
     successCallback: response => {
       setSuccess(true)
       updateUser(response)
