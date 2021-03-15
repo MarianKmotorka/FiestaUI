@@ -57,7 +57,7 @@ const ProfilePictureMenu = ({
 
     try {
       setLoading(true)
-      const { data } = await api.put('/users/me/profile-picture', formData)
+      const { data } = await api.post('/users/me/profile-picture', formData)
       updateUser(data)
       setSuccess()
     } catch (error) {

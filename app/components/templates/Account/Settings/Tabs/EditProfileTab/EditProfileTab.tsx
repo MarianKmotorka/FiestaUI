@@ -42,7 +42,7 @@ const EditProfileTab = () => {
   const [success, setSuccess] = useState(false)
 
   const { onSubmit, submitting } = useSubmitForm<IEditProfileValues, IEditResponse>({
-    method: 'put',
+    method: 'patch',
     url: '/users/me',
     successCallback: response => {
       setSuccess(true)

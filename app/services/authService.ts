@@ -13,7 +13,7 @@ export const logout = async () => {
 
 export const fetchCurrentUser = async () => {
   try {
-    const res = await api.get('/users/me')
+    const res = await api.get('/auth/me')
     return res.data as IUser
   } catch (err) {
     return undefined
