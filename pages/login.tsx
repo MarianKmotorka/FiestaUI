@@ -1,5 +1,5 @@
 import DefaultLayout from '@layouts/DefaultLayout'
-import LoginTemplate from '@templates/Account/Login/LoginTemplate'
+import LoginTemplate from '@templates/Login/LoginTemplate'
 import useTranslation from 'next-translate/useTranslation'
 
 const Login = () => {

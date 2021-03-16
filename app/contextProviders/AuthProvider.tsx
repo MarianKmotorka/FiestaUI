@@ -55,9 +55,7 @@ const AuthProvider: FC = ({ children }) => {
 
   useEffect(() => {
     const initialLoad = async () => {
-      if (localStorage.getItem(IS_SIGNED_IN_LOCAL_STORAGE_KEY)) {
-        await fetchUser()
-      }
+      if (localStorage.getItem(IS_SIGNED_IN_LOCAL_STORAGE_KEY)) await fetchUser()
       setLoading(false)
     }
 

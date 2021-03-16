@@ -3,7 +3,7 @@ import useTranslation from 'next-translate/useTranslation'
 import { useRef, ChangeEvent } from 'react'
 
 import api from '@api/HttpClient'
-import { IApiError } from '../../../../../../../types'
+import { IApiError } from '../../../../../../types'
 import { useAuthorizedUser } from '@contextProviders/AuthProvider'
 
 import { MenuContent, StyledInput, StyledMenu, StyledMenuItem } from './ProfilePictureMenu.styled'

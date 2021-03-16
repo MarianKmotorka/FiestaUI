@@ -1,5 +1,5 @@
 import DefaultLayout from '@layouts/DefaultLayout'
-import SignupTemplate from '@templates/Account/Signup/SignupTemplate'
+import SignupTemplate from '@templates/Signup/SignupTemplate'
 import useTranslation from 'next-translate/useTranslation'
 
 const Signup = () => {

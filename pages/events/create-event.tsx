@@ -1,6 +1,6 @@
 import AuthorizedPage from '@layouts/AuthorizedPage'
 import DefaultLayout from '@layouts/DefaultLayout'
-import CreateEventTemplate from '@templates/CreateEvent/CreateEventTemplate'
+import CreateEventTemplate from '@templates/Events/CreateEvent/CreateEventTemplate'
 
 const CreateEvent = () => {
   return (

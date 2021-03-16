@@ -1,6 +1,6 @@
 import AuthorizedPage from '@layouts/AuthorizedPage'
 import DefaultLayout from '@layouts/DefaultLayout'
-import SettingsTemplate from '@templates/Account/Settings/SettingsTemplate'
+import SettingsTemplate from '@templates/Settings/SettingsTemplate'
 import useTranslation from 'next-translate/useTranslation'
 
 const Settings = () => {
