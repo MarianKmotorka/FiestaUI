@@ -1,4 +1,4 @@
-import { forwardRef } from 'react'
+import { ChangeEvent, forwardRef } from 'react'
 import { TextFieldProps } from '@material-ui/core'
 import { StyledTextBox } from './TextBox.styled'
 
@@ -8,23 +8,34 @@ export type TextBoxProps = Omit<TextFieldProps, 'onChange' | 'error'> & {
   value: string
   error?: string
   className?: string
+  max?: number
+  min?: number
   onChange: (value: string) => void
   onBlur?: () => void
 }
 
 const TextBox = forwardRef(
-  ({ name, label, value, error, onChange, onBlur, ...rest }: TextBoxProps, forwardRef) => {
+  ({ label, value, error, type, max, min, onChange, ...rest }: TextBoxProps, forwardRef) => {
+    const handleChange = (e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+      const { value } = e.target
+      if (type === 'number') {
+        if (min !== undefined && Number(value) < min) return onChange(min.toString())
+        if (max !== undefined && Number(value) > max) return onChange(max.toString())
+      }
+
+      onChange(value)
+    }
+
     return (
       <StyledTextBox
         {...rest}
         ref={forwardRef as any}
-        name={name}
+        type={type}
         value={value}
         label={label}
         error={!!error}
         helperText={error}
-        onBlur={onBlur}
-        onChange={e => onChange(e.target.value)}
+        onChange={handleChange}
       />
     )
   }

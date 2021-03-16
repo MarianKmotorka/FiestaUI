@@ -79,10 +79,11 @@ const EventInfoStep = ({ nextStep }: IEventInfoStepProps) => {
         />
 
         <FormInput
-          name='capacity'
+          min={0}
           fullWidth
-          variant='outlined'
           type='number'
+          name='capacity'
+          variant='outlined'
           label={t('maxNumberOfPeople')}
           validate={combineValidators([requiredValidator, minNumericValue(2)])}
         />
