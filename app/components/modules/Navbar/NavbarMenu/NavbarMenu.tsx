@@ -1,8 +1,10 @@
+import Link from 'next/link'
+import useTranslation from 'next-translate/useTranslation'
+import { Brightness2, ExitToApp, Settings, WbSunny } from '@material-ui/icons'
+
 import { useAppTheme } from '@contextProviders/AppThemeProvider'
 import { useAuthorizedUser } from '@contextProviders/AuthProvider'
-import { Brightness2, ExitToApp, Settings, WbSunny } from '@material-ui/icons'
-import useTranslation from 'next-translate/useTranslation'
-import Link from 'next/link'
+
 import {
   MenuContent,
   Name,
@@ -10,17 +12,19 @@ import {
   StyledDivider,
   StyledMenu,
   StyledMenuItem
-} from './ProfileMenu.styled'
+} from './NavbarMenu.styled'
 
-interface IProfileDropdownProps {
+interface INavbarMenuProps {
   anchorEl: HTMLElement
   onClose: () => void
 }
 
-const ProfileDropdown = ({ anchorEl, onClose }: IProfileDropdownProps) => {
+const NavbarMenu = ({ anchorEl, onClose }: INavbarMenuProps) => {
   const { currentUser, logout } = useAuthorizedUser()
   const { isDark, switchTheme } = useAppTheme()
   const { t } = useTranslation('common')
+
+  const userDetailLink = `/users/${currentUser.id}`
 
   return (
     <StyledMenu
@@ -32,11 +36,11 @@ const ProfileDropdown = ({ anchorEl, onClose }: IProfileDropdownProps) => {
       transformOrigin={{ horizontal: 'center', vertical: 'top' }}
     >
       <MenuContent>
-        <Link href='/profile'>
+        <Link href={userDetailLink}>
           <StyledAvatar src={currentUser.pictureUrl} />
         </Link>
 
-        <Link href='/profile'>
+        <Link href={userDetailLink}>
           <Name>{currentUser.fullName}</Name>
         </Link>
 
@@ -63,4 +67,4 @@ const ProfileDropdown = ({ anchorEl, onClose }: IProfileDropdownProps) => {
   )
 }
 
-export default ProfileDropdown
+export default NavbarMenu

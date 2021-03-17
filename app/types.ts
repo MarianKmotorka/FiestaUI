@@ -8,13 +8,12 @@ interface IApiErrorDetail {
 }
 
 export interface IApiError {
-  response: {
-    data: {
-      errorCode: string
-      errorMessage: string
-      errorDetails: IApiErrorDetail[]
-    }
+  data: {
+    errorCode: string
+    errorMessage: string
+    errorDetails: IApiErrorDetail[]
   }
+  status: number
 }
 
 export type Validator<TFormValues = any, TValue = any> = (

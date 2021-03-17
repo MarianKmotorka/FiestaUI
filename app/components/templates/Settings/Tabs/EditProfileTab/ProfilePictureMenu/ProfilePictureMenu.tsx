@@ -27,6 +27,10 @@ const ProfilePictureMenu = ({
   const inputRef = useRef<HTMLInputElement>(null!)
   const { updateUser, currentUser } = useAuthorizedUser()
 
+  const clearInput = () => {
+    if (inputRef?.current?.value) inputRef.current.value = ''
+  }
+
   const handleUploadPictureClicked = () => {
     if (!inputRef.current) return
     inputRef.current.click()
@@ -41,11 +45,11 @@ const ProfilePictureMenu = ({
       updateUser({ pictureUrl: undefined })
       setSuccess()
     } catch (error) {
-      const errors = (error as IApiError).response.data.errorDetails
+      const errors = (error as IApiError).data.errorDetails
       setError(errors?.[0]?.code)
     }
     setLoading(false)
-    inputRef.current.value = ''
+    clearInput()
   }
 
   const handleInputChanged = async (e: ChangeEvent<HTMLInputElement>) => {
@@ -61,12 +65,12 @@ const ProfilePictureMenu = ({
       updateUser(data)
       setSuccess()
     } catch (error) {
-      const errors = (error as IApiError).response.data.errorDetails
+      const errors = (error as IApiError).data.errorDetails
       const translatedError = t(`validator.${errors?.[0]?.code}`, errors?.[0]?.customState)
       setError(translatedError)
     }
     setLoading(false)
-    inputRef.current.value = ''
+    clearInput()
   }
 
   return (

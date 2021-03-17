@@ -6,7 +6,9 @@ import { QueryClient, QueryClientProvider } from 'react-query'
 import { MuiPickersUtilsProvider } from '@material-ui/pickers'
 import AppThemeProvider from '@contextProviders/AppThemeProvider'
 
-const queryClient = new QueryClient()
+const queryClient = new QueryClient({
+  defaultOptions: { queries: { retry: false, refetchOnWindowFocus: false } }
+})
 
 const MyApp = ({ Component, pageProps }: AppProps) => {
   // Note: Keep AppThemeProvider close to the Component

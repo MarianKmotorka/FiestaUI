@@ -37,7 +37,7 @@ const ConnectGoogleAccount = () => {
         await api.post('/auth/connect-google-account', { code: query.code })
         await fetchUser()
       } catch (err) {
-        const message = (err as IApiError).response.data.errorMessage
+        const message = (err as IApiError).data.errorMessage
         setError(message)
         setConnecting(false)
       }

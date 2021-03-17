@@ -1,6 +1,6 @@
 import api, { setAuthHeader } from '../api/HttpClient'
 import { IApiError } from 'types'
-import { IUser } from 'domainTypes'
+import { ICurrentUser } from 'domainTypes'
 
 export const logout = async () => {
   try {
@@ -14,7 +14,7 @@ export const logout = async () => {
 export const fetchCurrentUser = async () => {
   try {
     const res = await api.get('/auth/me')
-    return res.data as IUser
+    return res.data as ICurrentUser
   } catch (err) {
     return undefined
   }
@@ -47,7 +47,7 @@ export const loginUsingGoogleCode = async (code: string) => {
     setAuthHeader(res.data.accessToken)
     return true
   } catch (err) {
-    return (err as IApiError).response.data.errorMessage
+    return (err as IApiError).data.errorMessage
   }
 }
 
@@ -61,6 +61,6 @@ export const loginWithEmailAndPassword = async (body: { email: string; password:
     setAuthHeader(res.data.accessToken)
     return true
   } catch (err) {
-    return (err as IApiError).response.data.errorMessage
+    return (err as IApiError).data.errorMessage
   }
 }

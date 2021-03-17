@@ -18,7 +18,8 @@ import {
 import ProfilePictureMenu from './ProfilePictureMenu/ProfilePictureMenu'
 
 import { AccordionTitle, SettingsAccordion } from '../common.styled'
-import { Wrapper, StyledAvatar, StyledDivider, StyledSpinner } from './EditProfileTab.styled'
+import { Wrapper, StyledAvatar, StyledDivider } from './EditProfileTab.styled'
+import Spinner from '@elements/Spinner'
 
 interface IEditResponse {
   id: string
@@ -59,7 +60,7 @@ const EditProfileTab = () => {
 
         <AccordionDetails>
           {profilePictureLoading ? (
-            <StyledSpinner />
+            <Spinner themed />
           ) : (
             <StyledAvatar
               src={currentUser.pictureUrl}
@@ -90,7 +91,7 @@ const EditProfileTab = () => {
               ])}
             />
 
-            <Button variant='outlined' type='submit' loading={submitting}>
+            <Button variant='outlined' type='submit' loading={submitting} themedSpinner>
               {t('submit')}
             </Button>
           </Form>

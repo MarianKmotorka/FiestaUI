@@ -11,7 +11,7 @@ interface ISubmitFormParameters<TValues, TResponse> {
   canSubmit?: boolean
   formatter?: SubmitFormatter<TValues>
   successCallback?: (data: TResponse, form: UseFormMethods<TValues>) => void
-  errorCallback?: (error: IApiError['response']['data'], form: UseFormMethods<TValues>) => void
+  errorCallback?: (error: IApiError['data'], form: UseFormMethods<TValues>) => void
 }
 
 export function useSubmitForm<TValues, TResponse = any>(
@@ -41,14 +41,14 @@ export function useSubmitForm<TValues, TResponse = any>(
       const response = await responsePromise
       successCallback?.(response.data, form)
     } catch (err) {
-      const errors = (err as IApiError).response.data.errorDetails
+      const errors = (err as IApiError).data.errorDetails
 
       errors.forEach(x => {
         const translatedError = t(`validator.${x.code}`, x.customState)
         form.setError(x.propertyName as any, { message: translatedError })
       })
 
-      errorCallback?.((err as IApiError).response.data, form)
+      errorCallback?.((err as IApiError).data, form)
     }
     setSubmitting(false)
   }

@@ -38,7 +38,7 @@ const DeleteAccountWithGoogle = () => {
         await api.delete(`/auth/delete-account-with-google?code=${query.code}`)
         await logout()
       } catch (err) {
-        const message = (err as IApiError).response.data.errorMessage
+        const message = (err as IApiError).data.errorMessage
         setError(message)
         setdeleting(false)
       }

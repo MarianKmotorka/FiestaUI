@@ -1,7 +1,6 @@
 import Divider from '@elements/Divider'
 import styled from 'styled-components'
 import { MD, LG } from 'utils/theme'
-import Spinner from '@elements/Spinner'
 import { Avatar } from '@material-ui/core'
 
 export const Wrapper = styled.div`
@@ -65,8 +64,4 @@ export const StyledAvatar = styled(Avatar)`
 `
 export const StyledDivider = styled(Divider)`
   margin: 20px 5px 20px;
-`
-
-export const StyledSpinner = styled(Spinner)`
-  color: ${({ theme }) => theme.themeText.themeGray};
 `

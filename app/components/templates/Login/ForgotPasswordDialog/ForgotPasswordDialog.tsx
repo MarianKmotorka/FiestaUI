@@ -31,7 +31,7 @@ const ConfirmEmailDialog = ({ onClose }: IConfirmEmailDialogProps) => {
       await api.post('/auth/send-reset-password-email', { email })
       setState('sent')
     } catch (err) {
-      const apiError = (err as IApiError).response.data
+      const apiError = (err as IApiError).data
       setError(t(`validator.${apiError.errorMessage}`))
       setState('notSent')
     }

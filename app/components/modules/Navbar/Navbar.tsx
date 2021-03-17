@@ -8,7 +8,7 @@ import { Brightness2, ExpandLess, ExpandMore, WbSunny } from '@material-ui/icons
 import NavLink from '@elements/NavLink'
 import useWindowSize from '@hooks/useWindowSize'
 import { useAuth } from '@contextProviders/AuthProvider'
-import ProfileDropdown from './ProfileMenu/ProfileMenu'
+import NavbarMenu from './NavbarMenu/NavbarMenu'
 import { useAppTheme } from '@contextProviders/AppThemeProvider'
 
 import {
@@ -84,7 +84,7 @@ const Navbar = () => {
                   />
 
                   {profileChipEl && (
-                    <ProfileDropdown
+                    <NavbarMenu
                       onClose={() => setProfileChipEl(undefined)}
                       anchorEl={profileChipEl}
                     />

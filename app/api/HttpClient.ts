@@ -9,8 +9,6 @@ const client = axios.create({
       : process.env.NEXT_PUBLIC_API_BASE_URL
 })
 
-client.interceptors.request.use(undefined, error => Promise.reject(error))
-
 createAuthRefreshInterceptor(client, failedRequest =>
   client
     .get(window.location.origin + '/api/refresh-token')
@@ -25,6 +23,9 @@ createAuthRefreshInterceptor(client, failedRequest =>
       window.location.assign('/login')
     })
 )
+
+//Note: Keep this line bellow "createAuthRefreshInterceptor()" since it needs entire error object being returned
+client.interceptors.response.use(undefined, error => Promise.reject(error.response))
 
 export const setAuthHeader = (accessToken?: string) => {
   client.defaults.headers['Authorization'] = accessToken ? `Bearer ${accessToken}` : ''

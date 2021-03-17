@@ -35,7 +35,7 @@ const ConfirmEmailPage = () => {
       try {
         await api.post('/auth/verify-email', { email: query.email, code: query.code })
       } catch (err) {
-        setError((err as IApiError).response.data.errorMessage)
+        setError((err as IApiError).data.errorMessage)
       }
 
       setLoading(false)

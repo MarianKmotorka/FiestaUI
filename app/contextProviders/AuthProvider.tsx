@@ -1,5 +1,5 @@
 import { createContext, FC, useCallback, useContext, useEffect, useState } from 'react'
-import { IUser } from 'domainTypes'
+import { ICurrentUser } from 'domainTypes'
 import * as authService from 'services/authService'
 
 export const IS_SIGNED_IN_LOCAL_STORAGE_KEY = 'FIESTA.is_signed_in'
@@ -13,10 +13,10 @@ type IAuthContextValue =
   | {
       isLoggedIn: true
       isLoading: boolean
-      currentUser: IUser
+      currentUser: ICurrentUser
       logout: () => Promise<void>
       fetchUser: () => Promise<void>
-      updateUser: (newValues: Partial<IUser>) => void
+      updateUser: (newValues: Partial<ICurrentUser>) => void
     }
 
 const AuthContext = createContext<IAuthContextValue>(null!)
@@ -37,7 +37,7 @@ export const useAuthorizedUser = () => {
 
 const AuthProvider: FC = ({ children }) => {
   const [loading, setLoading] = useState(true)
-  const [user, setUser] = useState<IUser>()
+  const [user, setUser] = useState<ICurrentUser>()
 
   const fetchUser = useCallback(async () => {
     setLoading(true)
@@ -69,7 +69,7 @@ const AuthProvider: FC = ({ children }) => {
   }, [])
 
   const updateUser = useCallback(
-    (newValues: Partial<IUser>) => {
+    (newValues: Partial<ICurrentUser>) => {
       if (user) setUser({ ...user, ...newValues })
     },
     [user]

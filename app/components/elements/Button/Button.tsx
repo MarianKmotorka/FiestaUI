@@ -3,9 +3,18 @@ import Spinner from '@elements/Spinner'
 
 interface IButtonProps extends ButtonProps {
   loading?: boolean
+  themedSpinner?: boolean
 }
 
-const Button = ({ loading, children, variant, color, disabled, ...rest }: IButtonProps) => {
+const Button = ({
+  loading,
+  children,
+  variant,
+  color,
+  disabled,
+  themedSpinner,
+  ...rest
+}: IButtonProps) => {
   return (
     <MuiButton
       {...rest}
@@ -13,7 +22,7 @@ const Button = ({ loading, children, variant, color, disabled, ...rest }: IButto
       color={color || 'primary'}
       disabled={disabled || loading}
     >
-      {loading ? <Spinner /> : children}
+      {loading ? <Spinner themed={themedSpinner} /> : children}
     </MuiButton>
   )
 }

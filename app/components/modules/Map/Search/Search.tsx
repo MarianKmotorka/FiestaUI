@@ -33,7 +33,7 @@ const Search = ({
       const location = await getLocation({ lat: lat(), lng: lng() })
       onChange(location)
     } catch (error) {
-      console.log('Error: ', error)
+      console.log('Search error: ', error)
     }
   }
 

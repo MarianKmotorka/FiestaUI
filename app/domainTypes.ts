@@ -1,13 +1,24 @@
-export interface IUser {
+export interface ICurrentUser {
   id: string
   firstName: string
   lastName: string
   fullName: string
   email: string
+  nick: string
   pictureUrl?: string
   authProvider: AuthProviderFlags
   role: RoleEnum
   googleEmail?: string
+}
+
+export interface IUser {
+  id: string
+  firstName: string
+  lastName: string
+  fullName: string
+  nick: string
+  pictureUrl?: string
+  bio?: string
 }
 
 export enum AuthProviderFlags {
