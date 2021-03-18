@@ -55,7 +55,10 @@ export const loginUsingGoogleCode = async (code: string) => {
  *
  * @returns true or error message
  */
-export const loginWithEmailAndPassword = async (body: { email: string; password: string }) => {
+export const loginWithEmailAndPassword = async (body: {
+  emailOrUsername: string
+  password: string
+}) => {
   try {
     const res = await api.post(`${window.location.origin}/api/login`, body)
     setAuthHeader(res.data.accessToken)

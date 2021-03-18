@@ -11,22 +11,17 @@ import { PageMinHeightWrapper } from '@elements/PageMinHeightWrapper'
 import ConfirmEmailDialog from './ConfirmEmailDialog/ConfirmEmailDialog'
 import ForgotPasswordDialog from './ForgotPasswordDialog/ForgotPasswordDialog'
 import { getGoogleLoginUrl, loginWithEmailAndPassword } from 'services/authService'
-import {
-  combineValidators,
-  emailValidator,
-  minLengthValidator,
-  requiredValidator
-} from 'utils/validators'
+import { combineValidators, minLengthValidator, requiredValidator } from 'utils/validators'
 
 import { FormContent, StyledCard, StyledForgotPasswordButton } from './LoginTemplate.styled'
 
 interface IFormValues {
-  email: string
+  emailOrUsername: string
   password: string
 }
 
 const defaultValues: IFormValues = {
-  email: '',
+  emailOrUsername: '',
   password: ''
 }
 
@@ -49,8 +44,8 @@ const LoginTemplate = () => {
 
     if (successOrError !== true) {
       setSubmitting(false)
-      if (successOrError === 'emailIsNotVerified') setEmailToConfirm(values.email)
-      return setError('email', { message: t(`validator.${successOrError}`) })
+      if (successOrError === 'emailIsNotVerified') setEmailToConfirm(values.emailOrUsername)
+      return setError('emailOrUsername', { message: t(`validator.${successOrError}`) })
     }
 
     await fetchUser()
@@ -63,9 +58,9 @@ const LoginTemplate = () => {
         <Form onSubmit={handleSubmit} defaultValues={defaultValues}>
           <FormContent>
             <FormInput
-              name='email'
-              label={t('emailAddress')}
-              validate={combineValidators([requiredValidator, emailValidator])}
+              name='emailOrUsername'
+              label={t('emailOrUserName')}
+              validate={combineValidators([requiredValidator])}
             />
             <FormInput
               name='password'
