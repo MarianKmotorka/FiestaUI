@@ -5,7 +5,7 @@ import useTranslation from 'next-translate/useTranslation'
 import { IApiError } from 'types'
 import api from '@api/HttpClient'
 import Button from '@elements/Button/Button'
-import Snackbar from '@elements/Snackbar/Snackbar'
+import { errorToast } from 'services/toastService'
 import { useAuth } from '@contextProviders/AuthProvider'
 
 const getGoogleRedirectUrl = () => {
@@ -28,7 +28,6 @@ const ConnectGoogleAccount = () => {
   const { t } = useTranslation('settings')
   const { query } = useRouter()
   const { fetchUser } = useAuth()
-  const [error, setError] = useState<string>()
   const [connecting, setConnecting] = useState(!!query.code)
 
   useEffect(() => {
@@ -38,32 +37,24 @@ const ConnectGoogleAccount = () => {
         await fetchUser()
       } catch (err) {
         const message = (err as IApiError).data.errorMessage
-        setError(message)
+        errorToast(t(`validator.${message}`))
         setConnecting(false)
       }
     }
 
     query.code && connect()
+    //Note: t() causes unwanded api calls -> removed from deps[]
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [query.code, fetchUser])
 
   return (
-    <>
-      <Button
-        variant='outlined'
-        loading={connecting}
-        onClick={() => window.location.assign(getGoogleRedirectUrl())}
-      >
-        {t('connectGoogleAccount')}
-      </Button>
-
-      {error && (
-        <Snackbar
-          severity='error'
-          onClose={() => setError(undefined)}
-          translationKey={`validator.${error}`}
-        />
-      )}
-    </>
+    <Button
+      variant='outlined'
+      loading={connecting}
+      onClick={() => window.location.assign(getGoogleRedirectUrl())}
+    >
+      {t('connectGoogleAccount')}
+    </Button>
   )
 }
 

@@ -22,7 +22,7 @@ const Button = ({
       color={color || 'primary'}
       disabled={disabled || loading}
     >
-      {loading ? <Spinner themed={themedSpinner} /> : children}
+      {loading ? <Spinner themed={themedSpinner ?? true} /> : children}
     </MuiButton>
   )
 }

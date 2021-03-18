@@ -6,7 +6,7 @@ import { AccordionDetails, AccordionSummary } from '@material-ui/core'
 import Spinner from '@elements/Spinner'
 import Form from '@elements/HookForm/Form'
 import Button from '@elements/Button/Button'
-import Snackbar from '@elements/Snackbar/Snackbar'
+import { successToast } from 'services/toastService'
 import FormInput from '@elements/HookForm/FormInput'
 import { useAuthorizedUser } from '@contextProviders/AuthProvider'
 import { useSubmitForm } from '@elements/HookForm/hooks/useSubmitForm'
@@ -39,14 +39,12 @@ const EditProfileTab = () => {
   const [profilePictureEl, setProfilePictureEl] = useState<HTMLElement>()
   const { currentUser, updateUser } = useAuthorizedUser()
   const [profilePictureLoading, setProfilePictureLoading] = useState(false)
-  const [error, setError] = useState<string>()
-  const [success, setSuccess] = useState(false)
 
   const { onSubmit, submitting } = useSubmitForm<IEditProfileValues, IEditResponse>({
     method: 'patch',
     url: `/users/${currentUser.id}`,
     successCallback: response => {
-      setSuccess(true)
+      successToast(t('saved'))
       updateUser(response)
     }
   })
@@ -91,7 +89,7 @@ const EditProfileTab = () => {
               ])}
             />
 
-            <Button variant='outlined' type='submit' loading={submitting} themedSpinner>
+            <Button variant='outlined' type='submit' loading={submitting}>
               {t('submit')}
             </Button>
           </Form>
@@ -100,14 +98,9 @@ const EditProfileTab = () => {
             onClose={() => setProfilePictureEl(undefined)}
             anchorEl={profilePictureEl}
             setLoading={setProfilePictureLoading}
-            setError={setError}
-            setSuccess={() => setSuccess(true)}
           />
         </AccordionDetails>
       </SettingsAccordion>
-
-      {success && <Snackbar onClose={() => setSuccess(false)} translationKey='saved' />}
-      {error && <Snackbar severity='error' onClose={() => setError(undefined)} text={error} />}
     </Wrapper>
   )
 }

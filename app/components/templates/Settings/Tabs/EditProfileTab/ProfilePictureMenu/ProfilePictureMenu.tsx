@@ -4,6 +4,7 @@ import { useRef, ChangeEvent } from 'react'
 
 import api from '@api/HttpClient'
 import { IApiError } from '../../../../../../types'
+import { errorToast, successToast } from 'services/toastService'
 import { useAuthorizedUser } from '@contextProviders/AuthProvider'
 
 import { MenuContent, StyledInput, StyledMenu, StyledMenuItem } from './ProfilePictureMenu.styled'
@@ -11,18 +12,10 @@ import { MenuContent, StyledInput, StyledMenu, StyledMenuItem } from './ProfileP
 interface IProfilePictureMenuProps {
   anchorEl?: HTMLElement
   setLoading: (loading: boolean) => void
-  setError: (error?: string) => void
   onClose: () => void
-  setSuccess: () => void
 }
 
-const ProfilePictureMenu = ({
-  anchorEl,
-  onClose,
-  setLoading,
-  setError,
-  setSuccess
-}: IProfilePictureMenuProps) => {
+const ProfilePictureMenu = ({ anchorEl, onClose, setLoading }: IProfilePictureMenuProps) => {
   const { t } = useTranslation('common')
   const inputRef = useRef<HTMLInputElement>(null!)
   const { updateUser, currentUser } = useAuthorizedUser()
@@ -43,10 +36,10 @@ const ProfilePictureMenu = ({
       onClose()
       await api.delete(`/users/${currentUser.id}/profile-picture`)
       updateUser({ pictureUrl: undefined })
-      setSuccess()
+      successToast(t('saved'))
     } catch (error) {
       const errors = (error as IApiError).data.errorDetails
-      setError(errors?.[0]?.code)
+      errors?.[0] && errorToast(errors[0].code)
     }
     setLoading(false)
     clearInput()
@@ -63,14 +56,14 @@ const ProfilePictureMenu = ({
       setLoading(true)
       const { data } = await api.post(`/users/${currentUser.id}/profile-picture`, formData)
       updateUser(data)
-      setSuccess()
+      successToast(t('saved'))
     } catch (error) {
       const apiError = (error as IApiError).data
       const detail = apiError.errorDetails?.[0]
       const translatedError = detail
         ? t(`validator.${detail.code}`, detail.customState)
         : apiError.errorMessage
-      setError(translatedError)
+      errorToast(translatedError)
     }
     setLoading(false)
     clearInput()

@@ -1,5 +1,5 @@
 import { createContext, FC, useCallback, useContext, useEffect, useState } from 'react'
-import { ThemeProvider as StyledThemeProvider, createGlobalStyle } from 'styled-components'
+import { ThemeProvider as StyledThemeProvider } from 'styled-components'
 import {
   CssBaseline,
   StylesProvider,
@@ -7,15 +7,10 @@ import {
   ThemeProvider as MuiThemeProvider
 } from '@material-ui/core'
 
-import useLocalStorage from '@hooks/useLocalStorage'
 import Hidden from '@elements/Hidden'
+import GlobalStyles from './GlobalStyles'
 import { lightTheme, darkTheme } from 'utils/theme'
-
-const GlobalStyles = createGlobalStyle`
-.MuiMenuItem-root{
-  color:${({ theme }) => theme.themeText.themeBlack};
-}
-`
+import useLocalStorage from '@hooks/useLocalStorage'
 
 interface IAppThemeContextValue {
   switchTheme: () => void

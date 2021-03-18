@@ -3,10 +3,10 @@ import { ExpandMore } from '@material-ui/icons'
 import useTranslation from 'next-translate/useTranslation'
 import { AccordionDetails, AccordionSummary } from '@material-ui/core'
 
-import Button from '@elements/Button/Button'
-import Snackbar from '@elements/Snackbar/Snackbar'
-import FormInput from '@elements/HookForm/FormInput'
 import Form from '@elements/HookForm/Form'
+import Button from '@elements/Button/Button'
+import FormInput from '@elements/HookForm/FormInput'
+import { successToast } from 'services/toastService'
 import { useAuthorizedUser } from '@contextProviders/AuthProvider'
 import { useSubmitForm } from '@elements/HookForm/hooks/useSubmitForm'
 import {
@@ -33,14 +33,13 @@ const defaultValues: IChangePasswordValues = {
 
 const ChangePasswordTab = () => {
   const { t } = useTranslation('common')
-  const [success, setSuccess] = useState(false)
   const [expanded, setExpanded] = useState(true)
   const { currentUser } = useAuthorizedUser()
 
   const { onSubmit, submitting } = useSubmitForm<IChangePasswordValues>({
     url: '/auth/change-password',
     formatter: values => ({ ...values, userId: currentUser.id }),
-    successCallback: () => setSuccess(true),
+    successCallback: () => successToast(t('success')),
     errorCallback: (err, { setError }) => {
       if (err.errorDetails.length === 0)
         setError('currentPassword', { message: t(`validator.${err.errorMessage}`) })
@@ -80,14 +79,12 @@ const ChangePasswordTab = () => {
               ])}
             />
 
-            <Button variant='outlined' type='submit' loading={submitting} themedSpinner>
+            <Button variant='outlined' type='submit' loading={submitting}>
               {t('changePassword')}
             </Button>
           </Form>
         </AccordionDetails>
       </SettingsAccordion>
-
-      {success && <Snackbar onClose={() => setSuccess(false)} translationKey='success' />}
     </Wrapper>
   )
 }

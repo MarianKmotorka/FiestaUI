@@ -9,7 +9,7 @@ import NavLink from '@elements/NavLink'
 import useWindowSize from '@hooks/useWindowSize'
 import { useAuth } from '@contextProviders/AuthProvider'
 import NavbarMenu from './NavbarMenu/NavbarMenu'
-import { useAppTheme } from '@contextProviders/AppThemeProvider'
+import { useAppTheme } from '@contextProviders/AppThemeProvider/AppThemeProvider'
 
 import {
   Logo,

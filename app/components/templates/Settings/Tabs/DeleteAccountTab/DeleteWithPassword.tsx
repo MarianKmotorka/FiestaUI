@@ -6,6 +6,7 @@ import { useAuthorizedUser } from '@contextProviders/AuthProvider'
 import Form from '@elements/HookForm/Form'
 import { requiredValidator } from 'utils/validators'
 import { useSubmitForm } from '@elements/HookForm/hooks/useSubmitForm'
+import { successToast } from 'services/toastService'
 
 interface IFormValues {
   password: string
@@ -22,7 +23,10 @@ const DeleteWithPassword = () => {
   const { onSubmit, submitting } = useSubmitForm<IFormValues>({
     url: '/auth/delete-account-with-password',
     method: 'delete',
-    successCallback: logout,
+    successCallback: async () => {
+      await logout()
+      successToast(t('accountDeleted'))
+    },
     errorCallback: (err, { setError }) => {
       if (err.errorDetails.length === 0)
         setError('password', { message: t(`validator.${err.errorMessage}`) })

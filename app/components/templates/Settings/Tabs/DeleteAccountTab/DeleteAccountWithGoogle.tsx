@@ -6,7 +6,7 @@ import useTranslation from 'next-translate/useTranslation'
 import { IApiError } from 'types'
 import api from '@api/HttpClient'
 import Button from '@elements/Button/Button'
-import Snackbar from '@elements/Snackbar/Snackbar'
+import { errorToast, successToast } from 'services/toastService'
 import { useAuthorizedUser } from '@contextProviders/AuthProvider'
 
 const getGoogleRedirectUrl = () => {
@@ -29,7 +29,6 @@ const DeleteAccountWithGoogle = () => {
   const { t } = useTranslation('settings')
   const { query } = useRouter()
   const { logout } = useAuthorizedUser()
-  const [error, setError] = useState<string>()
   const [deleting, setdeleting] = useState(!!query.code)
 
   useEffect(() => {
@@ -37,36 +36,29 @@ const DeleteAccountWithGoogle = () => {
       try {
         await api.delete(`/auth/delete-account-with-google?code=${query.code}`)
         await logout()
+        successToast(t('common:accountDeleted'))
       } catch (err) {
         const message = (err as IApiError).data.errorMessage
-        setError(message)
+        errorToast(t(`common:validator.${message}`))
         setdeleting(false)
       }
     }
 
     query.code && deleteAccount()
+    //Note: t() causes unwanded api calls -> removed from deps[]
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [query.code, logout])
 
   return (
-    <>
-      <Box marginTop='30px'>
-        <Button
-          variant='outlined'
-          loading={deleting}
-          onClick={() => window.location.assign(getGoogleRedirectUrl())}
-        >
-          {t('deleteWithGoogle')}
-        </Button>
-      </Box>
-
-      {error && (
-        <Snackbar
-          severity='error'
-          onClose={() => setError(undefined)}
-          translationKey={`validator.${error}`}
-        />
-      )}
-    </>
+    <Box marginTop='30px'>
+      <Button
+        variant='outlined'
+        loading={deleting}
+        onClick={() => window.location.assign(getGoogleRedirectUrl())}
+      >
+        {t('deleteWithGoogle')}
+      </Button>
+    </Box>
   )
 }
 

@@ -2,7 +2,7 @@ import Link from 'next/link'
 import useTranslation from 'next-translate/useTranslation'
 import { Brightness2, ExitToApp, Settings, WbSunny } from '@material-ui/icons'
 
-import { useAppTheme } from '@contextProviders/AppThemeProvider'
+import { useAppTheme } from '@contextProviders/AppThemeProvider/AppThemeProvider'
 import { useAuthorizedUser } from '@contextProviders/AuthProvider'
 
 import {

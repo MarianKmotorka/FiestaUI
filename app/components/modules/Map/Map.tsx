@@ -6,7 +6,7 @@ import { compact, join } from 'lodash'
 
 import Search from './Search/Search'
 import { lightMapStyle, darkMapStyle } from './mapStyles'
-import { useAppTheme } from '@contextProviders/AppThemeProvider'
+import { useAppTheme } from '@contextProviders/AppThemeProvider/AppThemeProvider'
 import { getLocation, IGoogleMapLocation } from 'utils/googleUtils'
 
 import { Wrapper } from './Map.styled'
