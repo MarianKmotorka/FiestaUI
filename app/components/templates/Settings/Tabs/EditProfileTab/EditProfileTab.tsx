@@ -3,10 +3,11 @@ import { ExpandMore } from '@material-ui/icons'
 import useTranslation from 'next-translate/useTranslation'
 import { AccordionDetails, AccordionSummary } from '@material-ui/core'
 
-import Snackbar from '@elements/Snackbar/Snackbar'
-import Button from '@elements/Button/Button'
-import FormInput from '@elements/HookForm/FormInput'
+import Spinner from '@elements/Spinner'
 import Form from '@elements/HookForm/Form'
+import Button from '@elements/Button/Button'
+import Snackbar from '@elements/Snackbar/Snackbar'
+import FormInput from '@elements/HookForm/FormInput'
 import { useAuthorizedUser } from '@contextProviders/AuthProvider'
 import { useSubmitForm } from '@elements/HookForm/hooks/useSubmitForm'
 import {
@@ -19,7 +20,6 @@ import ProfilePictureMenu from './ProfilePictureMenu/ProfilePictureMenu'
 
 import { AccordionTitle, SettingsAccordion } from '../common.styled'
 import { Wrapper, StyledAvatar, StyledDivider } from './EditProfileTab.styled'
-import Spinner from '@elements/Spinner'
 
 interface IEditResponse {
   id: string
