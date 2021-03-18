@@ -21,6 +21,8 @@ const CollapseContainer = ({ collapsedHeight = 40, children }: ICollapseContaine
       setShowMoreButton(innerRef.current.getBoundingClientRect().height > collapsedHeight)
   }, [innerRef, width, collapsedHeight])
 
+  const buttonText = collapsed ? 'showMore' : 'showLess'
+
   return (
     <div>
       <StyledCollapse in={!collapsed} collapsedHeight={collapsedHeight}>
@@ -29,7 +31,7 @@ const CollapseContainer = ({ collapsedHeight = 40, children }: ICollapseContaine
 
       {showMoreButton && (
         <StyledButton onClick={() => setCollapsed(x => !x)}>
-          {t('showMore').toUpperCase()}
+          {t(buttonText).toUpperCase()}
         </StyledButton>
       )}
     </div>

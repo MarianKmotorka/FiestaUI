@@ -65,8 +65,11 @@ const ProfilePictureMenu = ({
       updateUser(data)
       setSuccess()
     } catch (error) {
-      const errors = (error as IApiError).data.errorDetails
-      const translatedError = t(`validator.${errors?.[0]?.code}`, errors?.[0]?.customState)
+      const apiError = (error as IApiError).data
+      const detail = apiError.errorDetails?.[0]
+      const translatedError = detail
+        ? t(`validator.${detail.code}`, detail.customState)
+        : apiError.errorMessage
       setError(translatedError)
     }
     setLoading(false)
