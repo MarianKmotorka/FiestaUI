@@ -1,7 +1,7 @@
 import { Button as MuiButton, ButtonProps } from '@material-ui/core'
 import Spinner from '@elements/Spinner'
 
-interface IButtonProps extends ButtonProps {
+export interface IButtonProps extends ButtonProps {
   loading?: boolean
   themedSpinner?: boolean
 }

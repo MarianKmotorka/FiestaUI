@@ -5,11 +5,11 @@ import { AccordionDetails, AccordionSummary } from '@material-ui/core'
 
 import Spinner from '@elements/Spinner'
 import Form from '@elements/HookForm/Form'
-import Button from '@elements/Button/Button'
 import { successToast } from 'services/toastService'
 import FormInput from '@elements/HookForm/FormInput'
+import SubmitButton from '@elements/HookForm/SubmitButton'
 import { useAuthorizedUser } from '@contextProviders/AuthProvider'
-import { useSubmitForm } from '@elements/HookForm/hooks/useSubmitForm'
+import { onlyDirtyValues, useSubmitForm } from '@elements/HookForm/hooks/useSubmitForm'
 import {
   requiredValidator,
   combineValidators,
@@ -40,9 +40,10 @@ const EditProfileTab = () => {
   const { currentUser, updateUser } = useAuthorizedUser()
   const [profilePictureLoading, setProfilePictureLoading] = useState(false)
 
-  const { onSubmit, submitting } = useSubmitForm<IEditProfileValues, IEditResponse>({
+  const { onSubmit } = useSubmitForm<IEditProfileValues, IEditResponse>({
     method: 'patch',
     url: `/users/${currentUser.id}`,
+    formatter: onlyDirtyValues,
     successCallback: response => {
       successToast(t('saved'))
       updateUser(response)
@@ -89,9 +90,7 @@ const EditProfileTab = () => {
               ])}
             />
 
-            <Button variant='outlined' type='submit' loading={submitting}>
-              {t('submit')}
-            </Button>
+            <SubmitButton variant='outlined'>{t('submit')}</SubmitButton>
           </Form>
 
           <ProfilePictureMenu

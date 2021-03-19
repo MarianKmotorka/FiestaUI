@@ -1,3 +1,4 @@
+import { useEffect } from 'react'
 import {
   useForm,
   FormProvider,
@@ -21,6 +22,12 @@ export default function Form<T>({
     mode: 'onTouched',
     defaultValues
   })
+
+  //Note: Fixes form still dirty when typing in same value as initial
+  useEffect(() => {
+    form.reset(form.getValues() as any)
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [])
 
   const onSubmit = async (values: T) => {
     await initialOnSubmit(values, form)

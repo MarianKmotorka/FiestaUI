@@ -2,8 +2,8 @@ import { useState } from 'react'
 import useTranslation from 'next-translate/useTranslation'
 
 import Form from '@elements/HookForm/Form'
-import Button from '@elements/Button/Button'
 import FormInput from '@elements/HookForm/FormInput'
+import SubmitButton from '@elements/HookForm/SubmitButton'
 import { PageMinHeightWrapper } from '@elements/PageMinHeightWrapper'
 import { useSubmitForm } from '@elements/HookForm/hooks/useSubmitForm'
 import SignupSuccessDialog from './SignupSuccessDialog/SignupSuccessDialog'
@@ -37,7 +37,7 @@ const SignupTemplate = () => {
   const { t } = useTranslation('common')
   const [confirmationEmail, setConfirmationEmail] = useState<string>()
 
-  const { onSubmit, submitting } = useSubmitForm<ISignupFormValues>({
+  const { onSubmit } = useSubmitForm<ISignupFormValues>({
     url: '/auth/register',
     successCallback: (_, { getValues }) => setConfirmationEmail(getValues().email)
   })
@@ -74,9 +74,7 @@ const SignupTemplate = () => {
               ])}
             />
 
-            <Button type='submit' loading={submitting}>
-              {t('signup')}
-            </Button>
+            <SubmitButton>{t('signup')}</SubmitButton>
           </FormContent>
         </Form>
       </StyledCard>

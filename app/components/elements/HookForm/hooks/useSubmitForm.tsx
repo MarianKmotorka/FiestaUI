@@ -1,10 +1,12 @@
 import { useState } from 'react'
 import { IApiError } from 'types'
+import { keys, pick } from 'lodash'
 import { UseFormMethods } from 'react-hook-form'
 import useTranslation from 'next-translate/useTranslation'
 import api from '@api/HttpClient'
 
 export type SubmitFormatter<T> = (values: T, form: UseFormMethods<T>) => Record<string, any>
+
 interface ISubmitFormParameters<TValues, TResponse> {
   url: string
   method?: 'post' | 'patch' | 'put' | 'delete'
@@ -39,6 +41,15 @@ export function useSubmitForm<TValues, TResponse = any>(
 
     try {
       const response = await responsePromise
+      form.reset(form.getValues() as any, {
+        isDirty: false,
+        touched: false,
+        dirtyFields: false,
+        errors: true,
+        isValid: true,
+        isSubmitted: true,
+        submitCount: true
+      })
       successCallback?.(response.data, form)
     } catch (err) {
       const errors = (err as IApiError).data.errorDetails
@@ -54,4 +65,9 @@ export function useSubmitForm<TValues, TResponse = any>(
   }
 
   return { onSubmit, submitting }
+}
+
+export function onlyDirtyValues<T>(values: T, { formState }: UseFormMethods<T>) {
+  const dirtyKeys = keys(formState.dirtyFields)
+  return pick(values, dirtyKeys)
 }
