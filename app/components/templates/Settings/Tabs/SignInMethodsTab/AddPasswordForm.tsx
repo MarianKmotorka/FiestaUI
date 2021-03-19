@@ -1,8 +1,8 @@
 import useTranslation from 'next-translate/useTranslation'
 
-import Button from '@elements/Button/Button'
 import FormInput from '@elements/HookForm/FormInput'
 import { useAuth } from '@contextProviders/AuthProvider'
+import SubmitButton from '@elements/HookForm/SubmitButton'
 import Form from '@elements/HookForm/Form'
 import { useSubmitForm } from '@elements/HookForm/hooks/useSubmitForm'
 import {
@@ -26,7 +26,7 @@ const AddPasswordForm = () => {
   const { t } = useTranslation('common')
   const { fetchUser } = useAuth()
 
-  const { onSubmit, submitting } = useSubmitForm<IFormValues>({
+  const { onSubmit } = useSubmitForm<IFormValues>({
     url: '/auth/add-password',
     successCallback: fetchUser
   })
@@ -47,9 +47,7 @@ const AddPasswordForm = () => {
         label={t('repeatPassword')}
         validate={createRepeatPasswordValidator('password')}
       />
-      <Button variant='outlined' type='submit' loading={submitting}>
-        {t('add')}
-      </Button>
+      <SubmitButton variant='outlined'>{t('add')}</SubmitButton>
     </Form>
   )
 }

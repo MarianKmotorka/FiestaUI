@@ -5,6 +5,7 @@
   "administrativeAreaLevel2": "Second level administrative area",
   "accountDeleted": "Account deleted",
   "back": "Back",
+  "bio": "Bio",
   "cancel": "Cancel",
   "connect": "Connect",
   "clear": "Clear",
@@ -62,10 +63,12 @@
   "currentPassword": "Current password",
   "warning": "Warning",
   "uploadPicture": "Upload picture",
+  "username": "Username",
   "unexpectedErrorOccuredWhileLoadingData": "Unexpected error occured while loading data.",
   "removePicture": "Remove picture",
 
   "validator": {
+    "alreadyExists": "Already exists",
     "emailAlreadyVerified": "Email is already verified",
     "emailAlreadyInUse": "Email is already in use",
     "emailIsNotVerified": "Email is not verified",
@@ -74,6 +77,7 @@
     "invalidAuthProvider": "Invalid auth provider. Use other sign in method.",
     "invalidLoginCredentials": "Invalid login credentials",
     "locationMustBeSelected": "Location must be selected",
+    "canContainLettersNumberOrSpecialCharacters": "Can contain letters, numbers or these special characters: {{specialCharacters}}",
     "max": "Maximum {{max}}",
     "maxLength": "Max {{maxLength}} characters",
     "mustBeUnique": "Must be unique",

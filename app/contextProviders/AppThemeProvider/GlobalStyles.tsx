@@ -1,5 +1,5 @@
 import { NAVBAR_HEIGHT } from '@modules/Navbar/Navbar.styled'
-import { createGlobalStyle } from 'styled-components'
+import { createGlobalStyle, css } from 'styled-components'
 
 const GlobalStyles = createGlobalStyle`
   .MuiMenuItem-root {
@@ -29,6 +29,17 @@ const GlobalStyles = createGlobalStyle`
       }
     }
   }
+
+  ${({ theme }) =>
+    theme.type === 'dark' &&
+    css`
+      .Mui-disabled.MuiButton-root {
+        color: ${theme.grey[600]};
+      }
+      .Mui-disabled.MuiButton-outlined {
+        border-color: ${theme.grey[600]};
+      }
+    `}
 `
 
 export default GlobalStyles

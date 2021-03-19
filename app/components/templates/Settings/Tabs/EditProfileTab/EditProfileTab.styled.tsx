@@ -7,11 +7,18 @@ export const Wrapper = styled.div`
   form {
     display: flex;
     flex-direction: column;
-    max-width: 350px;
     width: 100%;
 
     > * + * {
       margin-top: 20px;
+    }
+
+    .MuiInputBase-formControl {
+      max-width: 350px;
+    }
+
+    .MuiInputBase-multiline {
+      max-width: 100%;
     }
 
     button {
@@ -26,18 +33,18 @@ export const Wrapper = styled.div`
 `
 
 export const StyledAvatar = styled(Avatar)`
-  height: 200px;
-  width: 200px;
+  height: 170px;
+  width: 170px;
   margin: 0;
   display: block;
   cursor: pointer;
 
   .MuiAvatar-fallback {
-    height: 180px;
-    width: 180px;
+    height: 140px;
+    width: 140px;
     color: ${({ theme }) => theme.themeText.themeGray};
     display: block;
-    margin: 17px auto 0;
+    margin: 10px auto 0;
   }
 
   @media screen and (max-width: ${LG}px) {
@@ -45,9 +52,9 @@ export const StyledAvatar = styled(Avatar)`
     width: 150px;
 
     .MuiAvatar-fallback {
-      height: 140px;
-      width: 140px;
-      margin-top: 5px;
+      height: 130px;
+      width: 130px;
+      margin-top: 7px;
     }
   }
 
@@ -62,6 +69,7 @@ export const StyledAvatar = styled(Avatar)`
     }
   }
 `
+
 export const StyledDivider = styled(Divider)`
-  margin: 20px 5px 20px;
+  margin: 25px 5px 30px;
 `

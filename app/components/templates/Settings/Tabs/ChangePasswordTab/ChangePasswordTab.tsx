@@ -4,9 +4,9 @@ import useTranslation from 'next-translate/useTranslation'
 import { AccordionDetails, AccordionSummary } from '@material-ui/core'
 
 import Form from '@elements/HookForm/Form'
-import Button from '@elements/Button/Button'
 import FormInput from '@elements/HookForm/FormInput'
 import { successToast } from 'services/toastService'
+import SubmitButton from '@elements/HookForm/SubmitButton'
 import { useAuthorizedUser } from '@contextProviders/AuthProvider'
 import { useSubmitForm } from '@elements/HookForm/hooks/useSubmitForm'
 import {
@@ -36,7 +36,7 @@ const ChangePasswordTab = () => {
   const [expanded, setExpanded] = useState(true)
   const { currentUser } = useAuthorizedUser()
 
-  const { onSubmit, submitting } = useSubmitForm<IChangePasswordValues>({
+  const { onSubmit } = useSubmitForm<IChangePasswordValues>({
     url: '/auth/change-password',
     formatter: values => ({ ...values, userId: currentUser.id }),
     successCallback: () => successToast(t('success')),
@@ -79,9 +79,7 @@ const ChangePasswordTab = () => {
               ])}
             />
 
-            <Button variant='outlined' type='submit' loading={submitting}>
-              {t('changePassword')}
-            </Button>
+            <SubmitButton variant='outlined'>{t('changePassword')}</SubmitButton>
           </Form>
         </AccordionDetails>
       </SettingsAccordion>

@@ -26,11 +26,13 @@ interface IEditResponse {
   firstName: string
   lastName: string
   fullName: string
+  username: string
 }
 
 interface IEditProfileValues {
   firstName: string
   lastName: string
+  username: string
 }
 
 const EditProfileTab = () => {
@@ -71,8 +73,20 @@ const EditProfileTab = () => {
 
           <Form onSubmit={onSubmit} defaultValues={currentUser}>
             <FormInput
+              name='username'
+              label={t('username')}
+              variant='outlined'
+              validate={combineValidators([
+                requiredValidator,
+                minLengthValidator(2),
+                maxLengthValidator(15)
+              ])}
+            />
+
+            <FormInput
               name='firstName'
               label={t('firstName')}
+              variant='outlined'
               validate={combineValidators([
                 requiredValidator,
                 minLengthValidator(2),
@@ -83,11 +97,22 @@ const EditProfileTab = () => {
             <FormInput
               name='lastName'
               label={t('lastName')}
+              variant='outlined'
               validate={combineValidators([
                 requiredValidator,
                 minLengthValidator(2),
                 maxLengthValidator(30)
               ])}
+            />
+
+            <FormInput
+              name='bio'
+              label={t('bio')}
+              multiline
+              rows={5}
+              rowsMax={13}
+              variant='outlined'
+              validate={maxLengthValidator(500)}
             />
 
             <SubmitButton variant='outlined'>{t('submit')}</SubmitButton>

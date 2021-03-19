@@ -31,7 +31,7 @@ const UserDetailTemplate = ({ userId }: IUserDetailTemplateProps) => {
       <Box display='flex' justifyContent='center'>
         <AvatarAndNameWrapper>
           <Avatar src={user.pictureUrl} />
-          <h1>{user.nick}</h1>
+          <h1>{user.username}</h1>
           <p>{user.fullName}</p>
         </AvatarAndNameWrapper>
       </Box>
@@ -43,7 +43,9 @@ const UserDetailTemplate = ({ userId }: IUserDetailTemplateProps) => {
       {user.bio && (
         <Box maxWidth='min(100%, 700px)' marginX='auto'>
           <CollapseContainer>
-            <Box color='themeText.themeBlack'>{user.bio}</Box>
+            <Box whiteSpace='pre-wrap' color='themeText.themeBlack'>
+              {user.bio}
+            </Box>
           </CollapseContainer>
         </Box>
       )}

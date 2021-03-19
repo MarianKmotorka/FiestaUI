@@ -4,7 +4,7 @@ export interface ICurrentUser {
   lastName: string
   fullName: string
   email: string
-  nick: string
+  username: string
   pictureUrl?: string
   authProvider: AuthProviderFlags
   role: RoleEnum
@@ -16,7 +16,7 @@ export interface IUser {
   firstName: string
   lastName: string
   fullName: string
-  nick: string
+  username: string
   pictureUrl?: string
   bio?: string
 }
