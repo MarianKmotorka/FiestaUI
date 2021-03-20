@@ -16,6 +16,7 @@ const FormSearchableDropdown = <
   TFormatted extends { [key: string]: any } = TValue
 >({
   name,
+  disabled,
   validate: initialValidate,
   ...rest
 }: IFormSearchableDropdownProps<TValue, TFormatted>) => {
@@ -35,6 +36,7 @@ const FormSearchableDropdown = <
           value={value}
           onChange={onChange}
           error={errors[name]?.message}
+          disabled={disabled || form.formState.isSubmitting}
         />
       )}
     />

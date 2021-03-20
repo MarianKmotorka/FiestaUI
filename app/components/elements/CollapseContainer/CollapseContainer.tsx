@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from 'react'
+import { useState } from 'react'
 import useTranslation from 'next-translate/useTranslation'
 
 import useWindowSize from '@hooks/useWindowSize'
@@ -11,22 +11,22 @@ interface ICollapseContainerProps {
 
 const CollapseContainer = ({ collapsedHeight = 40, children }: ICollapseContainerProps) => {
   const [collapsed, setCollapsed] = useState(true)
-  const [showMoreButton, setShowMoreButton] = useState(true)
-  const innerRef = useRef<HTMLDivElement>(null!)
-  const { width } = useWindowSize()
+  const [showMoreButton, setShowMoreButton] = useState(false)
   const { t } = useTranslation('common')
 
-  useEffect(() => {
-    if (innerRef?.current)
-      setShowMoreButton(innerRef.current.getBoundingClientRect().height > collapsedHeight)
-  }, [innerRef, width, collapsedHeight])
+  // Note: Makes sure "showMoreButton" is displayed properly when window is resized
+  useWindowSize()
 
   const buttonText = collapsed ? 'showMore' : 'showLess'
+
+  const handleShowButton = (el: HTMLDivElement | null) => {
+    if (el) setShowMoreButton(el.getBoundingClientRect().height > collapsedHeight)
+  }
 
   return (
     <div>
       <StyledCollapse in={!collapsed} collapsedHeight={collapsedHeight}>
-        <div ref={innerRef}>{children}</div>
+        <div ref={handleShowButton}>{children}</div>
       </StyledCollapse>
 
       {showMoreButton && (

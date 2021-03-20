@@ -11,6 +11,7 @@ interface IFormDateTimePickerProps extends Omit<DateTimePickerProps, 'onChange' 
 
 const FormDateTimePicker = ({
   name,
+  disabled,
   validate: initialValidate,
   ...rest
 }: IFormDateTimePickerProps) => {
@@ -31,6 +32,7 @@ const FormDateTimePicker = ({
           value={value}
           onChange={onChange}
           error={errors[name]?.message}
+          disabled={disabled || form.formState.isSubmitting}
         />
       )}
     />

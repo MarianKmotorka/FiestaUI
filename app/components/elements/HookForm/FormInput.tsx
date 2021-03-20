@@ -12,7 +12,14 @@ interface IFormInputProps extends Omit<TextBoxProps, 'value' | 'onChange'> {
   validate?: Validator<any>
 }
 
-const FormInput = ({ name, label, type, validate: initialValidate, ...rest }: IFormInputProps) => {
+const FormInput = ({
+  name,
+  label,
+  type,
+  disabled,
+  validate: initialValidate,
+  ...rest
+}: IFormInputProps) => {
   const form = useFormContext()
   const { t } = useTranslation('common')
   const { errors } = form
@@ -24,7 +31,14 @@ const FormInput = ({ name, label, type, validate: initialValidate, ...rest }: IF
       name={name}
       rules={{ validate }}
       render={props => (
-        <TextBox {...props} {...rest} type={type} label={label} error={errors[name]?.message} />
+        <TextBox
+          {...props}
+          {...rest}
+          type={type}
+          label={label}
+          error={errors[name]?.message}
+          disabled={disabled || form.formState.isSubmitting}
+        />
       )}
     />
   )
