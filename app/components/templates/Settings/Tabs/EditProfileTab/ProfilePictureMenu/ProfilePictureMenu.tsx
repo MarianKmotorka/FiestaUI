@@ -20,10 +20,6 @@ const ProfilePictureMenu = ({ anchorEl, onClose, setLoading }: IProfilePictureMe
   const inputRef = useRef<HTMLInputElement>(null!)
   const { updateUser, currentUser } = useAuthorizedUser()
 
-  const clearInput = () => {
-    if (inputRef?.current?.value) inputRef.current.value = ''
-  }
-
   const handleUploadPictureClicked = () => {
     if (!inputRef.current) return
     inputRef.current.click()
@@ -42,7 +38,6 @@ const ProfilePictureMenu = ({ anchorEl, onClose, setLoading }: IProfilePictureMe
       errors?.[0] && errorToast(errors[0].code)
     }
     setLoading(false)
-    clearInput()
   }
 
   const handleInputChanged = async (e: ChangeEvent<HTMLInputElement>) => {
@@ -66,7 +61,6 @@ const ProfilePictureMenu = ({ anchorEl, onClose, setLoading }: IProfilePictureMe
       errorToast(translatedError)
     }
     setLoading(false)
-    clearInput()
   }
 
   return (
@@ -78,7 +72,13 @@ const ProfilePictureMenu = ({ anchorEl, onClose, setLoading }: IProfilePictureMe
       onClose={onClose}
     >
       <MenuContent>
-        <StyledInput type='file' accept='image/*' ref={inputRef} onChange={handleInputChanged} />
+        <StyledInput
+          value=''
+          type='file'
+          accept='image/*'
+          ref={inputRef}
+          onChange={handleInputChanged}
+        />
 
         <StyledMenuItem onClick={handleUploadPictureClicked}>
           <Publish />
