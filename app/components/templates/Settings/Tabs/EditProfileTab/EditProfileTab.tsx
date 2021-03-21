@@ -1,12 +1,18 @@
 import React, { useState } from 'react'
 import { ExpandMore } from '@material-ui/icons'
+import { useQuery, useQueryClient } from 'react-query'
 import useTranslation from 'next-translate/useTranslation'
 import { AccordionDetails, AccordionSummary } from '@material-ui/core'
 
+import api from '@api/HttpClient'
+import { IApiError } from 'types'
+import { IUser } from 'domainTypes'
 import Spinner from '@elements/Spinner'
 import Form from '@elements/HookForm/Form'
+import LoadingAccordion from './LoadingAccordion'
 import { successToast } from 'services/toastService'
 import FormInput from '@elements/HookForm/FormInput'
+import FetchError from '@elements/FetchError/FetchError'
 import SubmitButton from '@elements/HookForm/SubmitButton'
 import { useAuthorizedUser } from '@contextProviders/AuthProvider'
 import { onlyDirtyValues, useSubmitForm } from '@elements/HookForm/hooks/useSubmitForm'
@@ -21,18 +27,11 @@ import ProfilePictureMenu from './ProfilePictureMenu/ProfilePictureMenu'
 import { AccordionTitle, SettingsAccordion } from '../common.styled'
 import { Wrapper, StyledAvatar, StyledDivider } from './EditProfileTab.styled'
 
-interface IEditResponse {
-  id: string
-  firstName: string
-  lastName: string
-  fullName: string
-  username: string
-}
-
 interface IEditProfileValues {
   firstName: string
   lastName: string
   username: string
+  bio: string
 }
 
 const EditProfileTab = () => {
@@ -41,16 +40,28 @@ const EditProfileTab = () => {
   const [profilePictureEl, setProfilePictureEl] = useState<HTMLElement>()
   const { currentUser, updateUser } = useAuthorizedUser()
   const [profilePictureLoading, setProfilePictureLoading] = useState(false)
+  const queryClient = useQueryClient()
 
-  const { onSubmit } = useSubmitForm<IEditProfileValues, IEditResponse>({
+  const { onSubmit } = useSubmitForm<IEditProfileValues, Omit<IUser, 'pictureUrl'>>({
     method: 'patch',
     url: `/users/${currentUser.id}`,
     formatter: onlyDirtyValues,
     successCallback: response => {
       successToast(t('saved'))
       updateUser(response)
+      queryClient.setQueryData<IUser>(['users', currentUser.id], prev => ({ ...prev, ...response }))
     }
   })
+
+  const { data, isLoading, error } = useQuery<IUser, IApiError>(
+    ['users', currentUser.id],
+    async () => (await api.get(`/users/${currentUser.id}`)).data
+  )
+
+  if (isLoading) return <LoadingAccordion />
+  if (error) return <FetchError error={error} />
+
+  const user = data!
 
   return (
     <Wrapper>
@@ -64,14 +75,14 @@ const EditProfileTab = () => {
             <Spinner themed />
           ) : (
             <StyledAvatar
-              src={currentUser.pictureUrl}
+              src={user.pictureUrl}
               onClick={e => setProfilePictureEl(profilePictureEl ? undefined : e.currentTarget)}
             />
           )}
 
           <StyledDivider />
 
-          <Form onSubmit={onSubmit} defaultValues={currentUser}>
+          <Form onSubmit={onSubmit} defaultValues={user}>
             <FormInput
               name='username'
               label={t('username')}

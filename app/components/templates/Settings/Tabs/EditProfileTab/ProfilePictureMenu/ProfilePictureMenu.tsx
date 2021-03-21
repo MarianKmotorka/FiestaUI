@@ -1,8 +1,10 @@
+import { useRef, ChangeEvent } from 'react'
+import { useQueryClient } from 'react-query'
 import { DeleteOutline, Publish } from '@material-ui/icons'
 import useTranslation from 'next-translate/useTranslation'
-import { useRef, ChangeEvent } from 'react'
 
 import api from '@api/HttpClient'
+import { IUser } from 'domainTypes'
 import { IApiError } from '../../../../../../types'
 import { errorToast, successToast } from 'services/toastService'
 import { useAuthorizedUser } from '@contextProviders/AuthProvider'
@@ -16,6 +18,7 @@ interface IProfilePictureMenuProps {
 }
 
 const ProfilePictureMenu = ({ anchorEl, onClose, setLoading }: IProfilePictureMenuProps) => {
+  const queryClient = useQueryClient()
   const { t } = useTranslation('common')
   const inputRef = useRef<HTMLInputElement>(null!)
   const { updateUser, currentUser } = useAuthorizedUser()
@@ -32,6 +35,10 @@ const ProfilePictureMenu = ({ anchorEl, onClose, setLoading }: IProfilePictureMe
       onClose()
       await api.delete(`/users/${currentUser.id}/profile-picture`)
       updateUser({ pictureUrl: undefined })
+      queryClient.setQueryData<IUser>(['users', currentUser.id], prev => ({
+        ...prev!,
+        pictureUrl: undefined
+      }))
       successToast(t('saved'))
     } catch (error) {
       const errors = (error as IApiError).data.errorDetails
@@ -51,6 +58,10 @@ const ProfilePictureMenu = ({ anchorEl, onClose, setLoading }: IProfilePictureMe
       setLoading(true)
       const { data } = await api.post(`/users/${currentUser.id}/profile-picture`, formData)
       updateUser(data)
+      queryClient.setQueryData<IUser>(['users', currentUser.id], prev => ({
+        ...prev,
+        ...data
+      }))
       successToast(t('saved'))
     } catch (error) {
       const apiError = (error as IApiError).data
