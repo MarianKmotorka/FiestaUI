@@ -1,8 +1,9 @@
-import { CardContent, Modal } from '@material-ui/core'
 import Link from 'next/link'
 import Trans from 'next-translate/Trans'
+import { CardContent } from '@material-ui/core'
 import useTranslation from 'next-translate/useTranslation'
 
+import Modal from '@elements/Modal'
 import Button from '@elements/Button/Button'
 
 import { StyledCard, Title } from './SignupSuccessDialog.styled'

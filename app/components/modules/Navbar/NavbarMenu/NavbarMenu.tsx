@@ -41,7 +41,7 @@ const NavbarMenu = ({ anchorEl, onClose }: INavbarMenuProps) => {
         </Link>
 
         <Link href={userDetailLink}>
-          <Name>{currentUser.fullName}</Name>
+          <Name>{currentUser.username}</Name>
         </Link>
 
         <StyledDivider />

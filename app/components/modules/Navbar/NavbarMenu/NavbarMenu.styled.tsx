@@ -48,13 +48,17 @@ export const Name = styled.h1`
   font-weight: 500;
   font-size: 1.2rem;
   text-align: center;
-  color: ${({ theme }) => theme.themeText.themeGray};
+  color: ${({ theme }) => theme.themeText.themeBlack};
   cursor: pointer;
   margin: 12px auto 0;
   width: 90%;
 
   :hover {
     text-decoration: underline;
+  }
+
+  ::first-letter {
+    color: ${({ theme }) => theme.primary.main};
   }
 `
 

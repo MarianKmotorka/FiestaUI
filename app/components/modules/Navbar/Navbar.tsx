@@ -3,10 +3,11 @@ import { AnimatePresence } from 'framer-motion'
 import { useRouter } from 'next/dist/client/router'
 import useTranslation from 'next-translate/useTranslation'
 import { Avatar, Button, Chip, IconButton } from '@material-ui/core'
-import { Brightness2, ExpandLess, ExpandMore, WbSunny } from '@material-ui/icons'
+import { Brightness2, ExpandLess, ExpandMore, Search, WbSunny } from '@material-ui/icons'
 
 import NavLink from '@elements/NavLink'
 import useWindowSize from '@hooks/useWindowSize'
+import NavbarSearch from './NavbarSearch/NavbarSearch'
 import { useAuth } from '@contextProviders/AuthProvider'
 import NavbarMenu from './NavbarMenu/NavbarMenu'
 import { useAppTheme } from '@contextProviders/AppThemeProvider/AppThemeProvider'
@@ -18,7 +19,8 @@ import {
   StyledAppBar,
   StyledContainer,
   StyledButtonGroup,
-  StyledBurger
+  StyledBurger,
+  SearchChip
 } from './Navbar.styled'
 
 const Navbar = () => {
@@ -28,6 +30,7 @@ const Navbar = () => {
   const { theme, isDark, switchTheme } = useAppTheme()
   const { maxMedium } = useWindowSize()
   const [menuOpen, setMenuOpen] = useState(false)
+  const [searchOpen, setSearchOpen] = useState(false)
   const [profileChipEl, setProfileChipEl] = useState<HTMLElement>()
   const showMenu = !maxMedium || (maxMedium && menuOpen)
   const menuAnimations = maxMedium
@@ -73,9 +76,15 @@ const Navbar = () => {
                     <LinkText>People</LinkText>
                   </NavLink>
 
+                  <SearchChip
+                    avatar={<Search />}
+                    onClick={() => setSearchOpen(true)}
+                    color='secondary'
+                  />
+
                   <Chip
                     avatar={<Avatar src={auth.currentUser.pictureUrl} />}
-                    label={auth.currentUser.fullName}
+                    label={auth.currentUser.username}
                     onDelete={() => {}}
                     clickable
                     color='primary'
@@ -128,6 +137,8 @@ const Navbar = () => {
           </IconButton>
         )}
       </StyledContainer>
+
+      {searchOpen && <NavbarSearch onClose={() => setSearchOpen(false)} />}
     </StyledAppBar>
   )
 }

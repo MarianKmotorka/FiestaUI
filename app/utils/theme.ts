@@ -1,6 +1,7 @@
 import { createMuiTheme } from '@material-ui/core/styles'
 import { Palette } from '@material-ui/core/styles/createPalette'
 import red from '@material-ui/core/colors/red'
+import { grey } from '@material-ui/core/colors'
 
 export const SM = 400
 export const MD = 700
@@ -40,6 +41,9 @@ export const lightTheme = createMuiTheme({
   },
   breakpoints: {
     values: { sm: MD, lg: XL, md: LG, xl: XXL, xs: SM }
+  },
+  overrides: {
+    MuiBackdrop: { root: { backgroundColor: 'rgba(0,0,0,0.8)' } }
   }
 })
 
@@ -49,7 +53,7 @@ export const darkTheme = createMuiTheme({
     ...lightTheme.palette,
     type: 'dark',
     secondary: {
-      main: '#f9f9f9'
+      main: grey[400]
     },
     themeText: {
       ...lightTheme.palette.themeText,
@@ -58,8 +62,8 @@ export const darkTheme = createMuiTheme({
       themeWhite: '#000000'
     },
     background: {
-      default: '#212121',
-      paper: '#2b2b2b'
+      default: '#171717',
+      paper: '#252525'
     }
   }
 })

@@ -1,9 +1,9 @@
 import { useState } from 'react'
-import { Modal } from '@material-ui/core'
 import { useFormContext } from 'react-hook-form'
 import { KeyboardArrowRight } from '@material-ui/icons'
 import useTranslation from 'next-translate/useTranslation'
 
+import Modal from '@elements/Modal'
 import Button from '@elements/Button/Button'
 import TextBox from '@elements/TextBox/TextBox'
 import { IGoogleMapLocation } from 'utils/googleUtils'

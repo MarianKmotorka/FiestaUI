@@ -1,10 +1,11 @@
 import { useState } from 'react'
-import { CardContent, Modal } from '@material-ui/core'
+import { CardContent } from '@material-ui/core'
 import { KeyboardArrowRight, Done } from '@material-ui/icons'
 import useTranslation from 'next-translate/useTranslation'
 
 import { IApiError } from 'types'
 import api from '@api/HttpClient'
+import Modal from '@elements/Modal'
 import Button from '@elements/Button/Button'
 import TextBox from '@elements/TextBox/TextBox'
 

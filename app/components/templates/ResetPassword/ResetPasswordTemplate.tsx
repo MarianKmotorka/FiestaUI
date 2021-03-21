@@ -1,10 +1,11 @@
 import { useState } from 'react'
 import Link from 'next/link'
 import { useRouter } from 'next/router'
-import { CardContent, Modal } from '@material-ui/core'
+import { CardContent } from '@material-ui/core'
 import useTranslation from 'next-translate/useTranslation'
 import { ArrowForward, KeyboardArrowRight } from '@material-ui/icons'
 
+import Modal from '@elements/Modal'
 import Form from '@elements/HookForm/Form'
 import Button from '@elements/Button/Button'
 import FormInput from '@elements/HookForm/FormInput'

@@ -1,7 +1,7 @@
 import styled from 'styled-components'
 import { motion } from 'framer-motion'
 import BurgerMenu from 'react-hamburger-menu'
-import { AppBar, ButtonGroup } from '@material-ui/core'
+import { AppBar, ButtonGroup, Chip } from '@material-ui/core'
 
 import { Container } from '@elements/Container'
 import FiestaLogo from '@elements/FiestaLogo'
@@ -72,7 +72,12 @@ export const Menu = styled(motion.div)`
     .MuiChip-label {
       text-overflow: ellipsis;
       max-width: 160px;
-      font-size: 1.1em;
+      font-size: 1.25em;
+
+      ::first-letter {
+        font-weight: 500;
+        color: ${({ theme }) => theme.grey[800]};
+      }
     }
   }
 
@@ -125,5 +130,13 @@ export const StyledButtonGroup = styled(ButtonGroup)`
 export const StyledBurger = styled(BurgerMenu)`
   span {
     margin-top: 0 !important;
+  }
+`
+
+export const SearchChip = styled(Chip)`
+  cursor: pointer;
+  svg {
+    background-color: transparent !important;
+    color: ${({ theme }) => theme.themeText.themeWhite} !important;
   }
 `

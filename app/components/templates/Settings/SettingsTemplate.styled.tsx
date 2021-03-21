@@ -63,12 +63,8 @@ export const StyledTab = styled(Tab)`
 `
 
 export const StyledPanel = styled(TabPanel)`
-  height: calc(100vh - ${NAVBAR_HEIGHT}px);
+  height: calc(100vh - ${NAVBAR_HEIGHT}px - 50px);
   overflow: auto;
-
-  ::-webkit-scrollbar {
-    display: none;
-  }
 
   @media screen and (max-width: ${MD}px) {
     height: calc(100vh - ${NAVBAR_HEIGHT}px - 60px);

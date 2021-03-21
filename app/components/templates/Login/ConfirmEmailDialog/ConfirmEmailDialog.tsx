@@ -1,10 +1,11 @@
 import { useState } from 'react'
-import { CardContent, Modal } from '@material-ui/core'
-import { KeyboardArrowRight, Done } from '@material-ui/icons'
-import useTranslation from 'next-translate/useTranslation'
 import Trans from 'next-translate/Trans'
+import { CardContent } from '@material-ui/core'
+import useTranslation from 'next-translate/useTranslation'
+import { KeyboardArrowRight, Done } from '@material-ui/icons'
 
 import api from '@api/HttpClient'
+import Modal from '@elements/Modal'
 import Button from '@elements/Button/Button'
 
 import { StyledCard, Title } from './ConfirmEmailDialog.styled'
