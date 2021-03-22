@@ -62,7 +62,7 @@ export const ItemInfo = styled.div`
 
   p {
     margin: 0px;
-    line-height: 1.15rem;
+    line-height: 1.4rem;
     font-weight: 500;
     font-size: 1.1rem;
     ::first-letter {
@@ -73,7 +73,7 @@ export const ItemInfo = styled.div`
   span {
     font-size: 0.85em;
     color: ${({ theme }) => theme.themeText.themeGray};
-
+    line-height: 1.15rem;
     display: flex;
     align-items: center;
     svg {
@@ -90,10 +90,12 @@ export const ItemInfo = styled.div`
     max-width: 60vw;
     p {
       font-size: 0.95rem;
+      line-height: 1.25rem;
     }
 
     span {
       font-size: 0.7em;
+      line-height: 1rem;
     }
 
     .MuiAvatar-root {
