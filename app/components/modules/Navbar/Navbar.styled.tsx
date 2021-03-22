@@ -62,7 +62,7 @@ export const Menu = styled(motion.div)`
 
   .MuiChip-root {
     margin-left: 20px;
-    padding: 3px;
+    padding: 4px;
 
     svg {
       pointer-events: none;
@@ -73,11 +73,8 @@ export const Menu = styled(motion.div)`
       text-overflow: ellipsis;
       max-width: 160px;
       font-size: 1.25em;
-
-      ::first-letter {
-        font-weight: 500;
-        color: ${({ theme }) => theme.grey[800]};
-      }
+      font-weight: 500;
+      margin: 0 2px;
     }
   }
 

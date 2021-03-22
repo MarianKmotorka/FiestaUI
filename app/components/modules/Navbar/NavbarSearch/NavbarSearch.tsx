@@ -3,18 +3,26 @@ import { useState } from 'react'
 import { isEmpty } from 'lodash'
 import { useQuery } from 'react-query'
 import useTranslation from 'next-translate/useTranslation'
-import { Avatar, Box } from '@material-ui/core'
+import { Avatar, Box, CircularProgress } from '@material-ui/core'
 import { Close, KeyboardArrowRight, Search, SentimentDissatisfied } from '@material-ui/icons'
 
 import { IApiError } from 'types'
 import api from '@api/HttpClient'
 import Modal from '@elements/Modal'
+import EventItem from './EventItem'
 import useDebounce from '@hooks/useDebounce'
+import { ItemType, EventAndUserSelectorItem } from './types'
 import TextBox from '@elements/TextBox/TextBox'
-import { IUserSelector } from 'utils/selectorTypes'
+import useWindowSize from '@hooks/useWindowSize'
 import FetchError from '@elements/FetchError/FetchError'
 
-import { Item, ItemsContainer, StyledCard, StyledCloseButton } from './NavbarSearch.styled'
+import {
+  Item,
+  ItemInfo,
+  ItemsContainer,
+  StyledCard,
+  StyledCloseButton
+} from './NavbarSearch.styled'
 
 interface INavbarSearchProps {
   onClose: () => void
@@ -24,15 +32,34 @@ const NavbarSearch = ({ onClose }: INavbarSearchProps) => {
   const { t } = useTranslation('common')
   const [search, setSearch] = useState('')
   const debouncedSearch = useDebounce(search)
+  const { minMedium } = useWindowSize()
 
-  const { data, error } = useQuery<IUserSelector[], IApiError>(
+  const { data, error, isFetching } = useQuery<EventAndUserSelectorItem[], IApiError>(
     ['users', 'selector', debouncedSearch],
-    async () => (await api.get(`/users/selector?search=${debouncedSearch}`)).data,
+    async () => (await api.get(`/selectors/events-and-users?search=${debouncedSearch}`)).data,
     { initialData: [] }
   )
 
   if (error) return <FetchError error={error} />
   const items = data!
+
+  const renderItem = (item: EventAndUserSelectorItem) =>
+    item.type === ItemType.User ? (
+      <Link key={item.id} href={`/users/${item.id}`}>
+        <Item onClick={onClose}>
+          <Avatar src={item.pictureUrl} />
+
+          <ItemInfo>
+            <p>{item.displayName}</p>
+            <span>{item.fullName}</span>
+          </ItemInfo>
+
+          {minMedium && <KeyboardArrowRight />}
+        </Item>
+      </Link>
+    ) : (
+      <EventItem item={item} onClose={onClose} />
+    )
 
   return (
     <Modal open onClose={onClose}>
@@ -41,7 +68,7 @@ const NavbarSearch = ({ onClose }: INavbarSearchProps) => {
           <Close />
         </StyledCloseButton>
 
-        <Box margin='60px auto 40px' width='84%'>
+        <Box margin='60px auto 30px' width='84%'>
           <TextBox
             fullWidth
             value={search}
@@ -58,21 +85,16 @@ const NavbarSearch = ({ onClose }: INavbarSearchProps) => {
         </Box>
 
         <ItemsContainer>
-          {items.map(x => (
-            <Link key={x.id} href={`/users/${x.id}`}>
-              <Item onClick={onClose}>
-                <Avatar src={x.pictureUrl} />
-                <Box display='flex' flexDirection='column' justifyContent='center'>
-                  <p>{x.username}</p>
-                  <span>{x.fullName}</span>
-                </Box>
-                <KeyboardArrowRight />
-              </Item>
-            </Link>
-          ))}
-
-          {isEmpty(items) && (
+          {isFetching && (
             <Item>
+              <CircularProgress />
+            </Item>
+          )}
+
+          {items.map(renderItem)}
+
+          {isEmpty(items) && !isFetching && (
+            <Item disabled>
               <Box display='flex' gridGap='10px'>
                 {t('nothingFound')}
                 <SentimentDissatisfied />
