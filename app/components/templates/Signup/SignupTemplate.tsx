@@ -39,7 +39,7 @@ const SignupTemplate = () => {
 
   const { onSubmit } = useSubmitForm<ISignupFormValues>({
     url: '/auth/register',
-    successCallback: (_, { getValues }) => setConfirmationEmail(getValues().email)
+    successCallback: (_, { email }) => setConfirmationEmail(email)
   })
 
   return (

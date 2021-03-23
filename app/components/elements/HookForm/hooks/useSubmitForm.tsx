@@ -12,7 +12,7 @@ interface ISubmitFormParameters<TValues, TResponse> {
   method?: 'post' | 'patch' | 'put' | 'delete'
   canSubmit?: boolean
   formatter?: SubmitFormatter<TValues>
-  successCallback?: (data: TResponse, form: UseFormMethods<TValues>) => void
+  successCallback?: (data: TResponse, values: TValues, form: UseFormMethods<TValues>) => void
   errorCallback?: (error: IApiError['data'], form: UseFormMethods<TValues>) => void
 }
 
@@ -50,7 +50,7 @@ export function useSubmitForm<TValues, TResponse = any>(
         isSubmitted: true,
         submitCount: true
       })
-      successCallback?.(response.data, form)
+      successCallback?.(response.data, values, form)
     } catch (err) {
       const errors = (err as IApiError).data.errorDetails
 
