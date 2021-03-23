@@ -58,7 +58,7 @@ const NavbarSearch = ({ onClose }: INavbarSearchProps) => {
         </Item>
       </Link>
     ) : (
-      <EventItem item={item} onClose={onClose} />
+      <EventItem key={item.id} item={item} onClose={onClose} />
     )
 
   return (
@@ -68,7 +68,7 @@ const NavbarSearch = ({ onClose }: INavbarSearchProps) => {
           <Close />
         </StyledCloseButton>
 
-        <Box margin='60px auto 30px' width='84%'>
+        <Box margin='60px auto 20px' width='84%'>
           <TextBox
             fullWidth
             value={search}

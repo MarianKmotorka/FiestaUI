@@ -17,7 +17,7 @@ const EventItem = ({ item, onClose }: IEventItemProps) => {
   if (item.type === ItemType.User) return <></>
 
   return (
-    <Link key={item.id} href='#'>
+    <Link href='#'>
       <Item onClick={onClose}>
         <Avatar variant='rounded' src={item.pictureUrl}>
           <Event />

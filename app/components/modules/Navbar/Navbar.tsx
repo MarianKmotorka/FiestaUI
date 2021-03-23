@@ -2,10 +2,25 @@ import { useState } from 'react'
 import { AnimatePresence } from 'framer-motion'
 import { useRouter } from 'next/dist/client/router'
 import useTranslation from 'next-translate/useTranslation'
-import { Avatar, Button, Chip, IconButton } from '@material-ui/core'
-import { Brightness2, ExpandLess, ExpandMore, Search, WbSunny } from '@material-ui/icons'
+import { Avatar, Box, Button, Chip, IconButton } from '@material-ui/core'
+import {
+  AccountCircle,
+  Add,
+  Brightness2,
+  Event,
+  ExitToAppRounded,
+  ExpandLess,
+  ExpandMore,
+  Fingerprint,
+  HomeRounded,
+  LocationSearching,
+  Search,
+  Settings,
+  WbSunny
+} from '@material-ui/icons'
 
 import NavLink from '@elements/NavLink'
+import Divider from '@elements/Divider'
 import useWindowSize from '@hooks/useWindowSize'
 import NavbarSearch from './NavbarSearch/NavbarSearch'
 import { useAuth } from '@contextProviders/AuthProvider'
@@ -20,10 +35,15 @@ import {
   StyledContainer,
   StyledButtonGroup,
   StyledBurger,
-  SearchChip
+  SearchChip,
+  MobileMenuItem
 } from './Navbar.styled'
 
-const Navbar = () => {
+interface INavbarProps {
+  forceUnauthorizedNavbar?: true
+}
+
+const Navbar = ({ forceUnauthorizedNavbar }: INavbarProps) => {
   const auth = useAuth()
   const router = useRouter()
   const { t } = useTranslation('common')
@@ -49,92 +69,186 @@ const Navbar = () => {
     setMenuOpen(prev => value || !prev)
   }
 
-  const pushAndClose = (path: string) => () => {
-    toggleMenu(false)
-    router.push(path)
-  }
+  const searchChip = (
+    <SearchChip avatar={<Search />} onClick={() => setSearchOpen(true)} color='secondary' />
+  )
+
+  const switchThemeMenuItem = (
+    <MobileMenuItem onClick={switchTheme}>
+      {isDark ? <WbSunny color='primary' /> : <Brightness2 />}
+      {t('switchTheme')}
+    </MobileMenuItem>
+  )
+
+  const mobileContent =
+    auth.isLoggedIn && !forceUnauthorizedNavbar ? (
+      <>
+        <NavLink href='/home'>
+          <MobileMenuItem>
+            <HomeRounded />
+            {t('home')}
+          </MobileMenuItem>
+        </NavLink>
+
+        <NavLink href='/events'>
+          <MobileMenuItem>
+            <Event />
+            {t('events')}
+          </MobileMenuItem>
+        </NavLink>
+
+        <NavLink href='/explore'>
+          <MobileMenuItem>
+            <LocationSearching />
+            {t('explore')}
+          </MobileMenuItem>
+        </NavLink>
+
+        <NavLink href={`/users/${auth.currentUser.id}`}>
+          <MobileMenuItem>
+            <AccountCircle />
+            {t('profile')}
+          </MobileMenuItem>
+        </NavLink>
+
+        <NavLink href='/settings'>
+          <MobileMenuItem>
+            <Settings />
+            {t('settings')}
+          </MobileMenuItem>
+        </NavLink>
+
+        <Box width='90%' margin='5px auto'>
+          <Divider />
+        </Box>
+
+        {switchThemeMenuItem}
+
+        <MobileMenuItem onClick={auth.logout}>
+          <ExitToAppRounded />
+          {t('logout')}
+        </MobileMenuItem>
+      </>
+    ) : (
+      <>
+        <NavLink href='/login'>
+          <MobileMenuItem>
+            <Fingerprint />
+            {t('login')}
+          </MobileMenuItem>
+        </NavLink>
+
+        <NavLink href='/signup'>
+          <MobileMenuItem>
+            <Add />
+            {t('signup')}
+          </MobileMenuItem>
+        </NavLink>
+
+        <Box width='90%' margin='5px auto'>
+          <Divider />
+        </Box>
+
+        {switchThemeMenuItem}
+      </>
+    )
+
+  const desktopContent =
+    auth.isLoggedIn && !forceUnauthorizedNavbar ? (
+      <>
+        <NavLink href='/home'>
+          <LinkText>
+            <HomeRounded />
+            <span>{t('home')}</span>
+          </LinkText>
+        </NavLink>
+
+        <NavLink href='/events'>
+          <LinkText>
+            <Event />
+            <span>{t('events')}</span>
+          </LinkText>
+        </NavLink>
+
+        <NavLink href='/explore'>
+          <LinkText>
+            <LocationSearching />
+            <span>{t('explore')}</span>
+          </LinkText>
+        </NavLink>
+
+        {searchChip}
+
+        <Chip
+          avatar={<Avatar src={auth.currentUser.pictureUrl} />}
+          label={auth.currentUser.username}
+          onDelete={() => {}}
+          clickable
+          color='primary'
+          deleteIcon={profileChipEl ? <ExpandLess /> : <ExpandMore />}
+          onClick={e => setProfileChipEl(prev => (prev ? undefined : e.currentTarget))}
+        />
+
+        {profileChipEl && (
+          <NavbarMenu onClose={() => setProfileChipEl(undefined)} anchorEl={profileChipEl} />
+        )}
+      </>
+    ) : (
+      <>
+        <IconButton onClick={switchTheme}>
+          {isDark ? <WbSunny color='primary' /> : <Brightness2 />}
+        </IconButton>
+
+        <StyledButtonGroup>
+          <Button
+            color='secondary'
+            variant='text'
+            size='large'
+            onClick={() => router.push('/login')}
+          >
+            {t('login').toUpperCase()}
+          </Button>
+
+          <Button
+            color='primary'
+            variant='contained'
+            size='large'
+            onClick={() => router.push('/signup')}
+          >
+            {t('signup').toUpperCase()}
+          </Button>
+        </StyledButtonGroup>
+      </>
+    )
 
   return (
     <StyledAppBar elevation={0}>
       <StyledContainer>
-        <Logo onClick={() => router.push('/')} />
+        <Logo onClick={() => router.push(auth.isLoggedIn ? '/home' : '/')} />
 
         <AnimatePresence>
           {showMenu && (
-            <Menu {...menuAnimations}>
-              {auth.isLoggedIn && (
-                <>
-                  <NavLink href='/home'>
-                    <LinkText>Home</LinkText>
-                  </NavLink>
-
-                  <NavLink href='/places'>
-                    <LinkText>Places</LinkText>
-                  </NavLink>
-
-                  <NavLink href='/people'>
-                    <LinkText>People</LinkText>
-                  </NavLink>
-
-                  <SearchChip
-                    avatar={<Search />}
-                    onClick={() => setSearchOpen(true)}
-                    color='secondary'
-                  />
-
-                  <Chip
-                    avatar={<Avatar src={auth.currentUser.pictureUrl} />}
-                    label={auth.currentUser.username}
-                    onDelete={() => {}}
-                    clickable
-                    color='primary'
-                    deleteIcon={profileChipEl ? <ExpandLess /> : <ExpandMore />}
-                    onClick={e => setProfileChipEl(prev => (prev ? undefined : e.currentTarget))}
-                  />
-
-                  {profileChipEl && (
-                    <NavbarMenu
-                      onClose={() => setProfileChipEl(undefined)}
-                      anchorEl={profileChipEl}
-                    />
-                  )}
-                </>
-              )}
-
-              {!auth.isLoggedIn && (
-                <>
-                  <IconButton onClick={switchTheme}>
-                    {isDark ? <WbSunny color='primary' /> : <Brightness2 />}
-                  </IconButton>
-
-                  <StyledButtonGroup size={maxMedium ? 'large' : 'medium'}>
-                    <Button color='secondary' variant='contained' onClick={pushAndClose('/login')}>
-                      {t('login')}
-                    </Button>
-
-                    <Button color='primary' variant='contained' onClick={pushAndClose('/signup')}>
-                      {t('signup')}
-                    </Button>
-                  </StyledButtonGroup>
-                </>
-              )}
-            </Menu>
+            <Menu {...menuAnimations}>{maxMedium ? mobileContent : desktopContent}</Menu>
           )}
         </AnimatePresence>
 
         {maxMedium && (
-          <IconButton onClick={() => toggleMenu()}>
-            <StyledBurger
-              isOpen={menuOpen}
-              width={28}
-              height={17}
-              strokeWidth={3}
-              borderRadius={3}
-              menuClicked={() => {}}
-              animationDuration={0.15}
-              color={theme.palette.primary.main}
-            />
-          </IconButton>
+          <>
+            {auth.isLoggedIn && !forceUnauthorizedNavbar && searchChip}
+
+            <IconButton onClick={() => toggleMenu()}>
+              <StyledBurger
+                isOpen={menuOpen}
+                width={28}
+                height={17}
+                strokeWidth={3}
+                borderRadius={3}
+                menuClicked={() => {}}
+                animationDuration={0.15}
+                color={theme.palette.primary.main}
+              />
+            </IconButton>
+          </>
         )}
       </StyledContainer>
 

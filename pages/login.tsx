@@ -6,7 +6,7 @@ const Login = () => {
   const { t } = useTranslation('common')
 
   return (
-    <DefaultLayout title={`${t('login')} • Fiesta`}>
+    <DefaultLayout title={`${t('login')} • Fiesta`} forceUnauthorizedNavbar>
       <LoginTemplate />
     </DefaultLayout>
   )

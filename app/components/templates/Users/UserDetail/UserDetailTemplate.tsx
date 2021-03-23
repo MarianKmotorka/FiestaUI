@@ -1,10 +1,9 @@
 import { useQuery } from 'react-query'
-import { Avatar, Box } from '@material-ui/core'
+import { Avatar, Box, CircularProgress } from '@material-ui/core'
 
 import api from '@api/HttpClient'
 import { IApiError } from 'types'
 import { IUser } from 'domainTypes'
-import Spinner from '@elements/Spinner'
 import Divider from '@elements/Divider'
 import FetchError from '@elements/FetchError/FetchError'
 import CollapseContainer from '@elements/CollapseContainer/CollapseContainer'
@@ -21,7 +20,7 @@ const UserDetailTemplate = ({ userId }: IUserDetailTemplateProps) => {
     async () => (await api.get(`/users/${userId}`)).data
   )
 
-  if (isLoading) return <Spinner themed />
+  if (isLoading) return <CircularProgress />
   if (error) return <FetchError error={error} />
 
   const user = data!

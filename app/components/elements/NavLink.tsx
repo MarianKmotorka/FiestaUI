@@ -3,9 +3,8 @@ import Link, { LinkProps } from 'next/link'
 import { useRouter } from 'next/router'
 
 const NavLink = ({ href, children, ...rest }: PropsWithChildren<LinkProps>) => {
-  const { pathname } = useRouter()
-
-  const isActive = href.toString().includes(pathname) && pathname !== '/'
+  const { asPath } = useRouter()
+  const isActive = asPath.includes(href.toString())
 
   const addActiveClass = (node: ReactNode): ReactNode =>
     Children.map(node, x => {

@@ -6,7 +6,7 @@ const Signup = () => {
   const { t } = useTranslation('common')
 
   return (
-    <DefaultLayout title={`${t('signup')} • Fiesta`}>
+    <DefaultLayout title={`${t('signup')} • Fiesta`} forceUnauthorizedNavbar>
       <SignupTemplate />
     </DefaultLayout>
   )

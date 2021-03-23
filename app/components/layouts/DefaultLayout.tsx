@@ -9,20 +9,21 @@ import { NAVBAR_HEIGHT } from '@modules/Navbar/Navbar.styled'
 
 interface IDefaultLayoutProps {
   title: string
+  forceUnauthorizedNavbar?: true
 }
 
 const StyledContainer = styled(Container)`
   margin-top: ${NAVBAR_HEIGHT}px;
 `
 
-const DefaultLayout: FC<IDefaultLayoutProps> = ({ children, title }) => {
+const DefaultLayout: FC<IDefaultLayoutProps> = ({ children, title, forceUnauthorizedNavbar }) => {
   return (
     <>
       <Head>
         <title>{title}</title>
       </Head>
 
-      <Navbar />
+      <Navbar forceUnauthorizedNavbar={forceUnauthorizedNavbar} />
 
       <StyledContainer>{children}</StyledContainer>
     </>

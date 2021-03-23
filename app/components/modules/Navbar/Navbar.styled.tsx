@@ -1,11 +1,11 @@
 import styled from 'styled-components'
 import { motion } from 'framer-motion'
 import BurgerMenu from 'react-hamburger-menu'
-import { AppBar, ButtonGroup, Chip } from '@material-ui/core'
+import { AppBar, ButtonGroup, Chip, MenuItem } from '@material-ui/core'
 
 import { Container } from '@elements/Container'
 import FiestaLogo from '@elements/FiestaLogo'
-import { MD, SM } from 'utils/theme'
+import { MD, SM, XL } from 'utils/theme'
 
 export const NAVBAR_HEIGHT = 80
 
@@ -33,26 +33,54 @@ export const StyledContainer = styled(Container)`
 `
 
 export const LinkText = styled.p`
-  color: ${({ theme }) => theme.themeText.themeGray};
+  color: ${({ theme }) => theme.secondary.main};
   font-size: 1.1rem;
   margin-right: auto;
   padding: 10px 20px;
   font-weight: 500;
   cursor: pointer;
 
+  display: flex;
+  align-items: center;
+  gap: 5px;
+
   :hover {
-    text-decoration: underline;
+    border-bottom: 2px solid ${({ theme }) => theme.secondary.main};
   }
 
   &.active {
-    text-decoration: underline;
-    text-decoration-color: ${({ theme }) => theme.primary.main};
+    border-bottom: 2px solid ${({ theme }) => theme.primary.main};
+    svg {
+      color: ${({ theme }) => theme.primary.main};
+    }
   }
 
-  @media screen and (max-width: ${MD}px) {
-    font-size: 1.4rem;
-    width: 100%;
-    text-align: center;
+  @media screen and (max-width: ${XL}px) {
+    span {
+      display: none;
+    }
+  }
+`
+
+export const MobileMenuItem = styled(MenuItem)`
+  width: 100%;
+  font-size: 1.1rem;
+  padding: 5px 5%;
+
+  > svg {
+    margin-right: 6px;
+  }
+
+  &.active {
+    svg {
+      color: ${({ theme }) => theme.primary.main};
+    }
+  }
+
+  .MuiAvatar-root {
+    width: 24px;
+    height: 24px;
+    margin-right: 6px;
   }
 `
 
@@ -84,35 +112,8 @@ export const Menu = styled(motion.div)`
     width: 100vw;
     top: ${NAVBAR_HEIGHT}px;
     height: calc(100vh - ${NAVBAR_HEIGHT}px);
-
-    background-color: ${({ theme }) => theme.background.default};
-    display: flex;
     flex-direction: column;
-    align-items: center;
-    padding: 90px 0 50px;
-
-    .MuiChip-root {
-      position: absolute;
-      top: 20px;
-      left: 50%;
-      transform: translateX(-50%);
-      margin: 0;
-
-      font-size: 0.9rem;
-      padding: 18px 0;
-      border-radius: 100px;
-
-      .MuiAvatar-root {
-        width: 30px;
-        height: 30px;
-      }
-    }
-
-    .MuiIconButton-root {
-      position: absolute;
-      top: 14px;
-      left: 5%;
-    }
+    background-color: ${({ theme }) => theme.background.default};
   }
 `
 
@@ -121,6 +122,8 @@ export const StyledButtonGroup = styled(ButtonGroup)`
 
   > button {
     min-width: 80px;
+    border-radius: 0;
+    box-shadow: none;
   }
 `
 

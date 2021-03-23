@@ -15,11 +15,12 @@ export const StyledCard = styled(Card)`
   height: 90vh;
 
   @media screen and (max-width: ${LG}px) {
-    width: 60vw;
+    width: 70vw;
   }
 
   @media screen and (max-width: ${MD}px) {
-    width: 90vw;
+    height: 95vh;
+    width: 95vw;
   }
 `
 
@@ -83,7 +84,7 @@ export const ItemInfo = styled.div`
   }
 
   @media screen and (max-width: ${LG}px) {
-    max-width: 33vw;
+    max-width: 40vw;
   }
 
   @media screen and (max-width: ${MD}px) {
