@@ -7,7 +7,7 @@ import { KeyboardArrowRight } from '@material-ui/icons'
 import useTranslation from 'next-translate/useTranslation'
 
 import api from '@api/HttpClient'
-import { IApiError } from 'types'
+import { IApiError } from '@api/types'
 import { PageMinHeightWrapper } from '@elements/PageMinHeightWrapper'
 
 const StyledCard = styled(Card)`

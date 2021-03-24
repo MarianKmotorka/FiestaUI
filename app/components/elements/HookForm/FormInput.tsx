@@ -1,7 +1,7 @@
 import { Controller, useFormContext } from 'react-hook-form'
 import useTranslation from 'next-translate/useTranslation'
 
-import { Validator } from 'types'
+import { Validator } from '@elements/HookForm/types'
 import TextBox, { TextBoxProps } from '@elements/TextBox/TextBox'
 
 interface IFormInputProps extends Omit<TextBoxProps, 'value' | 'onChange'> {
@@ -26,17 +26,23 @@ const FormInput = ({
 
   const validate = initialValidate ? (value: string) => initialValidate(value, t, form) : undefined
 
+  const getParsingOnChangeFunction = (onChange: (x: any) => void) => (value: string) => {
+    if (type === 'number') return onChange(Number(value))
+    return onChange(value)
+  }
+
   return (
     <Controller
       name={name}
       rules={{ validate }}
-      render={props => (
+      render={({ onChange, ...innerRest }) => (
         <TextBox
-          {...props}
+          {...innerRest}
           {...rest}
           type={type}
           label={label}
           error={errors[name]?.message}
+          onChange={getParsingOnChangeFunction(onChange)}
           disabled={disabled || form.formState.isSubmitting}
         />
       )}

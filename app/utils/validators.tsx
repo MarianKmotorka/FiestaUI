@@ -1,6 +1,6 @@
 import { Translate } from 'next-translate'
 import { UseFormMethods } from 'react-hook-form'
-import { Validator } from 'types'
+import { Validator } from '@elements/HookForm/types'
 
 const emailRegex = /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/
 

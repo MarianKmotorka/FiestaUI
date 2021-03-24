@@ -26,6 +26,7 @@ export const StyledDivider = styled(Divider)`
 export const MenuContent = styled.div`
   min-width: 280px;
   padding: 10px 0;
+  outline: none;
 `
 
 export const StyledAvatar = styled(Avatar)`

@@ -6,7 +6,7 @@ import useTranslation from 'next-translate/useTranslation'
 import { Avatar, Box, CircularProgress } from '@material-ui/core'
 import { Close, KeyboardArrowRight, Search, SentimentDissatisfied } from '@material-ui/icons'
 
-import { IApiError } from 'types'
+import { IApiError } from '@api/types'
 import api from '@api/HttpClient'
 import Modal from '@elements/Modal'
 import EventItem from './EventItem'

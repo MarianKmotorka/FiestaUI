@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react'
 import { useRouter } from 'next/router'
 import useTranslation from 'next-translate/useTranslation'
 
-import { IApiError } from 'types'
+import { IApiError } from '@api/types'
 import api from '@api/HttpClient'
 import Button from '@elements/Button/Button'
 import { errorToast } from 'services/toastService'

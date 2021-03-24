@@ -2,7 +2,7 @@ import { useState } from 'react'
 import { AnimatePresence } from 'framer-motion'
 import { useRouter } from 'next/dist/client/router'
 import useTranslation from 'next-translate/useTranslation'
-import { Avatar, Box, Button, Chip, IconButton } from '@material-ui/core'
+import { Avatar, Box, Button, Chip, IconButton, Tooltip } from '@material-ui/core'
 import {
   AccountCircle,
   Add,
@@ -30,7 +30,7 @@ import { useAppTheme } from '@contextProviders/AppThemeProvider/AppThemeProvider
 import {
   Logo,
   Menu,
-  LinkText,
+  LinkContent,
   StyledAppBar,
   StyledContainer,
   StyledButtonGroup,
@@ -48,7 +48,7 @@ const Navbar = ({ forceUnauthorizedNavbar }: INavbarProps) => {
   const router = useRouter()
   const { t } = useTranslation('common')
   const { theme, isDark, switchTheme } = useAppTheme()
-  const { maxMedium } = useWindowSize()
+  const { maxMedium, minExtraLarge } = useWindowSize()
   const [menuOpen, setMenuOpen] = useState(false)
   const [searchOpen, setSearchOpen] = useState(false)
   const [profileChipEl, setProfileChipEl] = useState<HTMLElement>()
@@ -157,24 +157,30 @@ const Navbar = ({ forceUnauthorizedNavbar }: INavbarProps) => {
     auth.isLoggedIn && !forceUnauthorizedNavbar ? (
       <>
         <NavLink href='/home'>
-          <LinkText>
-            <HomeRounded />
-            <span>{t('home')}</span>
-          </LinkText>
+          <Tooltip title={t('home')} disableHoverListener={minExtraLarge} arrow>
+            <LinkContent>
+              <HomeRounded />
+              <span>{t('home')}</span>
+            </LinkContent>
+          </Tooltip>
         </NavLink>
 
         <NavLink href='/events'>
-          <LinkText>
-            <Event />
-            <span>{t('events')}</span>
-          </LinkText>
+          <Tooltip title={t('events')} disableHoverListener={minExtraLarge} arrow>
+            <LinkContent>
+              <Event />
+              <span>{t('events')}</span>
+            </LinkContent>
+          </Tooltip>
         </NavLink>
 
         <NavLink href='/explore'>
-          <LinkText>
-            <LocationSearching />
-            <span>{t('explore')}</span>
-          </LinkText>
+          <Tooltip title={t('explore')} disableHoverListener={minExtraLarge} arrow>
+            <LinkContent>
+              <LocationSearching />
+              <span>{t('explore')}</span>
+            </LinkContent>
+          </Tooltip>
         </NavLink>
 
         {searchChip}

@@ -2,7 +2,7 @@ import { useQuery } from 'react-query'
 import { Avatar, Box, CircularProgress } from '@material-ui/core'
 
 import api from '@api/HttpClient'
-import { IApiError } from 'types'
+import { IApiError } from '@api/types'
 import { IUser } from 'domainTypes'
 import Divider from '@elements/Divider'
 import FetchError from '@elements/FetchError/FetchError'

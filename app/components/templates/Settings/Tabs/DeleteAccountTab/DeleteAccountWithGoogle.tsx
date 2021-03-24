@@ -3,7 +3,7 @@ import { Box } from '@material-ui/core'
 import { useRouter } from 'next/router'
 import useTranslation from 'next-translate/useTranslation'
 
-import { IApiError } from 'types'
+import { IApiError } from '@api/types'
 import api from '@api/HttpClient'
 import Button from '@elements/Button/Button'
 import { errorToast, successToast } from 'services/toastService'

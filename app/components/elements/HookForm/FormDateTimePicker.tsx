@@ -1,7 +1,7 @@
 import DateTimePicker, { DateTimePickerProps } from '@elements/DateTimePicker/DateTimePicker'
 import useTranslation from 'next-translate/useTranslation'
 import { Controller, useFormContext } from 'react-hook-form'
-import { Validator } from 'types'
+import { Validator } from '@elements/HookForm/types'
 
 interface IFormDateTimePickerProps extends Omit<DateTimePickerProps, 'onChange' | 'value'> {
   name: string

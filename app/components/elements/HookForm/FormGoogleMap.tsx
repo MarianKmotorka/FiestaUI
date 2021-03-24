@@ -2,7 +2,7 @@ import Snackbar from '@elements/Snackbar/Snackbar'
 import Map from '@modules/Map/Map'
 import useTranslation from 'next-translate/useTranslation'
 import { Controller, useFormContext } from 'react-hook-form'
-import { Validator } from 'types'
+import { Validator } from '@elements/HookForm/types'
 
 interface IFormGoogleMapProps {
   name: string

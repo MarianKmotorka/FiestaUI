@@ -1,7 +1,7 @@
 import useTranslation from 'next-translate/useTranslation'
 import { Controller, useFormContext } from 'react-hook-form'
 
-import { Validator } from 'types'
+import { Validator } from '@elements/HookForm/types'
 import SearchableDropdown from '@elements/SearchableDropdown/SearchableDropdown'
 import { ISearchableDropdownProps } from '@elements/SearchableDropdown/types'
 

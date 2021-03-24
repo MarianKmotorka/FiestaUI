@@ -1,5 +1,5 @@
 import api, { setAuthHeader } from '../api/HttpClient'
-import { IApiError } from 'types'
+import { IApiError } from '@api/types'
 import { ICurrentUser } from 'domainTypes'
 
 export const logout = async () => {

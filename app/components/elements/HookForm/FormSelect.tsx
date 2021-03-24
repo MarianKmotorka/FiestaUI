@@ -1,7 +1,7 @@
 import useTranslation from 'next-translate/useTranslation'
 import { Controller, useFormContext } from 'react-hook-form'
 
-import { Validator } from 'types'
+import { Validator } from '@elements/HookForm/types'
 import Select, { ISelectProps } from '@elements/Select/Select'
 
 interface IFormSelectProps extends Omit<ISelectProps, 'value' | 'onChange'> {

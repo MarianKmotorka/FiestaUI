@@ -32,24 +32,26 @@ export const StyledContainer = styled(Container)`
   justify-content: flex-end;
 `
 
-export const LinkText = styled.p`
+export const LinkContent = styled.p`
   color: ${({ theme }) => theme.secondary.main};
   font-size: 1.1rem;
   margin-right: auto;
   padding: 10px 20px;
   font-weight: 500;
   cursor: pointer;
+  transition: border-color 0.2s;
+  border-bottom: 2px solid transparent;
 
   display: flex;
   align-items: center;
   gap: 5px;
 
   :hover {
-    border-bottom: 2px solid ${({ theme }) => theme.secondary.main};
+    border-color: ${({ theme }) => theme.secondary.main};
   }
 
   &.active {
-    border-bottom: 2px solid ${({ theme }) => theme.primary.main};
+    border-color: ${({ theme }) => theme.primary.main};
     svg {
       color: ${({ theme }) => theme.primary.main};
     }

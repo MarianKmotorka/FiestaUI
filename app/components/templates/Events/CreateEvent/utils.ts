@@ -1,7 +1,7 @@
-import { SubmitFormatter } from '@elements/HookForm/hooks/useSubmitForm'
 import { omit } from 'lodash'
-import { Validator } from 'types'
+import { Validator } from '@elements/HookForm/types'
 import { IGoogleMapLocation } from 'utils/googleUtils'
+import { SubmitFormatter } from '@elements/HookForm/types'
 import { ICreateEventFormValues } from './CreateEventTemplate'
 import { eventInfoFormFields } from './FormSteps/EventInfoStep/EventInfoStep'
 

@@ -1,5 +1,5 @@
 import useTranslation from 'next-translate/useTranslation'
-import { IApiError } from 'types'
+import { IApiError } from '@api/types'
 import { Wrapper } from './FetchError.styled'
 
 interface IFetchErrorProps {

@@ -5,24 +5,25 @@ import useTranslation from 'next-translate/useTranslation'
 import { AccordionDetails, AccordionSummary } from '@material-ui/core'
 
 import api from '@api/HttpClient'
-import { IApiError } from 'types'
+import { IApiError } from '@api/types'
 import { IUser } from 'domainTypes'
 import Spinner from '@elements/Spinner'
 import Form from '@elements/HookForm/Form'
+import { onlyDirtyValues } from '@utils/utils'
 import LoadingAccordion from './LoadingAccordion'
 import { successToast } from 'services/toastService'
 import FormInput from '@elements/HookForm/FormInput'
 import FetchError from '@elements/FetchError/FetchError'
 import SubmitButton from '@elements/HookForm/SubmitButton'
 import { useAuthorizedUser } from '@contextProviders/AuthProvider'
-import { onlyDirtyValues, useSubmitForm } from '@elements/HookForm/hooks/useSubmitForm'
+import { useSubmitForm } from '@elements/HookForm/hooks/useSubmitForm'
+import ProfilePictureMenu from './ProfilePictureMenu/ProfilePictureMenu'
 import {
   requiredValidator,
   combineValidators,
   minLengthValidator,
   maxLengthValidator
 } from 'utils/validators'
-import ProfilePictureMenu from './ProfilePictureMenu/ProfilePictureMenu'
 
 import { AccordionTitle, SettingsAccordion } from '../common.styled'
 import { Wrapper, StyledAvatar, StyledDivider } from './EditProfileTab.styled'

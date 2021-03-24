@@ -5,7 +5,7 @@ import useTranslation from 'next-translate/useTranslation'
 
 import api from '@api/HttpClient'
 import { IUser } from 'domainTypes'
-import { IApiError } from '../../../../../../types'
+import { IApiError } from '@api/types'
 import { errorToast, successToast } from 'services/toastService'
 import { useAuthorizedUser } from '@contextProviders/AuthProvider'
 

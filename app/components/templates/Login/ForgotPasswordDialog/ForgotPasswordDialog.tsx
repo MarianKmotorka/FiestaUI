@@ -3,7 +3,7 @@ import { CardContent } from '@material-ui/core'
 import { KeyboardArrowRight, Done } from '@material-ui/icons'
 import useTranslation from 'next-translate/useTranslation'
 
-import { IApiError } from 'types'
+import { IApiError } from '@api/types'
 import api from '@api/HttpClient'
 import Modal from '@elements/Modal'
 import Button from '@elements/Button/Button'
