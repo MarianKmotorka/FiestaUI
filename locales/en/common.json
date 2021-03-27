@@ -1,5 +1,6 @@
 {
   "add": "Add",
+  "addFriend": "Add friend",
   "accessibility": "Accessibility",
   "administrativeAreaLevel1": "First level administrative area",
   "administrativeAreaLevel2": "Second level administrative area",
@@ -20,6 +21,7 @@
   "emailAddress": "Email address",
   "emailOrUserName": "Email or username",
   "error": "Error",
+  "edit": "Edit",
   "findPeopleOrEvents": "Find people or events",
   "endDate": "End date",
   "eventInfo": "Event info",
@@ -34,6 +36,7 @@
   "loading": "Loading",
   "location": "Location",
   "maxNumberOfPeople": "Maximum number of people",
+  "message": "Message",
   "name": "Name",
   "next": "Next",
   "nothingFound": "Nothing found",

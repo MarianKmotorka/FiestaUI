@@ -9,7 +9,7 @@ interface ICollapseContainerProps {
   children: JSX.Element
 }
 
-const CollapseContainer = ({ collapsedHeight = 40, children }: ICollapseContainerProps) => {
+const CollapseContainer = ({ collapsedHeight = 60, children }: ICollapseContainerProps) => {
   const [collapsed, setCollapsed] = useState(true)
   const [showMoreButton, setShowMoreButton] = useState(false)
   const { t } = useTranslation('common')
