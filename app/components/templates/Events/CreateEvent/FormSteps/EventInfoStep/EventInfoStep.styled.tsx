@@ -1,8 +1,6 @@
 import { Card } from '@material-ui/core'
 import styled from 'styled-components'
 
-export const Wrapper = styled.div``
-
 export const StyledCard = styled(Card)`
   padding: 20px;
   display: flex;
@@ -14,7 +12,8 @@ export const StyledCard = styled(Card)`
   }
 
   .MuiFormControl-root {
-    max-width: 350px;
+    max-width: 500px;
+    width: 100%;
   }
 `
 

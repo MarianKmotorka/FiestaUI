@@ -19,7 +19,7 @@ import {
   maxLengthValidator
 } from 'utils/validators'
 
-import { AccessibilityValue, StyledCard, Wrapper } from './EventInfoStep.styled'
+import { AccessibilityValue, StyledCard } from './EventInfoStep.styled'
 
 interface IEventInfoStepProps {
   nextStep: () => void
@@ -50,14 +50,13 @@ const EventInfoStep = ({ nextStep }: IEventInfoStepProps) => {
   )
 
   return (
-    <Wrapper>
+    <>
       <StyledCard elevation={0}>
         <FormInput
           name='name'
           label={t('name')}
           variant='outlined'
           validate={combineValidators([requiredValidator, maxLengthValidator(30)])}
-          fullWidth
         />
 
         <FormDateTimePicker
@@ -66,7 +65,6 @@ const EventInfoStep = ({ nextStep }: IEventInfoStepProps) => {
           inputVariant='outlined'
           validate={requiredValidator}
           disablePast
-          fullWidth
         />
 
         <FormDateTimePicker
@@ -75,12 +73,10 @@ const EventInfoStep = ({ nextStep }: IEventInfoStepProps) => {
           inputVariant='outlined'
           disablePast
           validate={combineValidators([requiredValidator, endDateValidator])}
-          fullWidth
         />
 
         <FormInput
           min={0}
-          fullWidth
           type='number'
           name='capacity'
           variant='outlined'
@@ -89,7 +85,6 @@ const EventInfoStep = ({ nextStep }: IEventInfoStepProps) => {
         />
 
         <FormSelect
-          fullWidth
           variant='outlined'
           name='accessibilityType'
           label={t('accessibility')}
@@ -101,6 +96,16 @@ const EventInfoStep = ({ nextStep }: IEventInfoStepProps) => {
             </MenuItem>
           ))}
         </FormSelect>
+
+        <FormInput
+          name='description'
+          label={t('description')}
+          multiline
+          rows={7}
+          rowsMax={13}
+          variant='outlined'
+          validate={maxLengthValidator(500)}
+        />
       </StyledCard>
 
       <Box display='flex' justifyContent='center' marginY='20px'>
@@ -108,7 +113,7 @@ const EventInfoStep = ({ nextStep }: IEventInfoStepProps) => {
           {t('next')}
         </Button>
       </Box>
-    </Wrapper>
+    </>
   )
 }
 

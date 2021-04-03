@@ -33,7 +33,7 @@ const ReviewStep = ({ prevStep }: IReviewStepProps) => {
   return (
     <Wrapper>
       <Grid container spacing={3} wrap='wrap'>
-        <Grid item xs={12} md={6} lg={4}>
+        <Grid item xs={12} md={6} xl={4}>
           <Card>
             <CardContent>
               <Title>
@@ -55,11 +55,12 @@ const ReviewStep = ({ prevStep }: IReviewStepProps) => {
                   )}`
                 )}
               />
+              <KeyValueRow keyName={t('description')} value={values.description} />
             </CardContent>
           </Card>
         </Grid>
 
-        <Grid item xs={12} md={6} lg={4}>
+        <Grid item xs={12} md={6} xl={4}>
           <Card>
             <CardContent>
               <Title>

@@ -14,6 +14,7 @@ import {
 import Hidden from '@elements/Hidden'
 import Form from '@elements/HookForm/Form'
 import { AccessibilityTypeEnum } from 'domainTypes'
+import { successToast } from 'services/toastService'
 import { IGoogleMapLocation } from 'utils/googleUtils'
 import ReviewStep from './FormSteps/ReviewStep/ReviewStep'
 import LocationStep from './FormSteps/LocationStep/LocationStep'
@@ -29,6 +30,7 @@ export interface ICreateEventFormValues {
   accessibilityType: number
   location: IGoogleMapLocation
   capacity: number
+  description: string
 }
 
 const defaultValues: Partial<ICreateEventFormValues> = {
@@ -58,6 +60,7 @@ const CreateEvent = () => {
     url: '/events/create',
     canSubmit: step === stepIndexes.reviewStep,
     formatter: submitFormatter,
+    successCallback: () => successToast(t('success')),
     errorCallback: ({ errorDetails }) => {
       redirectToStepByErrorFieldName(
         errorDetails.map(x => x.propertyName),
