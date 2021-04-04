@@ -1,19 +1,23 @@
 import Link from 'next/link'
-import { useQuery } from 'react-query'
-import { Edit, GroupAdd, Send } from '@material-ui/icons'
+import { useQuery, useQueryClient } from 'react-query'
+import { Edit, Message, PersonAdd } from '@material-ui/icons'
 import useTranslation from 'next-translate/useTranslation'
 import { Avatar, Box, CircularProgress } from '@material-ui/core'
+import { useState } from 'react'
 
+import { errorToast, successToast } from 'services/toastService'
 import api from '@api/HttpClient'
-import { IUser } from 'domainTypes'
+import { FriendStatus, IUser } from 'domainTypes'
 import { IApiError } from '@api/types'
 import Divider from '@elements/Divider'
 import AuthCheck from '@elements/AuthCheck'
 import Button from '@elements/Button/Button'
 import FetchError from '@elements/FetchError/FetchError'
-import { useAuth } from '@contextProviders/AuthProvider'
+import { isSignedInLocalStorageFlagSet, useAuth } from '@contextProviders/AuthProvider'
 import CollapseContainer from '@elements/CollapseContainer/CollapseContainer'
+import FriendMenu from './FriendMenu/FriendMenu'
 
+import { friendStatusTextMap, friendStatusStartIconMap, friendStatusEndIconMap } from './utils'
 import {
   AvatarWrapper,
   BioText,
@@ -30,17 +34,37 @@ interface IUserDetailTemplateProps {
 
 const UserDetailTemplate = ({ userId }: IUserDetailTemplateProps) => {
   const auth = useAuth()
+  const queryClient = useQueryClient()
   const { t } = useTranslation('common')
-  const { data, error, isLoading } = useQuery<IUser, IApiError>(
+  const [friendEl, setFriendEl] = useState<HTMLElement>()
+  const [friendStatusLoading, setFriendStatusLoading] = useState(false)
+
+  const { data, error, isLoading, isIdle } = useQuery<IUser, IApiError>(
     ['users', userId],
-    async () => (await api.get(`/users/${userId}`)).data
+    async () => (await api.get(`/users/${userId}`)).data,
+    { enabled: auth.isLoggedIn || !isSignedInLocalStorageFlagSet() }
   )
 
-  if (isLoading) return <CircularProgress />
+  if (isLoading || isIdle) return <CircularProgress />
   if (error) return <FetchError error={error} />
 
   const isCurrUser = auth.isLoggedIn ? auth.currentUser.id === userId : false
   const user = data!
+
+  const handleAddFriendClick = async () => {
+    try {
+      setFriendStatusLoading(true)
+      await api.post(`/friends/send-request`, { friendId: user.id })
+      queryClient.setQueryData<IUser>(['users', user.id], prev => ({
+        ...prev!,
+        friendStatus: FriendStatus.FriendRequestSent
+      }))
+      successToast(t('requestSent'))
+    } catch (_) {
+      errorToast(t('somethingWentWrong'))
+    }
+    setFriendStatusLoading(false)
+  }
 
   return (
     <>
@@ -66,7 +90,7 @@ const UserDetailTemplate = ({ userId }: IUserDetailTemplateProps) => {
               )}
 
               {!isCurrUser && (
-                <Button variant='outlined' color='secondary' endIcon={<Send />}>
+                <Button variant='outlined' color='secondary' endIcon={<Message />}>
                   {t('message')}
                 </Button>
               )}
@@ -75,14 +99,29 @@ const UserDetailTemplate = ({ userId }: IUserDetailTemplateProps) => {
                 <AuthCheck
                   fallback={loginUrl => (
                     <Link href={loginUrl}>
-                      <Button variant='outlined' color='secondary' endIcon={<GroupAdd />}>
+                      <Button variant='outlined' color='secondary' endIcon={<PersonAdd />}>
                         {t('addFriend')}
                       </Button>
                     </Link>
                   )}
                 >
-                  <Button variant='outlined' color='secondary' endIcon={<GroupAdd />}>
-                    {t('addFriend')}
+                  <Button
+                    variant='outlined'
+                    loading={friendStatusLoading}
+                    color={
+                      user.friendStatus === FriendStatus.FriendRequestRecieved
+                        ? 'primary'
+                        : 'secondary'
+                    }
+                    startIcon={friendStatusStartIconMap[user.friendStatus]}
+                    endIcon={friendStatusEndIconMap[user.friendStatus]}
+                    onClick={e =>
+                      user.friendStatus === FriendStatus.None
+                        ? handleAddFriendClick()
+                        : setFriendEl(friendEl ? undefined : e.currentTarget)
+                    }
+                  >
+                    {t(friendStatusTextMap[user.friendStatus])}
                   </Button>
                 </AuthCheck>
               )}
@@ -102,6 +141,14 @@ const UserDetailTemplate = ({ userId }: IUserDetailTemplateProps) => {
       <Box margin='30px auto'>
         <Divider />
       </Box>
+
+      <FriendMenu
+        userId={user.id}
+        friendStatus={user.friendStatus}
+        onClose={() => setFriendEl(undefined)}
+        anchorEl={friendEl}
+        setLoading={setFriendStatusLoading}
+      />
     </>
   )
 }

@@ -19,6 +19,8 @@ export interface IUser {
   username: string
   pictureUrl?: string
   bio?: string
+  numberOfFriends: number
+  friendStatus: FriendStatus
 }
 
 export enum AuthProviderFlags {
@@ -37,4 +39,11 @@ export enum AccessibilityTypeEnum {
   Public = 0,
   Private = 1,
   FriendsOnly = 2
+}
+
+export enum FriendStatus {
+  None = 0,
+  Friend = 1,
+  FriendRequestSent = 2,
+  FriendRequestRecieved = 3
 }
