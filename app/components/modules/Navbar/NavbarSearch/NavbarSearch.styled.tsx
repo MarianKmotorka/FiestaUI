@@ -1,6 +1,6 @@
 import { Card, IconButton, MenuItem } from '@material-ui/core'
 import styled from 'styled-components'
-import { LG, MD } from 'utils/theme'
+import { LG, MD } from '@contextProviders/AppThemeProvider/theme'
 
 export const StyledCard = styled(Card)`
   position: absolute;

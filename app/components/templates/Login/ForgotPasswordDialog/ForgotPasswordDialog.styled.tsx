@@ -1,6 +1,6 @@
 import { Card } from '@material-ui/core'
 import styled from 'styled-components'
-import { MD } from 'utils/theme'
+import { MD } from '@contextProviders/AppThemeProvider/theme'
 
 export const StyledCard = styled(Card)`
   position: absolute;

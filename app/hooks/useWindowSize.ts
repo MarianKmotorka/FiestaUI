@@ -1,5 +1,5 @@
 import { useEffect, useState, useCallback } from 'react'
-import { LG, MD, SM, XL } from 'utils/theme'
+import { LG, MD, SM, XL } from '@contextProviders/AppThemeProvider/theme'
 
 export const useWindowSize = () => {
   const isClient = typeof window === 'object'

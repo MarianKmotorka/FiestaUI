@@ -16,17 +16,16 @@ export const StyledMenu = styled(Menu)`
 `
 export const MenuContent = styled.div`
   min-width: 200px;
-  padding: 10px 0;
 `
 
 export const StyledMenuItem = styled(MenuItem)`
-  padding: 10px 25px;
+  padding: 10px 20px;
   color: ${({ theme }) => theme.themeText.themeGray};
 
   display: flex;
   justify-content: flex-start;
   align-items: center;
-  font-size: 1.05rem;
+  font-size: 1em;
 
   gap: 10px;
 

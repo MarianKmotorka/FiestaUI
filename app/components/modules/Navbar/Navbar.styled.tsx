@@ -5,7 +5,7 @@ import { AppBar, ButtonGroup, Chip, MenuItem } from '@material-ui/core'
 
 import { Container } from '@elements/Container'
 import FiestaLogo from '@elements/FiestaLogo'
-import { MD, SM, XL } from 'utils/theme'
+import { MD, SM, XL } from '@contextProviders/AppThemeProvider/theme'
 
 export const NAVBAR_HEIGHT = 80
 

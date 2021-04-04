@@ -1,5 +1,5 @@
 import styled from 'styled-components'
-import { LG, MD, SM } from 'utils/theme'
+import { LG, MD, SM } from '@contextProviders/AppThemeProvider/theme'
 
 export const TopSection = styled.section`
   display: flex;

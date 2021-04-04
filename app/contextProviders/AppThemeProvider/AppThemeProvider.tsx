@@ -9,7 +9,7 @@ import {
 
 import Hidden from '@elements/Hidden'
 import GlobalStyles from './GlobalStyles'
-import { lightTheme, darkTheme } from 'utils/theme'
+import { lightTheme, darkTheme } from '@contextProviders/AppThemeProvider/theme'
 import useLocalStorage from '@hooks/useLocalStorage'
 
 interface IAppThemeContextValue {

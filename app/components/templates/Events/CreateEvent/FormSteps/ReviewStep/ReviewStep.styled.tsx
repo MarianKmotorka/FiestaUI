@@ -1,5 +1,5 @@
 import styled from 'styled-components'
-import { MD } from 'utils/theme'
+import { MD } from '@contextProviders/AppThemeProvider/theme'
 
 export const Wrapper = styled.div``
 

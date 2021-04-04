@@ -3,7 +3,7 @@ import { KeyboardArrowLeft } from '@material-ui/icons'
 import useTranslation from 'next-translate/useTranslation'
 import { useRouter } from 'next/router'
 import styled from 'styled-components'
-import { MD } from 'utils/theme'
+import { MD } from '@contextProviders/AppThemeProvider/theme'
 
 const Wrapper = styled.div`
   height: 100vh;

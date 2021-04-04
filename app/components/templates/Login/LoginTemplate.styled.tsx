@@ -1,7 +1,7 @@
 import Button from '@elements/Button/Button'
 import { Card } from '@material-ui/core'
 import styled from 'styled-components'
-import { SM } from 'utils/theme'
+import { SM } from '@contextProviders/AppThemeProvider/theme'
 
 export const StyledCard = styled(Card)`
   display: flex;

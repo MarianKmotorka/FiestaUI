@@ -1,6 +1,6 @@
 import Divider from '@elements/Divider'
 import styled from 'styled-components'
-import { MD, LG } from 'utils/theme'
+import { MD, LG } from '@contextProviders/AppThemeProvider/theme'
 import { Avatar } from '@material-ui/core'
 
 export const Wrapper = styled.div`

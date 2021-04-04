@@ -1,7 +1,7 @@
 import { Accordion } from '@material-ui/core'
 import { Alert } from '@material-ui/lab'
 import styled from 'styled-components'
-import { LG, MD } from 'utils/theme'
+import { LG, MD } from '@contextProviders/AppThemeProvider/theme'
 
 export const SettingsAccordion = styled(Accordion)`
   .MuiAccordionSummary-root svg {

@@ -3,7 +3,7 @@ import { Tab } from '@material-ui/core'
 
 import { PageMinHeightWrapper } from '@elements/PageMinHeightWrapper'
 import TabPanel from '@elements/TabPanel/TabPanel'
-import { MD } from 'utils/theme'
+import { MD } from '@contextProviders/AppThemeProvider/theme'
 import { NAVBAR_HEIGHT } from '@modules/Navbar/Navbar.styled'
 
 export const Wrapper = styled(PageMinHeightWrapper)`
