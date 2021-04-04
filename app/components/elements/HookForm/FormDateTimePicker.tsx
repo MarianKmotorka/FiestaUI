@@ -17,7 +17,6 @@ const FormDateTimePicker = ({
 }: IFormDateTimePickerProps) => {
   const form = useFormContext()
   const { t } = useTranslation('common')
-  const { errors } = form
 
   const validate = initialValidate ? (value: string) => initialValidate(value, t, form) : undefined
 
@@ -25,13 +24,11 @@ const FormDateTimePicker = ({
     <Controller
       name={name}
       rules={{ validate }}
-      render={({ value, onChange, ref, ...other }) => (
+      render={({ field: { ref, ...other }, fieldState: { error } }) => (
         <DateTimePicker
           {...rest}
           {...other}
-          value={value}
-          onChange={onChange}
-          error={errors[name]?.message}
+          error={error?.message}
           disabled={disabled || form.formState.isSubmitting}
         />
       )}

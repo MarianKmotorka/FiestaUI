@@ -13,7 +13,6 @@ interface IFormSelectProps extends Omit<ISelectProps, 'value' | 'onChange'> {
 const FormSelect = ({ name, disabled, validate: initialValidate, ...rest }: IFormSelectProps) => {
   const form = useFormContext()
   const { t } = useTranslation('common')
-  const { errors } = form
 
   const validate = initialValidate ? (value: string) => initialValidate(value, t, form) : undefined
 
@@ -21,12 +20,12 @@ const FormSelect = ({ name, disabled, validate: initialValidate, ...rest }: IFor
     <Controller
       name={name}
       rules={{ validate }}
-      render={({ value, onChange }) => (
+      render={({ field: { value, onChange }, fieldState: { error } }) => (
         <Select
           {...rest}
           value={value}
           onChange={onChange}
-          error={errors[name]?.message}
+          error={error?.message}
           disabled={disabled || form.formState.isSubmitting}
         />
       )}

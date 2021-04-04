@@ -1,5 +1,5 @@
-import { useFormContext } from 'react-hook-form'
-import { keys, lowerFirst } from 'lodash'
+import { useFormContext, useFormState } from 'react-hook-form'
+import { isEmpty, keys, lowerFirst } from 'lodash'
 import useTranslation from 'next-translate/useTranslation'
 import { EditOutlined, KeyboardArrowLeft } from '@material-ui/icons'
 import { Box, Card, CardContent, Grid, IconButton } from '@material-ui/core'
@@ -18,14 +18,16 @@ interface IReviewStepProps {
 }
 
 const ReviewStep = ({ prevStep }: IReviewStepProps) => {
-  const { getValues, trigger, errors } = useFormContext<ICreateEventFormValues>()
+  const { getValues, trigger } = useFormContext<ICreateEventFormValues>()
+  const { errors } = useFormState()
   const { t } = useTranslation('common')
   const values = getValues()
   const { location } = values
 
-  const validateAndRedirectToErrorStep = async () => {
-    const isFormValid = await trigger()
-    if (!isFormValid) {
+  const validateAndRedirectToErrorStep = () => {
+    trigger()
+
+    if (!isEmpty(errors)) {
       redirectToStepByErrorFieldName(keys(errors), prevStep)
     }
   }

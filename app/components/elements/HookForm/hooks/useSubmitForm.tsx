@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import { UseFormMethods } from 'react-hook-form'
+import { UseFormReturn } from 'react-hook-form'
 import useTranslation from 'next-translate/useTranslation'
 
 import api from '@api/HttpClient'
@@ -11,8 +11,8 @@ interface ISubmitFormParameters<TValues, TResponse> {
   method?: 'post' | 'patch' | 'put' | 'delete'
   canSubmit?: boolean
   formatter?: SubmitFormatter<TValues>
-  successCallback?: (data: TResponse, values: TValues, form: UseFormMethods<TValues>) => void
-  errorCallback?: (error: IApiError['data'], form: UseFormMethods<TValues>) => void
+  successCallback?: (data: TResponse, values: TValues, form: UseFormReturn<TValues>) => void
+  errorCallback?: (error: IApiError['data'], form: UseFormReturn<TValues>) => void
 }
 
 export function useSubmitForm<TValues, TResponse = any>(
@@ -21,7 +21,7 @@ export function useSubmitForm<TValues, TResponse = any>(
   const { t } = useTranslation('common')
   const [submitting, setSubmitting] = useState(false)
 
-  const onSubmit = async (values: TValues, form: UseFormMethods<TValues>) => {
+  const onSubmit = async (values: TValues, form: UseFormReturn<TValues>) => {
     const {
       url,
       canSubmit,
@@ -41,13 +41,12 @@ export function useSubmitForm<TValues, TResponse = any>(
     try {
       const response = await responsePromise
       form.reset(form.getValues() as any, {
-        isDirty: false,
-        touched: false,
-        dirtyFields: false,
-        errors: true,
-        isValid: true,
-        isSubmitted: true,
-        submitCount: true
+        keepDirty: false,
+        keepTouched: false,
+        keepErrors: true,
+        keepIsValid: true,
+        keepIsSubmitted: true,
+        keepSubmitCount: true
       })
       successCallback?.(response.data, values, form)
     } catch (err) {

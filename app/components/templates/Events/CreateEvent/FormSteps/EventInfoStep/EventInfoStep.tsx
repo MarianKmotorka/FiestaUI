@@ -1,6 +1,6 @@
 import { ReactNode } from 'react'
-import { lowerFirst } from 'lodash'
-import { useFormContext } from 'react-hook-form'
+import { has, lowerFirst } from 'lodash'
+import { useFormContext, useFormState } from 'react-hook-form'
 import { Box, MenuItem } from '@material-ui/core'
 import useTranslation from 'next-translate/useTranslation'
 import { Group, KeyboardArrowRight, Lock, Public } from '@material-ui/icons'
@@ -36,10 +36,11 @@ const accessibilityIconMap: Record<number, ReactNode> = {
 const EventInfoStep = ({ nextStep }: IEventInfoStepProps) => {
   const { t } = useTranslation('common')
   const { trigger } = useFormContext()
+  const { errors } = useFormState()
 
-  const handleNext = async () => {
-    const isValid = await trigger(eventInfoFormFields)
-    isValid && nextStep()
+  const handleNext = () => {
+    trigger(eventInfoFormFields)
+    eventInfoFormFields.some(x => has(errors, x)) || nextStep()
   }
 
   const accessibilityTypeRenderer = (value: any): ReactNode => (

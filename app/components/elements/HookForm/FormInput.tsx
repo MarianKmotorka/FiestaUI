@@ -22,7 +22,6 @@ const FormInput = ({
 }: IFormInputProps) => {
   const form = useFormContext()
   const { t } = useTranslation('common')
-  const { errors } = form
 
   const validate = initialValidate ? (value: string) => initialValidate(value, t, form) : undefined
 
@@ -35,13 +34,13 @@ const FormInput = ({
     <Controller
       name={name}
       rules={{ validate }}
-      render={({ onChange, ...innerRest }) => (
+      render={({ field: { onChange, ...innerRest }, fieldState: { error } }) => (
         <TextBox
           {...innerRest}
           {...rest}
           type={type}
           label={label}
-          error={errors[name]?.message}
+          error={error?.message}
           onChange={getParsingOnChangeFunction(onChange)}
           disabled={disabled || form.formState.isSubmitting}
         />

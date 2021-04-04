@@ -1,13 +1,12 @@
 import { keys } from 'lodash'
-import { useFormContext } from 'react-hook-form'
+import { useFormState } from 'react-hook-form'
 import Button, { IButtonProps } from '@elements/Button/Button'
 
 interface ISubmitButtonProps extends Omit<IButtonProps, 'type' | 'loading'> {}
 
 const SubmitButton = (props: ISubmitButtonProps) => {
-  const {
-    formState: { isSubmitting, isDirty, errors }
-  } = useFormContext()
+  const { isSubmitting, isDirty, errors } = useFormState()
+  //TODO: isDirty not working
 
   const disabled = !isDirty || isSubmitting || keys(errors).length > 0
 

@@ -14,14 +14,14 @@ const FormGoogleMap = ({ name, validate: initialValidate }: IFormGoogleMapProps)
   const { t } = useTranslation('common')
 
   const validate = initialValidate ? (value: string) => initialValidate(value, t, form) : undefined
-  const error = form.errors[name]?.message
+  const error = form.formState.errors[name]?.message
 
   return (
     <>
       <Controller
         name={name}
         rules={{ validate }}
-        render={({ onChange, value }) => <Map onChange={onChange} value={value} />}
+        render={({ field: { onChange, value } }) => <Map onChange={onChange} value={value} />}
       />
 
       {error && <Snackbar severity='error' onClose={() => form.clearErrors(name)} text={error} />}

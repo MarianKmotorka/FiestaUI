@@ -3,7 +3,7 @@ import { DateTimePickerProps as MuiDateTimePickerProps } from '@material-ui/pick
 import useTranslation from 'next-translate/useTranslation'
 import { PickerGlobalStyle, StyledPicker } from './DateTimePicker.styled'
 
-export type DateTimePickerProps = MuiDateTimePickerProps & {
+export type DateTimePickerProps = Omit<MuiDateTimePickerProps, 'error'> & {
   name?: string
   label?: string
   value: string

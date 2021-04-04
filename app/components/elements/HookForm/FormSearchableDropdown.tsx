@@ -22,7 +22,6 @@ const FormSearchableDropdown = <
 }: IFormSearchableDropdownProps<TValue, TFormatted>) => {
   const form = useFormContext()
   const { t } = useTranslation('common')
-  const { errors } = form
 
   const validate = initialValidate ? (value: string) => initialValidate(value, t, form) : undefined
 
@@ -30,12 +29,12 @@ const FormSearchableDropdown = <
     <Controller
       name={name}
       rules={{ validate }}
-      render={({ value, onChange }) => (
+      render={({ field: { value, onChange }, fieldState: { error } }) => (
         <SearchableDropdown
           {...rest}
           value={value}
           onChange={onChange}
-          error={errors[name]?.message}
+          error={error?.message}
           disabled={disabled || form.formState.isSubmitting}
         />
       )}

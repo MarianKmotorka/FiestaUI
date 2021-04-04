@@ -1,6 +1,6 @@
 import { useState } from 'react'
 import { Box } from '@material-ui/core'
-import { useFormContext } from 'react-hook-form'
+import { useFormContext, useFormState } from 'react-hook-form'
 import useTranslation from 'next-translate/useTranslation'
 import { KeyboardArrowLeft, KeyboardArrowRight } from '@material-ui/icons'
 
@@ -10,6 +10,7 @@ import LocationModal from './LocationModal/LocationModal'
 import FormGoogleMap from '@elements/HookForm/FormGoogleMap'
 
 import { StyledCard } from './LocationStep.styled'
+import { ICreateEventFormValues } from '../../CreateEventTemplate'
 
 interface ILocationStepProps {
   nextStep: () => void
@@ -19,11 +20,12 @@ interface ILocationStepProps {
 const LocationStep = ({ nextStep, prevStep }: ILocationStepProps) => {
   const { t } = useTranslation('common')
   const { trigger } = useFormContext()
+  const { errors } = useFormState<ICreateEventFormValues>()
   const [modalOpen, setModalOpen] = useState(false)
 
-  const handleNextClick = async () => {
-    const isValid = await trigger('location')
-    isValid && setModalOpen(true)
+  const handleNextClick = () => {
+    trigger('location')
+    errors.location || setModalOpen(true)
   }
 
   return (
