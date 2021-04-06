@@ -6,10 +6,11 @@ import useTranslation from 'next-translate/useTranslation'
 import api from '@api/HttpClient'
 import { IUser } from 'domainTypes'
 import { IApiError } from '@api/types'
+import { Menu } from '@elements/Menu/Menu'
 import { errorToast, successToast } from 'services/toastService'
 import { useAuthorizedUser } from '@contextProviders/AuthProvider'
 
-import { MenuContent, StyledInput, StyledMenu, StyledMenuItem } from './ProfilePictureMenu.styled'
+import { StyledInput, StyledMenuItem } from './ProfilePictureMenu.styled'
 
 interface IProfilePictureMenuProps {
   anchorEl?: HTMLElement
@@ -41,8 +42,7 @@ const ProfilePictureMenu = ({ anchorEl, onClose, setLoading }: IProfilePictureMe
       }))
       successToast(t('saved'))
     } catch (error) {
-      const errors = (error as IApiError).data.errorDetails
-      errors?.[0] && errorToast(errors[0].code)
+      errorToast((error as IApiError).data.errorMessage)
     }
     setLoading(false)
   }
@@ -75,14 +75,16 @@ const ProfilePictureMenu = ({ anchorEl, onClose, setLoading }: IProfilePictureMe
   }
 
   return (
-    <StyledMenu
+    <Menu
       elevation={4}
       keepMounted
       open={Boolean(anchorEl)}
       anchorEl={anchorEl}
       onClose={onClose}
+      anchorOrigin={{ horizontal: 'center', vertical: 'center' }}
+      transformOrigin={{ horizontal: 'center', vertical: 'center' }}
     >
-      <MenuContent>
+      <>
         <StyledInput
           value=''
           type='file'
@@ -102,8 +104,8 @@ const ProfilePictureMenu = ({ anchorEl, onClose, setLoading }: IProfilePictureMe
             {t('removePicture')}
           </StyledMenuItem>
         )}
-      </MenuContent>
-    </StyledMenu>
+      </>
+    </Menu>
   )
 }
 

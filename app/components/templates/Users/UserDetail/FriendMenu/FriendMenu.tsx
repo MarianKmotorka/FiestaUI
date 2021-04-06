@@ -3,10 +3,11 @@ import useTranslation from 'next-translate/useTranslation'
 import { Block, Cancel, CancelScheduleSend, Check } from '@material-ui/icons'
 
 import api from '@api/HttpClient'
+import { Menu } from '@elements/Menu/Menu'
 import { FriendStatus, IUser } from 'domainTypes'
 import { errorToast, successToast } from 'services/toastService'
 
-import { MenuContent, StyledMenu, StyledMenuItem } from './FriendMenu.styled'
+import { StyledMenuItem } from './FriendMenu.styled'
 
 interface IFriendMenuProps {
   userId: string
@@ -85,43 +86,35 @@ const FriendMenu = ({ anchorEl, onClose, setLoading, userId, friendStatus }: IFr
   }
 
   return (
-    <StyledMenu
-      elevation={4}
-      keepMounted
-      open={Boolean(anchorEl)}
-      anchorEl={anchorEl}
-      onClose={onClose}
-    >
-      <MenuContent>
-        {friendStatus == FriendStatus.Friend && (
-          <StyledMenuItem id='removeMenuItem' onClick={handleRemoveFriendClicked}>
-            <Cancel />
-            {t('removeFriend')}
+    <Menu elevation={4} keepMounted open={Boolean(anchorEl)} anchorEl={anchorEl} onClose={onClose}>
+      {friendStatus == FriendStatus.Friend && (
+        <StyledMenuItem id='removeMenuItem' onClick={handleRemoveFriendClicked}>
+          <Cancel />
+          {t('removeFriend')}
+        </StyledMenuItem>
+      )}
+
+      {friendStatus == FriendStatus.FriendRequestSent && (
+        <StyledMenuItem id='removeMenuItem' onClick={handleUnsendFriendRequestClick}>
+          <CancelScheduleSend />
+          {t('unsendFriendRequest')}
+        </StyledMenuItem>
+      )}
+
+      {friendStatus == FriendStatus.FriendRequestRecieved && (
+        <>
+          <StyledMenuItem onClick={handleAcceptFriendRequestClick}>
+            <Check />
+            {t('acceptFriendRequest')}
           </StyledMenuItem>
-        )}
 
-        {friendStatus == FriendStatus.FriendRequestSent && (
-          <StyledMenuItem id='removeMenuItem' onClick={handleUnsendFriendRequestClick}>
-            <CancelScheduleSend />
-            {t('unsendFriendRequest')}
+          <StyledMenuItem id='removeMenuItem' onClick={handleRejectFriendRequestClick}>
+            <Block />
+            {t('rejectFriendRequest')}
           </StyledMenuItem>
-        )}
-
-        {friendStatus == FriendStatus.FriendRequestRecieved && (
-          <>
-            <StyledMenuItem onClick={handleAcceptFriendRequestClick}>
-              <Check />
-              {t('acceptFriendRequest')}
-            </StyledMenuItem>
-
-            <StyledMenuItem id='removeMenuItem' onClick={handleRejectFriendRequestClick}>
-              <Block />
-              {t('rejectFriendRequest')}
-            </StyledMenuItem>
-          </>
-        )}
-      </MenuContent>
-    </StyledMenu>
+        </>
+      )}
+    </Menu>
   )
 }
 
