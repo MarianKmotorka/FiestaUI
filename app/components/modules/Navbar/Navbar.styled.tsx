@@ -33,8 +33,8 @@ export const StyledContainer = styled(Container)`
 `
 
 export const LinkContent = styled.p`
-  color: ${({ theme }) => theme.secondary.main};
-  font-size: 1.1rem;
+  color: ${({ theme }) => theme.themeText.themeBlack};
+  font-size: 1rem;
   margin-right: auto;
   padding: 10px 20px;
   font-weight: 500;

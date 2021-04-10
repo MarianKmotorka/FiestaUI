@@ -11,7 +11,7 @@ export const Menu = styled(MuiMenu)`
   }
 
   .MuiMenu-paper {
-    background-color: ${({ theme }) => (theme.type == 'dark' ? theme.grey[900] : theme.grey[100])};
+    background-color: ${({ theme }) => theme.background.paper};
   }
 `
 
