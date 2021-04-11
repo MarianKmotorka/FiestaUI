@@ -124,7 +124,7 @@ const Navbar = ({ forceUnauthorizedNavbar }: INavbarProps) => {
 
         {switchThemeMenuItem}
 
-        <MobileMenuItem onClick={auth.logout}>
+        <MobileMenuItem onClick={() => auth.logout()}>
           <ExitToAppRounded />
           {t('logout')}
         </MobileMenuItem>

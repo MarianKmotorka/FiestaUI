@@ -14,7 +14,7 @@ type IAuthContextValue =
       isLoggedIn: true
       isLoading: boolean
       currentUser: ICurrentUser
-      logout: () => Promise<void>
+      logout: (shouldCallServer?: boolean) => Promise<void>
       fetchUser: () => Promise<void>
       updateUser: (newValues: Partial<ICurrentUser>) => void
     }
@@ -62,8 +62,8 @@ const AuthProvider: FC = ({ children }) => {
     initialLoad()
   }, [fetchUser])
 
-  const logout = useCallback(async () => {
-    await authService.logout()
+  const logout = useCallback(async (shouldCallServer?: boolean) => {
+    if (shouldCallServer !== false) await authService.logout()
     localStorage.removeItem(IS_SIGNED_IN_LOCAL_STORAGE_KEY)
     setUser(undefined)
   }, [])

@@ -24,7 +24,7 @@ const DeleteWithPassword = () => {
     url: '/auth/delete-account-with-password',
     method: 'delete',
     successCallback: async () => {
-      await logout()
+      await logout(false)
       successToast(t('accountDeleted'))
     },
     errorCallback: (err, { setError }) => {

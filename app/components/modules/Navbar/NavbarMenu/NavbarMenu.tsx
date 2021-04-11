@@ -58,7 +58,7 @@ const NavbarMenu = ({ anchorEl, onClose }: INavbarMenuProps) => {
           </StyledMenuItem>
         </Link>
 
-        <StyledMenuItem onClick={logout}>
+        <StyledMenuItem onClick={() => logout()}>
           {t('logout')}
           <ExitToApp />
         </StyledMenuItem>
