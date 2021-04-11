@@ -66,7 +66,7 @@ export const LinkContent = styled.p`
 
 export const MobileMenuItem = styled(MenuItem)`
   width: 100%;
-  font-size: 1.1rem;
+  font-size: 1rem;
   padding: 5px 5%;
 
   > svg {

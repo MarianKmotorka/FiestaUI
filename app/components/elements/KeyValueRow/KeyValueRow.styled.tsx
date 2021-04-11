@@ -1,20 +1,17 @@
 import styled from 'styled-components'
-import { MD } from '@contextProviders/AppThemeProvider/theme'
 
 export const Wrapper = styled.div`
   display: flex;
   border-radius: 3px;
-  font-size: 1.1em;
+  font-size: ${({ theme }) => theme.typography.body2.fontSize};
   color: ${({ theme }) => theme.palette.themeText.themeBlack};
   padding: 0 10px;
 
-  @media screen and (max-width: ${MD}px) {
-    font-size: 0.95em;
-  }
-
   :nth-child(even) {
     background-color: ${({ theme }) =>
-      theme.palette.type === 'dark' ? theme.palette.grey[800] : theme.palette.grey[100]};
+      theme.palette.type === 'dark'
+        ? theme.palette.grey[800] + '50'
+        : theme.palette.grey[100] + 'd0'};
   }
 `
 

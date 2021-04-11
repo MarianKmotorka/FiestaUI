@@ -47,7 +47,7 @@ export const StyledAvatar = styled(Avatar)`
 
 export const Name = styled.h1`
   font-weight: 500;
-  font-size: 1.2rem;
+  font-size: ${({ theme }) => theme.typography.h6.fontSize};
   text-align: center;
   color: ${({ theme }) => theme.palette.themeText.themeBlack};
   cursor: pointer;
@@ -69,7 +69,7 @@ export const StyledMenuItem = styled(MenuItem)`
 
   display: flex;
   justify-content: center;
-  font-size: 1.05rem;
+  font-size: ${({ theme }) => theme.typography.body1.fontSize};
 
   #lightThemeIcon {
     color: ${({ theme }) => theme.palette.primary.main};

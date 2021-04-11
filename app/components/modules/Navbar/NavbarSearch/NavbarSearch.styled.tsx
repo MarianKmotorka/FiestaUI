@@ -65,14 +65,14 @@ export const ItemInfo = styled.div`
     margin: 0px;
     line-height: 1.4rem;
     font-weight: 500;
-    font-size: 1.1rem;
+    font-size: ${({ theme }) => theme.typography.subtitle1.fontSize};
     ::first-letter {
       color: ${({ theme }) => theme.palette.primary.main};
     }
   }
 
   span {
-    font-size: 0.85em;
+    font-size: ${({ theme }) => theme.typography.subtitle2.fontSize};
     color: ${({ theme }) => theme.palette.themeText.themeGray};
     line-height: 1.15rem;
     display: flex;
@@ -90,12 +90,11 @@ export const ItemInfo = styled.div`
   @media screen and (max-width: ${MD}px) {
     max-width: 60vw;
     p {
-      font-size: 0.95rem;
       line-height: 1.25rem;
     }
 
     span {
-      font-size: 0.7em;
+      font-size: ${({ theme }) => theme.typography.subtitle2.fontSize};
       line-height: 1rem;
     }
 

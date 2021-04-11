@@ -8,6 +8,7 @@ export const TopSection = styled.section`
   @media screen and (max-width: ${MD}px) {
     flex-direction: column;
     align-items: center;
+    padding-top: 20px;
   }
 `
 
@@ -31,6 +32,7 @@ export const BioText = styled.div`
   color: ${({ theme }) => theme.palette.themeText.themeBlack};
   font-weight: 300;
   word-break: break-word;
+  font-size: ${({ theme }) => theme.typography.body1.fontSize};
 `
 
 export const ButtonsWrapper = styled.div`
@@ -94,22 +96,16 @@ export const NameWrapper = styled.div`
   p {
     margin: 0;
     color: ${({ theme }) => theme.palette.themeText.themeGray};
-    font-size: 1.3rem;
+    font-size: ${({ theme }) => theme.typography.h6.fontSize};
   }
 
   @media screen and (max-width: ${MD}px) {
     align-items: center;
-    p {
-      font-size: 1.2rem;
-    }
   }
 
   @media screen and (max-width: ${SM}px) {
     h1 {
       margin: 8px 0 6px;
-    }
-    p {
-      font-size: 1.05rem;
     }
   }
 `
