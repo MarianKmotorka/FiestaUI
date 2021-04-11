@@ -39,7 +39,7 @@ export const StyledAvatar = styled(Avatar)`
   .MuiAvatar-fallback {
     height: 45px;
     width: 45px;
-    color: ${({ theme }) => theme.themeText.themeGray};
+    color: ${({ theme }) => theme.palette.themeText.themeGray};
     display: block;
     margin: 4px auto 0;
   }
@@ -49,7 +49,7 @@ export const Name = styled.h1`
   font-weight: 500;
   font-size: 1.2rem;
   text-align: center;
-  color: ${({ theme }) => theme.themeText.themeBlack};
+  color: ${({ theme }) => theme.palette.themeText.themeBlack};
   cursor: pointer;
   margin: 12px auto 0;
   width: 90%;
@@ -59,20 +59,20 @@ export const Name = styled.h1`
   }
 
   ::first-letter {
-    color: ${({ theme }) => theme.primary.main};
+    color: ${({ theme }) => theme.palette.primary.main};
   }
 `
 
 export const StyledMenuItem = styled(MenuItem)`
   padding: 10px 25px;
-  color: ${({ theme }) => theme.themeText.themeGray};
+  color: ${({ theme }) => theme.palette.themeText.themeGray};
 
   display: flex;
   justify-content: center;
   font-size: 1.05rem;
 
   #lightThemeIcon {
-    color: ${({ theme }) => theme.primary.main};
+    color: ${({ theme }) => theme.palette.primary.main};
   }
 
   svg {

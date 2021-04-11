@@ -5,7 +5,7 @@ export const Wrapper = styled.div`
   display: flex;
   border-radius: 3px;
   font-size: 1.1em;
-  color: ${({ theme }) => theme.themeText.themeBlack};
+  color: ${({ theme }) => theme.palette.themeText.themeBlack};
   padding: 0 10px;
 
   @media screen and (max-width: ${MD}px) {
@@ -13,7 +13,8 @@ export const Wrapper = styled.div`
   }
 
   :nth-child(even) {
-    background-color: ${({ theme }) => (theme.type === 'dark' ? theme.grey[800] : theme.grey[100])};
+    background-color: ${({ theme }) =>
+      theme.palette.type === 'dark' ? theme.palette.grey[800] : theme.palette.grey[100]};
   }
 `
 

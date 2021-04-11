@@ -3,7 +3,7 @@ import styled from 'styled-components'
 const FiestaH1 = styled.h1<{ fontSize?: string }>`
   position: relative;
   font-size: ${({ fontSize }) => fontSize || '5.5rem'};
-  color: ${({ theme }) => theme.themeText.white};
+  color: ${({ theme }) => theme.palette.themeText.white};
   text-shadow: 2px 2px 2px rgba(0, 0, 0, 0.5);
 
   ::before {
@@ -12,7 +12,7 @@ const FiestaH1 = styled.h1<{ fontSize?: string }>`
     height: 1em;
     width: 100%;
     border-radius: 5px;
-    background-color: ${({ theme }) => theme.primary.main};
+    background-color: ${({ theme }) => theme.palette.primary.main};
 
     position: absolute;
     bottom: 10px;

@@ -11,13 +11,13 @@ export const Menu = styled(MuiMenu)`
   }
 
   .MuiMenu-paper {
-    background-color: ${({ theme }) => theme.background.paper};
+    background-color: ${({ theme }) => theme.palette.background.paper};
   }
 `
 
 export const MenuItem = styled(MuiMenuItem)`
   padding: 10px 20px;
-  color: ${({ theme }) => theme.themeText.themeGray};
+  color: ${({ theme }) => theme.palette.themeText.themeGray};
 
   display: flex;
   justify-content: flex-start;

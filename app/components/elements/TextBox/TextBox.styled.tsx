@@ -3,11 +3,11 @@ import styled from 'styled-components'
 
 export const StyledTextBox = styled(TextField)`
   .MuiFormLabel-root {
-    color: ${({ theme }) => theme.themeText.themeGray};
+    color: ${({ theme }) => theme.palette.themeText.themeGray};
   }
 
   .MuiInputBase-input {
-    color: ${({ theme }) => theme.themeText.themeBlack};
+    color: ${({ theme }) => theme.palette.themeText.themeBlack};
   }
 
   .MuiFormLabel-root {

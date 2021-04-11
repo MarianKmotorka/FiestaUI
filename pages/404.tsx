@@ -12,7 +12,7 @@ const Wrapper = styled.div`
   padding: 40px;
 
   h1 {
-    color: ${({ theme }) => theme.primary.main};
+    color: ${({ theme }) => theme.palette.primary.main};
     text-shadow: 5px 5px 30px rgba(255, 8, 102, 0.5);
     font-size: 2.5rem;
     text-align: center;

@@ -2,6 +2,7 @@ import { createContext, FC, useCallback, useContext, useEffect, useState } from 
 import { ThemeProvider as StyledThemeProvider } from 'styled-components'
 import {
   CssBaseline,
+  PaletteType,
   StylesProvider,
   Theme,
   ThemeProvider as MuiThemeProvider
@@ -9,8 +10,9 @@ import {
 
 import Hidden from '@elements/Hidden'
 import GlobalStyles from './GlobalStyles'
-import { lightTheme, darkTheme } from '@contextProviders/AppThemeProvider/theme'
+import useWindowSize from '@hooks/useWindowSize'
 import useLocalStorage from '@hooks/useLocalStorage'
+import { getTheme } from '@contextProviders/AppThemeProvider/theme'
 
 interface IAppThemeContextValue {
   switchTheme: () => void
@@ -22,8 +24,9 @@ const AppThemeContext = createContext<IAppThemeContextValue>(null!)
 export const useAppTheme = () => useContext(AppThemeContext)
 
 const AppThemeProvider: FC = ({ children }) => {
-  const [themeType, setThemeType] = useLocalStorage<'dark' | 'light'>('FIESTA.theme', 'light')
+  const [themeType, setThemeType] = useLocalStorage<PaletteType>('FIESTA.theme', 'light')
   const [isMounted, setIsMounted] = useState(false)
+  const windowSize = useWindowSize()
 
   useEffect(() => {
     const jssStyles = document.querySelector('#jss-server-side')
@@ -37,13 +40,13 @@ const AppThemeProvider: FC = ({ children }) => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [themeType]) // TODO: check this problem
 
-  const theme = themeType === 'light' ? lightTheme : darkTheme
+  const theme = getTheme(themeType, windowSize)
   const value: IAppThemeContextValue = { theme, switchTheme, isDark: themeType === 'dark' }
 
   const body = (
     <StylesProvider injectFirst>
       <MuiThemeProvider theme={theme}>
-        <StyledThemeProvider theme={theme.palette}>
+        <StyledThemeProvider theme={theme}>
           <AppThemeContext.Provider value={value}>
             <CssBaseline />
             <GlobalStyles />

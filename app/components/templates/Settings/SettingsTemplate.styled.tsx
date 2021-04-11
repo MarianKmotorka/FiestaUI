@@ -25,8 +25,8 @@ export const TabsContainer = styled.div`
   justify-content: center;
   margin-bottom: 50px;
 
-  color: ${({ theme }) => theme.themeText.themeBlack};
-  border-right: 1px solid ${({ theme }) => theme.themeText.themeBlack}26;
+  color: ${({ theme }) => theme.palette.themeText.themeBlack};
+  border-right: 1px solid ${({ theme }) => theme.palette.themeText.themeBlack}26;
 
   @media screen and (max-width: ${MD}px) {
     max-width: 100%;

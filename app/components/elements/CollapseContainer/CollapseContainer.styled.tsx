@@ -13,6 +13,6 @@ export const StyledButton = styled(Button)`
   margin-top: 5px;
   padding-left: 0;
   padding-right: 0;
-  color: ${({ theme }) => theme.themeText.themeGray};
+  color: ${({ theme }) => theme.palette.themeText.themeGray};
   font-weight: 500;
 `

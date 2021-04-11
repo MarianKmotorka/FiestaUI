@@ -10,7 +10,7 @@ import { MD, SM, XL } from '@contextProviders/AppThemeProvider/theme'
 export const NAVBAR_HEIGHT = 80
 
 export const StyledAppBar = styled(AppBar)`
-  background-color: ${({ theme }) => theme.background.default};
+  background-color: ${({ theme }) => theme.palette.background.default};
 `
 
 export const Logo = styled(FiestaLogo)`
@@ -33,7 +33,7 @@ export const StyledContainer = styled(Container)`
 `
 
 export const LinkContent = styled.p`
-  color: ${({ theme }) => theme.themeText.themeBlack};
+  color: ${({ theme }) => theme.palette.themeText.themeBlack};
   font-size: 1rem;
   margin-right: auto;
   padding: 10px 20px;
@@ -47,13 +47,13 @@ export const LinkContent = styled.p`
   gap: 5px;
 
   :hover {
-    border-color: ${({ theme }) => theme.secondary.main};
+    border-color: ${({ theme }) => theme.palette.secondary.main};
   }
 
   &.active {
-    border-color: ${({ theme }) => theme.primary.main};
+    border-color: ${({ theme }) => theme.palette.primary.main};
     svg {
-      color: ${({ theme }) => theme.primary.main};
+      color: ${({ theme }) => theme.palette.primary.main};
     }
   }
 
@@ -75,7 +75,7 @@ export const MobileMenuItem = styled(MenuItem)`
 
   &.active {
     svg {
-      color: ${({ theme }) => theme.primary.main};
+      color: ${({ theme }) => theme.palette.primary.main};
     }
   }
 
@@ -96,7 +96,7 @@ export const Menu = styled(motion.div)`
 
     svg {
       pointer-events: none;
-      color: ${({ theme }) => theme.themeText.white};
+      color: ${({ theme }) => theme.palette.themeText.white};
     }
 
     .MuiChip-label {
@@ -115,7 +115,7 @@ export const Menu = styled(motion.div)`
     top: ${NAVBAR_HEIGHT}px;
     height: calc(100vh - ${NAVBAR_HEIGHT}px);
     flex-direction: column;
-    background-color: ${({ theme }) => theme.background.default};
+    background-color: ${({ theme }) => theme.palette.background.default};
   }
 `
 
@@ -139,6 +139,6 @@ export const SearchChip = styled(Chip)`
   cursor: pointer;
   svg {
     background-color: transparent !important;
-    color: ${({ theme }) => theme.themeText.themeWhite} !important;
+    color: ${({ theme }) => theme.palette.themeText.themeWhite} !important;
   }
 `

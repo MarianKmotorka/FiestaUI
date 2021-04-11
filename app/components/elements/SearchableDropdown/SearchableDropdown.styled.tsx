@@ -5,7 +5,7 @@ export const Wrapper = styled.div`
   position: relative;
   z-index: 5;
   svg {
-    color: ${({ theme }) => theme.themeText.themeBlack};
+    color: ${({ theme }) => theme.palette.themeText.themeBlack};
   }
 `
 
@@ -23,7 +23,7 @@ export const ClearAndExpandIcons = styled.div`
   cursor: pointer;
 
   #clear-icon {
-    color: ${({ theme }) => theme.error.main};
+    color: ${({ theme }) => theme.palette.error.main};
   }
 `
 

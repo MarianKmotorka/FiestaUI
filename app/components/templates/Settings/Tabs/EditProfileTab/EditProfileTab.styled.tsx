@@ -42,7 +42,7 @@ export const StyledAvatar = styled(Avatar)`
   .MuiAvatar-fallback {
     height: 140px;
     width: 140px;
-    color: ${({ theme }) => theme.themeText.themeGray};
+    color: ${({ theme }) => theme.palette.themeText.themeGray};
     display: block;
     margin: 10px auto 0;
   }

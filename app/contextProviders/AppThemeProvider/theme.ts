@@ -1,7 +1,9 @@
-import { createMuiTheme } from '@material-ui/core/styles'
-import { Palette } from '@material-ui/core/styles/createPalette'
+import { createMuiTheme, ThemeOptions } from '@material-ui/core/styles'
+import { PaletteType } from '@material-ui/core'
+
 import red from '@material-ui/core/colors/red'
-import { grey } from '@material-ui/core/colors'
+import { getTypographyOptions } from './typography'
+import { UseWindowSizeReturn } from '@hooks/useWindowSize'
 
 export const SM = 400
 export const MD = 700
@@ -9,7 +11,7 @@ export const LG = 900
 export const XL = 1024
 export const XXL = 1320
 
-export const lightTheme = createMuiTheme({
+const lightTheme: ThemeOptions = {
   palette: {
     type: 'light',
     primary: {
@@ -33,21 +35,15 @@ export const lightTheme = createMuiTheme({
       paper: '#ffffff'
     }
   },
-  typography: {
-    button: {
-      textTransform: 'none',
-      fontWeight: 400
-    }
-  },
   breakpoints: {
-    values: { sm: MD, lg: XL, md: LG, xl: XXL, xs: SM }
+    values: { xs: SM, sm: MD, md: LG, lg: XL, xl: XXL }
   },
   overrides: {
     MuiBackdrop: { root: { backgroundColor: 'rgba(0,0,0,0.8)' } }
   }
-})
+}
 
-export const darkTheme = createMuiTheme({
+const darkTheme: ThemeOptions = {
   ...lightTheme,
   palette: {
     ...lightTheme.palette,
@@ -56,7 +52,7 @@ export const darkTheme = createMuiTheme({
       main: '#cbcad0'
     },
     themeText: {
-      ...lightTheme.palette.themeText,
+      ...lightTheme.palette!.themeText,
       themeGray: '#aaaaaa',
       themeBlack: '#ffffff',
       themeWhite: '#000000'
@@ -66,30 +62,10 @@ export const darkTheme = createMuiTheme({
       paper: '#151A21'
     }
   }
-})
-
-declare module 'styled-components' {
-  export interface DefaultTheme extends Palette {}
 }
 
-declare module '@material-ui/core/styles/createPalette' {
-  interface Palette {
-    themeText: {
-      black: string
-      white: string
-      themeGray: string
-      themeBlack: string
-      themeWhite: string
-    }
-  }
-
-  interface PaletteOptions {
-    themeText: {
-      black: string
-      white: string
-      themeGray: string
-      themeBlack: string
-      themeWhite: string
-    }
-  }
+export const getTheme = (type: PaletteType, windowSize: UseWindowSizeReturn) => {
+  const theme = type === 'light' ? lightTheme : darkTheme
+  const themeWithTypography = { ...theme, typography: getTypographyOptions(windowSize) }
+  return createMuiTheme(themeWithTypography)
 }

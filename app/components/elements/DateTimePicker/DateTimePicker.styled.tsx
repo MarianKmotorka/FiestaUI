@@ -3,11 +3,11 @@ import styled, { createGlobalStyle } from 'styled-components'
 
 export const StyledPicker = styled(DateTimePicker)`
   .MuiFormLabel-root {
-    color: ${({ theme }) => theme.themeText.themeGray};
+    color: ${({ theme }) => theme.palette.themeText.themeGray};
   }
 
   .MuiInputBase-input {
-    color: ${({ theme }) => theme.themeText.themeBlack};
+    color: ${({ theme }) => theme.palette.themeText.themeBlack};
   }
 
   .MuiFormLabel-root {
@@ -19,16 +19,16 @@ export const StyledPicker = styled(DateTimePicker)`
 export const PickerGlobalStyle = createGlobalStyle`
 .MuiPickersBasePicker-pickerView{
   .MuiPickersDay-day,.MuiPickersCalendarHeader-switchHeader,.MuiPickersYear-root,.MuiPickersClockNumber-clockNumber , svg {
-    color:${({ theme }) => theme.themeText.themeBlack};
+    color:${({ theme }) => theme.palette.themeText.themeBlack};
   }
   .MuiPickersDay-current, .MuiPickersYear-yearSelected{
-    color:${({ theme }) => theme.primary.main};
+    color:${({ theme }) => theme.palette.primary.main};
   }
   .MuiPickersDay-daySelected,.MuiPickersClockNumber-clockNumberSelected {
-    color:${({ theme }) => theme.themeText.white};
+    color:${({ theme }) => theme.palette.themeText.white};
   }
   .MuiPickersDay-dayDisabled, .MuiPickersCalendarHeader-dayLabel, .MuiPickersYear-yearDisabled {
-    color:${({ theme }) => theme.grey[500]};
+    color:${({ theme }) => theme.palette.grey[500]};
   }
 }
 `

@@ -11,20 +11,20 @@ export const Wrapper = styled.div`
     width: 95%;
 
     .MuiInputBase-root {
-      background-color: ${({ theme }) => theme.background.default + 'dd'};
-      color: ${({ theme }) => theme.themeText.themeBlack};
+      background-color: ${({ theme }) => theme.palette.background.default + 'dd'};
+      color: ${({ theme }) => theme.palette.themeText.themeBlack};
       border-radius: 100vh;
       padding-left: 15px;
 
       svg {
-        color: ${({ theme }) => theme.themeText.themeGray};
+        color: ${({ theme }) => theme.palette.themeText.themeGray};
       }
     }
   }
 `
 
 export const OptionText = styled.p`
-  color: ${({ theme }) => theme.themeText.themeBlack};
+  color: ${({ theme }) => theme.palette.themeText.themeBlack};
   font-size: 0.85em;
 `
 
@@ -32,7 +32,7 @@ export const Option = styled.div`
   display: flex;
   align-items: center;
   svg {
-    color: ${({ theme }) => theme.themeText.themeGray};
+    color: ${({ theme }) => theme.palette.themeText.themeGray};
     margin-right: 10px;
   }
 `

@@ -5,7 +5,7 @@ import { LG, MD } from '@contextProviders/AppThemeProvider/theme'
 
 export const SettingsAccordion = styled(Accordion)`
   .MuiAccordionSummary-root svg {
-    color: ${({ theme }) => theme.themeText.themeGray};
+    color: ${({ theme }) => theme.palette.themeText.themeGray};
   }
 
   .MuiAccordionDetails-root {
@@ -22,7 +22,7 @@ export const SettingsAccordion = styled(Accordion)`
 
 export const AccordionTitle = styled.h1`
   font-weight: 300;
-  color: ${({ theme }) => theme.themeText.themeBlack};
+  color: ${({ theme }) => theme.palette.themeText.themeBlack};
   font-size: 1.2rem;
 
   @media screen and (max-width: ${LG}px) {

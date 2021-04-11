@@ -10,7 +10,7 @@ interface IStyledProps {
 const StyledSpinner = styled(FontAwesomeIcon)<IStyledProps>`
   font-size: ${({ fontSize }) => fontSize || '1.4rem'};
   color: ${({ themed, theme }) =>
-    themed === 1 ? theme.themeText.themeBlack : theme.themeText.black};
+    themed === 1 ? theme.palette.themeText.themeBlack : theme.palette.themeText.black};
 `
 
 interface ISpinnerProps {

@@ -11,7 +11,7 @@ export const StyledCard = styled(Card)`
   min-width: 300px;
 
   p {
-    color: ${({ theme }) => theme.themeText.themeBlack};
+    color: ${({ theme }) => theme.palette.themeText.themeBlack};
   }
 
   input {
@@ -25,7 +25,7 @@ export const StyledCard = styled(Card)`
 
 export const Title = styled.h1`
   font-size: 1.5rem;
-  color: ${({ theme }) => theme.primary.main};
+  color: ${({ theme }) => theme.palette.primary.main};
 
   @media screen and (max-width: ${MD}px) {
     font-size: 1.2rem;

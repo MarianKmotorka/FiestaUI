@@ -2,13 +2,13 @@ import styled from 'styled-components'
 
 export const Wrapper = styled.div`
   .MuiStepLabel-label {
-    color: ${({ theme }) => theme.themeText.themeGray};
+    color: ${({ theme }) => theme.palette.themeText.themeGray};
     font-weight: 300;
   }
 
   .MuiStepLabel-active,
   .MuiStepLabel-completed {
-    color: ${({ theme }) => theme.themeText.themeBlack};
+    color: ${({ theme }) => theme.palette.themeText.themeBlack};
   }
 
   .MuiStepLabel-active {

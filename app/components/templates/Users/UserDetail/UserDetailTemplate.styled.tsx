@@ -28,7 +28,7 @@ export const NameAndButtonsWrapper = styled.div`
 
 export const BioText = styled.div`
   white-space: pre-wrap;
-  color: ${({ theme }) => theme.themeText.themeBlack};
+  color: ${({ theme }) => theme.palette.themeText.themeBlack};
   font-weight: 300;
   word-break: break-word;
 `
@@ -80,28 +80,25 @@ export const NameWrapper = styled.div`
   h1 {
     margin: 0;
     margin-bottom: 8px;
-    font-size: 2.2rem;
+    font-size: ${({ theme }) => theme.typography.h4.fontSize};
     font-weight: 400;
     line-height: 1em;
-    color: ${({ theme }) => theme.themeText.themeBlack};
+    color: ${({ theme }) => theme.palette.themeText.themeBlack};
     text-shadow: 1px 1px 1px rgba(0, 0, 0, 0.2);
 
     ::first-letter {
-      color: ${({ theme }) => theme.primary.main};
+      color: ${({ theme }) => theme.palette.primary.main};
     }
   }
 
   p {
     margin: 0;
-    color: ${({ theme }) => theme.themeText.themeGray};
+    color: ${({ theme }) => theme.palette.themeText.themeGray};
     font-size: 1.3rem;
   }
 
   @media screen and (max-width: ${MD}px) {
     align-items: center;
-    h1 {
-      font-size: 2rem;
-    }
     p {
       font-size: 1.2rem;
     }
@@ -110,7 +107,6 @@ export const NameWrapper = styled.div`
   @media screen and (max-width: ${SM}px) {
     h1 {
       margin: 8px 0 6px;
-      font-size: 1.5rem;
     }
     p {
       font-size: 1.05rem;

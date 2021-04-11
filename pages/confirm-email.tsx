@@ -15,11 +15,11 @@ const StyledCard = styled(Card)`
   min-width: 300px;
 
   h1 {
-    color: ${({ theme }) => theme.primary.main};
+    color: ${({ theme }) => theme.palette.primary.main};
   }
 
   p {
-    color: ${({ theme }) => theme.error.main};
+    color: ${({ theme }) => theme.palette.error.main};
     font-size: 1.3rem;
   }
 `

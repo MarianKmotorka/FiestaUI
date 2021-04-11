@@ -8,7 +8,7 @@ export const StyledCard = styled(Card)`
   max-width: 560px;
 
   h1 {
-    color: ${({ theme }) => theme.primary.main};
+    color: ${({ theme }) => theme.palette.primary.main};
   }
 
   .MuiTextField-root {
@@ -25,11 +25,11 @@ export const SuccessResetDialogCard = styled(Card)`
   min-width: 300px;
 
   p {
-    color: ${({ theme }) => theme.themeText.themeBlack};
+    color: ${({ theme }) => theme.palette.themeText.themeBlack};
   }
 
   h1 {
-    color: ${({ theme }) => theme.primary.main};
+    color: ${({ theme }) => theme.palette.primary.main};
 
     @media screen and (max-width: ${MD}px) {
       font-size: 1.2rem;

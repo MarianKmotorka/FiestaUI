@@ -30,7 +30,7 @@ export const StyledCloseButton = styled(IconButton)`
   right: 10px;
 
   svg {
-    color: ${({ theme }) => theme.themeText.themeGray};
+    color: ${({ theme }) => theme.palette.themeText.themeGray};
   }
 `
 
@@ -67,19 +67,19 @@ export const ItemInfo = styled.div`
     font-weight: 500;
     font-size: 1.1rem;
     ::first-letter {
-      color: ${({ theme }) => theme.primary.main};
+      color: ${({ theme }) => theme.palette.primary.main};
     }
   }
 
   span {
     font-size: 0.85em;
-    color: ${({ theme }) => theme.themeText.themeGray};
+    color: ${({ theme }) => theme.palette.themeText.themeGray};
     line-height: 1.15rem;
     display: flex;
     align-items: center;
     svg {
       font-size: 1em;
-      color: ${({ theme }) => theme.themeText.themeBlack};
+      color: ${({ theme }) => theme.palette.themeText.themeBlack};
     }
   }
 

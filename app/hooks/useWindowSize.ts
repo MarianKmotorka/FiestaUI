@@ -1,7 +1,20 @@
 import { useEffect, useState, useCallback } from 'react'
 import { LG, MD, SM, XL } from '@contextProviders/AppThemeProvider/theme'
 
-export const useWindowSize = () => {
+export interface UseWindowSizeReturn {
+  maxSmall: boolean
+  maxMedium: boolean
+  maxLarge: boolean
+  maxExtraLarge: boolean
+  minSmall: boolean
+  minMedium: boolean
+  minLarge: boolean
+  minExtraLarge: boolean
+  width: number
+  height: number
+}
+
+export const useWindowSize = (): UseWindowSizeReturn => {
   const isClient = typeof window === 'object'
 
   const getSize = useCallback(

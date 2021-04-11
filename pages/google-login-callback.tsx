@@ -21,7 +21,7 @@ const Overlay = styled.div`
     padding: 30px;
     font-size: 1.5rem;
     font-weight: 500;
-    color: ${({ theme }) => theme.error.main};
+    color: ${({ theme }) => theme.palette.error.main};
   }
 `
 
