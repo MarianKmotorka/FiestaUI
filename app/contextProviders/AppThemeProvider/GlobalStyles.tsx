@@ -1,5 +1,6 @@
 import { NAVBAR_HEIGHT } from '@modules/Navbar/Navbar.styled'
 import { createGlobalStyle, css } from 'styled-components'
+import { MD } from './theme'
 
 const GlobalStyles = createGlobalStyle`
   .MuiMenuItem-root {
@@ -21,8 +22,7 @@ const GlobalStyles = createGlobalStyle`
       padding: 0;
       min-height: 0px;
       margin-bottom: 0.2rem !important;
-      box-shadow:-5px 10px 10px rgba(0,0,0,0.2);
-      box-shadow:${({ theme }) => theme.shadows[15]};
+      box-shadow: ${({ theme }) => theme.shadows[15]};
 
       .Toastify__toast-body {
         width: 100%;
@@ -32,6 +32,7 @@ const GlobalStyles = createGlobalStyle`
     }
   }
 
+  // Disabled Button contrast fix
   ${({ theme }) =>
     theme.palette.type === 'dark' &&
     css`
@@ -42,6 +43,25 @@ const GlobalStyles = createGlobalStyle`
         border-color: ${theme.palette.grey[600]};
       }
     `}
+
+  // Scrollbar
+  * {
+    @media screen and (min-width: ${MD}px) {
+      ::-webkit-scrollbar {
+        width: 10px;
+      }
+
+      ::-webkit-scrollbar-track {
+        background: transparent;
+      }
+
+      ::-webkit-scrollbar-thumb {
+        border-radius: 100px;
+        background: ${({ theme: { palette } }) =>
+          palette.type === 'dark' ? palette.grey[800] : palette.grey[500]};
+      }
+    }
+  }
 `
 
 export default GlobalStyles

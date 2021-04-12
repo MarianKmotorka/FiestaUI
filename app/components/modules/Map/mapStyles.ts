@@ -93,77 +93,26 @@ export const lightMapStyle = [
 
 export const darkMapStyle = [
   {
-    featureType: 'administrative',
-    elementType: 'all',
+    elementType: 'geometry',
     stylers: [
       {
-        visibility: 'on'
+        color: '#242f3e'
       }
     ]
   },
   {
-    featureType: 'all',
     elementType: 'labels.text.fill',
     stylers: [
       {
-        saturation: 36
-      },
-      {
-        color: '#000000'
-      },
-      {
-        lightness: 40
+        color: '#746855'
       }
     ]
   },
   {
-    featureType: 'all',
     elementType: 'labels.text.stroke',
     stylers: [
       {
-        visibility: 'on'
-      },
-      {
-        color: '#000000'
-      },
-      {
-        lightness: 16
-      }
-    ]
-  },
-  {
-    featureType: 'all',
-    elementType: 'labels.icon',
-    stylers: [
-      {
-        visibility: 'on'
-      }
-    ]
-  },
-  {
-    featureType: 'administrative',
-    elementType: 'geometry.fill',
-    stylers: [
-      {
-        color: '#000000'
-      },
-      {
-        lightness: 20
-      }
-    ]
-  },
-  {
-    featureType: 'administrative',
-    elementType: 'geometry.stroke',
-    stylers: [
-      {
-        color: '#000000'
-      },
-      {
-        lightness: 17
-      },
-      {
-        weight: 1.2
+        color: '#242f3e'
       }
     ]
   },
@@ -172,67 +121,70 @@ export const darkMapStyle = [
     elementType: 'labels.text.fill',
     stylers: [
       {
-        color: '#c4c4c4'
-      }
-    ]
-  },
-  {
-    featureType: 'administrative.neighborhood',
-    elementType: 'labels.text.fill',
-    stylers: [
-      {
-        color: '#707070'
-      }
-    ]
-  },
-  {
-    featureType: 'landscape',
-    elementType: 'geometry',
-    stylers: [
-      {
-        color: '#000000'
-      },
-      {
-        lightness: 20
+        color: '#d59563'
       }
     ]
   },
   {
     featureType: 'poi',
-    elementType: 'geometry',
+    elementType: 'labels.text.fill',
     stylers: [
       {
-        color: '#000000'
-      },
-      {
-        lightness: 21
-      },
-      {
-        visibility: 'on'
+        color: '#d59563'
       }
     ]
   },
   {
-    featureType: 'poi.business',
+    featureType: 'poi.park',
     elementType: 'geometry',
     stylers: [
       {
-        visibility: 'on'
+        color: '#263c3f'
+      }
+    ]
+  },
+  {
+    featureType: 'poi.park',
+    elementType: 'labels.text.fill',
+    stylers: [
+      {
+        color: '#6b9a76'
+      }
+    ]
+  },
+  {
+    featureType: 'road',
+    elementType: 'geometry',
+    stylers: [
+      {
+        color: '#38414e'
+      }
+    ]
+  },
+  {
+    featureType: 'road',
+    elementType: 'geometry.stroke',
+    stylers: [
+      {
+        color: '#212a37'
+      }
+    ]
+  },
+  {
+    featureType: 'road',
+    elementType: 'labels.text.fill',
+    stylers: [
+      {
+        color: '#9ca5b3'
       }
     ]
   },
   {
     featureType: 'road.highway',
-    elementType: 'geometry.fill',
+    elementType: 'geometry',
     stylers: [
       {
-        color: '#be2026'
-      },
-      {
-        lightness: '0'
-      },
-      {
-        visibility: 'on'
+        color: '#746855'
       }
     ]
   },
@@ -241,7 +193,7 @@ export const darkMapStyle = [
     elementType: 'geometry.stroke',
     stylers: [
       {
-        visibility: 'on'
+        color: '#1f2835'
       }
     ]
   },
@@ -250,88 +202,7 @@ export const darkMapStyle = [
     elementType: 'labels.text.fill',
     stylers: [
       {
-        visibility: 'on'
-      }
-    ]
-  },
-  {
-    featureType: 'road.highway',
-    elementType: 'labels.text.stroke',
-    stylers: [
-      {
-        visibility: 'on'
-      },
-      {
-        hue: '#ff000a'
-      }
-    ]
-  },
-  {
-    featureType: 'road.arterial',
-    elementType: 'geometry',
-    stylers: [
-      {
-        color: '#000000'
-      },
-      {
-        lightness: 18
-      }
-    ]
-  },
-  {
-    featureType: 'road.arterial',
-    elementType: 'geometry.fill',
-    stylers: [
-      {
-        color: '#575757'
-      }
-    ]
-  },
-  {
-    featureType: 'road.arterial',
-    elementType: 'labels.text.fill',
-    stylers: [
-      {
-        color: '#ffffff'
-      }
-    ]
-  },
-  {
-    featureType: 'road.arterial',
-    elementType: 'labels.text.stroke',
-    stylers: [
-      {
-        color: '#2c2c2c'
-      }
-    ]
-  },
-  {
-    featureType: 'road.local',
-    elementType: 'geometry',
-    stylers: [
-      {
-        color: '#000000'
-      },
-      {
-        lightness: 16
-      }
-    ]
-  },
-  {
-    featureType: 'road.local',
-    elementType: 'labels.text.fill',
-    stylers: [
-      {
-        color: '#999999'
-      }
-    ]
-  },
-  {
-    featureType: 'road.local',
-    elementType: 'labels.text.stroke',
-    stylers: [
-      {
-        saturation: '-52'
+        color: '#f3d19c'
       }
     ]
   },
@@ -340,10 +211,16 @@ export const darkMapStyle = [
     elementType: 'geometry',
     stylers: [
       {
-        color: '#000000'
-      },
+        color: '#2f3948'
+      }
+    ]
+  },
+  {
+    featureType: 'transit.station',
+    elementType: 'labels.text.fill',
+    stylers: [
       {
-        lightness: 19
+        color: '#d59563'
       }
     ]
   },
@@ -352,10 +229,25 @@ export const darkMapStyle = [
     elementType: 'geometry',
     stylers: [
       {
-        color: '#000000'
-      },
+        color: '#17263c'
+      }
+    ]
+  },
+  {
+    featureType: 'water',
+    elementType: 'labels.text.fill',
+    stylers: [
       {
-        lightness: 17
+        color: '#515c6d'
+      }
+    ]
+  },
+  {
+    featureType: 'water',
+    elementType: 'labels.text.stroke',
+    stylers: [
+      {
+        color: '#17263c'
       }
     ]
   }
