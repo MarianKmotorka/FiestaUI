@@ -73,8 +73,7 @@ import { Column } from 'react-table'
 const columns: Column<any>[] = [
   {
     Header: 'Id',
-    accessor: 'id',
-    Filter: TextFilter
+    accessor: 'id'
   },
   {
     Header: 'Name',

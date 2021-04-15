@@ -5,6 +5,7 @@ import {
   useFilters,
   usePagination,
   useRowSelect,
+  useSortBy,
   useTable as useReactTable
 } from 'react-table'
 import { StyledCheckBox } from './Table.styled'
@@ -41,9 +42,11 @@ const TableProvider: FC = memo(({ children }) => {
       autoResetFilters: false,
       manualPagination: !inMemory,
       manualFilters: !inMemory,
+      manualSortBy: !inMemory,
       pageCount: inMemory ? undefined : pageCount
     },
     useFilters,
+    useSortBy,
     usePagination,
     useRowSelect,
     hooks => {

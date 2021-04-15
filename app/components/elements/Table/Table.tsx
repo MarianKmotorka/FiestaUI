@@ -7,7 +7,8 @@ import {
   TableCell,
   TableContainer,
   TableHead,
-  TableRow
+  TableRow,
+  TableSortLabel
 } from '@material-ui/core'
 import { Column } from 'react-table'
 import { isArray, keys } from 'lodash'
@@ -52,12 +53,13 @@ const Table = ({ columns, dataOrEndpoint, height, resizable, size, selectable }:
     setAllFilters,
     getTableProps,
     getTableBodyProps,
-    state: { pageIndex, pageSize, selectedRowIds, filters }
+    state: { pageIndex, pageSize, selectedRowIds, filters, sortBy }
   } = useTable()
 
   const { data, loading, error, refetch } = useFetchTableData({
     pageSize,
     filters,
+    sorts: sortBy,
     page: pageIndex,
     endpoint: dataOrEndpoint as ITableEndpoint,
     enabled: !isArray(dataOrEndpoint)
@@ -117,10 +119,16 @@ const Table = ({ columns, dataOrEndpoint, height, resizable, size, selectable }:
                 <TableRow {...headerGroup.getHeaderGroupProps()}>
                   {headerGroup.headers.map(column => (
                     <TableCell
-                      {...column.getHeaderProps()}
+                      {...column.getHeaderProps(column.getSortByToggleProps())}
                       className={column.id === SELECTION_COLUMN_ID ? 'selection-col' : ''}
                     >
-                      {column.render('Header')}
+                      <TableSortLabel
+                        active={column.isSorted}
+                        disabled={!column.canSort}
+                        direction={column.isSortedDesc ? 'desc' : 'asc'}
+                      >
+                        {column.render('Header')}
+                      </TableSortLabel>
                     </TableCell>
                   ))}
                 </TableRow>

@@ -1,8 +1,8 @@
 import { useQuery } from 'react-query'
-import { Filters } from 'react-table'
+import { Filters, SortingRule } from 'react-table'
 
 import api from '@api/HttpClient'
-import { IApiError, FilterOperation, IQueryDocument, IQueryResponse } from '@api/types'
+import { IApiError, FilterOperation, IQueryDocument, IQueryResponse, SortType } from '@api/types'
 
 export interface ITableEndpoint {
   url: string
@@ -14,6 +14,7 @@ interface UseFetchTableDataParams {
   page: number
   pageSize: number
   filters: Filters<any>
+  sorts: SortingRule<any>[]
 }
 
 const useFetchTableData = ({
@@ -21,7 +22,8 @@ const useFetchTableData = ({
   enabled,
   page,
   pageSize,
-  filters
+  filters,
+  sorts
 }: UseFetchTableDataParams) => {
   const queryDocument: IQueryDocument = {
     page,
@@ -31,7 +33,7 @@ const useFetchTableData = ({
       operation: FilterOperation.Contains,
       fieldValue: x.value
     })),
-    sorts: []
+    sorts: sorts.map(x => ({ fieldName: x.id, sortType: x.desc ? SortType.Desc : SortType.Asc }))
   }
 
   const { data, isLoading, isFetching, refetch, error } = useQuery<
