@@ -2,7 +2,7 @@ import { useQuery } from 'react-query'
 import { Filters, SortingRule } from 'react-table'
 
 import api from '@api/HttpClient'
-import { IApiError, FilterOperation, IQueryDocument, IQueryResponse, SortType } from '@api/types'
+import { IApiError, IQueryDocument, IQueryResponse, SortType } from '@api/types'
 
 export interface ITableEndpoint {
   url: string
@@ -30,7 +30,8 @@ const useFetchTableData = ({
     pageSize,
     filters: filters.map(x => ({
       fieldName: x.id,
-      operation: FilterOperation.Contains,
+      // Note: this prop is not part of original type - it is manually added in FilterModal.handleFilter()
+      operation: (x as any).operation,
       fieldValue: x.value
     })),
     sorts: sorts.map(x => ({ fieldName: x.id, sortType: x.desc ? SortType.Desc : SortType.Asc }))

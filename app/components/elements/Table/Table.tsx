@@ -45,6 +45,7 @@ const Table = ({ columns, dataOrEndpoint, height, resizable, size, selectable }:
   const {
     page,
     headerGroups,
+    filteredRows,
     gotoPage,
     setData,
     setConfig,
@@ -84,9 +85,9 @@ const Table = ({ columns, dataOrEndpoint, height, resizable, size, selectable }:
   if (error) return <FetchError error={error} />
 
   const hasFilters = columns.some(col => keys(col).includes('Filter'))
-  const totalEntries = isArray(dataOrEndpoint) ? dataOrEndpoint.length : data?.totalEntries || 0
+  const totalEntries = isArray(dataOrEndpoint) ? filteredRows.length : data?.totalEntries || 0
   const totalPages = isArray(dataOrEndpoint)
-    ? Math.ceil(dataOrEndpoint.length / pageSize)
+    ? Math.ceil(filteredRows.length / pageSize)
     : data?.totalPages || 0
 
   return (
@@ -101,7 +102,7 @@ const Table = ({ columns, dataOrEndpoint, height, resizable, size, selectable }:
         )}
 
         {!isArray(dataOrEndpoint) && (
-          <FloatingButton onClick={() => refetch()} disabled={loading}>
+          <FloatingButton onClick={refetch} disabled={loading}>
             <Refresh />
           </FloatingButton>
         )}

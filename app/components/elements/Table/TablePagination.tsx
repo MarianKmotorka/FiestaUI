@@ -1,4 +1,5 @@
 import { TablePagination as MuiTablePagination } from '@material-ui/core'
+import useTranslation from 'next-translate/useTranslation'
 interface IProps {
   page: number
   totalPages: number
@@ -17,17 +18,19 @@ const TablePagination = ({
   setPageSize,
   goToPage
 }: IProps) => {
+  const { t } = useTranslation('common')
+
   return (
     <MuiTablePagination
       component='div'
       page={page}
       count={totalEntries}
       rowsPerPage={pageSize}
-      labelRowsPerPage='Rows per page' //translate
+      labelRowsPerPage={t('rowsPerPage')}
       onChangePage={(_, x) => goToPage(x)}
-      rowsPerPageOptions={[2, 5, 10, 25, 50, 100]}
+      rowsPerPageOptions={[10, 25, 50, 100]}
       onChangeRowsPerPage={e => setPageSize(parseInt(e.target.value))}
-      labelDisplayedRows={() => `${page + 1} of ${totalPages}`} //translate
+      labelDisplayedRows={() => t('pageOfPages', { page: page + 1, pages: totalPages })}
     />
   )
 }

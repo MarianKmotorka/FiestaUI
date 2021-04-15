@@ -4,94 +4,37 @@ import Table from '@elements/Table/Table'
 import TableProvider from '@elements/Table/TableProvider'
 import DefaultLayout from '@layouts/DefaultLayout'
 import { Avatar, Box } from '@material-ui/core'
+import useTranslation from 'next-translate/useTranslation'
 import Link from 'next/link'
+import { useMemo } from 'react'
 import { Column } from 'react-table'
-
-// const data = [
-//   {
-//     id: 1,
-//     username: 'Buran',
-//     age: 44,
-//     size: 98
-//   },
-//   {
-//     id: 2,
-//     username: 'Brko',
-//     age: 11,
-//     size: 98
-//   },
-//   {
-//     id: 3,
-//     username: 'Zisko',
-//     age: 32,
-//     size: 98
-//   },
-//   {
-//     id: 'hex',
-//     username: 'Buranko',
-//     age: 65,
-//     size: 98
-//   },
-//   {
-//     id: 'Ada',
-//     username: 'Buranko',
-//     age: 65,
-//     size: 98
-//   },
-//   {
-//     id: 6,
-//     username: 'Buranko',
-//     age: 65,
-//     size: 98
-//   },
-//   {
-//     id: 7,
-//     username: 'Buranko',
-//     age: 65,
-//     size: 98
-//   },
-//   {
-//     id: 8,
-//     username: 'Buranko',
-//     age: 65,
-//     size: 98
-//   },
-//   {
-//     id: 9,
-//     username: 'Buranko',
-//     age: 65,
-//     size: 98
-//   },
-//   {
-//     id: 11,
-//     username: 'Buranko',
-//     age: 21,
-//     size: 98
-//   }
-// ]
-
-const columns: Column<any>[] = [
-  {
-    Header: 'Id',
-    accessor: 'id'
-  },
-  {
-    Header: 'Name',
-    accessor: 'username',
-    Filter: TextFilter,
-    Cell: ({ row: { original }, value }) => (
-      <Link href={`/users/${original.id}`}>
-        <Box display='flex' alignItems='center' gridGap='9px' style={{ cursor: 'pointer' }}>
-          <Avatar src={original.pictureUrl} />
-          <p>{value}</p>
-        </Box>
-      </Link>
-    )
-  }
-]
 
 const TableComponent = () => {
   const auth = useAuth()
+  const { t } = useTranslation('common')
+
+  const columns: Column<any>[] = useMemo(
+    () => [
+      {
+        Header: 'Id',
+        accessor: 'id'
+      },
+      {
+        Header: t('username'),
+        accessor: 'username',
+        Filter: TextFilter,
+        Cell: ({ row: { original }, value }) => (
+          <Link href={`/users/${original.id}`}>
+            <Box display='flex' alignItems='center' gridGap='9px' style={{ cursor: 'pointer' }}>
+              <Avatar src={original.pictureUrl} />
+              <p>{value}</p>
+            </Box>
+          </Link>
+        )
+      }
+    ],
+    [t]
+  )
 
   if (!auth.isLoggedIn) return <h1>Log in</h1>
 

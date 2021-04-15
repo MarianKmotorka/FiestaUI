@@ -1,7 +1,13 @@
+import { FilterOperation } from '@api/types'
 import TextBox from '@elements/TextBox/TextBox'
-import { FilterProps } from 'react-table'
+import { IFilterProps } from './types'
 
-const TextFilter = ({ column: { Header }, setValue, value }: FilterProps<any>) => {
+const TextFilter = ({
+  column: { Header },
+  setValue,
+  value,
+  operation = FilterOperation.Contains
+}: IFilterProps) => {
   return (
     <div>
       <TextBox
@@ -9,10 +15,8 @@ const TextFilter = ({ column: { Header }, setValue, value }: FilterProps<any>) =
         variant='outlined'
         color='secondary'
         label={Header?.toString()}
-        value={value || ''}
-        onChange={value => {
-          setValue(value || undefined)
-        }}
+        value={value?.value || ''}
+        onChange={value => setValue?.({ value: value || undefined, operation })}
       />
     </div>
   )
