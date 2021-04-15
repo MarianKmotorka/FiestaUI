@@ -1,4 +1,5 @@
-import { useEffect } from 'react'
+import { isFunction } from 'lodash'
+import { ReactNode, useEffect } from 'react'
 import {
   useForm,
   FormProvider,
@@ -8,7 +9,7 @@ import {
 } from 'react-hook-form'
 
 export interface IFormProps<T> {
-  children: React.ReactNode
+  children: ReactNode | ((form: UseFormMethods<T>) => ReactNode)
   defaultValues: DefaultValues<T>
   onSubmit: (values: T, form: UseFormMethods<T>) => Promise<void>
 }
@@ -35,7 +36,9 @@ export default function Form<T>({
 
   return (
     <FormProvider {...form}>
-      <form onSubmit={form.handleSubmit(onSubmit as SubmitHandler<T>)}>{children}</form>
+      <form onSubmit={form.handleSubmit(onSubmit as SubmitHandler<T>)}>
+        {isFunction(children) ? children(form) : children}
+      </form>
     </FormProvider>
   )
 }

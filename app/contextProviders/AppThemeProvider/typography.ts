@@ -5,6 +5,9 @@ const desktopTypo: TypographyOptions = {
   h4: {
     fontSize: '2.2rem'
   },
+  h5: {
+    fontSize: '1.7rem'
+  },
   h6: {
     fontSize: '1.25rem'
   },
@@ -26,6 +29,9 @@ const tabletTypo: TypographyOptions = {
   h4: {
     fontSize: '2rem'
   },
+  h5: {
+    fontSize: '1.5rem'
+  },
   h6: {
     fontSize: '1.2rem'
   },
@@ -46,6 +52,9 @@ const tabletTypo: TypographyOptions = {
 const mobileTypo: TypographyOptions = {
   h4: {
     fontSize: '1.8rem'
+  },
+  h5: {
+    fontSize: '1.3rem'
   },
   h6: {
     fontSize: '1.05rem'
