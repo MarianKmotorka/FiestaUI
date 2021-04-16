@@ -36,22 +36,40 @@ export const LinkContent = styled.p`
   color: ${({ theme }) => theme.palette.themeText.themeBlack};
   font-size: 1rem;
   margin-right: auto;
-  padding: 10px 20px;
+  padding: 10px 15px;
   font-weight: 500;
   cursor: pointer;
   transition: border-color 0.2s;
-  border-bottom: 2px solid transparent;
-
+  position: relative;
   display: flex;
   align-items: center;
   gap: 5px;
 
-  :hover {
-    border-color: ${({ theme }) => theme.palette.secondary.main};
+  ::before {
+    content: '';
+    width: calc(100% - 6px);
+    position: absolute;
+    bottom: 0;
+    left: 50%;
+    height: 2px;
+    background-color: ${({ theme }) => theme.palette.secondary.main};
+    transition: transform 0.2s, opacity 0.2s;
+    transform: scaleX(0) translateX(-50%);
+    transform-origin: left;
+    opacity: 0;
+  }
+
+  :hover ::before {
+    transform: scaleX(1) translateX(-50%);
+    opacity: 1;
   }
 
   &.active {
-    border-color: ${({ theme }) => theme.palette.primary.main};
+    &::before {
+      background-color: ${({ theme }) => theme.palette.primary.main};
+      transform: scaleX(1) translateX(-50%);
+      opacity: 1;
+    }
     svg {
       color: ${({ theme }) => theme.palette.primary.main};
     }
