@@ -39,7 +39,6 @@ export const LinkContent = styled.p`
   padding: 10px 15px;
   font-weight: 500;
   cursor: pointer;
-  transition: border-color 0.2s;
   position: relative;
   display: flex;
   align-items: center;
@@ -52,11 +51,12 @@ export const LinkContent = styled.p`
     bottom: 0;
     left: 50%;
     height: 2px;
+    border-radius: 10px;
     background-color: ${({ theme }) => theme.palette.secondary.main};
-    transition: transform 0.2s, opacity 0.2s;
+    transition: transform 0.3s, opacity 0.3s;
     transform: scaleX(0) translateX(-50%);
     transform-origin: left;
-    opacity: 0;
+    opacity: 0.2;
   }
 
   :hover ::before {
