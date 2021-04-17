@@ -39,7 +39,12 @@ const lightTheme: ThemeOptions = {
     values: { xs: SM, sm: MD, md: LG, lg: XL, xl: XXL }
   },
   overrides: {
-    MuiBackdrop: { root: { backgroundColor: 'rgba(0,0,0,0.8)' } }
+    MuiBackdrop: { root: { backgroundColor: 'rgba(0,0,0,0.8)' } },
+    MuiTooltip: {
+      tooltip: {
+        backgroundColor: '#151A21'
+      }
+    }
   }
 }
 

@@ -157,7 +157,7 @@ const Navbar = ({ forceUnauthorizedNavbar }: INavbarProps) => {
     auth.isLoggedIn && !forceUnauthorizedNavbar ? (
       <>
         <NavLink href='/home'>
-          <Tooltip title={t('home')} disableHoverListener={minExtraLarge} arrow>
+          <Tooltip title={t('home')} disableHoverListener={minExtraLarge}>
             <LinkContent>
               <HomeRounded />
               <span>{t('home')}</span>
@@ -166,7 +166,7 @@ const Navbar = ({ forceUnauthorizedNavbar }: INavbarProps) => {
         </NavLink>
 
         <NavLink href='/events'>
-          <Tooltip title={t('events')} disableHoverListener={minExtraLarge} arrow>
+          <Tooltip title={t('events')} disableHoverListener={minExtraLarge}>
             <LinkContent>
               <Event />
               <span>{t('events')}</span>
@@ -175,7 +175,7 @@ const Navbar = ({ forceUnauthorizedNavbar }: INavbarProps) => {
         </NavLink>
 
         <NavLink href='/explore'>
-          <Tooltip title={t('explore')} disableHoverListener={minExtraLarge} arrow>
+          <Tooltip title={t('explore')} disableHoverListener={minExtraLarge}>
             <LinkContent>
               <LocationSearching />
               <span>{t('explore')}</span>

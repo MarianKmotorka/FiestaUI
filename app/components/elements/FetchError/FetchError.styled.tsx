@@ -1,8 +1,22 @@
+import { Card } from '@material-ui/core'
 import styled from 'styled-components'
 
-export const Wrapper = styled.div`
+export const ErrorCard = styled(Card)`
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  min-width: 300px;
+
+  padding: 30px;
+
   h3 {
     color: ${({ theme }) => theme.palette.error.main};
-    font-size: 1.5rem;
+    ${({ theme }) => theme.typography.h4 as any};
+  }
+
+  p {
+    ${({ theme }) => theme.typography.body1 as any};
+    color: ${({ theme }) => theme.palette.themeText.themeGray};
   }
 `

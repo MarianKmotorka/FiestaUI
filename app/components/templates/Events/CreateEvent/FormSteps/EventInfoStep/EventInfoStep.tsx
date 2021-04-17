@@ -3,7 +3,7 @@ import { lowerFirst } from 'lodash'
 import { useFormContext } from 'react-hook-form'
 import { Box, MenuItem } from '@material-ui/core'
 import useTranslation from 'next-translate/useTranslation'
-import { Group, KeyboardArrowRight, Lock, Public } from '@material-ui/icons'
+import { KeyboardArrowRight } from '@material-ui/icons'
 
 import { endDateValidator } from '../../utils'
 import Button from '@elements/Button/Button'
@@ -11,6 +11,7 @@ import { enumToKeyValueArray } from 'utils/utils'
 import { AccessibilityTypeEnum } from 'domainTypes'
 import FormInput from '@elements/HookForm/FormInput'
 import FormSelect from '@elements/HookForm/FormSelect'
+import { accessibilityTypeIconMap } from '@utils/iconMaps'
 import FormDateTimePicker from '@elements/HookForm/FormDateTimePicker'
 import {
   combineValidators,
@@ -25,13 +26,14 @@ interface IEventInfoStepProps {
   nextStep: () => void
 }
 
-export const eventInfoFormFields = ['name', 'startDate', 'endDate', 'accessibilityType', 'capacity']
-
-const accessibilityIconMap: Record<number, ReactNode> = {
-  [AccessibilityTypeEnum.Public]: <Public />,
-  [AccessibilityTypeEnum.Private]: <Lock />,
-  [AccessibilityTypeEnum.FriendsOnly]: <Group />
-}
+export const eventInfoFormFields = [
+  'name',
+  'startDate',
+  'endDate',
+  'accessibilityType',
+  'capacity',
+  'description'
+]
 
 const EventInfoStep = ({ nextStep }: IEventInfoStepProps) => {
   const { t } = useTranslation('common')
@@ -44,7 +46,7 @@ const EventInfoStep = ({ nextStep }: IEventInfoStepProps) => {
 
   const accessibilityTypeRenderer = (value: any): ReactNode => (
     <AccessibilityValue>
-      {accessibilityIconMap[value]}
+      {accessibilityTypeIconMap[value]}
       {t(`enum.accessibilityTypeEnum.${lowerFirst(AccessibilityTypeEnum[value])}`)}
     </AccessibilityValue>
   )
@@ -104,7 +106,7 @@ const EventInfoStep = ({ nextStep }: IEventInfoStepProps) => {
           rows={7}
           rowsMax={13}
           variant='outlined'
-          validate={maxLengthValidator(500)}
+          validate={maxLengthValidator(2000)}
         />
       </StyledCard>
 

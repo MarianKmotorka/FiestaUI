@@ -1,3 +1,4 @@
+import moment from 'moment'
 import { keys, pick } from 'lodash'
 import { SubmitFormatter } from '@elements/HookForm/types'
 import { AuthProviderFlags, ICurrentUser } from 'domainTypes'
@@ -21,4 +22,11 @@ export const enumToKeyValueArray = (_enum: any) => {
 export const onlyDirtyValues: SubmitFormatter<any> = (values, { formState }) => {
   const dirtyKeys = keys(formState.dirtyFields)
   return pick(values, dirtyKeys)
+}
+
+export const toLocalTime = (date: string | Date, format?: string) => {
+  const utc = moment.utc(date).toDate()
+  return moment(utc)
+    .local()
+    .format(format || 'DD.MM. yyyy, HH:mm')
 }

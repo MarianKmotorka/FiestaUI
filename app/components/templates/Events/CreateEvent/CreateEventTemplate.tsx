@@ -56,11 +56,14 @@ const CreateEvent = () => {
       shallow: true
     })
 
-  const { onSubmit, submitting } = useSubmitForm<ICreateEventFormValues>({
+  const { onSubmit, submitting } = useSubmitForm<ICreateEventFormValues, { id: string }>({
     url: '/events/create',
     canSubmit: step === stepIndexes.reviewStep,
     formatter: submitFormatter,
-    successCallback: () => successToast(t('success')),
+    successCallback: ({ id }) => {
+      successToast(t('success'))
+      router.replace(`/events/${id}`)
+    },
     errorCallback: ({ errorDetails }) => {
       redirectToStepByErrorFieldName(
         errorDetails.map(x => x.propertyName),

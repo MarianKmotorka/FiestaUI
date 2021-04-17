@@ -51,6 +51,7 @@
   "notAuthorized": "Not authorized",
   "notFound": "Not found",
   "newPassword": "New password",
+  "organizer": "Organizer",
   "password": "Password",
   "pageOfPages": "{{page}} of {{pages}}",
   "provideEventInfo": "Provide event info",
@@ -58,6 +59,7 @@
   "pickLocation": "Pick location",
   "profile": "Profile",
   "repeatPassword": "Repeat password",
+  "resourceDoesNotExistOrHasBeenDeleted": "The resource does not exist or has been deleted.",
   "rowsPerPage": "Rows per page",
   "review": "Review",
   "reviewAddress": "Review address",
@@ -90,6 +92,7 @@
   "unexpectedErrorOccuredWhileLoadingData": "Unexpected error occured while loading data.",
   "unsendFriendRequest": "Unsend friend request",
   "warning": "Warning",
+  "youDontHaveSufficentPermissionsToAccessThisResource": "You don't have sufficient permissions to access this resource.",
 
   "validator": {
     "alreadyExists": "Already exists",

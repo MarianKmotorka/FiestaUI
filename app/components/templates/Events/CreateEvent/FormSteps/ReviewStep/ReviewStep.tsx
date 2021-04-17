@@ -4,6 +4,7 @@ import useTranslation from 'next-translate/useTranslation'
 import { EditOutlined, KeyboardArrowLeft } from '@material-ui/icons'
 import { Box, Card, CardContent, Grid, IconButton } from '@material-ui/core'
 
+import { toLocalTime } from '@utils/utils'
 import Button from '@elements/Button/Button'
 import { AccessibilityTypeEnum } from 'domainTypes'
 import KeyValueRow from '@elements/KeyValueRow/KeyValueRow'
@@ -44,8 +45,8 @@ const ReviewStep = ({ prevStep }: IReviewStepProps) => {
               </Title>
 
               <KeyValueRow keyName={t('name')} value={values.name} />
-              <KeyValueRow keyName={t('startDate')} value={values.startDate?.toDateString()} />
-              <KeyValueRow keyName={t('endDate')} value={values.endDate?.toDateString()} />
+              <KeyValueRow keyName={t('startDate')} value={toLocalTime(values.startDate)} />
+              <KeyValueRow keyName={t('endDate')} value={toLocalTime(values.endDate)} />
               <KeyValueRow keyName={t('maxNumberOfPeople')} value={values.capacity} />
               <KeyValueRow
                 keyName={t('accessibility')}

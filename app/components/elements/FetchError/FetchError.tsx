@@ -1,6 +1,7 @@
 import useTranslation from 'next-translate/useTranslation'
+import { ErrorOutlineOutlined, LockTwoTone, Search } from '@material-ui/icons'
 import { IApiError } from '@api/types'
-import { Wrapper } from './FetchError.styled'
+import { ErrorCard } from './FetchError.styled'
 
 interface IFetchErrorProps {
   error: IApiError
@@ -9,7 +10,7 @@ interface IFetchErrorProps {
 const FetchError = ({ error }: IFetchErrorProps) => {
   const { t } = useTranslation('common')
 
-  const getErrorMessage = () => {
+  const getErrorTitle = () => {
     switch (error.status) {
       case 404:
         return 'notFound'
@@ -20,10 +21,36 @@ const FetchError = ({ error }: IFetchErrorProps) => {
     }
   }
 
+  const getErrorMessage = () => {
+    switch (error.status) {
+      case 404:
+        return 'resourceDoesNotExistOrHasBeenDeleted'
+      case 403:
+        return 'youDontHaveSufficentPermissionsToAccessThisResource'
+      default:
+        return undefined
+    }
+  }
+
+  const getErrorIcon = () => {
+    switch (error.status) {
+      case 404:
+        return <Search fontSize='large' />
+      case 403:
+        return <LockTwoTone fontSize='large' />
+      default:
+        return <ErrorOutlineOutlined fontSize='large' />
+    }
+  }
+
+  const errorMessage = getErrorMessage()
+
   return (
-    <Wrapper>
-      <h3>{t(getErrorMessage())}</h3>
-    </Wrapper>
+    <ErrorCard>
+      {getErrorIcon()}
+      <h3>{t(getErrorTitle())}</h3>
+      {errorMessage && <p>{t(errorMessage)}</p>}
+    </ErrorCard>
   )
 }
 

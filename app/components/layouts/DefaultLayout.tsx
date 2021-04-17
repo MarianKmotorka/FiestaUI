@@ -1,16 +1,11 @@
 import { FC } from 'react'
-import Head from 'next/head'
 import styled from 'styled-components'
 
-import Navbar from '@modules/Navbar/Navbar'
 import { Container } from '../elements/Container'
-
+import FullWidthLayout, { IFullWidthLayoutProps } from './FullWidthLayout'
 import { NAVBAR_HEIGHT } from '@modules/Navbar/Navbar.styled'
 
-interface IDefaultLayoutProps {
-  title: string
-  forceUnauthorizedNavbar?: true
-}
+interface IDefaultLayoutProps extends IFullWidthLayoutProps {}
 
 const StyledContainer = styled(Container)`
   margin-top: ${NAVBAR_HEIGHT}px;
@@ -18,15 +13,9 @@ const StyledContainer = styled(Container)`
 
 const DefaultLayout: FC<IDefaultLayoutProps> = ({ children, title, forceUnauthorizedNavbar }) => {
   return (
-    <>
-      <Head>
-        <title>{title}</title>
-      </Head>
-
-      <Navbar forceUnauthorizedNavbar={forceUnauthorizedNavbar} />
-
+    <FullWidthLayout title={title} forceUnauthorizedNavbar={forceUnauthorizedNavbar}>
       <StyledContainer>{children}</StyledContainer>
-    </>
+    </FullWidthLayout>
   )
 }
 
