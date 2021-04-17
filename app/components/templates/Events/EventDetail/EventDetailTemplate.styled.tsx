@@ -1,5 +1,5 @@
 import styled from 'styled-components'
-import { Card } from '@material-ui/core'
+import { Button, Card } from '@material-ui/core'
 import Image from 'next/image'
 import { MD } from '@contextProviders/AppThemeProvider/theme'
 
@@ -77,12 +77,7 @@ export const InfoRow = styled.div`
   }
 `
 
-export const Organizer = styled.div`
-  display: flex;
-  align-items: center;
-  gap: 5px;
-  cursor: pointer;
-
+export const Organizer = styled(Button)`
   span {
     ::first-letter {
       color: ${({ theme }) => theme.palette.primary.main};
@@ -91,8 +86,5 @@ export const Organizer = styled.div`
   .MuiAvatar-root {
     width: 28px;
     height: 28px;
-  }
-  :hover span {
-    font-weight: 500;
   }
 `

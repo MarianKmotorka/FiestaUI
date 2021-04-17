@@ -3,14 +3,14 @@ import geo from 'react-geocode'
 
 export interface IGoogleMapLocation {
   latLng: LatLon
-  street: string
-  streetNumber: string
-  premise: string
-  city: string
-  state: string
-  administrativeAreaLevel1: string
-  administrativeAreaLevel2: string
-  postalCode: string
+  street?: string
+  streetNumber?: string
+  premise?: string
+  city?: string
+  state?: string
+  administrativeAreaLevel1?: string
+  administrativeAreaLevel2?: string
+  postalCode?: string
   googleMapsUrl: string
 }
 

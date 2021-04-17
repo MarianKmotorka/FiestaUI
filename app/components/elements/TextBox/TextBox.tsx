@@ -5,7 +5,7 @@ import { StyledTextBox } from './TextBox.styled'
 export type TextBoxProps = Omit<TextFieldProps, 'onChange' | 'error'> & {
   name?: string
   label?: string
-  value: string
+  value?: string
   error?: string
   className?: string
   max?: number
@@ -31,7 +31,7 @@ const TextBox = forwardRef(
         {...rest}
         ref={forwardRef as any}
         type={type}
-        value={value}
+        value={value || ''}
         label={label}
         error={!!error}
         helperText={error}

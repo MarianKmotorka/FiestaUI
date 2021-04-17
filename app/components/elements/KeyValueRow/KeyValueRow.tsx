@@ -3,7 +3,7 @@ import { Key, Value, Wrapper } from './KeyValueRow.styled'
 interface IKeyValueRowProps {
   keyName: string
   keyWidth?: string
-  value: string | number
+  value?: string | number
 }
 
 const KeyValueRow = ({ keyName, keyWidth, value }: IKeyValueRowProps) => {

@@ -2,8 +2,15 @@ import { useQuery } from 'react-query'
 import Link from 'next/link'
 import { lowerFirst } from 'lodash'
 import useTranslation from 'next-translate/useTranslation'
-import { Avatar, Box, CircularProgress } from '@material-ui/core'
-import { AccountBox, EventAvailable, EventBusy, Public } from '@material-ui/icons'
+import { Avatar, Box, Button, CircularProgress } from '@material-ui/core'
+import {
+  AccountBox,
+  EventAvailable,
+  EventBusy,
+  LockOpen,
+  OpenInNew,
+  Public
+} from '@material-ui/icons'
 
 import api from '@api/HttpClient'
 import { IApiError } from '@api/types'
@@ -37,6 +44,8 @@ interface IEventDetail {
   startDate: string
   endDate: string
   bannerUrl?: string
+  googleMapsUrl: string
+  location: string
   accessibilityType: AccessibilityTypeEnum
   attendeesCount: number
   organizer: {
@@ -92,8 +101,7 @@ const EventDetailTemplate = ({ eventId }: IProps) => {
                 {t('organizer')}:
               </h6>
               <Link href={`/users/${event.organizer.id}`}>
-                <Organizer>
-                  <Avatar src={event.organizer.pictureUrl} />{' '}
+                <Organizer startIcon={<Avatar src={event.organizer.pictureUrl} />}>
                   <span>{event.organizer.username}</span>
                 </Organizer>
               </Link>
@@ -114,7 +122,7 @@ const EventDetailTemplate = ({ eventId }: IProps) => {
             </InfoRow>
             <InfoRow>
               <h6>
-                <Public />
+                <LockOpen />
                 {t('accessibility')}:
               </h6>
               <div>
@@ -123,6 +131,22 @@ const EventDetailTemplate = ({ eventId }: IProps) => {
                     AccessibilityTypeEnum[event.accessibilityType]
                   )}`
                 )}
+              </div>
+            </InfoRow>
+            <InfoRow>
+              <h6>
+                <Public />
+                {t('location')}:
+              </h6>
+              <div>
+                <Button
+                  target='_blank'
+                  rel='noopener noreferrer'
+                  href={event.googleMapsUrl}
+                  endIcon={<OpenInNew />}
+                >
+                  {event.location}
+                </Button>
               </div>
             </InfoRow>
           </Box>
