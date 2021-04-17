@@ -61,9 +61,6 @@ export const InfoRow = styled.div`
   align-items: center;
   gap: 10px;
 
-  svg {
-    color: ${({ theme }) => theme.palette.primary.main};
-  }
   h6 {
     margin: 0;
     ${({ theme }) => theme.typography.body1 as any};
@@ -71,6 +68,10 @@ export const InfoRow = styled.div`
     align-items: center;
     gap: 5px;
     font-weight: 500;
+
+    svg {
+      color: ${({ theme }) => theme.palette.primary.main};
+    }
   }
   > div {
     ${({ theme }) => theme.typography.body1 as any};
