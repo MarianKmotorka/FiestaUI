@@ -9,7 +9,7 @@ import Button from '@elements/Button/Button'
 import { AccessibilityTypeEnum } from 'domainTypes'
 import KeyValueRow from '@elements/KeyValueRow/KeyValueRow'
 import { redirectToStepByErrorFieldName } from '../../utils'
-import { ICreateEventFormValues } from '@templates/Events/CreateEvent/CreateEventTemplate'
+import { ICreateEventFormValues } from '@templates/Events/CreateOrUpdateEvent/CreateOrUpdateEventTemplate'
 
 import { Title, Wrapper } from './ReviewStep.styled'
 

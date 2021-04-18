@@ -1,12 +1,12 @@
 import AuthorizedPage from '@layouts/AuthorizedPage'
 import DefaultLayout from '@layouts/DefaultLayout'
-import CreateEventTemplate from '@templates/Events/CreateEvent/CreateEventTemplate'
+import CreateOrUpdateEventTemplate from '@templates/Events/CreateOrUpdateEvent/CreateOrUpdateEventTemplate'
 
 const CreateEvent = () => {
   return (
     <AuthorizedPage>
       <DefaultLayout title='Create event • Fiesta'>
-        <CreateEventTemplate />
+        <CreateOrUpdateEventTemplate />
       </DefaultLayout>
     </AuthorizedPage>
   )

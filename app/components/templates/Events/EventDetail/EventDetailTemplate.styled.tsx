@@ -1,7 +1,7 @@
 import styled from 'styled-components'
 import { Button, Card } from '@material-ui/core'
 import Image from 'next/image'
-import { MD } from '@contextProviders/AppThemeProvider/theme'
+import { MD, SM } from '@contextProviders/AppThemeProvider/theme'
 
 export const Wrapper = styled.div`
   position: relative;
@@ -31,13 +31,17 @@ export const BannerImage = styled.img`
 export const StyledCard = styled(Card)`
   padding: 40px;
   border-radius: 12px;
-  background-color: ${({ theme }) => theme.palette.background.paper + 'd0'};
+  background-color: ${({ theme }) => theme.palette.background.paper + 'ee'};
   box-shadow: ${({ theme }) => theme.shadows[10]};
   ::first-letter {
     color: ${({ theme }) => theme.palette.primary.main};
   }
 
   @media screen and (max-width: ${MD}px) {
+    padding: 30px;
+  }
+
+  @media screen and (max-width: ${SM}px) {
     padding: 20px;
   }
 `

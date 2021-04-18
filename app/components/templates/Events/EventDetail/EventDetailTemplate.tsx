@@ -2,9 +2,10 @@ import { useQuery } from 'react-query'
 import Link from 'next/link'
 import { lowerFirst } from 'lodash'
 import useTranslation from 'next-translate/useTranslation'
-import { Avatar, Box, Button, CircularProgress } from '@material-ui/core'
+import { Avatar, Box, Button as MuiButton, CircularProgress } from '@material-ui/core'
 import {
   AccountBox,
+  Edit,
   EventAvailable,
   EventBusy,
   LockOpen,
@@ -15,6 +16,7 @@ import {
 import api from '@api/HttpClient'
 import { IApiError } from '@api/types'
 import { toLocalTime } from '@utils/utils'
+import Button from '@elements/Button/Button'
 import { Container } from '@elements/Container'
 import useWindowSize from '@hooks/useWindowSize'
 import { AccessibilityTypeEnum } from 'domainTypes'
@@ -75,6 +77,7 @@ const EventDetailTemplate = ({ eventId }: IProps) => {
 
   const event = data!
   const banner = event.bannerUrl || '/eventDetailBanner.png'
+  const isOrganizer = auth.isLoggedIn && auth.currentUser.id === event.organizer.id
 
   return (
     <Wrapper>
@@ -139,17 +142,23 @@ const EventDetailTemplate = ({ eventId }: IProps) => {
                 {t('location')}:
               </h6>
               <div>
-                <Button
+                <MuiButton
                   target='_blank'
                   rel='noopener noreferrer'
                   href={event.googleMapsUrl}
                   endIcon={<OpenInNew />}
                 >
                   {event.location}
-                </Button>
+                </MuiButton>
               </div>
             </InfoRow>
           </Box>
+
+          {isOrganizer && (
+            <Link href={`/events/${eventId}/update`}>
+              <Button startIcon={<Edit />}>{t('edit')}</Button>
+            </Link>
+          )}
         </StyledCard>
       </Container>
     </Wrapper>

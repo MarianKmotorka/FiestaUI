@@ -14,6 +14,9 @@ import { Wrapper } from './Map.styled'
 const libraries: Libraries = ['places']
 const defaultCenter = { lat: 48, lng: 12 }
 
+const getInitialLatLng = (location?: IGoogleMapLocation) =>
+  location ? { lat: location.latitude, lng: location.longitude } : undefined
+
 interface IMapProps {
   value?: IGoogleMapLocation
   onChange: (address: IGoogleMapLocation) => void
@@ -24,7 +27,9 @@ const Map = ({ value, onChange }: IMapProps) => {
   const mapRef = useRef<any>()
   const initialValue = useRef(value)
   const [, setFetching] = useState(false) // TODO: use to indicate loading
-  const [markerPosition, setMarkerPosition] = useState(initialValue.current?.latLng)
+
+  const initialLatLng = useMemo(() => getInitialLatLng(initialValue.current), [])
+  const [markerPosition, setMarkerPosition] = useState<LatLon | undefined>(initialLatLng)
 
   const { isLoaded, loadError } = useLoadScript({
     googleMapsApiKey: process.env.NEXT_PUBLIC_GOOGLE_MAPS_API_KEY,
@@ -69,10 +74,11 @@ const Map = ({ value, onChange }: IMapProps) => {
 
   const handleSearched = useCallback(
     (location: IGoogleMapLocation) => {
-      mapRef.current.panTo(location.latLng)
+      const latLng = { lat: location.latitude, lng: location.longitude }
+      mapRef.current.panTo(latLng)
       mapRef.current.setZoom(14)
       onChange(location)
-      setMarkerPosition(location.latLng)
+      setMarkerPosition(latLng)
     },
     [onChange]
   )
@@ -100,11 +106,11 @@ const Map = ({ value, onChange }: IMapProps) => {
       />
 
       <GoogleMap
-        zoom={4}
+        zoom={initialLatLng ? 12 : 4}
         id='googleMap'
         options={mapOptions}
         onLoad={handleMapLoaded}
-        center={initialValue.current?.latLng || defaultCenter}
+        center={initialLatLng || defaultCenter}
         onClick={async ({ latLng }) =>
           await handleMapClicked({ lat: latLng.lat(), lng: latLng.lng() })
         }

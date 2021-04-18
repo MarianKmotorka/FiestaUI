@@ -1,6 +1,11 @@
+import Link from 'next/link'
+import { useRouter } from 'next/router'
 import useTranslation from 'next-translate/useTranslation'
-import { ErrorOutlineOutlined, LockTwoTone, Search } from '@material-ui/icons'
+import { ErrorOutlineOutlined, FingerprintOutlined, LockTwoTone, Search } from '@material-ui/icons'
+
 import { IApiError } from '@api/types'
+import Button from '@elements/Button/Button'
+import { useAuth } from '@contextProviders/AuthProvider'
 import { ErrorCard } from './FetchError.styled'
 
 interface IFetchErrorProps {
@@ -9,6 +14,13 @@ interface IFetchErrorProps {
 
 const FetchError = ({ error }: IFetchErrorProps) => {
   const { t } = useTranslation('common')
+  const auth = useAuth()
+  const router = useRouter()
+
+  const redirect =
+    [401, 403].includes(error.status) &&
+    !auth.isLoggedIn &&
+    `/login?redirectedFrom=${router.asPath}`
 
   const getErrorTitle = () => {
     switch (error.status) {
@@ -16,6 +28,8 @@ const FetchError = ({ error }: IFetchErrorProps) => {
         return 'notFound'
       case 403:
         return 'notAuthorized'
+      case 401:
+        return 'notAuthenticated'
       default:
         return 'unexpectedErrorOccuredWhileLoadingData'
     }
@@ -48,8 +62,16 @@ const FetchError = ({ error }: IFetchErrorProps) => {
   return (
     <ErrorCard>
       {getErrorIcon()}
+
       <h3>{t(getErrorTitle())}</h3>
+
       {errorMessage && <p>{t(errorMessage)}</p>}
+
+      {redirect && (
+        <Link href={redirect}>
+          <Button startIcon={<FingerprintOutlined />}>{t('login')}</Button>
+        </Link>
+      )}
     </ErrorCard>
   )
 }

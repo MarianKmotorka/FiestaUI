@@ -1,15 +1,16 @@
-import { omit } from 'lodash'
+import { isNumber } from 'lodash'
 import { Validator } from '@elements/HookForm/types'
 import { IGoogleMapLocation } from 'utils/googleUtils'
-import { SubmitFormatter } from '@elements/HookForm/types'
-import { ICreateEventFormValues } from './CreateEventTemplate'
+import { ICreateEventFormValues } from './CreateOrUpdateEventTemplate'
 import { eventInfoFormFields } from './FormSteps/EventInfoStep/EventInfoStep'
 
 export const locationValidator: Validator<ICreateEventFormValues, IGoogleMapLocation> = (
   value,
   t
 ) => {
-  return value?.latLng ? undefined : t('validator.locationMustBeSelected')
+  return isNumber(value?.latitude) && isNumber(value?.longitude)
+    ? undefined
+    : t('validator.locationMustBeSelected')
 }
 
 export const endDateValidator: Validator<ICreateEventFormValues, Date> = (
@@ -29,15 +30,6 @@ export const getStep = (value: any) => {
 }
 
 export const stepTitles = ['provideEventInfo', 'pickLocation', 'review']
-
-export const submitFormatter: SubmitFormatter<ICreateEventFormValues> = values => {
-  const locationWithoutLatLng = omit(values.location, 'latLng')
-  const {
-    latLng: { lat, lng }
-  } = values.location
-
-  return { ...values, location: { ...locationWithoutLatLng, latitude: lat, longitude: lng } }
-}
 
 export const stepIndexes = {
   eventInfoStep: 0,

@@ -2,26 +2,28 @@ import { useEffect, useState } from 'react'
 import { max } from 'lodash'
 import { useRouter } from 'next/router'
 import useTranslation from 'next-translate/useTranslation'
-import { Step, StepButton, Stepper } from '@material-ui/core'
+import { CircularProgress, Step, StepButton, Stepper } from '@material-ui/core'
 
-import {
-  getStep,
-  redirectToStepByErrorFieldName,
-  stepIndexes,
-  stepTitles,
-  submitFormatter
-} from './utils'
+import { IApiError } from '@api/types'
 import Hidden from '@elements/Hidden'
 import Form from '@elements/HookForm/Form'
 import { AccessibilityTypeEnum } from 'domainTypes'
 import { successToast } from 'services/toastService'
 import { IGoogleMapLocation } from 'utils/googleUtils'
+import FetchError from '@elements/FetchError/FetchError'
 import ReviewStep from './FormSteps/ReviewStep/ReviewStep'
 import LocationStep from './FormSteps/LocationStep/LocationStep'
 import EventInfoStep from './FormSteps/EventInfoStep/EventInfoStep'
 import { useSubmitForm } from '@elements/HookForm/hooks/useSubmitForm'
+import { getStep, redirectToStepByErrorFieldName, stepIndexes, stepTitles } from './utils'
 
-import { Wrapper } from './CreateEventTemplate.styled'
+import { Wrapper } from './CreateOrUpdateEventTemplate.styled'
+
+interface IProps {
+  event?: ICreateEventFormValues & { id: string }
+  eventFetching?: boolean
+  fetchError?: IApiError | null
+}
 
 export interface ICreateEventFormValues {
   name: string
@@ -39,7 +41,7 @@ const defaultValues: Partial<ICreateEventFormValues> = {
   capacity: 2
 }
 
-const CreateEvent = () => {
+const CreateOrUpdateEvent = ({ event, eventFetching, fetchError }: IProps) => {
   const router = useRouter()
   const { t } = useTranslation('common')
   const [step, setStep] = useState(getStep(router.query.step))
@@ -47,19 +49,19 @@ const CreateEvent = () => {
 
   useEffect(() => {
     const currStep = getStep(router.query.step)
-    if (completedSteps.some(x => x === currStep - 1)) setStep(currStep)
+    if (event || completedSteps.some(x => x === currStep - 1)) setStep(currStep)
     else setStep(0)
-  }, [router.query, completedSteps])
+  }, [router.query, completedSteps, event])
 
   const changeStep = (index: number) =>
-    router.push({ pathname: router.pathname, query: { step: index } }, undefined, {
+    router.push({ pathname: router.asPath.split('?')[0], query: { step: index } }, undefined, {
       shallow: true
     })
 
   const { onSubmit, submitting } = useSubmitForm<ICreateEventFormValues, { id: string }>({
-    url: '/events/create',
+    url: event ? `/events/${event.id}` : '/events/create',
+    method: event ? 'patch' : 'post',
     canSubmit: step === stepIndexes.reviewStep,
-    formatter: submitFormatter,
     successCallback: ({ id }) => {
       successToast(t('success'))
       router.replace(`/events/${id}`)
@@ -82,7 +84,10 @@ const CreateEvent = () => {
   }
 
   const isStepCompletedOrNext = (index: number) =>
-    completedSteps.includes(index) || (max(completedSteps) ?? -1) + 1 === index
+    event || completedSteps.includes(index) || (max(completedSteps) ?? -1) + 1 === index
+
+  if (eventFetching) return <CircularProgress />
+  if (fetchError) return <FetchError error={fetchError} />
 
   return (
     <Wrapper>
@@ -96,7 +101,7 @@ const CreateEvent = () => {
         ))}
       </Stepper>
 
-      <Form defaultValues={defaultValues} onSubmit={onSubmit}>
+      <Form defaultValues={event || defaultValues} onSubmit={onSubmit}>
         <Hidden hidden={step !== stepIndexes.eventInfoStep}>
           <EventInfoStep nextStep={nextStep} />
         </Hidden>
@@ -113,4 +118,4 @@ const CreateEvent = () => {
   )
 }
 
-export default CreateEvent
+export default CreateOrUpdateEvent

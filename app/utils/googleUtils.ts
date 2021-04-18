@@ -2,7 +2,8 @@ import { LatLon } from 'use-places-autocomplete'
 import geo from 'react-geocode'
 
 export interface IGoogleMapLocation {
-  latLng: LatLon
+  latitude: number
+  longitude: number
   street?: string
   streetNumber?: string
   premise?: string
@@ -21,19 +22,20 @@ const getAddressByType = (type: string, addressComponents: any[]): string => {
   return ''
 }
 
-export const getLocation = async (latLng: LatLon): Promise<IGoogleMapLocation> => {
+export const getLocation = async ({ lat, lng }: LatLon): Promise<IGoogleMapLocation> => {
   let components = []
   try {
     const detail = await geo.fromLatLng(
-      `${latLng.lat}`,
-      `${latLng.lng}`,
+      `${lat}`,
+      `${lng}`,
       process.env.NEXT_PUBLIC_GOOGLE_GEOCODE_API_KEY
     )
     components = detail.results[0].address_components
   } catch (err) {}
 
   return {
-    latLng,
+    latitude: lat,
+    longitude: lng,
     streetNumber: getAddressByType('street_number', components),
     premise: getAddressByType('premise', components),
     street: getAddressByType('route', components),
