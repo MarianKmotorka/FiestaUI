@@ -11,7 +11,6 @@ export interface IGoogleMapLocation {
   administrativeAreaLevel1?: string
   administrativeAreaLevel2?: string
   postalCode?: string
-  googleMapsUrl: string
 }
 
 const getAddressByType = (type: string, addressComponents: any[]): string => {
@@ -21,9 +20,6 @@ const getAddressByType = (type: string, addressComponents: any[]): string => {
 
   return ''
 }
-
-const getGoogleMapsUrl = ({ lat, lng }: LatLon) =>
-  `https://www.google.com/maps/search/?api=1&query=${lat},${lng}`
 
 export const getLocation = async (latLng: LatLon): Promise<IGoogleMapLocation> => {
   let components = []
@@ -45,7 +41,6 @@ export const getLocation = async (latLng: LatLon): Promise<IGoogleMapLocation> =
     postalCode: getAddressByType('postal_code', components),
     administrativeAreaLevel2: getAddressByType('administrative_area_level_2', components),
     administrativeAreaLevel1: getAddressByType('administrative_area_level_1', components),
-    state: getAddressByType('country', components),
-    googleMapsUrl: getGoogleMapsUrl(latLng)
+    state: getAddressByType('country', components)
   }
 }
