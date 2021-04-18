@@ -1,5 +1,8 @@
 import moment from 'moment'
 import { keys, pick } from 'lodash'
+import { Translate } from 'next-translate'
+
+import { IApiError } from '@api/types'
 import { SubmitFormatter } from '@elements/HookForm/types'
 import { AuthProviderFlags, ICurrentUser } from 'domainTypes'
 
@@ -29,4 +32,9 @@ export const toLocalTime = (date: string | Date, format?: string) => {
   return moment(utc)
     .local()
     .format(format || 'DD.MM. yyyy, HH:mm')
+}
+
+export const getErrorMessage = (error: IApiError, t: Translate) => {
+  const detail = error.data.errorDetails?.[0]
+  return detail ? t(`validator.${detail.code}`, detail.customState) : error.data.errorMessage
 }

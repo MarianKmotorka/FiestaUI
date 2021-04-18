@@ -1,11 +1,11 @@
 import styled from 'styled-components'
 
 interface IHiddenProps {
-  hidden: boolean
+  hidden?: boolean
 }
 
 const Hidden = styled.div<IHiddenProps>`
-  visibility: ${({ hidden }) => (hidden ? 'hidden' : 'visible')};
+  visibility: ${({ hidden }) => (hidden !== false ? 'hidden' : 'visible')};
 `
 
 export default Hidden

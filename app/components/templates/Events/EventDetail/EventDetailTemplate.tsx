@@ -14,6 +14,7 @@ import {
 } from '@material-ui/icons'
 
 import api from '@api/HttpClient'
+import Banner from './Banner/Banner'
 import { IApiError } from '@api/types'
 import { toLocalTime } from '@utils/utils'
 import Button from '@elements/Button/Button'
@@ -28,7 +29,6 @@ import {
   StyledCard,
   BlurredImage,
   Wrapper,
-  BannerImage,
   Title,
   EventDescription,
   InfoRow,
@@ -39,7 +39,7 @@ interface IProps {
   eventId: string
 }
 
-interface IEventDetail {
+export interface IEventDetail {
   id: string
   name: string
   description: string
@@ -86,7 +86,7 @@ const EventDetailTemplate = ({ eventId }: IProps) => {
       </Box>
 
       <Container>
-        <BannerImage src={banner} />
+        <Banner src={banner} eventId={eventId} canUpload={isOrganizer} />
 
         <StyledCard>
           <Title>{event.name}</Title>

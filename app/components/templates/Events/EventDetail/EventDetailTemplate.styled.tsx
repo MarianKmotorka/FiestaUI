@@ -14,22 +14,9 @@ export const BlurredImage = styled(Image)`
   display: block;
 `
 
-export const BannerImage = styled.img`
-  object-fit: contain;
-  max-height: 50vh;
-  max-width: 100%;
-  border-radius: 10px;
-  margin: 0 auto;
-  margin-bottom: 30px;
-  display: block;
-
-  @media screen and (max-width: ${MD}px) {
-    margin-bottom: 15px;
-  }
-`
-
 export const StyledCard = styled(Card)`
   padding: 40px;
+  margin-top: 30px;
   border-radius: 12px;
   background-color: ${({ theme }) => theme.palette.background.paper + 'ee'};
   box-shadow: ${({ theme }) => theme.shadows[10]};
@@ -39,6 +26,7 @@ export const StyledCard = styled(Card)`
 
   @media screen and (max-width: ${MD}px) {
     padding: 30px;
+    margin-top: 15px;
   }
 
   @media screen and (max-width: ${SM}px) {

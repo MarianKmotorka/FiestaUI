@@ -2,6 +2,9 @@ import { UseWindowSizeReturn } from '@hooks/useWindowSize'
 import { TypographyOptions } from '@material-ui/core/styles/createTypography'
 
 const desktopTypo: TypographyOptions = {
+  h2: {
+    fontSize: '3.75rem'
+  },
   h4: {
     fontSize: '2.2rem'
   },
@@ -26,6 +29,9 @@ const desktopTypo: TypographyOptions = {
 }
 
 const tabletTypo: TypographyOptions = {
+  h2: {
+    fontSize: '3.45rem'
+  },
   h4: {
     fontSize: '2rem'
   },
@@ -50,6 +56,9 @@ const tabletTypo: TypographyOptions = {
 }
 
 const mobileTypo: TypographyOptions = {
+  h2: {
+    fontSize: '3.2rem'
+  },
   h4: {
     fontSize: '1.8rem'
   },

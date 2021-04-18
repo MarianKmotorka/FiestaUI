@@ -5,8 +5,8 @@ import useTranslation from 'next-translate/useTranslation'
 
 import api from '@api/HttpClient'
 import { IUser } from 'domainTypes'
-import { IApiError } from '@api/types'
 import { Menu } from '@elements/Menu/Menu'
+import { getErrorMessage } from '@utils/utils'
 import { errorToast, successToast } from 'services/toastService'
 import { useAuthorizedUser } from '@contextProviders/AuthProvider'
 
@@ -42,7 +42,7 @@ const ProfilePictureMenu = ({ anchorEl, onClose, setLoading }: IProfilePictureMe
       }))
       successToast(t('saved'))
     } catch (error) {
-      errorToast((error as IApiError).data.errorMessage)
+      errorToast(getErrorMessage(error, t))
     }
     setLoading(false)
   }
@@ -64,12 +64,7 @@ const ProfilePictureMenu = ({ anchorEl, onClose, setLoading }: IProfilePictureMe
       }))
       successToast(t('saved'))
     } catch (error) {
-      const apiError = (error as IApiError).data
-      const detail = apiError.errorDetails?.[0]
-      const translatedError = detail
-        ? t(`validator.${detail.code}`, detail.customState)
-        : apiError.errorMessage
-      errorToast(translatedError)
+      errorToast(getErrorMessage(error, t))
     }
     setLoading(false)
   }

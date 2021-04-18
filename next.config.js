@@ -19,6 +19,6 @@ module.exports = nextTranslate({
     return config
   },
   images: {
-    domains: []
+    domains: ['res.cloudinary.com']
   }
 })
