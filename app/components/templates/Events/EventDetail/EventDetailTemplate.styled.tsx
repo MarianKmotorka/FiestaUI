@@ -8,10 +8,16 @@ export const Wrapper = styled.div`
   padding: 30px 0;
 `
 
+export const BlurredImageWrapper = styled.div`
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: -1;
+`
+
 export const BlurredImage = styled(Image)`
   object-fit: cover;
   filter: blur(100px);
-  display: block;
 `
 
 export const StyledCard = styled(Card)`

@@ -32,7 +32,8 @@ import {
   Title,
   EventDescription,
   InfoRow,
-  Organizer
+  Organizer,
+  BlurredImageWrapper
 } from './EventDetailTemplate.styled'
 
 interface IProps {
@@ -81,9 +82,9 @@ const EventDetailTemplate = ({ eventId }: IProps) => {
 
   return (
     <Wrapper>
-      <Box position='absolute' top={0} left={0} zIndex={-1}>
+      <BlurredImageWrapper>
         <BlurredImage src={banner} width={width} height={height} />
-      </Box>
+      </BlurredImageWrapper>
 
       <Container>
         <Banner src={banner} eventId={eventId} canUpload={isOrganizer} />
