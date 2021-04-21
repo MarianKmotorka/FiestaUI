@@ -1,28 +1,20 @@
 import Link from 'next/link'
 import { useState } from 'react'
-import { isEmpty } from 'lodash'
 import { useQuery } from 'react-query'
+import { Avatar } from '@material-ui/core'
+import { KeyboardArrowRight } from '@material-ui/icons'
 import useTranslation from 'next-translate/useTranslation'
-import { Avatar, Box, CircularProgress } from '@material-ui/core'
-import { Close, KeyboardArrowRight, Search, SentimentDissatisfied } from '@material-ui/icons'
 
-import { IApiError } from '@api/types'
 import api from '@api/HttpClient'
-import Modal from '@elements/Modal'
 import EventItem from './EventItem'
+import { IApiError } from '@api/types'
 import useDebounce from '@hooks/useDebounce'
-import { ItemType, EventAndUserSelectorItem } from './types'
-import TextBox from '@elements/TextBox/TextBox'
 import useWindowSize from '@hooks/useWindowSize'
 import FetchError from '@elements/FetchError/FetchError'
+import { ItemType, EventAndUserSelectorItem } from './types'
+import { SearchModal, SearchModalItem } from '@modules/SearchModal'
 
-import {
-  Item,
-  ItemInfo,
-  ItemsContainer,
-  StyledCard,
-  StyledCloseButton
-} from './NavbarSearch.styled'
+import { ItemInfo } from './NavbarSearch.styled'
 
 interface INavbarSearchProps {
   onClose: () => void
@@ -45,8 +37,8 @@ const NavbarSearch = ({ onClose }: INavbarSearchProps) => {
 
   const renderItem = (item: EventAndUserSelectorItem) =>
     item.type === ItemType.User ? (
-      <Link key={item.id} href={`/users/${item.id}`}>
-        <Item onClick={onClose}>
+      <Link href={`/users/${item.id}`}>
+        <SearchModalItem onClick={onClose}>
           <Avatar src={item.pictureUrl} />
 
           <ItemInfo>
@@ -55,55 +47,22 @@ const NavbarSearch = ({ onClose }: INavbarSearchProps) => {
           </ItemInfo>
 
           {minMedium && <KeyboardArrowRight />}
-        </Item>
+        </SearchModalItem>
       </Link>
     ) : (
-      <EventItem key={item.id} item={item} onClose={onClose} />
+      <EventItem item={item} onClose={onClose} />
     )
 
   return (
-    <Modal open onClose={onClose}>
-      <StyledCard>
-        <StyledCloseButton onClick={onClose}>
-          <Close />
-        </StyledCloseButton>
-
-        <Box margin='60px auto 20px' width='84%'>
-          <TextBox
-            fullWidth
-            value={search}
-            onChange={setSearch}
-            placeholder={t('findPeopleOrEvents')}
-            InputProps={{
-              startAdornment: (
-                <Box marginRight='10px' color='themeText.themeGray'>
-                  <Search />
-                </Box>
-              )
-            }}
-          />
-        </Box>
-
-        <ItemsContainer>
-          {isFetching && (
-            <Item>
-              <CircularProgress />
-            </Item>
-          )}
-
-          {items.map(renderItem)}
-
-          {isEmpty(items) && !isFetching && (
-            <Item disabled>
-              <Box display='flex' gridGap='10px'>
-                {t('nothingFound')}
-                <SentimentDissatisfied />
-              </Box>
-            </Item>
-          )}
-        </ItemsContainer>
-      </StyledCard>
-    </Modal>
+    <SearchModal
+      items={items}
+      search={search}
+      isFetching={isFetching}
+      onClose={onClose}
+      setSearch={setSearch}
+      renderItem={renderItem}
+      searchPlaceholder={t('findPeopleOrEvents')}
+    />
   )
 }
 

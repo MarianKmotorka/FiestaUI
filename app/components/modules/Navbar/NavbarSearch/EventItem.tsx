@@ -1,10 +1,13 @@
-import useWindowSize from '@hooks/useWindowSize'
+import Link from 'next/link'
+import moment from 'moment'
 import { Avatar, Box } from '@material-ui/core'
 import { Edit, Event, KeyboardArrowRight, LocationOn, Schedule } from '@material-ui/icons'
-import moment from 'moment'
-import Link from 'next/link'
-import { Item, ItemInfo } from './NavbarSearch.styled'
+
+import useWindowSize from '@hooks/useWindowSize'
+import { SearchModalItem } from '@modules/SearchModal'
 import { EventAndUserSelectorItem, ItemType } from './types'
+
+import { ItemInfo } from './NavbarSearch.styled'
 
 interface IEventItemProps {
   item: EventAndUserSelectorItem
@@ -18,7 +21,7 @@ const EventItem = ({ item, onClose }: IEventItemProps) => {
 
   return (
     <Link href={`/events/${item.id}`}>
-      <Item onClick={onClose}>
+      <SearchModalItem onClick={onClose}>
         <Avatar variant='rounded' src={item.pictureUrl}>
           <Event />
         </Avatar>
@@ -49,7 +52,7 @@ const EventItem = ({ item, onClose }: IEventItemProps) => {
         </ItemInfo>
 
         {minMedium && <KeyboardArrowRight />}
-      </Item>
+      </SearchModalItem>
     </Link>
   )
 }
