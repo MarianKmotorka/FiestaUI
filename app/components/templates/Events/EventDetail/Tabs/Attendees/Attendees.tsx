@@ -1,4 +1,3 @@
-import Link from 'next/link'
 import { isEmpty } from 'lodash'
 import { useState } from 'react'
 import { InfiniteData, useInfiniteQuery, useQueryClient } from 'react-query'

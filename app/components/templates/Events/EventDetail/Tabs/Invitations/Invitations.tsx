@@ -1,5 +1,6 @@
 import { isEmpty } from 'lodash'
 import { useState } from 'react'
+import { Add } from '@material-ui/icons'
 import { Box, CircularProgress } from '@material-ui/core'
 import { InfiniteData, useInfiniteQuery, useQueryClient } from 'react-query'
 
@@ -96,13 +97,19 @@ const Invitations = ({ event }: IInvitationsProps) => {
         {t('thisEventHasCountInvitations', { count: event.invitationsCount })}
       </Box>
 
-      <StyledTextBox
-        value={search}
-        label={t('search')}
-        onChange={setSearch}
-        variant='outlined'
-        size='small'
-      />
+      <Box display='flex' gridGap='10px' flexWrap='wrap'>
+        <StyledTextBox
+          value={search}
+          label={t('search')}
+          onChange={setSearch}
+          variant='outlined'
+          size='small'
+        />
+
+        <Button variant='text' startIcon={<Add />}>
+          {t('invite')}
+        </Button>
+      </Box>
 
       {isFetching && (
         <Box marginY='15px'>
