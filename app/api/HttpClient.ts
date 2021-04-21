@@ -1,4 +1,5 @@
 import axios from 'axios'
+import Router from 'next/router'
 import createAuthRefreshInterceptor from 'axios-auth-refresh'
 import { IS_SIGNED_IN_LOCAL_STORAGE_KEY } from '../contextProviders/AuthProvider'
 
@@ -20,7 +21,7 @@ createAuthRefreshInterceptor(client, failedRequest =>
     })
     .catch(_ => {
       localStorage.removeItem(IS_SIGNED_IN_LOCAL_STORAGE_KEY)
-      window.location.assign('/login')
+      window.location.assign(`/login?redirectedFrom=${Router.asPath}`)
     })
 )
 

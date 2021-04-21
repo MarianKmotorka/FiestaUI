@@ -16,7 +16,8 @@ const UpdateEvent = () => {
     ['events', query.id, 'update'],
     async () => (await api.get(`/events/${query.id}/update`)).data,
     {
-      enabled: !!query.id && auth.isLoggedIn
+      enabled: !!query.id && auth.isLoggedIn,
+      cacheTime: 0 // cache time needs to be zero for edits, otherwise form initialValues are set from cache
     }
   )
 

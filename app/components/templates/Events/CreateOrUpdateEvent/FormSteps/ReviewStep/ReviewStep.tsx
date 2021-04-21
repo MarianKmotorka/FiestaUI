@@ -47,7 +47,7 @@ const ReviewStep = ({ prevStep }: IReviewStepProps) => {
               <KeyValueRow keyName={t('name')} value={values.name} />
               <KeyValueRow keyName={t('startDate')} value={toLocalTime(values.startDate)} />
               <KeyValueRow keyName={t('endDate')} value={toLocalTime(values.endDate)} />
-              <KeyValueRow keyName={t('maxNumberOfPeople')} value={values.capacity} />
+              <KeyValueRow keyName={t('maxAttendees')} value={values.capacity} />
               <KeyValueRow
                 keyName={t('accessibility')}
                 value={t(

@@ -14,6 +14,7 @@ export const XXL = 1320
 const lightTheme: ThemeOptions = {
   palette: {
     type: 'light',
+    isDark: false,
     primary: {
       main: '#fe2c55'
     },
@@ -52,6 +53,7 @@ const darkTheme: ThemeOptions = {
   ...lightTheme,
   palette: {
     ...lightTheme.palette,
+    isDark: true,
     type: 'dark',
     secondary: {
       main: '#cbcad0'

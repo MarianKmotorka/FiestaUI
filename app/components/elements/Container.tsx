@@ -1,12 +1,17 @@
-import styled from 'styled-components'
+import styled, { css } from 'styled-components'
 import { MD } from '@contextProviders/AppThemeProvider/theme'
 
-export const Container = styled.div`
+export const Container = styled.div<{ disabled?: boolean }>`
   width: 100%;
-  margin: 0 auto;
-  max-width: 80%;
 
-  @media screen and (max-width: ${MD}px) {
-    max-width: 90%;
-  }
+  ${({ disabled }) =>
+    !disabled &&
+    css`
+      margin: 0 auto;
+      max-width: 80%;
+
+      @media screen and (max-width: ${MD}px) {
+        max-width: 90%;
+      }
+    `}
 `

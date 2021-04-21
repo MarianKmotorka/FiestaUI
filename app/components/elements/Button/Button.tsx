@@ -1,20 +1,10 @@
-import { Button as MuiButton, ButtonProps } from '@material-ui/core'
-import Spinner from '@elements/Spinner'
+import { Button as MuiButton, ButtonProps, CircularProgress } from '@material-ui/core'
 
 export interface IButtonProps extends ButtonProps {
   loading?: boolean
-  themedSpinner?: boolean
 }
 
-const Button = ({
-  loading,
-  children,
-  variant,
-  color,
-  disabled,
-  themedSpinner,
-  ...rest
-}: IButtonProps) => {
+const Button = ({ loading, children, variant, color, disabled, ...rest }: IButtonProps) => {
   return (
     <MuiButton
       {...rest}
@@ -22,7 +12,7 @@ const Button = ({
       color={color || 'primary'}
       disabled={disabled || loading}
     >
-      {loading ? <Spinner themed={themedSpinner ?? true} /> : children}
+      {loading ? <CircularProgress size='1.3rem' /> : children}
     </MuiButton>
   )
 }

@@ -1,3 +1,4 @@
+import { MD } from '@contextProviders/AppThemeProvider/theme'
 import styled from 'styled-components'
 
 export const Wrapper = styled.div`
@@ -9,6 +10,10 @@ export const ImageWrapper = styled.div`
   border-radius: 10px;
   overflow: hidden;
   position: relative;
+
+  @media screen and (max-width: ${MD}px) {
+    border-radius: 0;
+  }
 `
 
 export const Overlay = styled.div<{ opacity: 0 | 1 }>`

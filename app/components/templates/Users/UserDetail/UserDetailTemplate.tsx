@@ -5,7 +5,7 @@ import useTranslation from 'next-translate/useTranslation'
 import { Avatar, Box, CircularProgress } from '@material-ui/core'
 
 import api from '@api/HttpClient'
-import { IUser } from 'domainTypes'
+import { IUserDetail } from 'domainTypes'
 import { IApiError } from '@api/types'
 import Divider from '@elements/Divider'
 import Button from '@elements/Button/Button'
@@ -32,7 +32,7 @@ const UserDetailTemplate = ({ userId }: IUserDetailTemplateProps) => {
   const auth = useAuth()
   const { t } = useTranslation('common')
 
-  const { data, error, isLoading, isIdle } = useQuery<IUser, IApiError>(
+  const { data, error, isLoading, isIdle } = useQuery<IUserDetail, IApiError>(
     ['users', userId],
     async () => (await api.get(`/users/${userId}`)).data,
     { enabled: !auth.isLoading }

@@ -16,9 +16,11 @@ export interface IApiError {
 export interface IQueryResponse<T> {
   entries: T[]
   page: number
+  nextPage: number
   pageSize: number
   totalPages: number
   totalEntries: number
+  hasMore: boolean
 }
 
 export enum SortType {
@@ -52,6 +54,6 @@ export interface IFilter {
 export interface IQueryDocument {
   page: number
   pageSize: number
-  sorts: ISort[]
-  filters: IFilter[]
+  sorts?: ISort[]
+  filters?: IFilter[]
 }

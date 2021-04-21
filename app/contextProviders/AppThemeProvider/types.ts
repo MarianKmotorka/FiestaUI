@@ -6,6 +6,7 @@ declare module 'styled-components' {
 
 declare module '@material-ui/core/styles/createPalette' {
   interface Palette {
+    isDark: boolean
     themeText: {
       black: string
       white: string
@@ -16,6 +17,7 @@ declare module '@material-ui/core/styles/createPalette' {
   }
 
   interface PaletteOptions {
+    isDark: boolean
     themeText: {
       black: string
       white: string

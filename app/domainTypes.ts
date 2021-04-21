@@ -11,7 +11,7 @@ export interface ICurrentUser {
   googleEmail?: string
 }
 
-export interface IUser {
+export interface IUserDetail {
   id: string
   firstName: string
   lastName: string
@@ -21,6 +21,12 @@ export interface IUser {
   bio?: string
   numberOfFriends: number
   friendStatus: FriendStatus
+}
+
+export interface IUserDto {
+  id: string
+  username: string
+  pictureUrl: string
 }
 
 export enum AuthProviderFlags {

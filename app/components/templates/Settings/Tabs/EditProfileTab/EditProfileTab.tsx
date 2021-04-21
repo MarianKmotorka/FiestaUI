@@ -6,7 +6,7 @@ import { AccordionDetails, AccordionSummary } from '@material-ui/core'
 
 import api from '@api/HttpClient'
 import { IApiError } from '@api/types'
-import { IUser } from 'domainTypes'
+import { IUserDetail } from 'domainTypes'
 import Spinner from '@elements/Spinner'
 import Form from '@elements/HookForm/Form'
 import { onlyDirtyValues } from '@utils/utils'
@@ -43,18 +43,21 @@ const EditProfileTab = () => {
   const [profilePictureLoading, setProfilePictureLoading] = useState(false)
   const queryClient = useQueryClient()
 
-  const { onSubmit } = useSubmitForm<IEditProfileValues, Omit<IUser, 'pictureUrl'>>({
+  const { onSubmit } = useSubmitForm<IEditProfileValues, Omit<IUserDetail, 'pictureUrl'>>({
     method: 'patch',
     url: `/users/${currentUser.id}`,
     formatter: onlyDirtyValues,
     successCallback: response => {
       successToast(t('saved'))
       updateUser(response)
-      queryClient.setQueryData<IUser>(['users', currentUser.id], prev => ({ ...prev, ...response }))
+      queryClient.setQueryData<IUserDetail>(['users', currentUser.id], prev => ({
+        ...prev,
+        ...response
+      }))
     }
   })
 
-  const { data, isLoading, error } = useQuery<IUser, IApiError>(
+  const { data, isLoading, error } = useQuery<IUserDetail, IApiError>(
     ['users', currentUser.id],
     async () => (await api.get(`/users/${currentUser.id}`)).data
   )

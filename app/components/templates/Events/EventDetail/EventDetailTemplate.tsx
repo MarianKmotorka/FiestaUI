@@ -2,12 +2,14 @@ import { useQuery } from 'react-query'
 import Link from 'next/link'
 import { lowerFirst } from 'lodash'
 import useTranslation from 'next-translate/useTranslation'
-import { Avatar, Box, Button as MuiButton, CircularProgress } from '@material-ui/core'
+import { Box, Button as MuiButton, CircularProgress } from '@material-ui/core'
 import {
   AccountBox,
+  DeleteForeverOutlined,
   Edit,
   EventAvailable,
   EventBusy,
+  FormatListNumbered,
   LockOpen,
   OpenInNew,
   Public
@@ -21,6 +23,7 @@ import Button from '@elements/Button/Button'
 import { Container } from '@elements/Container'
 import useWindowSize from '@hooks/useWindowSize'
 import { AccessibilityTypeEnum } from 'domainTypes'
+import EventDetailTabs from './Tabs/EventDetailTabs'
 import FetchError from '@elements/FetchError/FetchError'
 import { useAuth } from '@contextProviders/AuthProvider'
 import CollapseContainer from '@elements/CollapseContainer/CollapseContainer'
@@ -51,6 +54,8 @@ export interface IEventDetail {
   location: string
   accessibilityType: AccessibilityTypeEnum
   attendeesCount: number
+  invitationsCount: number
+  capacity: number
   organizer: {
     id: string
     username: string
@@ -61,7 +66,7 @@ export interface IEventDetail {
 const EventDetailTemplate = ({ eventId }: IProps) => {
   const auth = useAuth()
   const { t } = useTranslation('common')
-  const { width, height } = useWindowSize()
+  const { width, height, minMedium, maxMedium } = useWindowSize()
   const { data, isLoading, error, isIdle } = useQuery<IEventDetail, IApiError>(
     ['events', eventId],
     async () => await (await api.get(`/events/${eventId}`)).data,
@@ -77,90 +82,120 @@ const EventDetailTemplate = ({ eventId }: IProps) => {
   if (error) return <FetchError error={error} />
 
   const event = data!
-  const banner = event.bannerUrl || '/eventDetailBanner.png'
+  const bannerUrl = event.bannerUrl || '/eventDetailBanner.png'
   const isOrganizer = auth.isLoggedIn && auth.currentUser.id === event.organizer.id
 
   return (
     <Wrapper>
       <BlurredImageWrapper>
-        <BlurredImage src={banner} width={width} height={height} />
+        <BlurredImage src={bannerUrl} width={width} height={height} />
       </BlurredImageWrapper>
 
-      <Container>
-        <Banner src={banner} eventId={eventId} canUpload={isOrganizer} />
+      <Container disabled={maxMedium}>
+        <Banner src={bannerUrl} eventId={eventId} canUpload={isOrganizer} />
 
         <StyledCard>
-          <Title>{event.name}</Title>
+          <Container disabled={minMedium}>
+            <Title>{event.name}</Title>
 
-          {event.description && (
-            <CollapseContainer collapsedHeight={80}>
-              <EventDescription>{event.description}</EventDescription>
-            </CollapseContainer>
-          )}
+            {event.description && (
+              <CollapseContainer collapsedHeight={80}>
+                <EventDescription>{event.description}</EventDescription>
+              </CollapseContainer>
+            )}
 
-          <Box marginY='20px'>
-            <InfoRow>
-              <h6>
-                <AccountBox />
-                {t('organizer')}:
-              </h6>
-              <Link href={`/users/${event.organizer.id}`}>
-                <Organizer startIcon={<Avatar src={event.organizer.pictureUrl} />}>
-                  <span>{event.organizer.username}</span>
-                </Organizer>
-              </Link>
-            </InfoRow>
-            <InfoRow>
-              <h6>
-                <EventAvailable />
-                {t('startDate')}:
-              </h6>
-              <div>{toLocalTime(event.startDate)}</div>
-            </InfoRow>
-            <InfoRow>
-              <h6>
-                <EventBusy />
-                {t('endDate')}:
-              </h6>
-              <div>{toLocalTime(event.endDate)}</div>
-            </InfoRow>
-            <InfoRow>
-              <h6>
-                <LockOpen />
-                {t('accessibility')}:
-              </h6>
-              <div>
-                {t(
-                  `enum.accessibilityTypeEnum.${lowerFirst(
-                    AccessibilityTypeEnum[event.accessibilityType]
-                  )}`
-                )}
-              </div>
-            </InfoRow>
-            <InfoRow>
-              <h6>
-                <Public />
-                {t('location')}:
-              </h6>
-              <div>
-                <MuiButton
-                  target='_blank'
-                  rel='noopener noreferrer'
-                  href={event.googleMapsUrl}
-                  endIcon={<OpenInNew />}
+            <Box marginY='20px'>
+              <InfoRow>
+                <h6>
+                  <AccountBox />
+                  {t('organizer')}:
+                </h6>
+                <Link href={`/users/${event.organizer.id}`}>
+                  <Organizer>
+                    <span>{event.organizer.username}</span>
+                  </Organizer>
+                </Link>
+              </InfoRow>
+              <InfoRow>
+                <h6>
+                  <EventAvailable />
+                  {t('startDate')}:
+                </h6>
+                <div>{toLocalTime(event.startDate)}</div>
+              </InfoRow>
+              <InfoRow>
+                <h6>
+                  <EventBusy />
+                  {t('endDate')}:
+                </h6>
+                <div>{toLocalTime(event.endDate)}</div>
+              </InfoRow>
+              <InfoRow>
+                <h6>
+                  <LockOpen />
+                  {t('accessibility')}:
+                </h6>
+                <div>
+                  {t(
+                    `enum.accessibilityTypeEnum.${lowerFirst(
+                      AccessibilityTypeEnum[event.accessibilityType]
+                    )}`
+                  )}
+                </div>
+              </InfoRow>
+              <InfoRow>
+                <h6>
+                  <Public />
+                  {t('location')}:
+                </h6>
+                <div>
+                  <MuiButton
+                    target='_blank'
+                    rel='noopener noreferrer'
+                    href={event.googleMapsUrl}
+                    endIcon={<OpenInNew />}
+                  >
+                    {event.location}
+                  </MuiButton>
+                </div>
+              </InfoRow>
+              <InfoRow>
+                <h6>
+                  <FormatListNumbered />
+                  {t('maxAttendees')}:
+                </h6>
+                <div>{event.capacity}</div>
+              </InfoRow>
+            </Box>
+
+            {isOrganizer && (
+              <Box display='flex' justifyContent='flex-end' gridGap='10px'>
+                <Link href={`/events/${eventId}/update`}>
+                  <Button
+                    startIcon={<Edit />}
+                    color='default'
+                    variant='text'
+                    size={maxMedium ? 'medium' : 'large'}
+                  >
+                    {t('edit')}
+                  </Button>
+                </Link>
+
+                <Button
+                  variant='text'
+                  size={maxMedium ? 'medium' : 'large'}
+                  startIcon={<DeleteForeverOutlined />}
                 >
-                  {event.location}
-                </MuiButton>
-              </div>
-            </InfoRow>
-          </Box>
-
-          {isOrganizer && (
-            <Link href={`/events/${eventId}/update`}>
-              <Button startIcon={<Edit />}>{t('edit')}</Button>
-            </Link>
-          )}
+                  {t('delete')}
+                </Button>
+              </Box>
+            )}
+          </Container>
         </StyledCard>
+      </Container>
+
+      <Container>
+        <EventDetailTabs event={event} isOrganizer={isOrganizer} />
       </Container>
     </Wrapper>
   )

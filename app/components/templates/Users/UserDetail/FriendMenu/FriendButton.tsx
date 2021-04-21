@@ -8,13 +8,13 @@ import api from '@api/HttpClient'
 import FriendMenu from './FriendMenu'
 import AuthCheck from '@elements/AuthCheck'
 import Button from '@elements/Button/Button'
-import { FriendStatus, IUser } from 'domainTypes'
+import { FriendStatus, IUserDetail } from 'domainTypes'
 import { errorToast, successToast } from 'services/toastService'
 
 import { friendStatusEndIconMap, friendStatusStartIconMap, friendStatusTextMap } from './utils'
 
 interface IProps {
-  user: IUser
+  user: IUserDetail
 }
 
 const FriendButton = ({ user }: IProps) => {
@@ -27,7 +27,7 @@ const FriendButton = ({ user }: IProps) => {
     try {
       setFriendStatusLoading(true)
       await api.post(`/friends/send-request`, { friendId: user.id })
-      queryClient.setQueryData<IUser>(['users', user.id], prev => ({
+      queryClient.setQueryData<IUserDetail>(['users', user.id], prev => ({
         ...prev!,
         friendStatus: FriendStatus.FriendRequestSent
       }))

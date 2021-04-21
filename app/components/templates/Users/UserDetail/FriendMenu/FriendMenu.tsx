@@ -4,7 +4,7 @@ import { Block, Cancel, CancelScheduleSend, Check } from '@material-ui/icons'
 
 import api from '@api/HttpClient'
 import { Menu } from '@elements/Menu/Menu'
-import { FriendStatus, IUser } from 'domainTypes'
+import { FriendStatus, IUserDetail } from 'domainTypes'
 import { errorToast, successToast } from 'services/toastService'
 
 import { StyledMenuItem } from './FriendMenu.styled'
@@ -26,7 +26,7 @@ const FriendMenu = ({ anchorEl, onClose, setLoading, userId, friendStatus }: IFr
       setLoading(true)
       onClose()
       await api.delete(`/friends/${userId}`)
-      queryClient.setQueryData<IUser>(['users', userId], prev => ({
+      queryClient.setQueryData<IUserDetail>(['users', userId], prev => ({
         ...prev!,
         friendStatus: FriendStatus.None
       }))
@@ -42,7 +42,7 @@ const FriendMenu = ({ anchorEl, onClose, setLoading, userId, friendStatus }: IFr
       setLoading(true)
       onClose()
       await api.post(`/friends/unsend-request`, { friendId: userId })
-      queryClient.setQueryData<IUser>(['users', userId], prev => ({
+      queryClient.setQueryData<IUserDetail>(['users', userId], prev => ({
         ...prev!,
         friendStatus: FriendStatus.None
       }))
@@ -58,7 +58,7 @@ const FriendMenu = ({ anchorEl, onClose, setLoading, userId, friendStatus }: IFr
       setLoading(true)
       onClose()
       await api.post(`/friends/confirm-request`, { friendId: userId })
-      queryClient.setQueryData<IUser>(['users', userId], prev => ({
+      queryClient.setQueryData<IUserDetail>(['users', userId], prev => ({
         ...prev!,
         friendStatus: FriendStatus.Friend
       }))
@@ -74,7 +74,7 @@ const FriendMenu = ({ anchorEl, onClose, setLoading, userId, friendStatus }: IFr
       setLoading(true)
       onClose()
       await api.post(`/friends/reject-request`, { friendId: userId })
-      queryClient.setQueryData<IUser>(['users', userId], prev => ({
+      queryClient.setQueryData<IUserDetail>(['users', userId], prev => ({
         ...prev!,
         friendStatus: FriendStatus.None
       }))

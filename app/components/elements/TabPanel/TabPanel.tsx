@@ -10,7 +10,7 @@ const TabPanel = ({ children, value, index, className }: ITabPanelProps) => {
 
   return (
     <div role='tabpanel' className={className}>
-      {value === index && children}
+      {children}
     </div>
   )
 }

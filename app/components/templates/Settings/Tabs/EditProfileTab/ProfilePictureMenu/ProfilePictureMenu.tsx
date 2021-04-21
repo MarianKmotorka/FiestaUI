@@ -4,7 +4,7 @@ import { DeleteOutline, Publish } from '@material-ui/icons'
 import useTranslation from 'next-translate/useTranslation'
 
 import api from '@api/HttpClient'
-import { IUser } from 'domainTypes'
+import { IUserDetail } from 'domainTypes'
 import { Menu } from '@elements/Menu/Menu'
 import { getErrorMessage } from '@utils/utils'
 import { errorToast, successToast } from 'services/toastService'
@@ -36,7 +36,7 @@ const ProfilePictureMenu = ({ anchorEl, onClose, setLoading }: IProfilePictureMe
       onClose()
       await api.delete(`/users/${currentUser.id}/profile-picture`)
       updateUser({ pictureUrl: undefined })
-      queryClient.setQueryData<IUser>(['users', currentUser.id], prev => ({
+      queryClient.setQueryData<IUserDetail>(['users', currentUser.id], prev => ({
         ...prev!,
         pictureUrl: undefined
       }))
@@ -58,7 +58,7 @@ const ProfilePictureMenu = ({ anchorEl, onClose, setLoading }: IProfilePictureMe
       setLoading(true)
       const { data } = await api.post(`/users/${currentUser.id}/profile-picture`, formData)
       updateUser(data)
-      queryClient.setQueryData<IUser>(['users', currentUser.id], prev => ({
+      queryClient.setQueryData<IUserDetail>(['users', currentUser.id], prev => ({
         ...prev,
         ...data
       }))
