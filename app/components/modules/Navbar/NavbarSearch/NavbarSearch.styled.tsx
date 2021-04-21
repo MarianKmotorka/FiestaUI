@@ -1,5 +1,6 @@
 import styled from 'styled-components'
 import { LG, MD } from '@contextProviders/AppThemeProvider/theme'
+import { SearchModalItem } from '@modules/SearchModal'
 
 export const ItemInfo = styled.div`
   display: flex;
@@ -49,5 +50,18 @@ export const ItemInfo = styled.div`
       width: 33px;
       height: 33px;
     }
+  }
+`
+
+export const Item = styled(SearchModalItem)`
+  display: flex;
+  gap: 18px;
+
+  > svg {
+    margin-left: auto;
+  }
+
+  @media screen and (max-width: ${MD}px) {
+    gap: 10px;
   }
 `

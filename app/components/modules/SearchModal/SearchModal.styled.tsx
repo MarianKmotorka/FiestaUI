@@ -41,15 +41,8 @@ export const ItemsContainer = styled.div`
 
 export const SearchModalItem = styled(MenuItem)`
   padding: 13px 8%;
-  display: flex;
-  gap: 18px;
-
-  > svg {
-    margin-left: auto;
-  }
 
   @media screen and (max-width: ${MD}px) {
     padding: 7px 8%;
-    gap: 10px;
   }
 `

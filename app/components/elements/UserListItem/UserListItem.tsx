@@ -7,21 +7,24 @@ interface IUserListItemProps {
   user: IUserDto
   href?: string
   className?: string
+  isLink?: boolean
 }
 
-const UserListItem = ({ user, href, className }: IUserListItemProps) => {
-  return (
-    <Link href={href || `/users/${user.id}`}>
-      <Wrapper className={className}>
-        <StyledAvatar src={user.pictureUrl} />
+const UserListItem = ({ user, isLink, href, className }: IUserListItemProps) => {
+  const content = (
+    <Wrapper className={className}>
+      <StyledAvatar src={user.pictureUrl} />
 
-        <Box>
-          <ItemText>{user.username}</ItemText>
-          <ItemSubText>{user.fullName}</ItemSubText>
-        </Box>
-      </Wrapper>
-    </Link>
+      <Box>
+        <ItemText>{user.username}</ItemText>
+        <ItemSubText>{user.fullName}</ItemSubText>
+      </Box>
+    </Wrapper>
   )
+
+  if (!isLink) return content
+
+  return <Link href={href || `/users/${user.id}`}>{content}</Link>
 }
 
 export default UserListItem

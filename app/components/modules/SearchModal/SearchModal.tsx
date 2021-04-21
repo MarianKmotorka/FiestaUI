@@ -1,6 +1,6 @@
 import { ReactNode } from 'react'
 import { isEmpty } from 'lodash'
-import { Box, CircularProgress } from '@material-ui/core'
+import { Box, CircularProgress, Typography } from '@material-ui/core'
 import useTranslation from 'next-translate/useTranslation'
 import { Close, Search, SentimentDissatisfied } from '@material-ui/icons'
 
@@ -19,6 +19,7 @@ interface ISearchModalProps<T> {
   items: T[]
   search: string
   isFetching: boolean
+  title?: string
   searchPlaceholder?: string
   hasNextPage?: boolean
   onClose: () => void
@@ -30,6 +31,7 @@ interface ISearchModalProps<T> {
 const SearchModal = <T extends { id: string }>({
   items,
   search,
+  title,
   isFetching,
   hasNextPage,
   searchPlaceholder,
@@ -47,7 +49,13 @@ const SearchModal = <T extends { id: string }>({
           <Close />
         </StyledCloseButton>
 
-        <Box margin='60px auto 20px' width='84%'>
+        <Box padding='20px 8% 0'>
+          <Typography color='primary' variant='subtitle1'>
+            {title}
+          </Typography>
+        </Box>
+
+        <Box margin='40px auto 20px' width='84%'>
           <TextBox
             fullWidth
             value={search}

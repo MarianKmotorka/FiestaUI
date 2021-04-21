@@ -115,7 +115,7 @@ const Attendees = ({ event, isOrganizer }: IAttendeesProps) => {
         {pages.map(page =>
           page.entries.map(e => (
             <Item key={e.id}>
-              <UserListItem user={e} />
+              <UserListItem user={e} isLink />
 
               {isOrganizer && (
                 <ActionsWrapper>

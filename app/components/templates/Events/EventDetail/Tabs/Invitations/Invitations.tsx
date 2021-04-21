@@ -10,6 +10,7 @@ import Observer from '@elements/Observer'
 import Button from '@elements/Button/Button'
 import useDebounce from '@hooks/useDebounce'
 import { getErrorMessage } from '@utils/utils'
+import AddInvitationModal from './AddInvitationModal'
 import FetchError from '@elements/FetchError/FetchError'
 import { IEventDetail } from '../../EventDetailTemplate'
 import useTranslation from 'next-translate/useTranslation'
@@ -32,6 +33,7 @@ interface IInvitation {
 
 const Invitations = ({ event }: IInvitationsProps) => {
   const [deletingId, setDeletingId] = useState<string>()
+  const [addModalOpen, setAddModalOpen] = useState(false)
   const queryClient = useQueryClient()
   const { t } = useTranslation('common')
   const [search, setSearch] = useState('')
@@ -106,7 +108,7 @@ const Invitations = ({ event }: IInvitationsProps) => {
           size='small'
         />
 
-        <Button variant='text' startIcon={<Add />}>
+        <Button variant='text' startIcon={<Add />} onClick={() => setAddModalOpen(true)}>
           {t('invite')}
         </Button>
       </Box>
@@ -125,7 +127,7 @@ const Invitations = ({ event }: IInvitationsProps) => {
         {pages.map(page =>
           page.entries.map(e => (
             <Item key={e.invitee.id}>
-              <UserListItem user={e.invitee} />
+              <UserListItem user={e.invitee} isLink />
 
               <ActionsWrapper>
                 <Button
@@ -142,6 +144,10 @@ const Invitations = ({ event }: IInvitationsProps) => {
 
         <Observer callback={fetchNextPage} disabled={isFetching || !hasNextPage} />
       </ItemsContainer>
+
+      {addModalOpen && (
+        <AddInvitationModal eventId={event.id} onClose={() => setAddModalOpen(false)} />
+      )}
     </>
   )
 }

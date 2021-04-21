@@ -12,9 +12,9 @@ import useDebounce from '@hooks/useDebounce'
 import useWindowSize from '@hooks/useWindowSize'
 import FetchError from '@elements/FetchError/FetchError'
 import { ItemType, EventAndUserSelectorItem } from './types'
-import { SearchModal, SearchModalItem } from '@modules/SearchModal'
+import { SearchModal } from '@modules/SearchModal'
 
-import { ItemInfo } from './NavbarSearch.styled'
+import { Item, ItemInfo } from './NavbarSearch.styled'
 
 interface INavbarSearchProps {
   onClose: () => void
@@ -38,7 +38,7 @@ const NavbarSearch = ({ onClose }: INavbarSearchProps) => {
   const renderItem = (item: EventAndUserSelectorItem) =>
     item.type === ItemType.User ? (
       <Link href={`/users/${item.id}`}>
-        <SearchModalItem onClick={onClose}>
+        <Item onClick={onClose}>
           <Avatar src={item.pictureUrl} />
 
           <ItemInfo>
@@ -47,7 +47,7 @@ const NavbarSearch = ({ onClose }: INavbarSearchProps) => {
           </ItemInfo>
 
           {minMedium && <KeyboardArrowRight />}
-        </SearchModalItem>
+        </Item>
       </Link>
     ) : (
       <EventItem item={item} onClose={onClose} />

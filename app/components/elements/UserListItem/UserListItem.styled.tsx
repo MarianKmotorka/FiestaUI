@@ -15,10 +15,6 @@ export const Wrapper = styled.div`
   gap: 8px;
   padding-right: 10px;
   cursor: pointer;
-
-  :hover * {
-    font-weight: 500;
-  }
 `
 
 export const ItemText = styled.p`
