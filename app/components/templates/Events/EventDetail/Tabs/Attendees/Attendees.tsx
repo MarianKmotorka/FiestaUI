@@ -13,19 +13,12 @@ import { getErrorMessage } from '@utils/utils'
 import FetchError from '@elements/FetchError/FetchError'
 import { IEventDetail } from '../../EventDetailTemplate'
 import useTranslation from 'next-translate/useTranslation'
+import UserListItem from '@elements/UserListItem/UserListItem'
 import ConfirmationDialog from '@elements/ConfirmationDialog/ConfirmationDialog'
 import { errorToast, successToast } from 'services/toastService'
 import { IApiError, IQueryDocument, IQueryResponse } from '@api/types'
 
-import {
-  ActionsWrapper,
-  Item,
-  ItemsContainer,
-  ItemText,
-  StyledAvatar,
-  StyledTextBox,
-  UserInfo
-} from '../common.styled'
+import { ActionsWrapper, Item, ItemsContainer, StyledTextBox } from '../common.styled'
 
 interface IAttendeesProps {
   event: IEventDetail
@@ -123,12 +116,7 @@ const Attendees = ({ event, isOrganizer }: IAttendeesProps) => {
         {pages.map(page =>
           page.entries.map(e => (
             <Item key={e.id}>
-              <Link href={`/users/${e.id}`}>
-                <UserInfo>
-                  <StyledAvatar src={e.pictureUrl} />
-                  <ItemText>{e.username}</ItemText>
-                </UserInfo>
-              </Link>
+              <UserListItem user={e} />
 
               {isOrganizer && (
                 <ActionsWrapper>

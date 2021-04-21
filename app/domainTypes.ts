@@ -27,6 +27,9 @@ export interface IUserDto {
   id: string
   username: string
   pictureUrl: string
+  firstName: string
+  lastName: string
+  fullName: string
 }
 
 export enum AuthProviderFlags {

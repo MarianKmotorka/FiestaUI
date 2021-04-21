@@ -1,4 +1,3 @@
-import Link from 'next/link'
 import { isEmpty } from 'lodash'
 import { useState } from 'react'
 import { Box, CircularProgress } from '@material-ui/core'
@@ -13,18 +12,11 @@ import { getErrorMessage } from '@utils/utils'
 import FetchError from '@elements/FetchError/FetchError'
 import { IEventDetail } from '../../EventDetailTemplate'
 import useTranslation from 'next-translate/useTranslation'
+import UserListItem from '@elements/UserListItem/UserListItem'
 import { errorToast, successToast } from 'services/toastService'
 import { IApiError, IQueryDocument, IQueryResponse } from '@api/types'
 
-import {
-  ActionsWrapper,
-  Item,
-  ItemsContainer,
-  ItemText,
-  StyledAvatar,
-  StyledTextBox,
-  UserInfo
-} from '../common.styled'
+import { ActionsWrapper, Item, ItemsContainer, StyledTextBox } from '../common.styled'
 
 interface IInvitationsProps {
   event: IEventDetail
@@ -126,12 +118,7 @@ const Invitations = ({ event }: IInvitationsProps) => {
         {pages.map(page =>
           page.entries.map(e => (
             <Item key={e.invitee.id}>
-              <Link href={`/users/${e.invitee.id}`}>
-                <UserInfo>
-                  <StyledAvatar src={e.invitee.pictureUrl} />
-                  <ItemText>{e.invitee.username}</ItemText>
-                </UserInfo>
-              </Link>
+              <UserListItem user={e.invitee} />
 
               <ActionsWrapper>
                 <Button
