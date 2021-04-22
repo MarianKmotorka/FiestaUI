@@ -49,8 +49,8 @@ const SearchModal = <T extends { id: string }>({
           <Close />
         </StyledCloseButton>
 
-        <Box padding='20px 8% 0'>
-          <Typography color='primary' variant='subtitle1'>
+        <Box padding='40px 8% 0'>
+          <Typography color='primary' variant='h6'>
             {title}
           </Typography>
         </Box>

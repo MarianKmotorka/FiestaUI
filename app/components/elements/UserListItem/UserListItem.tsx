@@ -12,7 +12,7 @@ interface IUserListItemProps {
 
 const UserListItem = ({ user, isLink, href, className }: IUserListItemProps) => {
   const content = (
-    <Wrapper className={className}>
+    <Wrapper className={className} cursor={isLink ? 'pointer' : 'auto'}>
       <StyledAvatar src={user.pictureUrl} />
 
       <Box>

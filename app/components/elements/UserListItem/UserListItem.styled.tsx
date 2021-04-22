@@ -9,12 +9,12 @@ export const StyledAvatar = styled(Avatar)`
   }
 `
 
-export const Wrapper = styled.div`
+export const Wrapper = styled.div<{ cursor: string }>`
   display: flex;
   align-items: center;
   gap: 8px;
   padding-right: 10px;
-  cursor: pointer;
+  cursor: ${({ cursor }) => cursor};
 `
 
 export const ItemText = styled.p`

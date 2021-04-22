@@ -111,6 +111,7 @@
 
   "validator": {
     "alreadyExists": "Already exists",
+    "alreadyAttendeeOrInvited": "User is already invited or attendee",
     "emailAlreadyVerified": "Email is already verified",
     "emailAlreadyInUse": "Email is already in use",
     "emailIsNotVerified": "Email is not verified",

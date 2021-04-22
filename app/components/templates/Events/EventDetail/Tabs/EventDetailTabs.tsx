@@ -49,11 +49,13 @@ const EventDetailTabs = ({ event, isOrganizer }: IEventDetailTabsProps) => {
           </AuthCheck>
         </StyledPanel>
 
-        <StyledPanel index='invitations' value={currTab}>
-          <AuthCheck>
-            <Invitations event={event} isOrganizer={isOrganizer} />
-          </AuthCheck>
-        </StyledPanel>
+        {isOrganizer && (
+          <StyledPanel index='invitations' value={currTab}>
+            <AuthCheck>
+              <Invitations event={event} isOrganizer={isOrganizer} />
+            </AuthCheck>
+          </StyledPanel>
+        )}
 
         <StyledPanel index='joinRequests' value={currTab}></StyledPanel>
         <StyledPanel index='discussion' value={currTab}></StyledPanel>
