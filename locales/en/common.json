@@ -1,5 +1,6 @@
 {
   "add": "Add",
+  "areYouSure": "Are you sure ?",
   "accept": "Accept",
   "alert": "Alert",
   "addFriend": "Add friend",
@@ -53,6 +54,7 @@
   "logout": "Logout",
   "loading": "Loading",
   "location": "Location",
+  "leaveEvent": "Leave event",
   "maxAttendees": "Max attendees",
   "message": "Message",
   "name": "Name",
@@ -108,6 +110,8 @@
   "warning": "Warning",
   "youDontHaveSufficentPermissionsToAccessThisResource": "You don't have sufficient permissions to access this resource.",
   "youMustBeLoggedIn": "You must be logged in.",
+  "youHaveBeenInvited": "You have been invited",
+  "youAreAttendingThisEvent": "You are attending this event",
 
   "validator": {
     "alreadyExists": "Already exists",

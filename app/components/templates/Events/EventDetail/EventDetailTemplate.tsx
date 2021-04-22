@@ -55,6 +55,8 @@ export interface IEventDetail {
   accessibilityType: AccessibilityTypeEnum
   attendeesCount: number
   invitationsCount: number
+  isCurrentUserInvited: boolean
+  isCurrentUserAttendee: boolean
   capacity: number
   organizer: {
     id: string
