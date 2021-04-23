@@ -18,7 +18,7 @@ interface IReviewStepProps {
   prevStep: (index?: number) => void
 }
 
-const ReviewStep = ({ prevStep }: IReviewStepProps) => {
+const ReviewStep = ({ prevStep, submitting }: IReviewStepProps) => {
   const { getValues, trigger, errors } = useFormContext<ICreateEventFormValues>()
   const { t } = useTranslation('common')
   const values = getValues()
@@ -99,7 +99,12 @@ const ReviewStep = ({ prevStep }: IReviewStepProps) => {
           {t('back')}
         </Button>
 
-        <Button type='submit' size='large' onClick={validateAndRedirectToErrorStep}>
+        <Button
+          type='submit'
+          size='large'
+          onClick={validateAndRedirectToErrorStep}
+          loading={submitting}
+        >
           {t('submit').toUpperCase()}
         </Button>
       </Box>

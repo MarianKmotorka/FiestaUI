@@ -1,6 +1,7 @@
 import { forwardRef } from 'react'
 import { DateTimePickerProps as MuiDateTimePickerProps } from '@material-ui/pickers'
 import useTranslation from 'next-translate/useTranslation'
+import moment from 'moment'
 import { PickerGlobalStyle, StyledPicker } from './DateTimePicker.styled'
 
 export type DateTimePickerProps = MuiDateTimePickerProps & {
@@ -25,7 +26,8 @@ const DateTimePicker = forwardRef(
           ref={ref as any}
           name={name}
           label={label}
-          value={value || null}
+          //Value needs to be null to show nothing
+          value={value ? moment.utc(value).local().toDate() : null}
           onChange={x => onChange(x?.toDate())}
           error={!!error}
           helperText={error}
