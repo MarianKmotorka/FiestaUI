@@ -108,7 +108,8 @@ const Attendees = ({ event, isOrganizer }: IAttendeesProps) => {
       queryClient.setQueryData<IEventDetail>(['events', event.id], prev => ({
         ...prev!,
         isCurrentUserInvited: false,
-        isCurrentUserAttendee: true
+        isCurrentUserAttendee: true,
+        attendeesCount: prev!.attendeesCount + 1
       }))
       queryClient.invalidateQueries(['events', event.id, 'attendees', 'query'])
     } catch (err) {
