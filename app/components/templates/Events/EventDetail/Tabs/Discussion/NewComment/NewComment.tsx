@@ -38,7 +38,7 @@ const NewComment = ({ isReply, onSend, onCancel }: INewCommentProps) => {
   return (
     <Box marginBottom='10px' marginTop='2px'>
       <Box display='flex' gridGap='15px'>
-        <StyledAvatar src={currentUser.pictureUrl} small={isReply} />
+        <StyledAvatar src={currentUser.pictureUrl} small={isReply ? 1 : 0} />
 
         <TextBox
           value={text}

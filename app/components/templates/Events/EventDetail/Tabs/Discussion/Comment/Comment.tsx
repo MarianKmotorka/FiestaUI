@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { memo, useState } from 'react'
 import moment from 'moment'
 import Link from 'next/link'
 import { Box } from '@material-ui/core'
@@ -15,9 +15,10 @@ import { Content, CreatedAt, StyledChip, UserName, ViewRepliesButton } from './C
 interface ICommentProps {
   comment: IComment
   isOrganizerComment: boolean
+  onReply: (text: string, parentId: string) => Promise<void>
 }
 
-const Comment = ({ comment, isOrganizerComment }: ICommentProps) => {
+const Comment = memo(({ comment, isOrganizerComment, onReply }: ICommentProps) => {
   const { t } = useTranslation('common')
   const [showNewReply, setShowNewReply] = useState(false)
   const [showReplies, setShowReplies] = useState(false)
@@ -30,10 +31,14 @@ const Comment = ({ comment, isOrganizerComment }: ICommentProps) => {
     <UserName>{comment.sender.username}</UserName>
   )
 
+  const handleReply = async (text: string) => {
+    await onReply(text, comment.id)
+  }
+
   return (
     <Box display='flex' gridGap='15px' marginY='25px'>
       <Link href={userHref}>
-        <StyledAvatar src={comment.sender.pictureUrl} small={!!comment.parentId} />
+        <StyledAvatar src={comment.sender.pictureUrl} small={comment.parentId ? 1 : 0} />
       </Link>
 
       <Box flex='1'>
@@ -49,7 +54,7 @@ const Comment = ({ comment, isOrganizerComment }: ICommentProps) => {
         </Button>
 
         {showNewReply && (
-          <NewComment onCancel={() => setShowNewReply(false)} onSend={async text => {}} isReply />
+          <NewComment onCancel={() => setShowNewReply(false)} onSend={handleReply} isReply />
         )}
 
         {comment.replyCount > 0 && (
@@ -67,6 +72,6 @@ const Comment = ({ comment, isOrganizerComment }: ICommentProps) => {
       </Box>
     </Box>
   )
-}
+})
 
 export default Comment

@@ -52,8 +52,21 @@ export interface IFilter {
 }
 
 export interface IQueryDocument {
-  page: number
-  pageSize: number
+  page?: number
+  pageSize?: number
   sorts?: ISort[]
   filters?: IFilter[]
+}
+
+export interface ISkippedItemsDocument {
+  take?: number
+  skip?: number
+}
+
+export interface ISkippedItemsResponse<T> {
+  entries: T[]
+  take: number
+  skip: number
+  totalEntries: number
+  hasMore: boolean
 }

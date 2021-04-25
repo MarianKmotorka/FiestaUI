@@ -54,7 +54,9 @@ const EventDetailTabs = ({ event, isOrganizer }: IEventDetailTabsProps) => {
 
         {isOrganizer && (
           <StyledPanel index='invitations' value={currTab}>
-            <Invitations event={event} isOrganizer={isOrganizer} />
+            <AuthCheck>
+              <Invitations event={event} isOrganizer={isOrganizer} />
+            </AuthCheck>
           </StyledPanel>
         )}
 
@@ -62,7 +64,9 @@ const EventDetailTabs = ({ event, isOrganizer }: IEventDetailTabsProps) => {
 
         {showDiscussion && (
           <StyledPanel index='discussion' value={currTab}>
-            <Discussion event={event} />
+            <AuthCheck>
+              <Discussion event={event} />
+            </AuthCheck>
           </StyledPanel>
         )}
       </Box>

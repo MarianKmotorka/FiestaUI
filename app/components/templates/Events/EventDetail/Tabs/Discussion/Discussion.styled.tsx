@@ -2,7 +2,7 @@ import styled, { css } from 'styled-components'
 import { Avatar } from '@material-ui/core'
 import { SM } from '@contextProviders/AppThemeProvider/theme'
 
-export const StyledAvatar = styled(Avatar)<{ small?: boolean }>`
+export const StyledAvatar = styled(Avatar)<{ small?: 1 | 0 }>`
   cursor: pointer;
   @media screen and (max-width: ${SM}px) {
     width: 36px;
