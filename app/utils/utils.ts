@@ -31,7 +31,7 @@ export const toLocalTime = (date: string | Date, format?: string) => {
   const utc = moment.utc(date).toDate()
   return moment(utc)
     .local()
-    .format(format || 'DD.MM. yyyy, HH:mm')
+    .format(format || 'DD MMMM yyyy, HH:mm')
 }
 
 export const getErrorMessage = (error: IApiError, t: Translate) => {
