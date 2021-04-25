@@ -1,12 +1,16 @@
-import { Box, Chip, Typography } from '@material-ui/core'
-import { ArrowDropDown, ArrowDropUp, CheckCircleOutline } from '@material-ui/icons'
-import moment from 'moment'
-import useTranslation from 'next-translate/useTranslation'
-import Link from 'next/link'
 import { useState } from 'react'
+import moment from 'moment'
+import Link from 'next/link'
+import { Box } from '@material-ui/core'
+import useTranslation from 'next-translate/useTranslation'
+import { ArrowDropDown, ArrowDropUp, CheckCircleOutline } from '@material-ui/icons'
+
 import { IComment } from '../Discussion'
+import Button from '@elements/Button/Button'
+import NewComment from '../NewComment/NewComment'
+
 import { StyledAvatar } from '../Discussion.styled'
-import { CreatedAt, StyledChip, UserName, ViewRepliesButton } from './Comment.styled'
+import { Content, CreatedAt, StyledChip, UserName, ViewRepliesButton } from './Comment.styled'
 
 interface ICommentProps {
   comment: IComment
@@ -15,6 +19,7 @@ interface ICommentProps {
 
 const Comment = ({ comment, isOrganizerComment }: ICommentProps) => {
   const { t } = useTranslation('common')
+  const [showNewReply, setShowNewReply] = useState(false)
   const [showReplies, setShowReplies] = useState(false)
 
   const userHref = `/users/${comment.sender.id}`
@@ -28,20 +33,29 @@ const Comment = ({ comment, isOrganizerComment }: ICommentProps) => {
   return (
     <Box display='flex' gridGap='15px' marginY='25px'>
       <Link href={userHref}>
-        <StyledAvatar src={comment.sender.pictureUrl} />
+        <StyledAvatar src={comment.sender.pictureUrl} small={!!comment.parentId} />
       </Link>
 
-      <Box>
+      <Box flex='1'>
         <Box display='flex' alignItems='flex-end' gridGap='5px'>
           <Link href={userHref}>{username}</Link>
           <CreatedAt>{moment.utc(comment.createdAt).local().fromNow()}</CreatedAt>
         </Box>
 
-        <Typography variant='body1'>{comment.text}</Typography>
+        <Content>{comment.text}</Content>
+
+        <Button variant='text' color='default' onClick={() => setShowNewReply(true)}>
+          {t('reply').toUpperCase()}
+        </Button>
+
+        {showNewReply && (
+          <NewComment onCancel={() => setShowNewReply(false)} onSend={async text => {}} isReply />
+        )}
 
         {comment.replyCount > 0 && (
           <ViewRepliesButton
             variant='text'
+            disableRipple
             startIcon={showReplies ? <ArrowDropUp /> : <ArrowDropDown />}
             onClick={() => setShowReplies(x => !x)}
           >

@@ -10,9 +10,11 @@ import { StyledAvatar } from '../Discussion.styled'
 
 interface INewCommentProps {
   onSend: (text: string) => Promise<void>
+  onCancel?: () => void
+  isReply?: boolean
 }
 
-const NewComment = ({ onSend }: INewCommentProps) => {
+const NewComment = ({ isReply, onSend, onCancel }: INewCommentProps) => {
   const [text, setText] = useState('')
   const [sending, setSending] = useState(false)
   const { t } = useTranslation('common')
@@ -22,6 +24,7 @@ const NewComment = ({ onSend }: INewCommentProps) => {
   const handleCancel = () => {
     setShowButtons(false)
     setText('')
+    onCancel?.()
   }
 
   const handleSent = async () => {
@@ -33,9 +36,9 @@ const NewComment = ({ onSend }: INewCommentProps) => {
   }
 
   return (
-    <Box marginBottom='10px'>
+    <Box marginBottom='10px' marginTop='2px'>
       <Box display='flex' gridGap='15px'>
-        <StyledAvatar src={currentUser.pictureUrl} />
+        <StyledAvatar src={currentUser.pictureUrl} small={isReply} />
 
         <TextBox
           value={text}
@@ -43,8 +46,9 @@ const NewComment = ({ onSend }: INewCommentProps) => {
           multiline
           fullWidth
           color='secondary'
+          autoFocus={isReply}
           onFocus={() => setShowButtons(true)}
-          placeholder={t('addComment') + '...'}
+          placeholder={t(isReply ? 'addReply' : 'addComment') + '...'}
         />
       </Box>
 
@@ -55,7 +59,7 @@ const NewComment = ({ onSend }: INewCommentProps) => {
           </Button>
 
           <Button disabled={!text} disableElevation onClick={handleSent} loading={sending}>
-            {t('send').toUpperCase()}
+            {t(isReply ? 'reply' : 'send').toUpperCase()}
           </Button>
         </Box>
       )}

@@ -1,6 +1,7 @@
 {
   "add": "Add",
   "addComment": "Add comment",
+  "addReply": "Add reply",
   "areYouSure": "Are you sure ?",
   "accept": "Accept",
   "alert": "Alert",
@@ -79,6 +80,7 @@
   "review": "Review",
   "reviewAddress": "Review address",
   "remove": "Remove",
+  "reply": "Reply",
   "removePicture": "Remove picture",
   "removeFriend": "Remove friend",
   "rejectFriendRequest": "Reject friend request",

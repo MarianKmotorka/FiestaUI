@@ -15,7 +15,7 @@ export const comments: IComment[] = [
   {
     id: 'awda3054',
     createdAt: '2021-04-25',
-    text: 'Zvaram to fene co len iode',
+    text: 'Zvaram to fene co len iode, a blablalb aefa a fae daedsefaw f, aedaedaedaedaed.',
     replyCount: 0,
     sender: {
       id: '5a9154ee-8993-499f-b87e-6949a12b3054',

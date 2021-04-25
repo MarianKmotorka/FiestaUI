@@ -22,6 +22,9 @@ export const UserName = styled.h6`
 export const ViewRepliesButton = styled(Button)`
   padding-left: 0;
   padding-right: 0;
+  :hover {
+    background-color: inherit;
+  }
 `
 
 export const Content = styled.p`
@@ -35,7 +38,9 @@ export const StyledChip = styled(Chip)`
   background-color: ${({ theme }) =>
     theme.palette.isDark ? theme.palette.grey[900] : theme.palette.grey[300]};
   height: 25px;
+
   svg {
+    color: ${({ theme }) => theme.palette.themeText.themeBlack};
     font-size: ${({ theme }) => theme.typography.subtitle1.fontSize};
   }
 
