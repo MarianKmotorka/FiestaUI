@@ -5,6 +5,7 @@ import useTranslation from 'next-translate/useTranslation'
 
 import AuthCheck from '@elements/AuthCheck'
 import Attendees from './Attendees/Attendees'
+import Discussion from './Discussion/Discussion'
 import Invitations from './Invitations/Invitations'
 import { IEventDetail } from '../EventDetailTemplate'
 
@@ -28,6 +29,8 @@ const EventDetailTabs = ({ event, isOrganizer }: IEventDetailTabsProps) => {
     })
   }
 
+  const showDiscussion = isOrganizer || event.isCurrentUserAttendee
+
   return (
     <TabsWrapper>
       <Tabs
@@ -39,7 +42,7 @@ const EventDetailTabs = ({ event, isOrganizer }: IEventDetailTabsProps) => {
         <Tab value='attendees' label={t('attendees')} />
         {isOrganizer && <Tab value='invitations' label={t('invitations')} />}
         {isOrganizer && <Tab value='joinRequests' label={t('joinRequests')} />}
-        <Tab value='discussion' label={t('discussion')} />
+        {showDiscussion && <Tab value='discussion' label={t('discussion')} />}
       </Tabs>
 
       <Box minHeight='400px'>
@@ -51,14 +54,17 @@ const EventDetailTabs = ({ event, isOrganizer }: IEventDetailTabsProps) => {
 
         {isOrganizer && (
           <StyledPanel index='invitations' value={currTab}>
-            <AuthCheck>
-              <Invitations event={event} isOrganizer={isOrganizer} />
-            </AuthCheck>
+            <Invitations event={event} isOrganizer={isOrganizer} />
           </StyledPanel>
         )}
 
-        <StyledPanel index='joinRequests' value={currTab}></StyledPanel>
-        <StyledPanel index='discussion' value={currTab}></StyledPanel>
+        {isOrganizer && <StyledPanel index='joinRequests' value={currTab}></StyledPanel>}
+
+        {showDiscussion && (
+          <StyledPanel index='discussion' value={currTab}>
+            <Discussion event={event} />
+          </StyledPanel>
+        )}
       </Box>
     </TabsWrapper>
   )

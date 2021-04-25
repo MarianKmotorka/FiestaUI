@@ -1,5 +1,6 @@
 {
   "add": "Add",
+  "addComment": "Add comment",
   "areYouSure": "Are you sure ?",
   "accept": "Accept",
   "alert": "Alert",
@@ -45,6 +46,7 @@
   "filter": "Filter",
   "filters": "Filters",
   "home": "Home",
+  "hideCountReplies": "Hide {{count}} replies",
   "invitations": "Invitations",
   "invite": "Invite",
   "joinRequests": "Join requests",
@@ -107,6 +109,7 @@
   "username": "Username",
   "unexpectedErrorOccuredWhileLoadingData": "Unexpected error occured while loading data.",
   "unsendFriendRequest": "Unsend friend request",
+  "viewCountReplies": "View {{count}} replies",
   "warning": "Warning",
   "youDontHaveSufficentPermissionsToAccessThisResource": "You don't have sufficient permissions to access this resource.",
   "youMustBeLoggedIn": "You must be logged in.",
