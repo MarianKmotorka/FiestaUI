@@ -51,3 +51,14 @@ export const StyledChip = styled(Chip)`
     }
   }
 `
+
+export const ReplyButton = styled(Button)`
+  padding-left: 0;
+  padding-right: 0;
+  min-width: 0;
+  margin-right: 10px;
+
+  :hover {
+    background-color: inherit;
+  }
+`

@@ -1,3 +1,4 @@
+import { useCallback } from 'react'
 import { CircularProgress } from '@material-ui/core'
 import useTranslation from 'next-translate/useTranslation'
 import { InfiniteData, useInfiniteQuery, useQueryClient } from 'react-query'
@@ -30,13 +31,16 @@ export interface IComment {
 const Discussion = ({ event }: IDiscussionProps) => {
   const { t } = useTranslation('common')
   const queryClient = useQueryClient()
-  const queryKey = ['event', event.id, 'comments', 'query']
+  const getQueryKey = useCallback(
+    (parentId?: string) => ['event', event.id, 'comments', 'query', { parentId }],
+    [event.id]
+  )
 
   const { data, isFetching, isLoading, error, hasNextPage, fetchNextPage } = useInfiniteQuery<
     ISkippedItemsResponse<IComment>,
     IApiError
   >(
-    queryKey,
+    getQueryKey(),
     async ({ pageParam = 0 }) => {
       const skippedItemsDocument: ISkippedItemsDocument = {
         skip: pageParam
@@ -54,21 +58,50 @@ const Discussion = ({ event }: IDiscussionProps) => {
     }
   )
 
-  const submitComment = async (text: string, parentId?: string) => {
-    try {
-      var response = await api.post<IComment>(`/events/${event.id}/comments`, { text, parentId })
-      var newComment = response.data
-      queryClient.setQueryData<InfiniteData<ISkippedItemsResponse<IComment>>>(queryKey, prev => ({
-        ...prev!,
-        pages: prev!.pages.map((page, pageIndex) => ({
-          ...page,
-          entries: pageIndex === 0 ? [newComment, ...page.entries] : page.entries
-        }))
-      }))
-    } catch (err) {
-      errorToast(getErrorMessage(err, t))
-    }
-  }
+  const submitComment = useCallback(
+    async (text: string, parentId?: string) => {
+      try {
+        var response = await api.post<IComment>(`/events/${event.id}/comments`, { text, parentId })
+        var newComment = response.data
+
+        // Add new comment to the top
+        queryClient.setQueryData<InfiniteData<ISkippedItemsResponse<IComment>>>(
+          getQueryKey(parentId),
+          prev =>
+            prev
+              ? {
+                  ...prev,
+                  pages: prev.pages.map((page, pageIndex) => ({
+                    ...page,
+                    entries: pageIndex === 0 ? [newComment, ...page.entries] : page.entries
+                  }))
+                }
+              : { pages: [], pageParams: [] }
+        )
+
+        if (parentId) {
+          // Increment replyCount for parent comment
+          queryClient.setQueryData<InfiniteData<ISkippedItemsResponse<IComment>>>(
+            getQueryKey(),
+            prev => ({
+              ...prev!,
+              pages: prev!.pages.map((page, pageIndex) => ({
+                ...page,
+                entries: page.entries.map(e =>
+                  e.id === parentId ? { ...e, replyCount: e.replyCount + 1 } : e
+                )
+              }))
+            })
+          )
+          // Invalidate chache so it refetches when viewed
+          queryClient.invalidateQueries(getQueryKey(parentId), { refetchActive: false })
+        }
+      } catch (err) {
+        errorToast(getErrorMessage(err, t))
+      }
+    },
+    [event.id, queryClient, t, getQueryKey]
+  )
 
   if (isLoading) return <CircularProgress />
   if (error) return <FetchError error={error} />
@@ -84,13 +117,16 @@ const Discussion = ({ event }: IDiscussionProps) => {
           <Comment
             key={x.id}
             comment={x}
-            isOrganizerComment={x.sender.id === event.organizer.id}
+            eventId={event.id}
+            organizerId={event.organizer.id}
+            getQueryKey={getQueryKey}
             onReply={submitComment}
           />
         ))
       )}
 
       {isFetching && <CircularProgress />}
+
       <Observer callback={fetchNextPage} disabled={isFetching || !hasNextPage} />
     </>
   )
