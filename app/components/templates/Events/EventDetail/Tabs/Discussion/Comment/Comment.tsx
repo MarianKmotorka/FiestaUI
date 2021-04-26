@@ -4,7 +4,13 @@ import Link from 'next/link'
 import { useInfiniteQuery } from 'react-query'
 import { Box, CircularProgress } from '@material-ui/core'
 import useTranslation from 'next-translate/useTranslation'
-import { ArrowDownward, ArrowDropDown, ArrowDropUp, CheckCircleOutline } from '@material-ui/icons'
+import {
+  ArrowDownward,
+  ArrowDropDown,
+  ArrowDropUp,
+  CheckCircleOutline,
+  Edit
+} from '@material-ui/icons'
 
 import api from '@api/HttpClient'
 import { IComment } from '../Discussion'
@@ -85,6 +91,11 @@ const Comment = memo(({ comment, eventId, organizerId, getQueryKey, onReply }: I
         <Box display='flex' alignItems='flex-end' gridGap='5px'>
           <Link href={userHref}>{username}</Link>
           <CreatedAt>{moment.utc(comment.createdAt).local().fromNow()}</CreatedAt>
+          {comment.isEdited && (
+            <Box>
+              <Edit fontSize='inherit' color='disabled' />
+            </Box>
+          )}
         </Box>
 
         <Content>{comment.text}</Content>
