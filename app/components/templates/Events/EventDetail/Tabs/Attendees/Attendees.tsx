@@ -88,7 +88,6 @@ const Attendees = ({ event, isOrganizer }: IAttendeesProps) => {
         ...prev!,
         attendeesCount: prev!.attendeesCount - 1
       }))
-      successToast(t('success'))
     } catch (err) {
       errorToast(getErrorMessage(err, t))
     }
