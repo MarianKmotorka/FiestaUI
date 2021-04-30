@@ -1,7 +1,7 @@
 import { useCallback } from 'react'
 import { CircularProgress } from '@material-ui/core'
 import useTranslation from 'next-translate/useTranslation'
-import { InfiniteData, useInfiniteQuery, useQueryClient } from 'react-query'
+import { useInfiniteQuery, useQueryClient } from 'react-query'
 
 import api from '@api/HttpClient'
 import { IUserDto } from 'domainTypes'
@@ -14,6 +14,8 @@ import FetchError from '@elements/FetchError/FetchError'
 import { IEventDetail } from '../../EventDetailTemplate'
 import { IApiError, ISkippedItemsDocument, ISkippedItemsResponse } from '@api/types'
 
+import { addComment, increaseReplyCount } from './utils'
+
 interface IDiscussionProps {
   event: IEventDetail
 }
@@ -25,14 +27,14 @@ export interface IComment {
   replyCount: number
   sender: IUserDto
   isEdited: boolean
-  parentId?: string
+  parentId: string | null // keep null instead of undefined because BE returns null a parentId is used in queryKey
 }
 
 const Discussion = ({ event }: IDiscussionProps) => {
   const { t } = useTranslation('common')
   const queryClient = useQueryClient()
   const getQueryKey = useCallback(
-    (parentId?: string) => ['event', event.id, 'comments', 'query', { parentId }],
+    (parentId: string | null = null) => ['event', event.id, 'comments', 'query', { parentId }],
     [event.id]
   )
 
@@ -40,7 +42,7 @@ const Discussion = ({ event }: IDiscussionProps) => {
     ISkippedItemsResponse<IComment>,
     IApiError
   >(
-    getQueryKey(),
+    getQueryKey(null),
     async ({ pageParam = 0 }) => {
       const skippedItemsDocument: ISkippedItemsDocument = {
         skip: pageParam
@@ -59,42 +61,18 @@ const Discussion = ({ event }: IDiscussionProps) => {
   )
 
   const submitComment = useCallback(
-    async (text: string, parentId?: string) => {
+    async (text: string, parentId: string | null = null) => {
       try {
-        var response = await api.post<IComment>(`/events/${event.id}/comments`, { text, parentId })
-        var newComment = response.data
-
-        // Add new comment to the top
-        queryClient.setQueryData<InfiniteData<ISkippedItemsResponse<IComment>>>(
-          getQueryKey(parentId),
-          prev =>
-            prev
-              ? {
-                  ...prev,
-                  pages: prev.pages.map((page, pageIndex) => ({
-                    ...page,
-                    entries: pageIndex === 0 ? [newComment, ...page.entries] : page.entries
-                  }))
-                }
-              : { pages: [], pageParams: [] }
-        )
+        const { data } = await api.post<IComment>(`/events/${event.id}/comments`, {
+          text,
+          parentId
+        })
+        addComment(queryClient, getQueryKey(parentId), data)
 
         if (parentId) {
-          // Increment replyCount for parent comment
-          queryClient.setQueryData<InfiniteData<ISkippedItemsResponse<IComment>>>(
-            getQueryKey(),
-            prev => ({
-              ...prev!,
-              pages: prev!.pages.map((page, pageIndex) => ({
-                ...page,
-                entries: page.entries.map(e =>
-                  e.id === parentId ? { ...e, replyCount: e.replyCount + 1 } : e
-                )
-              }))
-            })
-          )
-          // Invalidate chache so it refetches when viewed
+          // Invalidate cache so it refetches replies when viewed
           queryClient.invalidateQueries(getQueryKey(parentId), { refetchActive: false })
+          increaseReplyCount(queryClient, getQueryKey(), parentId)
         }
       } catch (err) {
         errorToast(getErrorMessage(err, t))

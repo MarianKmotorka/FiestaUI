@@ -1,22 +1,27 @@
 import { memo, useState } from 'react'
 import moment from 'moment'
 import Link from 'next/link'
-import { useInfiniteQuery } from 'react-query'
-import { Box, CircularProgress } from '@material-ui/core'
+import { useInfiniteQuery, useQueryClient } from 'react-query'
+import { Box, CircularProgress, IconButton } from '@material-ui/core'
 import useTranslation from 'next-translate/useTranslation'
 import {
   ArrowDownward,
   ArrowDropDown,
   ArrowDropUp,
   CheckCircleOutline,
+  Delete,
   Edit
 } from '@material-ui/icons'
 
 import api from '@api/HttpClient'
 import { IComment } from '../Discussion'
 import Button from '@elements/Button/Button'
+import { getErrorMessage } from '@utils/utils'
 import NewComment from '../NewComment/NewComment'
+import { errorToast } from 'services/toastService'
 import FetchError from '@elements/FetchError/FetchError'
+import { increaseReplyCount, removeComment } from '../utils'
+import { useAuthorizedUser } from '@contextProviders/AuthProvider'
 import { IApiError, ISkippedItemsDocument, ISkippedItemsResponse } from '@api/types'
 
 import {
@@ -33,12 +38,14 @@ interface ICommentProps {
   comment: IComment
   organizerId: string
   eventId: string
-  getQueryKey: (parentId: string) => any[]
+  getQueryKey: (parentId?: string | null) => any[]
   onReply: (text: string, parentId: string) => Promise<void>
 }
 
 const Comment = memo(({ comment, eventId, organizerId, getQueryKey, onReply }: ICommentProps) => {
   const { t } = useTranslation('common')
+  const queryClient = useQueryClient()
+  const { currentUser } = useAuthorizedUser()
   const [showNewReply, setShowNewReply] = useState(false)
   const [showReplies, setShowReplies] = useState(false)
 
@@ -66,6 +73,16 @@ const Comment = memo(({ comment, eventId, organizerId, getQueryKey, onReply }: I
         !lastPage || lastPage.hasMore ? allPages.flatMap(x => x.entries).length : false
     }
   )
+
+  const handleDeleted = async () => {
+    try {
+      await api.delete(`/events/${eventId}/comments/${comment.id}`)
+      if (comment.parentId) increaseReplyCount(queryClient, getQueryKey(), comment.parentId, -1)
+      removeComment(queryClient, getQueryKey(comment.parentId), comment)
+    } catch (err) {
+      errorToast(getErrorMessage(err, t))
+    }
+  }
 
   if (error) return <FetchError error={error} />
 
@@ -150,6 +167,14 @@ const Comment = memo(({ comment, eventId, organizerId, getQueryKey, onReply }: I
           </Button>
         )}
       </Box>
+
+      {comment.sender.id === currentUser.id && (
+        <Box>
+          <IconButton onClick={handleDeleted}>
+            <Delete />
+          </IconButton>
+        </Box>
+      )}
     </Box>
   )
 })

@@ -15,8 +15,8 @@ export interface IGoogleMapLocation {
 }
 
 const getAddressByType = (type: string, addressComponents: any[]): string => {
-  for (var i = 0; i < addressComponents.length; i++)
-    for (var j = 0; j < addressComponents[i].types.length; j++)
+  for (let i = 0; i < addressComponents.length; i++)
+    for (let j = 0; j < addressComponents[i].types.length; j++)
       if (addressComponents[i].types[j] === type) return addressComponents[i].long_name
 
   return ''

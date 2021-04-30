@@ -60,7 +60,7 @@ const Map = ({ value, onChange }: IMapProps) => {
 
       const location = await getLocation(latLng)
       const { streetNumber, street, city, administrativeAreaLevel1 } = location
-      var locationString = join(
+      const locationString = join(
         compact([streetNumber, street, city, administrativeAreaLevel1]),
         ', '
       )
