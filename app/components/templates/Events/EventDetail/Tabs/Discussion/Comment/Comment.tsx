@@ -2,7 +2,7 @@ import { memo, useState } from 'react'
 import moment from 'moment'
 import Link from 'next/link'
 import { useInfiniteQuery, useQueryClient } from 'react-query'
-import { Box, CircularProgress, IconButton } from '@material-ui/core'
+import { Box, CircularProgress } from '@material-ui/core'
 import useTranslation from 'next-translate/useTranslation'
 import {
   ArrowDownward,
@@ -27,6 +27,7 @@ import { IApiError, ISkippedItemsDocument, ISkippedItemsResponse } from '@api/ty
 import {
   Content,
   CreatedAt,
+  DeleteButton,
   ReplyButton,
   StyledChip,
   UserName,
@@ -99,30 +100,42 @@ const Comment = memo(({ comment, eventId, organizerId, getQueryKey, onReply }: I
   }
 
   return (
-    <Box display='flex' gridGap='15px' marginY='25px'>
-      <Link href={userHref}>
-        <StyledAvatar src={comment.sender.pictureUrl} small={comment.parentId ? 1 : 0} />
-      </Link>
+    <Box marginY='20px'>
+      <Box display='flex'>
+        <Link href={userHref}>
+          <Box width={comment.parentId ? '40px' : '50px'}>
+            <StyledAvatar src={comment.sender.pictureUrl} small={comment.parentId ? 1 : 0} />
+          </Box>
+        </Link>
 
-      <Box flex='1'>
-        <Box display='flex' alignItems='flex-end' gridGap='5px'>
-          <Link href={userHref}>{username}</Link>
-          <CreatedAt>{moment.utc(comment.createdAt).local().fromNow()}</CreatedAt>
-          {comment.isEdited && (
-            <Box>
-              <Edit fontSize='inherit' color='disabled' />
-            </Box>
+        <Box flex='1'>
+          <Box display='flex' alignItems='center' gridGap='5px'>
+            <Link href={userHref}>{username}</Link>
+            <CreatedAt>{moment.utc(comment.createdAt).local().fromNow()}</CreatedAt>
+            {comment.isEdited && (
+              <Box>
+                <Edit fontSize='inherit' color='disabled' />
+              </Box>
+            )}
+          </Box>
+
+          <Content>{comment.text}</Content>
+
+          {!comment.parentId && (
+            <ReplyButton variant='text' color='default' onClick={() => setShowNewReply(true)}>
+              {t('reply').toUpperCase()}
+            </ReplyButton>
           )}
         </Box>
 
-        <Content>{comment.text}</Content>
-
-        {!comment.parentId && (
-          <ReplyButton variant='text' color='default' onClick={() => setShowNewReply(true)}>
-            {t('reply').toUpperCase()}
-          </ReplyButton>
+        {comment.sender.id === currentUser.id && (
+          <DeleteButton disableRipple onClick={handleDeleted}>
+            <Delete />
+          </DeleteButton>
         )}
+      </Box>
 
+      <Box marginLeft='50px'>
         {showNewReply && (
           <NewComment onCancel={() => setShowNewReply(false)} onSend={handleReply} isReply />
         )}
@@ -167,14 +180,6 @@ const Comment = memo(({ comment, eventId, organizerId, getQueryKey, onReply }: I
           </Button>
         )}
       </Box>
-
-      {comment.sender.id === currentUser.id && (
-        <Box>
-          <IconButton onClick={handleDeleted}>
-            <Delete />
-          </IconButton>
-        </Box>
-      )}
     </Box>
   )
 })
