@@ -1,6 +1,7 @@
-import { useQuery } from 'react-query'
+import { useState } from 'react'
 import Link from 'next/link'
 import { lowerFirst } from 'lodash'
+import { useQuery } from 'react-query'
 import useTranslation from 'next-translate/useTranslation'
 import { Box, Button as MuiButton, CircularProgress } from '@material-ui/core'
 import {
@@ -22,6 +23,7 @@ import { toLocalTime } from '@utils/utils'
 import Button from '@elements/Button/Button'
 import { Container } from '@elements/Container'
 import useWindowSize from '@hooks/useWindowSize'
+import DeleteEventDialog from './DeleteEventDialog'
 import { AccessibilityTypeEnum } from 'domainTypes'
 import EventDetailTabs from './Tabs/EventDetailTabs'
 import FetchError from '@elements/FetchError/FetchError'
@@ -68,6 +70,7 @@ export interface IEventDetail {
 const EventDetailTemplate = ({ eventId }: IProps) => {
   const auth = useAuth()
   const { t } = useTranslation('common')
+  const [showDeleteDialog, setShowDeleteDialog] = useState(false)
   const { width, height, minMedium, maxMedium } = useWindowSize()
   const { data, isLoading, error, isIdle } = useQuery<IEventDetail, IApiError>(
     ['events', eventId],
@@ -187,6 +190,7 @@ const EventDetailTemplate = ({ eventId }: IProps) => {
                   variant='text'
                   size={maxMedium ? 'medium' : 'large'}
                   startIcon={<DeleteForeverOutlined />}
+                  onClick={() => setShowDeleteDialog(true)}
                 >
                   {t('delete')}
                 </Button>
@@ -199,6 +203,10 @@ const EventDetailTemplate = ({ eventId }: IProps) => {
       <Container>
         <EventDetailTabs event={event} isOrganizer={isOrganizer} />
       </Container>
+
+      {showDeleteDialog && (
+        <DeleteEventDialog onClose={() => setShowDeleteDialog(false)} eventId={event.id} />
+      )}
     </Wrapper>
   )
 }
