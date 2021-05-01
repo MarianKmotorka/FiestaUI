@@ -9,7 +9,6 @@ import api from '@api/HttpClient'
 import EventItem from './EventItem'
 import { IApiError } from '@api/types'
 import useDebounce from '@hooks/useDebounce'
-import useWindowSize from '@hooks/useWindowSize'
 import FetchError from '@elements/FetchError/FetchError'
 import { ItemType, EventAndUserSelectorItem } from './types'
 import { SearchModal } from '@modules/SearchModal'
@@ -24,7 +23,6 @@ const NavbarSearch = ({ onClose }: INavbarSearchProps) => {
   const { t } = useTranslation('common')
   const [search, setSearch] = useState('')
   const debouncedSearch = useDebounce(search)
-  const { minMedium } = useWindowSize()
 
   const { data, error, isFetching } = useQuery<EventAndUserSelectorItem[], IApiError>(
     ['users', 'selector', debouncedSearch],
@@ -46,7 +44,7 @@ const NavbarSearch = ({ onClose }: INavbarSearchProps) => {
             <span>{item.fullName}</span>
           </ItemInfo>
 
-          {minMedium && <KeyboardArrowRight />}
+          <KeyboardArrowRight />
         </Item>
       </Link>
     ) : (

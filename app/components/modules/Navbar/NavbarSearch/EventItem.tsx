@@ -3,10 +3,8 @@ import moment from 'moment'
 import { Avatar, Box } from '@material-ui/core'
 import { Edit, Event, KeyboardArrowRight, LocationOn, Schedule } from '@material-ui/icons'
 
-import useWindowSize from '@hooks/useWindowSize'
 import { EventAndUserSelectorItem, ItemType } from './types'
-
-import { Item, ItemInfo } from './NavbarSearch.styled'
+import { EllipsisOverflow, Item, ItemInfo } from './NavbarSearch.styled'
 
 interface IEventItemProps {
   item: EventAndUserSelectorItem
@@ -14,8 +12,6 @@ interface IEventItemProps {
 }
 
 const EventItem = ({ item, onClose }: IEventItemProps) => {
-  const { minMedium } = useWindowSize()
-
   if (item.type === ItemType.User) return <></>
 
   return (
@@ -34,23 +30,29 @@ const EventItem = ({ item, onClose }: IEventItemProps) => {
               {moment(item.startDate).format('DD.MM.YYYY')}
             </Box>
 
-            <Box marginLeft='7px' display='flex' alignItems='center' gridGap='1px'>
+            <Box
+              marginLeft='7px'
+              display='flex'
+              alignItems='center'
+              gridGap='1px'
+              overflow='hidden'
+            >
               <LocationOn />
-              {item.location}
+              <EllipsisOverflow>{item.location}</EllipsisOverflow>
             </Box>
           </span>
 
           {item.description && (
             <span>
-              <Box display='flex' alignItems='center' gridGap='3px'>
+              <Box display='flex' alignItems='center' gridGap='3px' overflow='hidden'>
                 <Edit />
-                {item.description}
+                <EllipsisOverflow>{item.description}</EllipsisOverflow>
               </Box>
             </span>
           )}
         </ItemInfo>
 
-        {minMedium && <KeyboardArrowRight />}
+        <KeyboardArrowRight />
       </Item>
     </Link>
   )
