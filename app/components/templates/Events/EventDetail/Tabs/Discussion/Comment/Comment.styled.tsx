@@ -1,5 +1,5 @@
 import Button from '@elements/Button/Button'
-import { Chip, IconButton } from '@material-ui/core'
+import { Chip } from '@material-ui/core'
 import styled from 'styled-components'
 
 export const CreatedAt = styled.h6`
@@ -58,13 +58,6 @@ export const ReplyButton = styled(Button)`
   min-width: 0;
   margin-right: 10px;
 
-  :hover {
-    background-color: inherit;
-  }
-`
-
-export const DeleteButton = styled(IconButton)`
-  padding: 0;
   :hover {
     background-color: inherit;
   }

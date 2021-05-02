@@ -97,7 +97,7 @@ const Discussion = ({ event }: IDiscussionProps) => {
             comment={x}
             eventId={event.id}
             organizerId={event.organizer.id}
-            getQueryKey={getQueryKey}
+            getCommentsQueryKey={getQueryKey}
             onReply={submitComment}
           />
         ))
