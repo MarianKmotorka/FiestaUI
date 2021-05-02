@@ -122,7 +122,7 @@ const Comment = memo(
                 <Link href={userHref}>{username}</Link>
                 <CreatedAt>{moment.utc(comment.createdAt).local().fromNow()}</CreatedAt>
                 {comment.isEdited && (
-                  <Tooltip title={t('edited')} placement='top'>
+                  <Tooltip title={t('edited')} placement='right'>
                     <Edit fontSize='inherit' color='inherit' />
                   </Tooltip>
                 )}

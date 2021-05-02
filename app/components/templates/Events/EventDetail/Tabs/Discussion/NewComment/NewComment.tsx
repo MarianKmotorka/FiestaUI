@@ -70,7 +70,12 @@ const NewComment = ({
             {t('cancel').toUpperCase()}
           </Button>
 
-          <Button disabled={!text} disableElevation onClick={handleSent} loading={sending}>
+          <Button
+            disabled={!text || text === initialText}
+            disableElevation
+            onClick={handleSent}
+            loading={sending}
+          >
             {(sendButtonText || t('send')).toUpperCase()}
           </Button>
         </Box>
