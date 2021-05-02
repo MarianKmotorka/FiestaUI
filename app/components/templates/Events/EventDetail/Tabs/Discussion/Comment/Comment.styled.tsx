@@ -11,6 +11,7 @@ export const CreatedAt = styled.h6`
 
 export const UserName = styled.h6`
   ${({ theme }) => theme.typography.subtitle2 as any};
+  color: ${({ theme }) => theme.palette.themeText.themeBlack};
   margin: 0;
   cursor: pointer;
 

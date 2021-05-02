@@ -33,6 +33,16 @@ export const addComment = (queryClient: QueryClient, queryKey: any, newComment: 
   )
 }
 
+export const editComment = (queryClient: QueryClient, queryKey: any, edited: IComment) => {
+  queryClient.setQueryData<InfiniteData<ISkippedItemsResponse<IComment>>>(queryKey, prev => ({
+    ...prev!,
+    pages: prev!.pages.map((page, pageIndex) => ({
+      ...page,
+      entries: page.entries.map(e => (e.id === edited.id ? edited : e))
+    }))
+  }))
+}
+
 export const removeComment = (queryClient: QueryClient, queryKey: any, removed: IComment) => {
   queryClient.setQueryData<InfiniteData<ISkippedItemsResponse<IComment>>>(queryKey, prev => ({
     ...prev!,

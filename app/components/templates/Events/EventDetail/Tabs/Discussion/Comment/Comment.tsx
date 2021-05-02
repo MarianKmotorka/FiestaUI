@@ -1,8 +1,8 @@
 import { memo, useState } from 'react'
 import moment from 'moment'
 import Link from 'next/link'
-import { useInfiniteQuery } from 'react-query'
-import { Box, CircularProgress } from '@material-ui/core'
+import { useInfiniteQuery, useQueryClient } from 'react-query'
+import { Box, CircularProgress, Tooltip } from '@material-ui/core'
 import useTranslation from 'next-translate/useTranslation'
 import {
   ArrowDownward,
@@ -13,9 +13,12 @@ import {
 } from '@material-ui/icons'
 
 import api from '@api/HttpClient'
+import { editComment } from '../utils'
 import { IComment } from '../Discussion'
 import Button from '@elements/Button/Button'
+import { getErrorMessage } from '@utils/utils'
 import NewComment from '../NewComment/NewComment'
+import { errorToast } from 'services/toastService'
 import CommentMenu from './CommentMenu/CommentMenu'
 import FetchError from '@elements/FetchError/FetchError'
 import { useAuthorizedUser } from '@contextProviders/AuthProvider'
@@ -42,7 +45,9 @@ interface ICommentProps {
 const Comment = memo(
   ({ comment, eventId, organizerId, getCommentsQueryKey, onReply }: ICommentProps) => {
     const { t } = useTranslation('common')
+    const queryClient = useQueryClient()
     const { currentUser } = useAuthorizedUser()
+    const [isEditing, setIsEditing] = useState(false)
     const [showNewReply, setShowNewReply] = useState(false)
     const [showReplies, setShowReplies] = useState(false)
 
@@ -81,51 +86,78 @@ const Comment = memo(
         <UserName>{comment.sender.username}</UserName>
       )
 
-    const handleReply = async (text: string) => {
-      await onReply(text, comment.id)
+    const handleEdit = async (text: string) => {
+      try {
+        const { data } = await api.patch<IComment>(`/events/${eventId}/comments/${comment.id}`, {
+          text
+        })
+        editComment(queryClient, getCommentsQueryKey(comment.parentId), data)
+        setIsEditing(false)
+      } catch (err) {
+        errorToast(getErrorMessage(err, t))
+      }
     }
 
     return (
       <Box marginY='20px'>
-        <Box display='flex'>
-          <Link href={userHref}>
-            <Box width={comment.parentId ? '40px' : '50px'}>
-              <StyledAvatar src={comment.sender.pictureUrl} small={comment.parentId ? 1 : 0} />
-            </Box>
-          </Link>
+        {isEditing ? (
+          <NewComment
+            autofocus
+            onSend={handleEdit}
+            initialText={comment.text}
+            smallAvatar={!!comment.parentId}
+            sendButtonText={t('edit')}
+            onCancel={() => setIsEditing(false)}
+          />
+        ) : (
+          <Box display='flex'>
+            <Link href={userHref}>
+              <Box width={comment.parentId ? '40px' : '50px'}>
+                <StyledAvatar src={comment.sender.pictureUrl} small={comment.parentId ? 1 : 0} />
+              </Box>
+            </Link>
 
-          <Box flex='1'>
-            <Box display='flex' alignItems='center' gridGap='5px'>
-              <Link href={userHref}>{username}</Link>
-              <CreatedAt>{moment.utc(comment.createdAt).local().fromNow()}</CreatedAt>
-              {comment.isEdited && (
-                <Box>
-                  <Edit fontSize='inherit' color='disabled' />
-                </Box>
+            <Box flex='1'>
+              <Box display='flex' alignItems='center' gridGap='5px' color='themeText.themeGray'>
+                <Link href={userHref}>{username}</Link>
+                <CreatedAt>{moment.utc(comment.createdAt).local().fromNow()}</CreatedAt>
+                {comment.isEdited && (
+                  <Tooltip title={t('edited')} placement='top'>
+                    <Edit fontSize='inherit' color='inherit' />
+                  </Tooltip>
+                )}
+              </Box>
+
+              <Content>{comment.text}</Content>
+
+              {!comment.parentId && (
+                <ReplyButton variant='text' color='default' onClick={() => setShowNewReply(true)}>
+                  {t('reply').toUpperCase()}
+                </ReplyButton>
               )}
             </Box>
 
-            <Content>{comment.text}</Content>
-
-            {!comment.parentId && (
-              <ReplyButton variant='text' color='default' onClick={() => setShowNewReply(true)}>
-                {t('reply').toUpperCase()}
-              </ReplyButton>
+            {currentUser.id === comment.sender.id && (
+              <CommentMenu
+                getCommentsQueryKey={getCommentsQueryKey}
+                eventId={eventId}
+                comment={comment}
+                onEdit={() => setIsEditing(true)}
+              />
             )}
           </Box>
-
-          {currentUser.id === comment.sender.id && (
-            <CommentMenu
-              getCommentsQueryKey={getCommentsQueryKey}
-              eventId={eventId}
-              comment={comment}
-            />
-          )}
-        </Box>
+        )}
 
         <Box marginLeft='50px'>
           {showNewReply && (
-            <NewComment onCancel={() => setShowNewReply(false)} onSend={handleReply} isReply />
+            <NewComment
+              autofocus
+              smallAvatar
+              sendButtonText={t('reply')}
+              placeholder={t('addReply')}
+              onCancel={() => setShowNewReply(false)}
+              onSend={async text => await onReply(text, comment.id)}
+            />
           )}
 
           {comment.replyCount > 0 && (

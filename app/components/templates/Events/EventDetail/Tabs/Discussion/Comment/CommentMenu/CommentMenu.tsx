@@ -15,10 +15,11 @@ import { IconWrapper } from './CommentMenu.styled'
 interface ICommentMenuProps {
   eventId: string
   comment: IComment
+  onEdit: () => void
   getCommentsQueryKey: (parentId?: string | null) => any[]
 }
 
-const CommentMenu = ({ getCommentsQueryKey, eventId, comment }: ICommentMenuProps) => {
+const CommentMenu = ({ eventId, comment, getCommentsQueryKey, onEdit }: ICommentMenuProps) => {
   const [anchorEl, setAnchorEl] = useState<HTMLDivElement>()
   const { t } = useTranslation('common')
   const queryClient = useQueryClient()
@@ -55,7 +56,7 @@ const CommentMenu = ({ getCommentsQueryKey, eventId, comment }: ICommentMenuProp
           {t('delete')}
         </MenuItem>
 
-        <MenuItem>
+        <MenuItem onClick={onEdit}>
           <Box marginRight='8px' color='themeText.themeGray'>
             <Edit fontSize='small' />
           </Box>
