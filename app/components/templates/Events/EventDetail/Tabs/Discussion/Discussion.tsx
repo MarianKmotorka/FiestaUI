@@ -7,9 +7,8 @@ import api from '@api/HttpClient'
 import { IUserDto } from 'domainTypes'
 import Comment from './Comment/Comment'
 import Observer from '@elements/Observer'
-import { getErrorMessage } from '@utils/utils'
 import NewComment from './NewComment/NewComment'
-import { errorToast } from 'services/toastService'
+import { apiErrorToast } from 'services/toastService'
 import FetchError from '@elements/FetchError/FetchError'
 import { IEventDetail } from '../../EventDetailTemplate'
 import { IApiError, ISkippedItemsDocument, ISkippedItemsResponse } from '@api/types'
@@ -75,7 +74,7 @@ const Discussion = ({ event }: IDiscussionProps) => {
           increaseReplyCount(queryClient, getQueryKey(), parentId)
         }
       } catch (err) {
-        errorToast(getErrorMessage(err, t))
+        apiErrorToast(err, t)
       }
     },
     [event.id, queryClient, t, getQueryKey]

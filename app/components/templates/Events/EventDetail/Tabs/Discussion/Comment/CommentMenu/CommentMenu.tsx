@@ -6,8 +6,7 @@ import { Delete, Edit, MoreVert } from '@material-ui/icons'
 
 import api from '@api/HttpClient'
 import { IComment } from '../../Discussion'
-import { getErrorMessage } from '@utils/utils'
-import { errorToast } from 'services/toastService'
+import { apiErrorToast } from 'services/toastService'
 import { increaseReplyCount, removeComment } from '../../utils'
 
 import { IconWrapper } from './CommentMenu.styled'
@@ -32,7 +31,7 @@ const CommentMenu = ({ eventId, comment, getCommentsQueryKey, onEdit }: IComment
       if (comment.parentId)
         increaseReplyCount(queryClient, getCommentsQueryKey(), comment.parentId, -1)
     } catch (err) {
-      errorToast(getErrorMessage(err, t))
+      apiErrorToast(err, t)
     }
   }
 

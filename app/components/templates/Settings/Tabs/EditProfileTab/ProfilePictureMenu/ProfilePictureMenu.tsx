@@ -6,8 +6,7 @@ import useTranslation from 'next-translate/useTranslation'
 import api from '@api/HttpClient'
 import { IUserDetail } from 'domainTypes'
 import { Menu } from '@elements/Menu/Menu'
-import { getErrorMessage } from '@utils/utils'
-import { errorToast, successToast } from 'services/toastService'
+import { apiErrorToast, successToast } from 'services/toastService'
 import { useAuthorizedUser } from '@contextProviders/AuthProvider'
 
 import { StyledInput, StyledMenuItem } from './ProfilePictureMenu.styled'
@@ -42,7 +41,7 @@ const ProfilePictureMenu = ({ anchorEl, onClose, setLoading }: IProfilePictureMe
       }))
       successToast(t('saved'))
     } catch (error) {
-      errorToast(getErrorMessage(error, t))
+      apiErrorToast(error, t)
     }
     setLoading(false)
   }
@@ -64,7 +63,7 @@ const ProfilePictureMenu = ({ anchorEl, onClose, setLoading }: IProfilePictureMe
       }))
       successToast(t('saved'))
     } catch (error) {
-      errorToast(getErrorMessage(error, t))
+      apiErrorToast(error, t)
     }
     setLoading(false)
   }

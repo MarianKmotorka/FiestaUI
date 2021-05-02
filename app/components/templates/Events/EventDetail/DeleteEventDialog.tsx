@@ -3,8 +3,7 @@ import { useRouter } from 'next/router'
 import useTranslation from 'next-translate/useTranslation'
 
 import api from '@api/HttpClient'
-import { getErrorMessage } from '@utils/utils'
-import { errorToast, successToast } from 'services/toastService'
+import { apiErrorToast, successToast } from 'services/toastService'
 import ConfirmationDialog from '@elements/ConfirmationDialog/ConfirmationDialog'
 
 interface IDeleteEventDialogProps {
@@ -24,7 +23,7 @@ const DeleteEventDialog = ({ eventId, onClose }: IDeleteEventDialogProps) => {
       successToast('success')
       router.replace('/events')
     } catch (err) {
-      errorToast(getErrorMessage(err, t))
+      apiErrorToast(err, t)
       onClose()
     }
   }

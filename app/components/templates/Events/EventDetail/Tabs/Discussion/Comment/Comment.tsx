@@ -16,9 +16,8 @@ import api from '@api/HttpClient'
 import { editComment } from '../utils'
 import { IComment } from '../Discussion'
 import Button from '@elements/Button/Button'
-import { getErrorMessage } from '@utils/utils'
 import NewComment from '../NewComment/NewComment'
-import { errorToast } from 'services/toastService'
+import { apiErrorToast } from 'services/toastService'
 import CommentMenu from './CommentMenu/CommentMenu'
 import FetchError from '@elements/FetchError/FetchError'
 import { useAuthorizedUser } from '@contextProviders/AuthProvider'
@@ -94,7 +93,7 @@ const Comment = memo(
         editComment(queryClient, getCommentsQueryKey(comment.parentId), data)
         setIsEditing(false)
       } catch (err) {
-        errorToast(getErrorMessage(err, t))
+        apiErrorToast(err, t)
       }
     }
 

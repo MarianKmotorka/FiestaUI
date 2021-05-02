@@ -10,7 +10,6 @@ import { IUserDto } from 'domainTypes'
 import Observer from '@elements/Observer'
 import Button from '@elements/Button/Button'
 import useDebounce from '@hooks/useDebounce'
-import { getErrorMessage } from '@utils/utils'
 import useWindowSize from '@hooks/useWindowSize'
 import FetchError from '@elements/FetchError/FetchError'
 import { IEventDetail } from '../../EventDetailTemplate'
@@ -18,7 +17,7 @@ import useTranslation from 'next-translate/useTranslation'
 import UserListItem from '@elements/UserListItem/UserListItem'
 import { useAuthorizedUser } from '@contextProviders/AuthProvider'
 import ConfirmationDialog from '@elements/ConfirmationDialog/ConfirmationDialog'
-import { errorToast, successToast } from 'services/toastService'
+import { apiErrorToast, successToast } from 'services/toastService'
 import { IApiError, IQueryDocument, IQueryResponse } from '@api/types'
 
 import { ActionsWrapper, Item, ItemsContainer, StyledTextBox } from '../common.styled'
@@ -89,7 +88,7 @@ const Attendees = ({ event, isOrganizer }: IAttendeesProps) => {
         attendeesCount: prev!.attendeesCount - 1
       }))
     } catch (err) {
-      errorToast(getErrorMessage(err, t))
+      apiErrorToast(err, t)
     }
     setRemoving(false)
     setToRemove(undefined)
@@ -112,7 +111,7 @@ const Attendees = ({ event, isOrganizer }: IAttendeesProps) => {
       }))
       queryClient.invalidateQueries(['events', event.id, 'attendees', 'query'])
     } catch (err) {
-      errorToast(getErrorMessage(err, t))
+      apiErrorToast(err, t)
     }
 
     setInvitationLoading(undefined)

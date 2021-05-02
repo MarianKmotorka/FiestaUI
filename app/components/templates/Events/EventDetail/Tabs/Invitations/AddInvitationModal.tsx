@@ -10,8 +10,7 @@ import { IUserDto } from 'domainTypes'
 import { IApiError } from '@api/types'
 import Button from '@elements/Button/Button'
 import useDebounce from '@hooks/useDebounce'
-import { getErrorMessage } from '@utils/utils'
-import { errorToast } from 'services/toastService'
+import { apiErrorToast } from 'services/toastService'
 import { IEventDetail } from '../../EventDetailTemplate'
 import FetchError from '@elements/FetchError/FetchError'
 import UserListItem from '@elements/UserListItem/UserListItem'
@@ -44,7 +43,7 @@ const AddInvitationModal = ({ eventId, onClose }: IAddInvitationModalProps) => {
       await api.post(`/events/${eventId}/invitations`, { invitedIds: [userId] })
       setInvitedIds(prev => [...prev, userId])
     } catch (err) {
-      errorToast(getErrorMessage(err, t))
+      apiErrorToast(err, t)
     }
 
     setLoadingIds(prev => [...prev.filter(x => x !== userId)])

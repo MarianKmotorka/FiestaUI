@@ -9,13 +9,12 @@ import { IUserDto } from 'domainTypes'
 import Observer from '@elements/Observer'
 import Button from '@elements/Button/Button'
 import useDebounce from '@hooks/useDebounce'
-import { getErrorMessage } from '@utils/utils'
 import AddInvitationModal from './AddInvitationModal'
 import FetchError from '@elements/FetchError/FetchError'
 import { IEventDetail } from '../../EventDetailTemplate'
 import useTranslation from 'next-translate/useTranslation'
 import UserListItem from '@elements/UserListItem/UserListItem'
-import { errorToast } from 'services/toastService'
+import { apiErrorToast } from 'services/toastService'
 import { IApiError, IQueryDocument, IQueryResponse } from '@api/types'
 
 import { ActionsWrapper, Item, ItemsContainer, StyledTextBox } from '../common.styled'
@@ -82,7 +81,7 @@ const Invitations = ({ event }: IInvitationsProps) => {
         invitationsCount: prev!.invitationsCount - 1
       }))
     } catch (err) {
-      errorToast(getErrorMessage(err, t))
+      apiErrorToast(err, t)
     }
     setDeletingId(undefined)
   }

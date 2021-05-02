@@ -5,9 +5,8 @@ import { Box, CircularProgress } from '@material-ui/core'
 import useTranslation from 'next-translate/useTranslation'
 
 import api from '@api/HttpClient'
-import { getErrorMessage } from '@utils/utils'
 import { IEventDetail } from '../EventDetailTemplate'
-import { errorToast, successToast } from 'services/toastService'
+import { apiErrorToast, successToast } from 'services/toastService'
 import { Image, ImageWrapper, Overlay, Wrapper } from './Banner.styled'
 
 interface IBannerProps {
@@ -38,7 +37,7 @@ const Banner = ({ src, canUpload, eventId }: IBannerProps) => {
       }))
       successToast(t('saved'))
     } catch (error) {
-      errorToast(getErrorMessage(error, t))
+      apiErrorToast(error, t)
     }
     setLoading(false)
   }
