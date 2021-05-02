@@ -11,7 +11,7 @@ interface ICollapseContainerProps {
 
 const CollapseContainer = ({ collapsedHeight = 70, children }: ICollapseContainerProps) => {
   const [collapsed, setCollapsed] = useState(true)
-  const [showMoreButton, setShowMoreButton] = useState(false)
+  const [isOverflow, setIsOverflow] = useState(false)
   const { t } = useTranslation('common')
 
   // Note: Makes sure "showMoreButton" is displayed properly when window is resized
@@ -19,21 +19,21 @@ const CollapseContainer = ({ collapsedHeight = 70, children }: ICollapseContaine
 
   const buttonText = collapsed ? 'showMore' : 'showLess'
 
-  const handleShowButton = (el: HTMLDivElement | null) => {
-    if (el) setShowMoreButton(el.getBoundingClientRect().height > collapsedHeight)
+  const handleIsOverflow = (el: HTMLDivElement | null) => {
+    if (el) setIsOverflow(el.getBoundingClientRect().height > collapsedHeight)
   }
+
+  if (!isOverflow) return <div ref={handleIsOverflow}>{children}</div>
 
   return (
     <div>
       <StyledCollapse in={!collapsed} collapsedHeight={collapsedHeight}>
-        <div ref={handleShowButton}>{children}</div>
+        <div ref={handleIsOverflow}>{children}</div>
       </StyledCollapse>
 
-      {showMoreButton && (
-        <StyledButton onClick={() => setCollapsed(x => !x)}>
-          {t(buttonText).toUpperCase()}
-        </StyledButton>
-      )}
+      <StyledButton onClick={() => setCollapsed(x => !x)} size='small'>
+        {t(buttonText)}
+      </StyledButton>
     </div>
   )
 }

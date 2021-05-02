@@ -21,6 +21,7 @@ import { apiErrorToast } from 'services/toastService'
 import CommentMenu from './CommentMenu/CommentMenu'
 import FetchError from '@elements/FetchError/FetchError'
 import { useAuthorizedUser } from '@contextProviders/AuthProvider'
+import CollapseContainer from '@elements/CollapseContainer/CollapseContainer'
 import { IApiError, ISkippedItemsDocument, ISkippedItemsResponse } from '@api/types'
 
 import {
@@ -127,7 +128,9 @@ const Comment = memo(
                 )}
               </Box>
 
-              <Content>{comment.text}</Content>
+              <CollapseContainer collapsedHeight={90}>
+                <Content>{comment.text}</Content>
+              </CollapseContainer>
 
               {!comment.parentId && (
                 <ReplyButton variant='text' color='default' onClick={() => setShowNewReply(true)}>

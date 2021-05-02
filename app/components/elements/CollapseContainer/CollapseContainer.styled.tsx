@@ -15,4 +15,9 @@ export const StyledButton = styled(Button)`
   padding-right: 0;
   color: ${({ theme }) => theme.palette.themeText.themeGray};
   font-weight: 500;
+
+  :hover {
+    background-color: transparent;
+    text-decoration: underline;
+  }
 `

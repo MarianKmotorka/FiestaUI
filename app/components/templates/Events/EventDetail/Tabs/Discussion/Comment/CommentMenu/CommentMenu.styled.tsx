@@ -1,3 +1,4 @@
+import { MenuItem } from '@material-ui/core'
 import styled from 'styled-components'
 
 export const IconWrapper = styled.div`
@@ -8,5 +9,12 @@ export const IconWrapper = styled.div`
   :hover,
   :focus {
     color: ${({ theme }) => theme.palette.themeText.themeBlack};
+  }
+`
+
+export const StyledMenuItem = styled(MenuItem)`
+  svg {
+    margin-right: 11px;
+    font-size: 1.3em;
   }
 `

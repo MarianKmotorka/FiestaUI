@@ -1,6 +1,6 @@
 import { useState } from 'react'
 import { useQueryClient } from 'react-query'
-import { Box, Menu, MenuItem } from '@material-ui/core'
+import { Menu } from '@material-ui/core'
 import useTranslation from 'next-translate/useTranslation'
 import { Delete, Edit, MoreVert } from '@material-ui/icons'
 
@@ -9,7 +9,7 @@ import { IComment } from '../../Discussion'
 import { apiErrorToast } from 'services/toastService'
 import { increaseReplyCount, removeComment } from '../../utils'
 
-import { IconWrapper } from './CommentMenu.styled'
+import { IconWrapper, StyledMenuItem } from './CommentMenu.styled'
 
 interface ICommentMenuProps {
   eventId: string
@@ -42,25 +42,20 @@ const CommentMenu = ({ eventId, comment, getCommentsQueryKey, onEdit }: IComment
       </IconWrapper>
 
       <Menu
-        id='simple-menu'
-        anchorEl={anchorEl}
         keepMounted
+        anchorEl={anchorEl}
         open={Boolean(anchorEl)}
         onClose={() => setAnchorEl(undefined)}
       >
-        <MenuItem onClick={handleDeleted}>
-          <Box marginRight='8px' color='themeText.themeGray'>
-            <Delete fontSize='small' />
-          </Box>
+        <StyledMenuItem onClick={handleDeleted}>
+          <Delete />
           {t('delete')}
-        </MenuItem>
+        </StyledMenuItem>
 
-        <MenuItem onClick={onEdit}>
-          <Box marginRight='8px' color='themeText.themeGray'>
-            <Edit fontSize='small' />
-          </Box>
+        <StyledMenuItem onClick={onEdit}>
+          <Edit />
           {t('edit')}
-        </MenuItem>
+        </StyledMenuItem>
       </Menu>
     </>
   )
