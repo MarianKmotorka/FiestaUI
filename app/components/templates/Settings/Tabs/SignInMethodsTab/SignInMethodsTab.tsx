@@ -2,7 +2,7 @@ import { useState } from 'react'
 import { useRouter } from 'next/router'
 import { ExpandMore } from '@material-ui/icons'
 import useTranslation from 'next-translate/useTranslation'
-import { AccordionDetails, AccordionSummary, Chip } from '@material-ui/core'
+import { AccordionDetails, AccordionSummary, Box, Chip } from '@material-ui/core'
 
 import { hasAuthProvider } from 'utils/utils'
 import { AuthProviderFlags } from 'domainTypes'
@@ -13,11 +13,13 @@ import { useAuthorizedUser } from '@contextProviders/AuthProvider'
 import { Wrapper } from './SignInMethodsTab.styled'
 import { AccordionTitle, StyledSettingsAlert, SettingsAccordion } from '../common.styled'
 
+type ExpandedType = 'passwordSignIn' | 'googleSignIn' | false
+
 const SignInMethodsTab = () => {
   const { t } = useTranslation('settings')
   const { query } = useRouter()
   const { currentUser } = useAuthorizedUser()
-  const [expanded, setExpanded] = useState<string | false>(!!query.code && 'googleSignIn')
+  const [expanded, setExpanded] = useState<ExpandedType>(!!query.code && 'googleSignIn')
 
   const hasPassword = hasAuthProvider(currentUser, AuthProviderFlags.EmailAndPassword)
   const hasGoogleAccount = hasAuthProvider(currentUser, AuthProviderFlags.Google)
@@ -29,12 +31,18 @@ const SignInMethodsTab = () => {
         onChange={(_, value) => setExpanded(value && 'passwordSignIn')}
       >
         <AccordionSummary expandIcon={<ExpandMore />}>
-          <AccordionTitle>{t('emailAndPasswordSignIn')}</AccordionTitle>
+          <AccordionTitle>{t('passwordSignIn')}</AccordionTitle>
         </AccordionSummary>
 
         <AccordionDetails>
           {hasPassword ? (
-            <StyledSettingsAlert>{t('passwordSignInIsSetUp')}.</StyledSettingsAlert>
+            <>
+              <Box display='flex' gridGap='5px' flexWrap='wrap'>
+                <Chip label={currentUser.email} />
+                <Chip label={currentUser.username} />
+              </Box>
+              <StyledSettingsAlert>{t('passwordSignInIsSetUp')}.</StyledSettingsAlert>
+            </>
           ) : (
             <>
               <StyledSettingsAlert severity='info'>

@@ -13,11 +13,13 @@ import DeleteAccountWithGoogle from './DeleteAccountWithGoogle'
 import { Wrapper } from './DeleteAccountTab.styled'
 import { SettingsAccordion, AccordionTitle, StyledSettingsAlert } from '../common.styled'
 
+type ExpandedType = 'googleDelete' | 'passwordDelete' | false
+
 const DeleteAccountTab = () => {
   const { t } = useTranslation('settings')
   const { query } = useRouter()
   const { currentUser } = useAuthorizedUser()
-  const [expanded, setExpanded] = useState<string | false>(!!query.code && 'googleDelete')
+  const [expanded, setExpanded] = useState<ExpandedType>(!!query.code && 'googleDelete')
 
   const hasPassword = hasAuthProvider(currentUser, AuthProviderFlags.EmailAndPassword)
   const hasGoogleAccount = hasAuthProvider(currentUser, AuthProviderFlags.Google)
