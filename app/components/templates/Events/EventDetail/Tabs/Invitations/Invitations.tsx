@@ -6,6 +6,7 @@ import { InfiniteData, useInfiniteQuery, useQueryClient } from 'react-query'
 
 import api from '@api/HttpClient'
 import { IUserDto } from 'domainTypes'
+import { Alert } from '@material-ui/lab'
 import Observer from '@elements/Observer'
 import Button from '@elements/Button/Button'
 import useDebounce from '@hooks/useDebounce'
@@ -93,6 +94,10 @@ const Invitations = ({ event }: IInvitationsProps) => {
 
   return (
     <>
+      {event.invitationsCount + event.attendeesCount > event.capacity && (
+        <Alert severity='warning'>{t('morePeopleAreInvitedThanMaxAttendees')}</Alert>
+      )}
+
       <Box marginY='20px' color='themeText.themeGray'>
         {t('thisEventHasCountInvitations', { count: event.invitationsCount })}
       </Box>
