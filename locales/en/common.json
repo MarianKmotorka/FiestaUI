@@ -136,6 +136,7 @@
     "invalidLoginCredentials": "Invalid login credentials",
     "locationMustBeSelected": "Location must be selected",
     "canContainLettersNumberOrSpecialCharacters": "Can contain letters, numbers or these special characters: {{specialCharacters}}",
+    "cannotBeLessThanCurrentAttendeesCount": "Cannot be less than the current number of attendees",
     "max": "Maximum {{max}}",
     "maxLength": "Max {{maxLength}} characters",
     "mustBeUnique": "Must be unique",
