@@ -2,21 +2,20 @@ import { useState } from 'react'
 import { AnimatePresence } from 'framer-motion'
 import { useRouter } from 'next/dist/client/router'
 import useTranslation from 'next-translate/useTranslation'
-import { Avatar, Box, Button, Chip, IconButton, Tooltip } from '@material-ui/core'
+import { Avatar, Box, Button, IconButton, Tooltip } from '@material-ui/core'
 import {
-  AccountCircle,
+  AccountCircleTwoTone,
   Add,
-  Brightness2,
-  Event,
-  ExitToAppRounded,
-  ExpandLess,
-  ExpandMore,
-  Fingerprint,
-  HomeRounded,
-  LocationSearching,
-  Search,
-  Settings,
-  WbSunny
+  Brightness2TwoTone,
+  EventTwoTone,
+  ExitToAppTwoTone,
+  ExploreTwoTone,
+  FingerprintTwoTone,
+  HomeTwoTone,
+  NotificationsTwoTone,
+  SearchTwoTone,
+  SettingsTwoTone,
+  WbSunnyTwoTone
 } from '@material-ui/icons'
 
 import NavLink from '@elements/NavLink'
@@ -30,13 +29,12 @@ import { useAppTheme } from '@contextProviders/AppThemeProvider/AppThemeProvider
 import {
   Logo,
   Menu,
-  LinkContent,
   StyledAppBar,
   StyledContainer,
   StyledButtonGroup,
   StyledBurger,
-  SearchChip,
-  MobileMenuItem
+  MobileMenuItem,
+  NavIconButton
 } from './Navbar.styled'
 
 interface INavbarProps {
@@ -48,7 +46,7 @@ const Navbar = ({ forceUnauthorizedNavbar }: INavbarProps) => {
   const router = useRouter()
   const { t } = useTranslation('common')
   const { theme, isDark, switchTheme } = useAppTheme()
-  const { maxMedium, minExtraLarge } = useWindowSize()
+  const { maxMedium } = useWindowSize()
   const [menuOpen, setMenuOpen] = useState(false)
   const [searchOpen, setSearchOpen] = useState(false)
   const [profileChipEl, setProfileChipEl] = useState<HTMLElement>()
@@ -69,13 +67,9 @@ const Navbar = ({ forceUnauthorizedNavbar }: INavbarProps) => {
     setMenuOpen(prev => value || !prev)
   }
 
-  const searchChip = (
-    <SearchChip avatar={<Search />} onClick={() => setSearchOpen(true)} color='secondary' />
-  )
-
   const switchThemeMenuItem = (
     <MobileMenuItem onClick={switchTheme}>
-      {isDark ? <WbSunny color='primary' /> : <Brightness2 />}
+      {isDark ? <WbSunnyTwoTone color='primary' /> : <Brightness2TwoTone />}
       {t('switchTheme')}
     </MobileMenuItem>
   )
@@ -85,35 +79,35 @@ const Navbar = ({ forceUnauthorizedNavbar }: INavbarProps) => {
       <>
         <NavLink href='/home'>
           <MobileMenuItem>
-            <HomeRounded />
+            <HomeTwoTone />
             {t('home')}
           </MobileMenuItem>
         </NavLink>
 
         <NavLink href='/events'>
           <MobileMenuItem>
-            <Event />
+            <EventTwoTone />
             {t('events')}
           </MobileMenuItem>
         </NavLink>
 
         <NavLink href='/explore'>
           <MobileMenuItem>
-            <LocationSearching />
+            <ExploreTwoTone />
             {t('explore')}
           </MobileMenuItem>
         </NavLink>
 
         <NavLink href={`/users/${auth.currentUser.id}`}>
           <MobileMenuItem>
-            <AccountCircle />
+            <AccountCircleTwoTone />
             {t('profile')}
           </MobileMenuItem>
         </NavLink>
 
         <NavLink href='/settings'>
           <MobileMenuItem>
-            <Settings />
+            <SettingsTwoTone />
             {t('settings')}
           </MobileMenuItem>
         </NavLink>
@@ -125,7 +119,7 @@ const Navbar = ({ forceUnauthorizedNavbar }: INavbarProps) => {
         {switchThemeMenuItem}
 
         <MobileMenuItem onClick={() => auth.logout()}>
-          <ExitToAppRounded />
+          <ExitToAppTwoTone />
           {t('logout')}
         </MobileMenuItem>
       </>
@@ -133,7 +127,7 @@ const Navbar = ({ forceUnauthorizedNavbar }: INavbarProps) => {
       <>
         <NavLink href='/login'>
           <MobileMenuItem>
-            <Fingerprint />
+            <FingerprintTwoTone />
             {t('login')}
           </MobileMenuItem>
         </NavLink>
@@ -157,42 +151,48 @@ const Navbar = ({ forceUnauthorizedNavbar }: INavbarProps) => {
     auth.isLoggedIn && !forceUnauthorizedNavbar ? (
       <>
         <NavLink href='/home'>
-          <Tooltip title={t('home')} disableHoverListener={minExtraLarge}>
-            <LinkContent>
-              <HomeRounded />
-              <span>{t('home')}</span>
-            </LinkContent>
+          <Tooltip title={t('home')}>
+            <NavIconButton>
+              <HomeTwoTone />
+            </NavIconButton>
           </Tooltip>
         </NavLink>
 
         <NavLink href='/events'>
-          <Tooltip title={t('events')} disableHoverListener={minExtraLarge}>
-            <LinkContent>
-              <Event />
-              <span>{t('events')}</span>
-            </LinkContent>
+          <Tooltip title={t('events')}>
+            <NavIconButton>
+              <EventTwoTone />
+            </NavIconButton>
           </Tooltip>
         </NavLink>
 
         <NavLink href='/explore'>
-          <Tooltip title={t('explore')} disableHoverListener={minExtraLarge}>
-            <LinkContent>
-              <LocationSearching />
-              <span>{t('explore')}</span>
-            </LinkContent>
+          <Tooltip title={t('explore')}>
+            <NavIconButton>
+              <ExploreTwoTone />
+            </NavIconButton>
           </Tooltip>
         </NavLink>
 
-        {searchChip}
+        <Box alignSelf='stretch' paddingY='5px'>
+          <Divider orientation='vertical' />
+        </Box>
 
-        <Chip
-          avatar={<Avatar src={auth.currentUser.pictureUrl} />}
-          label={auth.currentUser.username}
-          onDelete={() => {}}
-          clickable
-          color='primary'
-          deleteIcon={profileChipEl ? <ExpandLess /> : <ExpandMore />}
-          onClick={e => setProfileChipEl(prev => (prev ? undefined : e.currentTarget))}
+        <Tooltip title={t('search')}>
+          <NavIconButton onClick={() => setSearchOpen(true)}>
+            <SearchTwoTone />
+          </NavIconButton>
+        </Tooltip>
+
+        <Tooltip title={t('notifications')}>
+          <NavIconButton>
+            <NotificationsTwoTone />
+          </NavIconButton>
+        </Tooltip>
+
+        <Avatar
+          src={auth.currentUser.pictureUrl}
+          onClick={e => setProfileChipEl(profileChipEl ? undefined : e.currentTarget)}
         />
 
         {profileChipEl && (
@@ -202,7 +202,7 @@ const Navbar = ({ forceUnauthorizedNavbar }: INavbarProps) => {
     ) : (
       <>
         <IconButton onClick={switchTheme}>
-          {isDark ? <WbSunny color='primary' /> : <Brightness2 />}
+          {isDark ? <WbSunnyTwoTone color='primary' /> : <Brightness2TwoTone />}
         </IconButton>
 
         <StyledButtonGroup>
@@ -240,15 +240,25 @@ const Navbar = ({ forceUnauthorizedNavbar }: INavbarProps) => {
 
         {maxMedium && (
           <>
-            {auth.isLoggedIn && !forceUnauthorizedNavbar && searchChip}
+            {auth.isLoggedIn && !forceUnauthorizedNavbar && (
+              <>
+                <NavIconButton onClick={() => setSearchOpen(true)}>
+                  <SearchTwoTone />
+                </NavIconButton>
+
+                <NavIconButton>
+                  <NotificationsTwoTone />
+                </NavIconButton>
+              </>
+            )}
 
             <IconButton onClick={() => toggleMenu()}>
               <StyledBurger
                 isOpen={menuOpen}
-                width={28}
-                height={17}
-                strokeWidth={3}
-                borderRadius={3}
+                width={25}
+                height={16}
+                strokeWidth={1}
+                borderRadius={100}
                 menuClicked={() => {}}
                 animationDuration={0.15}
                 color={theme.palette.primary.main}

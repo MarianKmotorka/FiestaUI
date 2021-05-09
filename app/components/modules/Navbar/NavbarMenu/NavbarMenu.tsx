@@ -1,6 +1,11 @@
 import Link from 'next/link'
 import useTranslation from 'next-translate/useTranslation'
-import { Brightness2, ExitToApp, Settings, WbSunny } from '@material-ui/icons'
+import {
+  Brightness2TwoTone,
+  ExitToAppTwoTone,
+  SettingsTwoTone,
+  WbSunnyTwoTone
+} from '@material-ui/icons'
 
 import { useAppTheme } from '@contextProviders/AppThemeProvider/AppThemeProvider'
 import { useAuthorizedUser } from '@contextProviders/AuthProvider'
@@ -48,19 +53,19 @@ const NavbarMenu = ({ anchorEl, onClose }: INavbarMenuProps) => {
 
         <StyledMenuItem onClick={switchTheme}>
           {t('switchTheme')}
-          {isDark ? <WbSunny id='lightThemeIcon' /> : <Brightness2 />}
+          {isDark ? <WbSunnyTwoTone id='lightThemeIcon' /> : <Brightness2TwoTone />}
         </StyledMenuItem>
 
         <Link href='/settings'>
           <StyledMenuItem>
             {t('settings')}
-            <Settings />
+            <SettingsTwoTone />
           </StyledMenuItem>
         </Link>
 
         <StyledMenuItem onClick={() => logout()}>
           {t('logout')}
-          <ExitToApp />
+          <ExitToAppTwoTone />
         </StyledMenuItem>
       </MenuContent>
     </StyledMenu>

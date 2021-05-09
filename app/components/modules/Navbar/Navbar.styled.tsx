@@ -1,11 +1,11 @@
 import styled from 'styled-components'
 import { motion } from 'framer-motion'
 import BurgerMenu from 'react-hamburger-menu'
-import { AppBar, ButtonGroup, Chip, MenuItem } from '@material-ui/core'
+import { AppBar, ButtonGroup, Chip, IconButton, MenuItem } from '@material-ui/core'
 
 import { Container } from '@elements/Container'
 import FiestaLogo from '@elements/FiestaLogo'
-import { MD, SM, XL } from '@contextProviders/AppThemeProvider/theme'
+import { MD, SM } from '@contextProviders/AppThemeProvider/theme'
 
 export const NAVBAR_HEIGHT = 80
 
@@ -32,53 +32,11 @@ export const StyledContainer = styled(Container)`
   justify-content: flex-end;
 `
 
-export const LinkContent = styled.p`
+export const NavIconButton = styled(IconButton)`
   color: ${({ theme }) => theme.palette.themeText.themeBlack};
-  font-size: 1rem;
-  margin-right: auto;
-  padding: 10px 15px;
-  font-weight: 500;
-  cursor: pointer;
-  position: relative;
-  display: flex;
-  align-items: center;
-  gap: 5px;
 
-  ::before {
-    content: '';
-    width: calc(100% - 6px);
-    position: absolute;
-    bottom: 0;
-    left: 50%;
-    height: 2px;
-    border-radius: 10px;
-    background-color: ${({ theme }) => theme.palette.secondary.main};
-    transition: transform 0.3s, opacity 0.3s;
-    transform: scaleX(0) translateX(-50%);
-    transform-origin: left;
-    opacity: 0.2;
-  }
-
-  :hover ::before {
-    transform: scaleX(1) translateX(-50%);
-    opacity: 1;
-  }
-
-  &.active {
-    &::before {
-      background-color: ${({ theme }) => theme.palette.primary.main};
-      transform: scaleX(1) translateX(-50%);
-      opacity: 1;
-    }
-    svg {
-      color: ${({ theme }) => theme.palette.primary.main};
-    }
-  }
-
-  @media screen and (max-width: ${XL}px) {
-    span {
-      display: none;
-    }
+  &.active svg {
+    color: ${({ theme }) => theme.palette.primary.main};
   }
 `
 
@@ -108,22 +66,16 @@ export const Menu = styled(motion.div)`
   display: flex;
   align-items: center;
 
-  .MuiChip-root {
-    margin-left: 20px;
-    padding: 4px;
+  .MuiAvatar-root {
+    margin-left: 18px;
+    width: 36px;
+    height: 36px;
+    cursor: pointer;
+  }
 
-    svg {
-      pointer-events: none;
-      color: ${({ theme }) => theme.palette.themeText.white};
-    }
-
-    .MuiChip-label {
-      text-overflow: ellipsis;
-      max-width: 160px;
-      font-size: 1.25em;
-      font-weight: 500;
-      margin: 0 2px;
-    }
+  > button {
+    margin-left: 6px;
+    margin-right: 6px;
   }
 
   @media screen and (max-width: ${MD}px) {
