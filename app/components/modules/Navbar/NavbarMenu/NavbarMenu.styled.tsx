@@ -1,19 +1,12 @@
 import Divider from '@elements/Divider'
 import { Avatar, Menu, MenuItem } from '@material-ui/core'
 import styled from 'styled-components'
-import { MD } from '@contextProviders/AppThemeProvider/theme'
 
 export const StyledMenu = styled(Menu)`
   transform: translateY(60px);
-
   :focus {
     outline: none;
   }
-
-  @media screen and (max-width: ${MD}px) {
-    transform: translateY(140px);
-  }
-
   .MuiPaper-rounded {
     border-radius: 12px;
   }
