@@ -3,10 +3,11 @@ interface ITabPanelProps {
   index: any
   value: any
   className?: string
+  alwaysVisible?: boolean
 }
 
-const TabPanel = ({ children, value, index, className }: ITabPanelProps) => {
-  if (value !== index) return null
+const TabPanel = ({ children, value, index, className, alwaysVisible }: ITabPanelProps) => {
+  if (!alwaysVisible && value !== index) return null
 
   return (
     <div role='tabpanel' className={className}>

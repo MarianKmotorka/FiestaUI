@@ -49,7 +49,7 @@ const LoginTemplate = () => {
     }
 
     await fetchUser()
-    router.replace((router.query.redirectedFrom as string) || '/home')
+    router.replace((router.query.redirectedFrom as string) || '/events')
   }
 
   return (

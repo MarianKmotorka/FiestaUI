@@ -11,7 +11,7 @@ import DeleteWithPassword from './DeleteWithPassword'
 import DeleteAccountWithGoogle from './DeleteAccountWithGoogle'
 
 import { Wrapper } from './DeleteAccountTab.styled'
-import { SettingsAccordion, AccordionTitle, StyledSettingsAlert } from '../common.styled'
+import { SettingsAccordion, AccordionTitle, StyledSettingsAlert, TabTitle } from '../common.styled'
 
 type ExpandedType = 'googleDelete' | 'passwordDelete' | false
 
@@ -26,6 +26,8 @@ const DeleteAccountTab = () => {
 
   return (
     <Wrapper>
+      <TabTitle danger={1}>{t('dangerZone')}</TabTitle>
+
       <SettingsAccordion
         expanded={expanded === 'passwordDelete'}
         onChange={(_, value) => setExpanded(value && 'passwordDelete')}

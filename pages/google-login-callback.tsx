@@ -46,7 +46,7 @@ const GoogleLoginCallback = () => {
       if (successOrError !== true) return setError(successOrError)
 
       await fetchUser()
-      replace(getReturnUrlFromQuery(query) || '/home')
+      replace(getReturnUrlFromQuery(query) || '/events')
     }
 
     query.code && sendCodeToServer()

@@ -1,13 +1,12 @@
 import styled from 'styled-components'
-import { motion } from 'framer-motion'
-import BurgerMenu from 'react-hamburger-menu'
-import { AppBar, ButtonGroup, Chip, IconButton, MenuItem } from '@material-ui/core'
+import { AppBar, ButtonGroup, IconButton } from '@material-ui/core'
 
 import { Container } from '@elements/Container'
 import FiestaLogo from '@elements/FiestaLogo'
 import { MD, SM } from '@contextProviders/AppThemeProvider/theme'
 
 export const NAVBAR_HEIGHT = 80
+export const NAVBAR_HEIGHT_MOBILE = 60
 
 export const StyledAppBar = styled(AppBar)`
   background-color: ${({ theme }) => theme.palette.background.default};
@@ -19,8 +18,12 @@ export const Logo = styled(FiestaLogo)`
   font-size: 2.5rem !important;
   text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.7) !important;
 
+  @media screen and (max-width: ${MD}px) {
+    font-size: 1.8rem !important;
+  }
+
   @media screen and (max-width: ${SM}px) {
-    font-size: 1.7rem !important;
+    font-size: 1.4rem !important;
   }
 `
 
@@ -28,8 +31,11 @@ export const StyledContainer = styled(Container)`
   height: ${NAVBAR_HEIGHT}px;
   display: flex;
   align-items: center;
-
   justify-content: flex-end;
+
+  @media screen and (max-width: ${SM}px) {
+    height: ${NAVBAR_HEIGHT_MOBILE}px;
+  }
 `
 
 export const NavIconButton = styled(IconButton)`
@@ -40,29 +46,7 @@ export const NavIconButton = styled(IconButton)`
   }
 `
 
-export const MobileMenuItem = styled(MenuItem)`
-  width: 100%;
-  font-size: 1rem;
-  padding: 5px 5%;
-
-  > svg {
-    margin-right: 6px;
-  }
-
-  &.active {
-    svg {
-      color: ${({ theme }) => theme.palette.primary.main};
-    }
-  }
-
-  .MuiAvatar-root {
-    width: 24px;
-    height: 24px;
-    margin-right: 6px;
-  }
-`
-
-export const Menu = styled(motion.div)`
+export const Menu = styled.div`
   display: flex;
   align-items: center;
 
@@ -73,42 +57,18 @@ export const Menu = styled(motion.div)`
     cursor: pointer;
   }
 
-  > button {
-    margin-left: 6px;
-    margin-right: 6px;
-  }
-
-  @media screen and (max-width: ${MD}px) {
-    position: fixed;
-    left: 0px;
-    width: 100vw;
-    top: ${NAVBAR_HEIGHT}px;
-    height: calc(100vh - ${NAVBAR_HEIGHT}px);
-    flex-direction: column;
-    background-color: ${({ theme }) => theme.palette.background.default};
+  @media screen and (min-width: ${MD}px) {
+    > button {
+      margin-left: 6px;
+      margin-right: 6px;
+    }
   }
 `
 
 export const StyledButtonGroup = styled(ButtonGroup)`
-  margin-left: 10px;
-
   > button {
     min-width: 80px;
     border-radius: 0;
     box-shadow: none;
-  }
-`
-
-export const StyledBurger = styled(BurgerMenu)`
-  span {
-    margin-top: 0 !important;
-  }
-`
-
-export const SearchChip = styled(Chip)`
-  cursor: pointer;
-  svg {
-    background-color: transparent !important;
-    color: ${({ theme }) => theme.palette.themeText.themeWhite} !important;
   }
 `

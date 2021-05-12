@@ -17,7 +17,7 @@ import {
 } from 'utils/validators'
 
 import { Wrapper } from './ChangePasswordTab.styled'
-import { SettingsAccordion, AccordionTitle } from '../common.styled'
+import { SettingsAccordion, AccordionTitle, TabTitle } from '../common.styled'
 
 interface IChangePasswordValues {
   currentPassword: string
@@ -33,7 +33,7 @@ const defaultValues: IChangePasswordValues = {
 
 const ChangePasswordTab = () => {
   const { t } = useTranslation('common')
-  const [expanded, setExpanded] = useState(true)
+  const [expanded, setExpanded] = useState(false)
   const { currentUser } = useAuthorizedUser()
 
   const { onSubmit } = useSubmitForm<IChangePasswordValues>({
@@ -48,6 +48,8 @@ const ChangePasswordTab = () => {
 
   return (
     <Wrapper>
+      <TabTitle>{t('password')}</TabTitle>
+
       <SettingsAccordion expanded={expanded} onChange={(_, value) => setExpanded(value)}>
         <AccordionSummary expandIcon={<ExpandMore />}>
           <AccordionTitle>{t('changePassword')}</AccordionTitle>

@@ -1,16 +1,30 @@
 import { FC } from 'react'
 import Head from 'next/head'
-import Navbar from '@modules/Navbar/Navbar'
 import styled from 'styled-components'
-import { NAVBAR_HEIGHT } from '@modules/Navbar/Navbar.styled'
+
+import Navbar from '@modules/Navbar/Navbar'
+import { useAuth } from '@contextProviders/AuthProvider'
+import { MD, SM } from '@contextProviders/AppThemeProvider/theme'
+import BottomNavigation from '@modules/BottomNavigation/BottomNavigation'
+
+import { NAVBAR_HEIGHT, NAVBAR_HEIGHT_MOBILE } from '@modules/Navbar/Navbar.styled'
+import { BOTTOM_NAVIGATION_HEIGHT } from '@modules/BottomNavigation/BottomNavigation.styled'
 
 export interface IFullWidthLayoutProps {
   title: string
   forceUnauthorizedNavbar?: true
 }
 
-const MarginTop = styled.div`
-  margin-top: ${NAVBAR_HEIGHT}px;
+const Wrapper = styled.div<{ paddingBottom: number }>`
+  padding-top: ${NAVBAR_HEIGHT}px;
+
+  @media screen and (max-width: ${MD}px) {
+    padding-bottom: ${({ paddingBottom }) => paddingBottom + 'px'};
+  }
+
+  @media screen and (max-width: ${SM}px) {
+    padding-top: ${NAVBAR_HEIGHT_MOBILE}px;
+  }
 `
 
 const FullWidthLayout: FC<IFullWidthLayoutProps> = ({
@@ -18,6 +32,9 @@ const FullWidthLayout: FC<IFullWidthLayoutProps> = ({
   title,
   forceUnauthorizedNavbar
 }) => {
+  // if this causes rerender performance issues, memoize Wrapper upon children
+  const { isLoggedIn } = useAuth()
+
   return (
     <>
       <Head>
@@ -25,7 +42,14 @@ const FullWidthLayout: FC<IFullWidthLayoutProps> = ({
       </Head>
 
       <Navbar forceUnauthorizedNavbar={forceUnauthorizedNavbar} />
-      <MarginTop>{children}</MarginTop>
+
+      <Wrapper
+        paddingBottom={isLoggedIn && !forceUnauthorizedNavbar ? BOTTOM_NAVIGATION_HEIGHT : 0}
+      >
+        {children}
+      </Wrapper>
+
+      {!forceUnauthorizedNavbar && <BottomNavigation />}
     </>
   )
 }

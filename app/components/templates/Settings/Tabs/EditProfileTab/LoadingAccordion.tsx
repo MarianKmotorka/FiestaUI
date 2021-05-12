@@ -1,7 +1,6 @@
-import { AccordionSummary } from '@material-ui/core'
+import { AccordionDetails, AccordionSummary, CircularProgress } from '@material-ui/core'
 import useTranslation from 'next-translate/useTranslation'
-
-import Spinner from '@elements/Spinner'
+import { ExpandMore } from '@material-ui/icons'
 
 import { Wrapper } from './EditProfileTab.styled'
 import { AccordionTitle, SettingsAccordion } from '../common.styled'
@@ -12,9 +11,13 @@ const LoadingAccordion = () => {
   return (
     <Wrapper>
       <SettingsAccordion>
-        <AccordionSummary expandIcon={<Spinner />}>
+        <AccordionSummary expandIcon={<ExpandMore />}>
           <AccordionTitle>{t('editProfile')}</AccordionTitle>
         </AccordionSummary>
+
+        <AccordionDetails>
+          <CircularProgress />
+        </AccordionDetails>
       </SettingsAccordion>
     </Wrapper>
   )

@@ -1,5 +1,6 @@
 {
   "add": "Add",
+  "appearence": "Appearence",
   "addComment": "Add comment",
   "addReply": "Add reply",
   "areYouSure": "Are you sure ?",
@@ -40,6 +41,7 @@
   "edited": "Edited",
   "findPeopleOrEvents": "Find people or events",
   "friend": "Friend",
+  "friendRequests": "Friend requests",
   "friendRemoved": "Friend removed",
   "endDate": "End date",
   "eventInfo": "Event info",
@@ -63,6 +65,7 @@
   "leaveEvent": "Leave event",
   "maxAttendees": "Max attendees",
   "message": "Message",
+  "messages": "Messages",
   "morePeopleAreInvitedThanMaxAttendees": "More people are invited than max number of attendees!",
   "name": "Name",
   "next": "Next",

@@ -25,7 +25,7 @@ import {
   maxLengthValidator
 } from 'utils/validators'
 
-import { AccordionTitle, SettingsAccordion } from '../common.styled'
+import { AccordionTitle, SettingsAccordion, TabTitle } from '../common.styled'
 import { Wrapper, StyledAvatar, StyledDivider } from './EditProfileTab.styled'
 
 interface IEditProfileValues {
@@ -37,7 +37,7 @@ interface IEditProfileValues {
 
 const EditProfileTab = () => {
   const { t } = useTranslation('common')
-  const [expanded, setExpanded] = useState(true)
+  const [expanded, setExpanded] = useState(false)
   const [profilePictureEl, setProfilePictureEl] = useState<HTMLElement>()
   const { currentUser, updateUser } = useAuthorizedUser()
   const [profilePictureLoading, setProfilePictureLoading] = useState(false)
@@ -69,6 +69,8 @@ const EditProfileTab = () => {
 
   return (
     <Wrapper>
+      <TabTitle>{t('profile')}</TabTitle>
+
       <SettingsAccordion expanded={expanded} onChange={(_, value) => setExpanded(value)}>
         <AccordionSummary expandIcon={<ExpandMore />}>
           <AccordionTitle>{t('editProfile')}</AccordionTitle>

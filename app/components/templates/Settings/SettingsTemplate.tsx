@@ -1,17 +1,18 @@
 import { useState } from 'react'
 import { useRouter } from 'next/router'
-import { Tabs } from '@material-ui/core'
+import { AccordionSummary, Tabs } from '@material-ui/core'
 import useTranslation from 'next-translate/useTranslation'
+import { ExitToAppTwoTone } from '@material-ui/icons'
 
 import { hasAuthProvider } from 'utils/utils'
 import { AuthProviderFlags } from 'domainTypes'
 import useWindowSize from '@hooks/useWindowSize'
+import AppearenceTab from './Tabs/Appearence/Appearence'
+import EditProfileTab from './Tabs/EditProfileTab/EditProfileTab'
 import { useAuthorizedUser } from '@contextProviders/AuthProvider'
+import DeleteAccountTab from './Tabs/DeleteAccountTab/DeleteAccountTab'
 import SignInMethodsTab from './Tabs/SignInMethodsTab/SignInMethodsTab'
 import ChangePasswordTab from './Tabs/ChangePasswordTab/ChangePasswordTab'
-import DeleteAccountTab from './Tabs/DeleteAccountTab/DeleteAccountTab'
-import EditProfileTab from './Tabs/EditProfileTab/EditProfileTab'
-import { AccountCircle, DeleteForever, LockOpen, VpnKey } from '@material-ui/icons'
 
 import {
   TabPanelContainer,
@@ -20,13 +21,14 @@ import {
   StyledPanel,
   Wrapper
 } from './SettingsTemplate.styled'
+import { AccordionTitle, SettingsAccordion, TabTitle } from './Tabs/common.styled'
 
 const SettingsTemplate = () => {
   const router = useRouter()
-  const [currTab, setCurrTab] = useState((router.query.tab as string) || 'editProfile')
+  const [currTab, setCurrTab] = useState((router.query.tab as string) || 'profile')
   const { t } = useTranslation('common')
   const { maxMedium } = useWindowSize()
-  const { currentUser } = useAuthorizedUser()
+  const { currentUser, logout } = useAuthorizedUser()
 
   const changeTab = (value: string) => {
     setCurrTab(value)
@@ -35,57 +37,59 @@ const SettingsTemplate = () => {
 
   return (
     <Wrapper>
-      <TabsContainer>
-        <Tabs
-          value={currTab}
-          textColor='inherit'
-          indicatorColor='primary'
-          onChange={(_, value) => changeTab(value)}
-          orientation={maxMedium ? 'horizontal' : 'vertical'}
-          variant={maxMedium ? 'fullWidth' : 'standard'}
-        >
-          <StyledTab
-            value='editProfile'
-            label={!maxMedium && t('editProfile')}
-            icon={maxMedium ? <AccountCircle /> : undefined}
-          />
+      {!maxMedium && (
+        <TabsContainer>
+          <Tabs
+            value={currTab}
+            textColor='inherit'
+            indicatorColor='primary'
+            onChange={(_, value) => changeTab(value)}
+            orientation='vertical'
+          >
+            <StyledTab value='profile' label={t('profile')} />
 
-          {hasAuthProvider(currentUser, AuthProviderFlags.EmailAndPassword) && (
-            <StyledTab
-              value='changePassword'
-              label={!maxMedium && t('changePassword')}
-              icon={maxMedium ? <VpnKey /> : undefined}
-            />
-          )}
+            {hasAuthProvider(currentUser, AuthProviderFlags.EmailAndPassword) && (
+              <StyledTab value='changePassword' label={t('changePassword')} />
+            )}
 
-          <StyledTab
-            value='signInMethods'
-            label={!maxMedium && t('signInMethods')}
-            icon={maxMedium ? <LockOpen /> : undefined}
-          />
+            <StyledTab value='signInMethods' label={t('signInMethods')} />
 
-          <StyledTab
-            value='deleteAccount'
-            label={!maxMedium && t('deleteAccount')}
-            icon={maxMedium ? <DeleteForever /> : undefined}
-          />
-        </Tabs>
-      </TabsContainer>
+            <StyledTab value='appearence' label={t('appearence')} />
+
+            <StyledTab value='deleteAccount' label={t('deleteAccount')} />
+          </Tabs>
+        </TabsContainer>
+      )}
 
       <TabPanelContainer>
-        <StyledPanel index='editProfile' value={currTab}>
+        <StyledPanel index='profile' value={currTab} alwaysVisible={maxMedium}>
           <EditProfileTab />
         </StyledPanel>
 
-        <StyledPanel index='changePassword' value={currTab}>
+        <StyledPanel index='changePassword' value={currTab} alwaysVisible={maxMedium}>
           <ChangePasswordTab />
         </StyledPanel>
 
-        <StyledPanel index='signInMethods' value={currTab}>
+        <StyledPanel index='signInMethods' value={currTab} alwaysVisible={maxMedium}>
           <SignInMethodsTab />
         </StyledPanel>
 
-        <StyledPanel index='deleteAccount' value={currTab}>
+        <StyledPanel index='appearence' value={currTab} alwaysVisible={maxMedium}>
+          <AppearenceTab />
+        </StyledPanel>
+
+        {maxMedium && (
+          <div>
+            <TabTitle>{t('logout')}</TabTitle>
+            <SettingsAccordion expanded={false}>
+              <AccordionSummary onClick={() => logout()} expandIcon={<ExitToAppTwoTone />}>
+                <AccordionTitle>{t('logout')}</AccordionTitle>
+              </AccordionSummary>
+            </SettingsAccordion>
+          </div>
+        )}
+
+        <StyledPanel index='deleteAccount' value={currTab} alwaysVisible={maxMedium}>
           <DeleteAccountTab />
         </StyledPanel>
       </TabPanelContainer>

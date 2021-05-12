@@ -11,7 +11,7 @@ import ConnectGoogleAccount from './ConnectGoogleAccount'
 import { useAuthorizedUser } from '@contextProviders/AuthProvider'
 
 import { Wrapper } from './SignInMethodsTab.styled'
-import { AccordionTitle, StyledSettingsAlert, SettingsAccordion } from '../common.styled'
+import { AccordionTitle, StyledSettingsAlert, SettingsAccordion, TabTitle } from '../common.styled'
 
 type ExpandedType = 'passwordSignIn' | 'googleSignIn' | false
 
@@ -26,6 +26,8 @@ const SignInMethodsTab = () => {
 
   return (
     <Wrapper>
+      <TabTitle>{t('common:signInMethods')}</TabTitle>
+
       <SettingsAccordion
         expanded={expanded === 'passwordSignIn'}
         onChange={(_, value) => setExpanded(value && 'passwordSignIn')}

@@ -20,7 +20,7 @@ export const SettingsAccordion = styled(Accordion)`
   }
 `
 
-export const AccordionTitle = styled.h1`
+export const AccordionTitle = styled.h2`
   font-weight: 300;
   color: ${({ theme }) => theme.palette.themeText.themeBlack};
   font-size: 1.2rem;
@@ -39,4 +39,15 @@ export const StyledSettingsAlert = styled(Alert)`
   margin-bottom: 10px;
   font-weight: 300;
   font-size: 0.95em;
+`
+
+export const TabTitle = styled.h1<{ danger?: 1 }>`
+  ${({ theme }) => theme.typography.h6 as any}
+  margin: 25px 0 10px;
+
+  ${({ danger, theme }) => danger && `color: ${theme.palette.error.main}`};
+
+  @media screen and (min-width: ${MD + 1}px) {
+    display: none;
+  }
 `
