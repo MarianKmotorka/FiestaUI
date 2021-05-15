@@ -1,6 +1,8 @@
 import axios from 'axios'
 import Router from 'next/router'
 import createAuthRefreshInterceptor from 'axios-auth-refresh'
+
+import { refreshToken } from 'services/authService'
 import { IS_SIGNED_IN_LOCAL_STORAGE_KEY } from '../contextProviders/AuthProvider'
 
 const client = axios.create({
@@ -11,11 +13,8 @@ const client = axios.create({
 })
 
 createAuthRefreshInterceptor(client, failedRequest =>
-  client
-    .get(window.location.origin + '/api/refresh-token')
-    .then(resp => {
-      const { accessToken } = resp.data
-      setAuthHeader(accessToken)
+  refreshToken(client)
+    .then(accessToken => {
       failedRequest.response.config.headers.Authorization = `Bearer ${accessToken}`
       return Promise.resolve()
     })

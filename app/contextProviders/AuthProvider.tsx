@@ -38,6 +38,7 @@ export const useAuthorizedUser = () => {
 const AuthProvider: FC = ({ children }) => {
   const [loading, setLoading] = useState(true)
   const [user, setUser] = useState<ICurrentUser>()
+  useRefreshToken(!!user)
 
   const fetchUser = useCallback(async () => {
     setLoading(true)
@@ -91,6 +92,15 @@ const AuthProvider: FC = ({ children }) => {
       }
 
   return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>
+}
+
+const useRefreshToken = (isLoggedIn: boolean) => {
+  useEffect(() => {
+    if (!isLoggedIn) return
+
+    const intervalId = setInterval(() => authService.refreshToken(), 570_000) // 9.5 minutes
+    return () => clearInterval(intervalId)
+  }, [isLoggedIn])
 }
 
 export default AuthProvider

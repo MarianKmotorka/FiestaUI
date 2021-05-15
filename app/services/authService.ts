@@ -1,6 +1,7 @@
 import api, { setAuthHeader } from '../api/HttpClient'
 import { IApiError } from '@api/types'
 import { ICurrentUser } from 'domainTypes'
+import { AxiosInstance } from 'axios'
 
 export const logout = async () => {
   try {
@@ -38,7 +39,6 @@ export const getGoogleLoginUrl = (redirectedFrom?: string) => {
 }
 
 /**
- *
  * @returns true or error message
  */
 export const loginUsingGoogleCode = async (code: string) => {
@@ -52,7 +52,6 @@ export const loginUsingGoogleCode = async (code: string) => {
 }
 
 /**
- *
  * @returns true or error message
  */
 export const loginWithEmailAndPassword = async (body: {
@@ -65,5 +64,19 @@ export const loginWithEmailAndPassword = async (body: {
     return true
   } catch (err) {
     return (err as IApiError).data.errorMessage
+  }
+}
+
+/**
+ * @returns accessToken
+ */
+export const refreshToken = async (client: AxiosInstance = api): Promise<string> => {
+  try {
+    const response = await client.get(window.location.origin + '/api/refresh-token')
+    const { accessToken } = response.data
+    setAuthHeader(accessToken)
+    return Promise.resolve(accessToken)
+  } catch (_) {
+    return Promise.reject('FAILED TO REFRESH TOKEN')
   }
 }
