@@ -3,23 +3,18 @@ import { Avatar, Menu, MenuItem } from '@material-ui/core'
 import styled from 'styled-components'
 
 export const StyledMenu = styled(Menu)`
-  transform: translateY(60px);
-  :focus {
-    outline: none;
+  .MuiList-root {
+    padding: 18px 0;
+    min-width: 265px;
   }
+
   .MuiPaper-rounded {
-    border-radius: 12px;
+    border-radius: 10px;
   }
 `
 
 export const StyledDivider = styled(Divider)`
   margin: 20px 25px 20px;
-`
-
-export const MenuContent = styled.div`
-  min-width: 280px;
-  padding: 10px 0;
-  outline: none;
 `
 
 export const StyledAvatar = styled(Avatar)`

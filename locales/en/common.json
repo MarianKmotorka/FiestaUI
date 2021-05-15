@@ -70,6 +70,7 @@
   "name": "Name",
   "next": "Next",
   "nothingFound": "Nothing found",
+  "noNotifications": "You don't have any notifications so far.",
   "notifications": "Notifications",
   "notAuthorized": "Not authorized",
   "notAuthenticated": "Not authenticated",
@@ -153,6 +154,10 @@
     "thisGoogleAccountIsNotConnected": "Picked Google account is not connected to your account",
     "maxSize": "Maximum file size: {{maxSize}}",
     "unsupportedMediaType": "Unsupported media type"
+  },
+
+  "notification": {
+    "eventInvitationCreated": "<0>{{inviter}}</0> has invited you to attend <0>{{event}}</0>"
   },
 
   "enum": {

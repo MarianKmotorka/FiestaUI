@@ -38,8 +38,10 @@ export const StyledContainer = styled(Container)`
   }
 `
 
-export const NavIconButton = styled(IconButton)`
+export const NavIconButton = styled(IconButton)<{ active?: 0 | 1 }>`
   color: ${({ theme }) => theme.palette.themeText.themeBlack};
+
+  ${({ theme, active }) => active && `color: ${theme.palette.primary.main}`};
 
   &.active svg {
     color: ${({ theme }) => theme.palette.primary.main};
@@ -49,6 +51,8 @@ export const NavIconButton = styled(IconButton)`
 export const Menu = styled.div`
   display: flex;
   align-items: center;
+
+  color: ${({ theme }) => theme.palette.themeText.themeBlack};
 
   .MuiAvatar-root {
     margin-left: 18px;

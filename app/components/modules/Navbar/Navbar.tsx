@@ -1,7 +1,7 @@
 import { useState } from 'react'
 import { useRouter } from 'next/dist/client/router'
 import useTranslation from 'next-translate/useTranslation'
-import { Avatar, Button, IconButton, Tooltip } from '@material-ui/core'
+import { Avatar, Badge, Button, Tooltip } from '@material-ui/core'
 import {
   ChatTwoTone,
   DashboardTwoTone,
@@ -13,9 +13,11 @@ import {
 
 import NavLink from '@elements/NavLink'
 import useWindowSize from '@hooks/useWindowSize'
+import NavbarMenu from './NavbarMenu/NavbarMenu'
 import NavbarSearch from './NavbarSearch/NavbarSearch'
 import { useAuth } from '@contextProviders/AuthProvider'
-import NavbarMenu from './NavbarMenu/NavbarMenu'
+import Notifications from '@modules/Notifications/Notifications'
+import { useNotifications } from '@modules/Notifications/NotificationsProvider'
 
 import {
   Logo,
@@ -36,25 +38,36 @@ const Navbar = ({ forceUnauthorizedNavbar }: INavbarProps) => {
   const { t } = useTranslation('common')
   const { maxMedium } = useWindowSize()
   const [searchOpen, setSearchOpen] = useState(false)
-  const [profileChipEl, setProfileChipEl] = useState<HTMLElement>()
+  const [avatarEl, setAvatarEl] = useState<HTMLElement>()
+  const [notificationsEl, setNotificationsEl] = useState<HTMLElement>()
+  const { unseenCount } = useNotifications()
+
+  const notificationButton = (
+    <NavIconButton
+      onClick={e => setNotificationsEl(notificationsEl ? undefined : e.currentTarget)}
+      active={notificationsEl ? 1 : 0}
+    >
+      <Badge badgeContent={unseenCount} color='primary'>
+        <NotificationsTwoTone />
+      </Badge>
+    </NavIconButton>
+  )
 
   const mobileContent = (
     <>
-      <IconButton onClick={() => setSearchOpen(true)}>
+      <NavIconButton onClick={() => setSearchOpen(true)}>
         <SearchTwoTone />
-      </IconButton>
+      </NavIconButton>
 
-      <IconButton>
+      <NavIconButton>
         <ChatTwoTone />
-      </IconButton>
+      </NavIconButton>
 
-      <IconButton>
+      <NavIconButton>
         <PeopleTwoTone />
-      </IconButton>
+      </NavIconButton>
 
-      <IconButton>
-        <NotificationsTwoTone />
-      </IconButton>
+      {notificationButton}
     </>
   )
 
@@ -94,20 +107,14 @@ const Navbar = ({ forceUnauthorizedNavbar }: INavbarProps) => {
         </NavIconButton>
       </Tooltip>
 
-      <Tooltip title={t('notifications')}>
-        <NavIconButton>
-          <NotificationsTwoTone />
-        </NavIconButton>
-      </Tooltip>
+      <Tooltip title={t('notifications')}>{notificationButton}</Tooltip>
 
       <Avatar
         src={auth.currentUser.pictureUrl}
-        onClick={e => setProfileChipEl(profileChipEl ? undefined : e.currentTarget)}
+        onClick={e => setAvatarEl(avatarEl ? undefined : e.currentTarget)}
       />
 
-      {profileChipEl && (
-        <NavbarMenu onClose={() => setProfileChipEl(undefined)} anchorEl={profileChipEl} />
-      )}
+      {avatarEl && <NavbarMenu onClose={() => setAvatarEl(undefined)} anchorEl={avatarEl} />}
     </>
   )
 
@@ -148,6 +155,10 @@ const Navbar = ({ forceUnauthorizedNavbar }: INavbarProps) => {
       </StyledContainer>
 
       {searchOpen && <NavbarSearch onClose={() => setSearchOpen(false)} />}
+
+      {notificationsEl && (
+        <Notifications anchorEl={notificationsEl} onClose={() => setNotificationsEl(undefined)} />
+      )}
     </StyledAppBar>
   )
 }

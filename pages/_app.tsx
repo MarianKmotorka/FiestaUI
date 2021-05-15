@@ -8,6 +8,7 @@ import { MuiPickersUtilsProvider } from '@material-ui/pickers'
 
 import AuthProvider from '@contextProviders/AuthProvider'
 import AppThemeProvider from '@contextProviders/AppThemeProvider/AppThemeProvider'
+import NotificationsProvider from '@modules/Notifications/NotificationsProvider'
 
 import '../public/globals.css'
 import 'react-toastify/dist/ReactToastify.min.css'
@@ -25,11 +26,13 @@ const MyApp = ({ Component, pageProps }: AppProps) => {
     <QueryClientProvider client={queryClient}>
       <AuthProvider>
         <MuiPickersUtilsProvider utils={MomentUtils}>
-          <AppThemeProvider>
-            <Component {...pageProps} />
+          <NotificationsProvider>
+            <AppThemeProvider>
+              <Component {...pageProps} />
 
-            <ToastContainer />
-          </AppThemeProvider>
+              <ToastContainer />
+            </AppThemeProvider>
+          </NotificationsProvider>
         </MuiPickersUtilsProvider>
       </AuthProvider>
     </QueryClientProvider>

@@ -25,7 +25,7 @@ const NavbarSearch = ({ onClose }: INavbarSearchProps) => {
   const debouncedSearch = useDebounce(search)
 
   const { data, error, isFetching } = useQuery<EventAndUserSelectorItem[], IApiError>(
-    ['users', 'selector', debouncedSearch],
+    ['selectors', 'events-and-users', debouncedSearch],
     async () => (await api.get(`/selectors/events-and-users?search=${debouncedSearch}`)).data,
     { initialData: [] }
   )

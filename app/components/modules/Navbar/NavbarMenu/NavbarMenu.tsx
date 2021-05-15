@@ -1,4 +1,5 @@
 import Link from 'next/link'
+import { PopoverOrigin } from '@material-ui/core'
 import useTranslation from 'next-translate/useTranslation'
 import {
   Brightness2TwoTone,
@@ -10,14 +11,7 @@ import {
 import { useAppTheme } from '@contextProviders/AppThemeProvider/AppThemeProvider'
 import { useAuthorizedUser } from '@contextProviders/AuthProvider'
 
-import {
-  MenuContent,
-  Name,
-  StyledAvatar,
-  StyledDivider,
-  StyledMenu,
-  StyledMenuItem
-} from './NavbarMenu.styled'
+import { Name, StyledAvatar, StyledDivider, StyledMenu, StyledMenuItem } from './NavbarMenu.styled'
 
 interface INavbarMenuProps {
   anchorEl: HTMLElement
@@ -31,43 +25,49 @@ const NavbarMenu = ({ anchorEl, onClose }: INavbarMenuProps) => {
 
   const userDetailLink = `/users/${currentUser.id}`
 
+  const origins: {
+    anchorOrigin: PopoverOrigin
+    transformOrigin: PopoverOrigin
+  } = {
+    anchorOrigin: { horizontal: 'center', vertical: 'bottom' },
+    transformOrigin: { horizontal: 'center', vertical: 'top' }
+  }
+
   return (
     <StyledMenu
       elevation={4}
       open
       anchorEl={anchorEl}
       onClose={onClose}
-      anchorOrigin={{ horizontal: 'center', vertical: 'top' }}
-      transformOrigin={{ horizontal: 'center', vertical: 'top' }}
+      getContentAnchorEl={null}
+      {...origins}
     >
-      <MenuContent>
-        <Link href={userDetailLink}>
-          <StyledAvatar src={currentUser.pictureUrl} />
-        </Link>
+      <Link href={userDetailLink}>
+        <StyledAvatar src={currentUser.pictureUrl} />
+      </Link>
 
-        <Link href={userDetailLink}>
-          <Name>{currentUser.username}</Name>
-        </Link>
+      <Link href={userDetailLink}>
+        <Name>{currentUser.username}</Name>
+      </Link>
 
-        <StyledDivider />
+      <StyledDivider />
 
-        <StyledMenuItem onClick={switchTheme}>
-          {t('switchTheme')}
-          {isDark ? <WbSunnyTwoTone id='lightThemeIcon' /> : <Brightness2TwoTone />}
+      <StyledMenuItem onClick={switchTheme}>
+        {t('switchTheme')}
+        {isDark ? <WbSunnyTwoTone id='lightThemeIcon' /> : <Brightness2TwoTone />}
+      </StyledMenuItem>
+
+      <Link href='/settings'>
+        <StyledMenuItem>
+          {t('settings')}
+          <SettingsTwoTone />
         </StyledMenuItem>
+      </Link>
 
-        <Link href='/settings'>
-          <StyledMenuItem>
-            {t('settings')}
-            <SettingsTwoTone />
-          </StyledMenuItem>
-        </Link>
-
-        <StyledMenuItem onClick={() => logout()}>
-          {t('logout')}
-          <ExitToAppTwoTone />
-        </StyledMenuItem>
-      </MenuContent>
+      <StyledMenuItem onClick={() => logout()}>
+        {t('logout')}
+        <ExitToAppTwoTone />
+      </StyledMenuItem>
     </StyledMenu>
   )
 }

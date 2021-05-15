@@ -63,10 +63,11 @@ export interface ISkippedItemsDocument {
   skip?: number
 }
 
-export interface ISkippedItemsResponse<T> {
+export interface ISkippedItemsResponse<T, TAdditionalData = any> {
   entries: T[]
   take: number
   skip: number
   totalEntries: number
   hasMore: boolean
+  additionalData: TAdditionalData
 }
