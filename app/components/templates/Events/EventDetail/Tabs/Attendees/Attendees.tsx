@@ -30,9 +30,8 @@ interface IAttendeesProps {
 const Attendees = ({ event, isOrganizer }: IAttendeesProps) => {
   const [removing, setRemoving] = useState(false)
   const [toRemove, setToRemove] = useState<IUserDto>()
-  const [invitationLoading, setInvitationLoading] = useState<'accept' | 'decline' | undefined>(
-    undefined
-  )
+  const [invitationLoading, setInvitationLoading] =
+    useState<'accept' | 'decline' | undefined>(undefined)
   const { currentUser } = useAuthorizedUser()
   const router = useRouter()
   const queryClient = useQueryClient()
@@ -200,6 +199,7 @@ const Attendees = ({ event, isOrganizer }: IAttendeesProps) => {
           confirmLoading={removing}
           onConfirm={handleRemoved}
           onCancel={() => setToRemove(undefined)}
+          confirmText={toRemove.id === currentUser.id ? t('leaveEvent') : t('remove')}
           content={
             toRemove.id === currentUser.id
               ? t('areYouSure')

@@ -47,3 +47,31 @@ export const setNotificationSeen = (queryClient: QueryClient, id: number) => {
         : { pages: [], pageParams: [] }
   )
 }
+
+export const setAllNotificationsSeen = (queryClient: QueryClient) => {
+  queryClient.setQueryData<InfiniteData<ISkippedItemsResponse<INotification<any>>>>(
+    ['notifications'],
+    prev =>
+      prev
+        ? {
+            ...prev,
+            pages: prev.pages.map(page => ({
+              ...page,
+              entries: page.entries.map(e => ({ ...e, seen: true }))
+            }))
+          }
+        : { pages: [], pageParams: [] }
+  )
+}
+
+export const deleteAllNotifications = (queryClient: QueryClient) => {
+  queryClient.setQueryData<InfiniteData<ISkippedItemsResponse<INotification<any>>>>(
+    ['notifications'],
+    {
+      pages: [
+        { hasMore: false, entries: [], take: 0, skip: 0, totalEntries: 0, additionalData: null }
+      ],
+      pageParams: []
+    }
+  )
+}

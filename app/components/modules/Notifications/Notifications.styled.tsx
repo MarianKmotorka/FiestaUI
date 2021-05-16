@@ -1,5 +1,5 @@
 import styled from 'styled-components'
-import { Menu } from '@material-ui/core'
+import { IconButton, Menu, MenuItem } from '@material-ui/core'
 
 import { SM } from '@contextProviders/AppThemeProvider/theme'
 import { NAVBAR_HEIGHT_MOBILE } from '@modules/Navbar/Navbar.styled'
@@ -31,4 +31,14 @@ export const StyledMenu = styled(Menu)`
       box-shadow: none;
     }
   }
+`
+
+export const MoreButton = styled(IconButton)`
+  margin-left: auto;
+`
+
+export const StyledMenuItem = styled(MenuItem)`
+  display: flex;
+  align-items: center;
+  gap: 7px;
 `

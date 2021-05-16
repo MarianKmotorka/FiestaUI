@@ -45,7 +45,10 @@ const CommentMenu = ({ eventId, comment, getCommentsQueryKey, onEdit }: IComment
         keepMounted
         anchorEl={anchorEl}
         open={Boolean(anchorEl)}
+        getContentAnchorEl={null}
         onClose={() => setAnchorEl(undefined)}
+        anchorOrigin={{ horizontal: 'right', vertical: 'bottom' }}
+        transformOrigin={{ horizontal: 'right', vertical: 'top' }}
       >
         <StyledMenuItem onClick={handleDeleted}>
           <Delete />

@@ -6,7 +6,12 @@ import useHub from '@hooks/useHub'
 import { INotification } from './types'
 import { useAuth } from '@contextProviders/AuthProvider'
 import { IApiError, ISkippedItemsDocument, ISkippedItemsResponse } from '@api/types'
-import { addNotification, setNotificationSeen } from './utils'
+import {
+  addNotification,
+  setNotificationSeen,
+  setAllNotificationsSeen,
+  deleteAllNotifications
+} from './utils'
 
 type Response = ISkippedItemsResponse<INotification<any>, { unseenCount: number }>
 
@@ -18,6 +23,8 @@ interface INotificationsContextValue {
   hasMore: boolean
   loadMore: () => Promise<any>
   setSeen: (id: number) => Promise<void>
+  setAllSeen: () => Promise<void>
+  deleteAll: () => Promise<void>
 }
 
 const NotificationsContext = createContext<INotificationsContextValue>(null!)
@@ -73,6 +80,18 @@ const NotificationsProvider: FC = ({ children }) => {
     [hubConnection, queryClient]
   )
 
+  const setAllSeen = useCallback(async () => {
+    await hubConnection?.invoke('SetAllSeen')
+    setAllNotificationsSeen(queryClient)
+    setUnseenCount(0)
+  }, [queryClient, hubConnection])
+
+  const deleteAll = useCallback(async () => {
+    await hubConnection?.invoke('DeleteAll')
+    deleteAllNotifications(queryClient)
+    setUnseenCount(0)
+  }, [queryClient, hubConnection])
+
   useEffect(() => {
     if (!hubConnection) return
 
@@ -90,6 +109,8 @@ const NotificationsProvider: FC = ({ children }) => {
     isLoading: isLoading || isFetching,
     notifications: data ? data.pages.flatMap(page => page.entries) : undefined,
     setSeen,
+    setAllSeen,
+    deleteAll,
     loadMore: useCallback(() => fetchNextPage(), [fetchNextPage])
   }
 

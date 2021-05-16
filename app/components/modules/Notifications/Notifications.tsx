@@ -1,31 +1,41 @@
+import { useState } from 'react'
 import { isEmpty } from 'lodash'
-import { NotificationsTwoTone } from '@material-ui/icons'
+import {
+  DeleteTwoTone,
+  MoreHoriz,
+  NotificationsTwoTone,
+  VisibilityTwoTone
+} from '@material-ui/icons'
 import useTranslation from 'next-translate/useTranslation'
-import { Box, CircularProgress, PopoverOrigin, Typography } from '@material-ui/core'
+import { Box, CircularProgress, Menu, Typography } from '@material-ui/core'
 
 import Observer from '@elements/Observer'
 import { getErrorMessage } from '@utils/utils'
 import { useNotifications } from './NotificationsProvider'
 
 import { getNotificationVariant } from './utils'
-import { StyledMenu } from './Notifications.styled'
+import { MoreButton, StyledMenu, StyledMenuItem } from './Notifications.styled'
 
 interface INotificationsProps {
   anchorEl: HTMLElement
   onClose: () => void
 }
 
-const origins: {
-  anchorOrigin: PopoverOrigin
-  transformOrigin: PopoverOrigin
-} = {
-  anchorOrigin: { horizontal: 'center', vertical: 'bottom' },
-  transformOrigin: { horizontal: 'center', vertical: 'top' }
-}
-
 const Notifications = ({ anchorEl, onClose }: INotificationsProps) => {
-  const { notifications, isLoading, error, hasMore, loadMore } = useNotifications()
+  const { notifications, isLoading, error, hasMore, loadMore, setAllSeen, deleteAll } =
+    useNotifications()
   const { t } = useTranslation('common')
+  const [moreButtonAnchorEl, setMoreButtonAnchorEl] = useState<HTMLElement>()
+
+  const handleDeleteAll = async () => {
+    await deleteAll()
+    setMoreButtonAnchorEl(undefined)
+  }
+
+  const handleSetAllSeen = async () => {
+    await setAllSeen()
+    setMoreButtonAnchorEl(undefined)
+  }
 
   return (
     <StyledMenu
@@ -34,7 +44,8 @@ const Notifications = ({ anchorEl, onClose }: INotificationsProps) => {
       anchorEl={anchorEl}
       onClose={onClose}
       getContentAnchorEl={null}
-      {...origins}
+      anchorOrigin={{ horizontal: 'center', vertical: 'bottom' }}
+      transformOrigin={{ horizontal: 'center', vertical: 'top' }}
     >
       <Box
         padding='15px 20px'
@@ -45,6 +56,17 @@ const Notifications = ({ anchorEl, onClose }: INotificationsProps) => {
       >
         <NotificationsTwoTone />
         <Typography variant='h6'>{t('notifications')}</Typography>
+        {!isEmpty(notifications) && (
+          <MoreButton
+            onClick={e =>
+              moreButtonAnchorEl
+                ? setMoreButtonAnchorEl(undefined)
+                : setMoreButtonAnchorEl(e.currentTarget)
+            }
+          >
+            <MoreHoriz />
+          </MoreButton>
+        )}
       </Box>
 
       {!isLoading && !error && isEmpty(notifications) && (
@@ -68,6 +90,26 @@ const Notifications = ({ anchorEl, onClose }: INotificationsProps) => {
       )}
 
       <Observer callback={loadMore} disabled={isLoading || !hasMore} />
+
+      <Menu
+        keepMounted
+        getContentAnchorEl={null}
+        anchorEl={moreButtonAnchorEl}
+        open={Boolean(moreButtonAnchorEl)}
+        onClose={() => setMoreButtonAnchorEl(undefined)}
+        anchorOrigin={{ horizontal: 'right', vertical: 'bottom' }}
+        transformOrigin={{ horizontal: 'right', vertical: 'top' }}
+      >
+        <StyledMenuItem onClick={handleDeleteAll}>
+          <DeleteTwoTone />
+          {t('deleteAllNotifications')}
+        </StyledMenuItem>
+
+        <StyledMenuItem onClick={handleSetAllSeen}>
+          <VisibilityTwoTone />
+          {t('setAllAsSeen')}
+        </StyledMenuItem>
+      </Menu>
     </StyledMenu>
   )
 }
