@@ -60,7 +60,7 @@ const UserDetailTemplate = ({ userId }: IUserDetailTemplateProps) => {
 
             <ButtonsWrapper>
               {isCurrUser && (
-                <Link href='/settings?tab=editProfile'>
+                <Link href='/settings?tab=profile'>
                   <Button variant='outlined' color='secondary' endIcon={<Edit />}>
                     {t('edit')}
                   </Button>
