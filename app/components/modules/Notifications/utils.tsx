@@ -1,17 +1,21 @@
-import { ISkippedItemsResponse } from '@api/types'
 import { ReactNode } from 'react'
 import { InfiniteData, QueryClient } from 'react-query'
+
+import { ISkippedItemsResponse } from '@api/types'
 import { INotification, NotificationType } from './types'
-import EventInvitationCreated from './variants/EventInvitationCreated'
+import EventAttendeeLeft from './variants/EventAttendeeLeft'
 import EventInvitationReply from './variants/EventInvitationReply'
+import EventAttendeeRemoved from './variants/EventAttendeeRemoved'
+import EventInvitationCreated from './variants/EventInvitationCreated'
 
 export const getNotificationVariant = (notification: INotification<any>) => {
   const notificationMap: Record<NotificationType, ReactNode> = {
     [NotificationType.EventInvitationReply]: <EventInvitationReply notification={notification} />,
-
     [NotificationType.EventInvitationCreated]: (
       <EventInvitationCreated notification={notification} />
-    )
+    ),
+    [NotificationType.EventAttendeeRemoved]: <EventAttendeeRemoved notification={notification} />,
+    [NotificationType.EventAttendeeLeft]: <EventAttendeeLeft notification={notification} />
   }
 
   return notificationMap[notification.type]

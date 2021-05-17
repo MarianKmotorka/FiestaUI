@@ -10,7 +10,7 @@ interface INotificationProps {
   imageSrc?: string
   createdAt: string
   seen: boolean
-  href: string
+  href?: string
   setSeen: () => Promise<void>
 }
 
@@ -25,7 +25,7 @@ const Notification = ({
   const router = useRouter()
 
   const handleClick = async () => {
-    router.push(href)
+    href && router.push(href)
     if (!seen) await setSeen()
   }
 
