@@ -159,7 +159,9 @@
   },
 
   "notification": {
-    "eventInvitationCreated": "<0>{{inviter}}</0> has invited you to attend <0>{{event}}</0>"
+    "eventInvitationCreated": "<0>{{inviter}}</0> has invited you to attend <0>{{event}}</0>",
+    "eventInvitationAccepted": "<0>{{invitee}}</0> has accepted your invitation to <0>{{event}}</0>",
+    "eventInvitationDeclined": "<0>{{invitee}}</0> has declined your invitation to <0>{{event}}</0>"
   },
 
   "enum": {

@@ -3,10 +3,11 @@ import { ReactNode } from 'react'
 import { InfiniteData, QueryClient } from 'react-query'
 import { INotification, NotificationType } from './types'
 import EventInvitationCreated from './variants/EventInvitationCreated'
+import EventInvitationReply from './variants/EventInvitationReply'
 
 export const getNotificationVariant = (notification: INotification<any>) => {
   const notificationMap: Record<NotificationType, ReactNode> = {
-    [NotificationType.EventInvitationReply]: <div></div>,
+    [NotificationType.EventInvitationReply]: <EventInvitationReply notification={notification} />,
 
     [NotificationType.EventInvitationCreated]: (
       <EventInvitationCreated notification={notification} />
