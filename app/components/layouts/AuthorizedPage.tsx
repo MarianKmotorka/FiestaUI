@@ -1,5 +1,5 @@
 import { FC } from 'react'
-import styled from 'styled-components'
+import styled, { keyframes } from 'styled-components'
 import Router from 'next/router'
 import { useAuth } from '@contextProviders/AuthProvider'
 import FiestaLogo from '@elements/FiestaLogo'
@@ -9,6 +9,18 @@ const Overlay = styled.div`
   height: 100vh;
   display: grid;
   place-items: center;
+`
+const logoMotion = keyframes`
+  from{
+    transform: scale(0.85);
+  }
+  to{
+    transform:scale(1.15)
+  }
+`
+
+const StyledLogo = styled(FiestaLogo)`
+  animation: ${logoMotion} 0.8s linear infinite alternate;
 `
 
 const AuthorizedPage: FC = ({ children }) => {
@@ -24,7 +36,7 @@ const AuthorizedPage: FC = ({ children }) => {
     return (
       <Overlay>
         {header}
-        <FiestaLogo />
+        <StyledLogo />
       </Overlay>
     )
 
@@ -34,7 +46,7 @@ const AuthorizedPage: FC = ({ children }) => {
       <Overlay>
         {header}
 
-        <FiestaLogo />
+        <StyledLogo />
       </Overlay>
     )
   }
