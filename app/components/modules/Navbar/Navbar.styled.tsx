@@ -8,8 +8,9 @@ import { MD, SM } from '@contextProviders/AppThemeProvider/theme'
 export const NAVBAR_HEIGHT = 80
 export const NAVBAR_HEIGHT_MOBILE = 60
 
-export const StyledAppBar = styled(AppBar)`
-  background-color: ${({ theme }) => theme.palette.background.default};
+export const StyledAppBar = styled(AppBar)<{ transparent: 0 | 1 }>`
+  background-color: ${({ theme, transparent }) =>
+    transparent ? 'transparent' : theme.palette.background.default};
 `
 
 export const Logo = styled(FiestaLogo)`
@@ -40,6 +41,7 @@ export const StyledContainer = styled(Container)`
 
 export const NavIconButton = styled(IconButton)<{ active?: 0 | 1 }>`
   color: ${({ theme }) => theme.palette.themeText.themeBlack};
+  background: ${({ theme }) => theme.palette.background.default}88;
 
   ${({ theme, active }) => active && `color: ${theme.palette.primary.main}`};
 

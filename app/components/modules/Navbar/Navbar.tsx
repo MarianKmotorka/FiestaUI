@@ -30,9 +30,10 @@ import {
 
 interface INavbarProps {
   forceUnauthorizedNavbar?: true
+  transparent?: true
 }
 
-const Navbar = ({ forceUnauthorizedNavbar }: INavbarProps) => {
+const Navbar = ({ forceUnauthorizedNavbar, transparent }: INavbarProps) => {
   const auth = useAuth()
   const router = useRouter()
   const { t } = useTranslation('common')
@@ -119,7 +120,7 @@ const Navbar = ({ forceUnauthorizedNavbar }: INavbarProps) => {
   )
 
   return (
-    <StyledAppBar elevation={0}>
+    <StyledAppBar elevation={0} transparent={transparent ? 1 : 0}>
       <StyledContainer>
         <Logo onClick={() => router.push(auth.isLoggedIn ? '/events' : '/')} />
 

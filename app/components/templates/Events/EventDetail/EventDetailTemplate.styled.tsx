@@ -5,7 +5,7 @@ import { MD, SM } from '@contextProviders/AppThemeProvider/theme'
 
 export const Wrapper = styled.div`
   position: relative;
-  padding: 30px 0;
+  padding: 100px 0 30px;
 
   @media screen and (max-width: ${MD}px) {
     padding-top: 0;

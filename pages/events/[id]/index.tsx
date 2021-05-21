@@ -6,7 +6,7 @@ const EventDetail = () => {
   const { query } = useRouter()
 
   return (
-    <FullWidthLayout title='Event • Fiesta'>
+    <FullWidthLayout title='Event • Fiesta' transparentNavbar>
       <EventDetailTemplate eventId={query.id as string} />
     </FullWidthLayout>
   )
