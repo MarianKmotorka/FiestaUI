@@ -1,5 +1,6 @@
 import { MD } from '@contextProviders/AppThemeProvider/theme'
 import { Card } from '@material-ui/core'
+import { Close } from '@material-ui/icons'
 import { BOTTOM_NAVIGATION_HEIGHT } from '@modules/BottomNavigation/BottomNavigation.styled'
 import styled from 'styled-components'
 
@@ -15,4 +16,11 @@ export const Wrapper = styled(Card)`
     bottom: calc(15px + ${BOTTOM_NAVIGATION_HEIGHT}px);
     right: 15px;
   }
+`
+
+export const CloseIcon = styled(Close)`
+  cursor: pointer;
+  position: absolute;
+  top: 10px;
+  right: 10px;
 `

@@ -12,7 +12,7 @@ import { AccessibilityTypeEnum } from 'domainTypes'
 import { IEventDetail } from '../EventDetailTemplate'
 import { apiErrorToast } from 'services/toastService'
 
-import { Wrapper } from './InvitationPopup.styled'
+import { CloseIcon, Wrapper } from './InvitationPopup.styled'
 
 interface IInvitationPopupProps {
   event: IEventDetail
@@ -57,6 +57,13 @@ const InvitationPopup = ({ event }: IInvitationPopupProps) => {
     setInvitationLoading(undefined)
   }
 
+  const handleClose = () => {
+    queryClient.setQueryData<IEventDetail>(['events', event.id], prev => ({
+      ...prev!,
+      isCurrentUserInvited: false
+    }))
+  }
+
   const alertButtonProps = {
     size: maxMedium ? 'small' : 'medium'
   } as const
@@ -64,6 +71,8 @@ const InvitationPopup = ({ event }: IInvitationPopupProps) => {
   return (
     <Grow in>
       <Wrapper elevation={15}>
+        <CloseIcon fontSize='small' onClick={handleClose} />
+
         <Box display='flex' gridGap='17px'>
           {!maxMedium && <HelpTwoTone fontSize='large' />}
 
