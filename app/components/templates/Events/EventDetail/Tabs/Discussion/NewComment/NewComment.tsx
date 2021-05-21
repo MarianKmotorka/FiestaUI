@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { Box } from '@material-ui/core'
 import useTranslation from 'next-translate/useTranslation'
 
@@ -27,11 +27,16 @@ const NewComment = ({
   onSend,
   onCancel
 }: INewCommentProps) => {
-  const [text, setText] = useState(initialText || '')
+  const [text, setText] = useState('')
   const [sending, setSending] = useState(false)
   const { t } = useTranslation('common')
   const { currentUser } = useAuthorizedUser()
   const [showButtons, setShowButtons] = useState(false)
+
+  // Setting initial state this way so the cursor ends up at the end of the text
+  useEffect(() => {
+    initialText && setText(initialText)
+  }, [initialText])
 
   const handleCancel = () => {
     setShowButtons(false)
