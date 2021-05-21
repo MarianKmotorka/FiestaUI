@@ -21,8 +21,7 @@ export const UserName = styled.h6`
 `
 
 export const ViewRepliesButton = styled(Button)`
-  padding-left: 0;
-  padding-right: 0;
+  padding: 2px 0;
   :hover {
     background-color: inherit;
   }
@@ -56,6 +55,7 @@ export const StyledChip = styled(Chip)`
 export const ReplyButton = styled(Button)`
   padding-left: 0;
   padding-right: 0;
+  padding-bottom: 0;
   min-width: 0;
   margin-right: 10px;
 

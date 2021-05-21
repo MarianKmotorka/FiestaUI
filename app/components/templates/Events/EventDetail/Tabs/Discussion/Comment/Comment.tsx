@@ -99,7 +99,7 @@ const Comment = memo(
     }
 
     return (
-      <Box marginY='20px'>
+      <Box marginY={comment.parentId ? '18px' : '25px'}>
         {isEditing ? (
           <NewComment
             autofocus
