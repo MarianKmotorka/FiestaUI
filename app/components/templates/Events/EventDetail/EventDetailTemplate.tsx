@@ -28,6 +28,7 @@ import { AccessibilityTypeEnum } from 'domainTypes'
 import EventDetailTabs from './Tabs/EventDetailTabs'
 import FetchError from '@elements/FetchError/FetchError'
 import { useAuth } from '@contextProviders/AuthProvider'
+import InvitationPopup from './InvitationPopup/InvitationPopup'
 import CollapseContainer from '@elements/CollapseContainer/CollapseContainer'
 
 import {
@@ -207,6 +208,8 @@ const EventDetailTemplate = ({ eventId }: IProps) => {
       {showDeleteDialog && (
         <DeleteEventDialog onClose={() => setShowDeleteDialog(false)} eventId={event.id} />
       )}
+
+      {event.isCurrentUserInvited && <InvitationPopup event={event} />}
     </Wrapper>
   )
 }

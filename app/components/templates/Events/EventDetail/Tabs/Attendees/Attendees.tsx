@@ -2,23 +2,22 @@ import { isEmpty } from 'lodash'
 import { useState } from 'react'
 import { Alert } from '@material-ui/lab'
 import { useRouter } from 'next/router'
-import { InfiniteData, useInfiniteQuery, useQueryClient } from 'react-query'
 import { Box, CircularProgress } from '@material-ui/core'
+import { InfiniteData, useInfiniteQuery, useQueryClient } from 'react-query'
 
 import api from '@api/HttpClient'
 import { IUserDto } from 'domainTypes'
 import Observer from '@elements/Observer'
 import Button from '@elements/Button/Button'
 import useDebounce from '@hooks/useDebounce'
-import useWindowSize from '@hooks/useWindowSize'
 import FetchError from '@elements/FetchError/FetchError'
 import { IEventDetail } from '../../EventDetailTemplate'
 import useTranslation from 'next-translate/useTranslation'
 import UserListItem from '@elements/UserListItem/UserListItem'
 import { useAuthorizedUser } from '@contextProviders/AuthProvider'
-import ConfirmationDialog from '@elements/ConfirmationDialog/ConfirmationDialog'
 import { apiErrorToast, successToast } from 'services/toastService'
 import { IApiError, IQueryDocument, IQueryResponse } from '@api/types'
+import ConfirmationDialog from '@elements/ConfirmationDialog/ConfirmationDialog'
 
 import { ActionsWrapper, Item, ItemsContainer, StyledTextBox } from '../common.styled'
 
@@ -30,12 +29,9 @@ interface IAttendeesProps {
 const Attendees = ({ event, isOrganizer }: IAttendeesProps) => {
   const [removing, setRemoving] = useState(false)
   const [toRemove, setToRemove] = useState<IUserDto>()
-  const [invitationLoading, setInvitationLoading] =
-    useState<'accept' | 'decline' | undefined>(undefined)
   const { currentUser } = useAuthorizedUser()
   const router = useRouter()
   const queryClient = useQueryClient()
-  const { maxMedium } = useWindowSize()
   const { t } = useTranslation('common')
   const [search, setSearch] = useState('')
   const debouncedSearch = useDebounce(search)
@@ -93,34 +89,6 @@ const Attendees = ({ event, isOrganizer }: IAttendeesProps) => {
     setToRemove(undefined)
   }
 
-  const handleInvitation = async (accepted: boolean) => {
-    if (invitationLoading) return
-    setInvitationLoading(accepted ? 'accept' : 'decline')
-
-    try {
-      await api.post(`/events/${event.id}/invitations/reply`, { accepted })
-
-      if (!accepted) return router.replace('/events')
-
-      queryClient.setQueryData<IEventDetail>(['events', event.id], prev => ({
-        ...prev!,
-        isCurrentUserInvited: false,
-        isCurrentUserAttendee: true,
-        attendeesCount: prev!.attendeesCount + 1
-      }))
-      queryClient.invalidateQueries(['events', event.id, 'attendees', 'query'])
-    } catch (err) {
-      apiErrorToast(err, t)
-    }
-
-    setInvitationLoading(undefined)
-  }
-
-  const alertButtonProps = {
-    size: maxMedium ? 'small' : 'medium',
-    variant: 'text'
-  } as const
-
   if (isLoading) return <CircularProgress />
   if (error) return <FetchError error={error} />
 
@@ -129,28 +97,6 @@ const Attendees = ({ event, isOrganizer }: IAttendeesProps) => {
   return (
     <>
       {event.isCurrentUserAttendee && <Alert>{t('youAreAttendingThisEvent')}</Alert>}
-
-      {event.isCurrentUserInvited && (
-        <Alert severity='info'>
-          <Box display='flex' gridGap='5px' flexWrap='wrap' alignItems='center'>
-            {t('youHaveBeenInvited')}
-            <Button
-              {...alertButtonProps}
-              onClick={() => handleInvitation(true)}
-              loading={invitationLoading === 'accept'}
-            >
-              {t('accept')}
-            </Button>
-            <Button
-              {...alertButtonProps}
-              onClick={() => handleInvitation(false)}
-              loading={invitationLoading === 'decline'}
-            >
-              {t('decline')}
-            </Button>
-          </Box>
-        </Alert>
-      )}
 
       <Box marginY='20px' color='themeText.themeGray'>
         {t('thisEventHasCountAttendees', { count: event.attendeesCount })}

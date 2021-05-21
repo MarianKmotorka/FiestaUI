@@ -124,9 +124,10 @@
   "unsendFriendRequest": "Unsend friend request",
   "viewCountReplies": "View {{count}} replies",
   "warning": "Warning",
+  "wouldYouLikeToAcceptTheInvitation": "Would you like to accept the invitation ?",
   "youDontHaveSufficentPermissionsToAccessThisResource": "You don't have sufficient permissions to access this resource.",
   "youMustBeLoggedIn": "You must be logged in.",
-  "youHaveBeenInvited": "You have been invited",
+  "youHaveBeenInvitedToThisEvent": "You have been invited to this event.",
   "youAreAttendingThisEvent": "You are attending this event",
 
   "validator": {
