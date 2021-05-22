@@ -14,6 +14,7 @@ import {
 import NavLink from '@elements/NavLink'
 import useWindowSize from '@hooks/useWindowSize'
 import NavbarMenu from './NavbarMenu/NavbarMenu'
+import HideOnScroll from '@elements/HideOnScroll'
 import NavbarSearch from './NavbarSearch/NavbarSearch'
 import { useAuth } from '@contextProviders/AuthProvider'
 import Notifications from '@modules/Notifications/Notifications'
@@ -120,47 +121,49 @@ const Navbar = ({ forceUnauthorizedNavbar, transparent }: INavbarProps) => {
   )
 
   return (
-    <StyledAppBar elevation={0} transparent={transparent ? 1 : 0}>
-      <StyledContainer>
-        <Logo onClick={() => router.push(auth.isLoggedIn ? '/events' : '/')} />
+    <HideOnScroll>
+      <StyledAppBar elevation={0} transparent={transparent ? 1 : 0}>
+        <StyledContainer>
+          <Logo onClick={() => router.push(auth.isLoggedIn ? '/events' : '/')} />
 
-        <Menu>
-          {auth.isLoggedIn && !forceUnauthorizedNavbar ? (
-            maxMedium ? (
-              mobileContent
+          <Menu>
+            {auth.isLoggedIn && !forceUnauthorizedNavbar ? (
+              maxMedium ? (
+                mobileContent
+              ) : (
+                desktopContent
+              )
             ) : (
-              desktopContent
-            )
-          ) : (
-            <StyledButtonGroup>
-              <Button
-                color='secondary'
-                variant='text'
-                size={maxMedium ? 'small' : 'large'}
-                onClick={() => router.push('/login')}
-              >
-                {t('login').toUpperCase()}
-              </Button>
+              <StyledButtonGroup>
+                <Button
+                  color='secondary'
+                  variant='text'
+                  size={maxMedium ? 'small' : 'large'}
+                  onClick={() => router.push('/login')}
+                >
+                  {t('login').toUpperCase()}
+                </Button>
 
-              <Button
-                color='primary'
-                variant='contained'
-                size={maxMedium ? 'small' : 'large'}
-                onClick={() => router.push('/signup')}
-              >
-                {t('signup').toUpperCase()}
-              </Button>
-            </StyledButtonGroup>
-          )}
-        </Menu>
-      </StyledContainer>
+                <Button
+                  color='primary'
+                  variant='contained'
+                  size={maxMedium ? 'small' : 'large'}
+                  onClick={() => router.push('/signup')}
+                >
+                  {t('signup').toUpperCase()}
+                </Button>
+              </StyledButtonGroup>
+            )}
+          </Menu>
+        </StyledContainer>
 
-      {searchOpen && <NavbarSearch onClose={() => setSearchOpen(false)} />}
+        {searchOpen && <NavbarSearch onClose={() => setSearchOpen(false)} />}
 
-      {notificationsEl && (
-        <Notifications anchorEl={notificationsEl} onClose={() => setNotificationsEl(undefined)} />
-      )}
-    </StyledAppBar>
+        {notificationsEl && (
+          <Notifications anchorEl={notificationsEl} onClose={() => setNotificationsEl(undefined)} />
+        )}
+      </StyledAppBar>
+    </HideOnScroll>
   )
 }
 

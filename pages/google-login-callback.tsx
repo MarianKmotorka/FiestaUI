@@ -4,7 +4,7 @@ import useTranslation from 'next-translate/useTranslation'
 import { KeyboardArrowLeft } from '@material-ui/icons'
 import { Card, CardContent } from '@material-ui/core'
 import { useRouter } from 'next/dist/client/router'
-import styled from 'styled-components'
+import styled, { keyframes } from 'styled-components'
 import Head from 'next/head'
 
 import { loginUsingGoogleCode } from 'services/authService'
@@ -23,6 +23,19 @@ const Overlay = styled.div`
     font-weight: 500;
     color: ${({ theme }) => theme.palette.error.main};
   }
+`
+
+const logoMotion = keyframes`
+  from{
+    transform: scale(0.85);
+  }
+  to{
+    transform:scale(1.15)
+  }
+`
+
+const StyledLogo = styled(FiestaLogo)`
+  animation: ${logoMotion} 0.8s linear infinite alternate;
 `
 
 const getReturnUrlFromQuery = (query: ParsedUrlQuery) => {
@@ -58,7 +71,7 @@ const GoogleLoginCallback = () => {
         <title>Callback</title>
       </Head>
 
-      {!error && <FiestaLogo />}
+      {!error && <StyledLogo />}
 
       {error && (
         <Card>
