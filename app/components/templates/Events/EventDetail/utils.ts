@@ -12,8 +12,9 @@ export const getGoogleCalendarUrl = (event: IEventDetail) => {
   const endDate = moment(event.endDate).format(format)
   url.searchParams.append('dates', `${startDate}Z/${endDate}Z`)
 
-  const eventLink = `${window.location.origin}/events/${event.id}`
-  url.searchParams.append('details', `${event.description || ''}\n\n${eventLink}`)
+  const origin = `${window.location.origin}/events/${event.id}`
+  const link = `<a href="${origin}">${event.name}</a>`
+  url.searchParams.append('details', `${event.description || ''}\n\n${link}`)
 
   return url.toString()
 }
