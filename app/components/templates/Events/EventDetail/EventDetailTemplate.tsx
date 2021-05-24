@@ -6,10 +6,11 @@ import useTranslation from 'next-translate/useTranslation'
 import { Box, Button as MuiButton, CircularProgress } from '@material-ui/core'
 import {
   AccountBox,
-  DeleteForeverOutlined,
-  Edit,
+  DeleteTwoTone,
+  EditTwoTone,
   EventAvailable,
   EventBusy,
+  EventNoteTwoTone,
   FormatListNumbered,
   LockOpen,
   OpenInNew,
@@ -41,6 +42,9 @@ import {
   Organizer,
   BlurredImageWrapper
 } from './EventDetailTemplate.styled'
+import Divider from '@elements/Divider'
+import { getGoogleCalendarUrl } from './utils'
+import { NAVBAR_HEIGHT } from '@modules/Navbar/Navbar.styled'
 
 interface IProps {
   eventId: string
@@ -82,7 +86,9 @@ const EventDetailTemplate = ({ eventId }: IProps) => {
   if (isLoading || isIdle)
     return (
       <Container>
-        <CircularProgress />
+        <Box marginTop={`${NAVBAR_HEIGHT}px`}>
+          <CircularProgress />
+        </Box>
       </Container>
     )
   if (error) return <FetchError error={error} />
@@ -174,29 +180,46 @@ const EventDetailTemplate = ({ eventId }: IProps) => {
               </InfoRow>
             </Box>
 
-            {isOrganizer && (
-              <Box display='flex' justifyContent='flex-end' gridGap='10px'>
-                <Link href={`/events/${eventId}/update`}>
-                  <Button
-                    startIcon={<Edit />}
-                    color='default'
-                    variant='text'
-                    size={maxMedium ? 'medium' : 'large'}
-                  >
-                    {t('edit')}
-                  </Button>
-                </Link>
+            <Divider />
 
-                <Button
+            <Box
+              display='flex'
+              justifyContent='flex-end'
+              gridGap='10px'
+              flexWrap='wrap'
+              marginTop='15px'
+            >
+              {(event.isCurrentUserAttendee || isOrganizer) && (
+                <MuiButton
+                  startIcon={<EventNoteTwoTone />}
+                  color='default'
                   variant='text'
-                  size={maxMedium ? 'medium' : 'large'}
-                  startIcon={<DeleteForeverOutlined />}
-                  onClick={() => setShowDeleteDialog(true)}
+                  target='_blank'
+                  rel='noopener noreferrer'
+                  href={getGoogleCalendarUrl(event)}
                 >
-                  {t('delete')}
-                </Button>
-              </Box>
-            )}
+                  {t('addToGoogleCalendar')}
+                </MuiButton>
+              )}
+
+              {isOrganizer && (
+                <>
+                  <Link href={`/events/${eventId}/update`}>
+                    <Button startIcon={<EditTwoTone />} color='default' variant='text'>
+                      {t('edit')}
+                    </Button>
+                  </Link>
+
+                  <Button
+                    variant='text'
+                    startIcon={<DeleteTwoTone />}
+                    onClick={() => setShowDeleteDialog(true)}
+                  >
+                    {t('delete')}
+                  </Button>
+                </>
+              )}
+            </Box>
           </Container>
         </StyledCard>
       </Container>

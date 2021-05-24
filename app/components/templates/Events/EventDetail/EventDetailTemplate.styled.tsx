@@ -36,7 +36,7 @@ export const BlurredImage = styled(Image)`
 `
 
 export const StyledCard = styled(Card)`
-  padding: 40px 0 30px;
+  padding: 40px 0 20px;
   margin-top: 30px;
   border-radius: 12px;
   background-color: ${({ theme }) => theme.palette.background.paper + 'ee'};
