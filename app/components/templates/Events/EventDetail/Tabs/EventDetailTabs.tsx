@@ -7,6 +7,7 @@ import AuthCheck from '@elements/AuthCheck'
 import Attendees from './Attendees/Attendees'
 import Discussion from './Discussion/Discussion'
 import Invitations from './Invitations/Invitations'
+import JoinRequests from './JoinRequests/JoinRequests'
 import { IEventDetail } from '../EventDetailTemplate'
 
 import { StyledPanel, TabsWrapper } from './EventDetailTabs.styled'
@@ -60,7 +61,13 @@ const EventDetailTabs = ({ event, isOrganizer }: IEventDetailTabsProps) => {
           </StyledPanel>
         )}
 
-        {isOrganizer && <StyledPanel index='joinRequests' value={currTab}></StyledPanel>}
+        {isOrganizer && (
+          <StyledPanel index='joinRequests' value={currTab}>
+            <AuthCheck>
+              <JoinRequests event={event} />
+            </AuthCheck>
+          </StyledPanel>
+        )}
 
         {showDiscussion && (
           <StyledPanel index='discussion' value={currTab}>

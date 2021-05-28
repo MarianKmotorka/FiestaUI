@@ -7,6 +7,8 @@ import EventAttendeeLeft from './variants/EventAttendeeLeft'
 import EventInvitationReply from './variants/EventInvitationReply'
 import EventAttendeeRemoved from './variants/EventAttendeeRemoved'
 import EventInvitationCreated from './variants/EventInvitationCreated'
+import EventJoinRequestCreated from './variants/EventJoinRequestCreated'
+import EventJoinRequestReply from './variants/EventJoinRequestReply'
 
 export const getNotificationVariant = (notification: INotification<any>) => {
   const notificationMap: Record<NotificationType, ReactNode> = {
@@ -15,7 +17,11 @@ export const getNotificationVariant = (notification: INotification<any>) => {
       <EventInvitationCreated notification={notification} />
     ),
     [NotificationType.EventAttendeeRemoved]: <EventAttendeeRemoved notification={notification} />,
-    [NotificationType.EventAttendeeLeft]: <EventAttendeeLeft notification={notification} />
+    [NotificationType.EventAttendeeLeft]: <EventAttendeeLeft notification={notification} />,
+    [NotificationType.EventJoinRequestCreated]: (
+      <EventJoinRequestCreated notification={notification} />
+    ),
+    [NotificationType.EventJoinRequestReply]: <EventJoinRequestReply notification={notification} />
   }
 
   return notificationMap[notification.type]

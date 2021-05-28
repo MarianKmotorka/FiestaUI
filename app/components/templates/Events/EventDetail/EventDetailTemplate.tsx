@@ -1,7 +1,7 @@
 import { useState } from 'react'
 import Link from 'next/link'
 import { lowerFirst } from 'lodash'
-import { useQuery } from 'react-query'
+import { useQuery, useQueryClient } from 'react-query'
 import useTranslation from 'next-translate/useTranslation'
 import { Box, Button as MuiButton, CircularProgress } from '@material-ui/core'
 import {
@@ -14,6 +14,8 @@ import {
   FormatListNumbered,
   LockOpen,
   OpenInNew,
+  PersonAddDisabledOutlined,
+  PersonAddOutlined,
   Public
 } from '@material-ui/icons'
 
@@ -31,6 +33,11 @@ import FetchError from '@elements/FetchError/FetchError'
 import { useAuth } from '@contextProviders/AuthProvider'
 import InvitationPopup from './InvitationPopup/InvitationPopup'
 import CollapseContainer from '@elements/CollapseContainer/CollapseContainer'
+import { apiErrorToast, successToast } from 'services/toastService'
+import Divider from '@elements/Divider'
+import { getGoogleCalendarUrl } from './utils'
+import { NAVBAR_HEIGHT } from '@modules/Navbar/Navbar.styled'
+import AuthCheck from '@elements/AuthCheck'
 
 import {
   StyledCard,
@@ -42,9 +49,6 @@ import {
   Organizer,
   BlurredImageWrapper
 } from './EventDetailTemplate.styled'
-import Divider from '@elements/Divider'
-import { getGoogleCalendarUrl } from './utils'
-import { NAVBAR_HEIGHT } from '@modules/Navbar/Navbar.styled'
 
 interface IProps {
   eventId: string
@@ -64,6 +68,7 @@ export interface IEventDetail {
   invitationsCount: number
   isCurrentUserInvited: boolean
   isCurrentUserAttendee: boolean
+  isJoinRequestSentByCurrentUser: boolean
   capacity: number
   organizer: {
     id: string
@@ -82,6 +87,8 @@ const EventDetailTemplate = ({ eventId }: IProps) => {
     async () => await (await api.get(`/events/${eventId}`)).data,
     { enabled: !auth.isLoading }
   )
+  const [isJoinRequestLoading, setIsJoinRequestLoading] = useState(false)
+  const queryClient = useQueryClient()
 
   if (isLoading || isIdle)
     return (
@@ -96,6 +103,36 @@ const EventDetailTemplate = ({ eventId }: IProps) => {
   const event = data!
   const bannerUrl = event.bannerUrl || '/eventDetailBanner.png'
   const isOrganizer = auth.isLoggedIn && auth.currentUser.id === event.organizer.id
+
+  const handleSendRequestClick = async () => {
+    try {
+      setIsJoinRequestLoading(true)
+      await api.post(`/events/${event.id}/join-requests`, { id: event.id })
+      queryClient.setQueryData<IEventDetail>(['events', event.id], prev => ({
+        ...prev!,
+        isJoinRequestSentByCurrentUser: true
+      }))
+      successToast(t('requestSent'))
+    } catch (err) {
+      apiErrorToast(err, t)
+    }
+    setIsJoinRequestLoading(false)
+  }
+
+  const handleUnsendRequestClick = async () => {
+    try {
+      setIsJoinRequestLoading(true)
+      await api.post(`/events/${event.id}/join-requests/delete`, { id: event.id })
+      queryClient.setQueryData<IEventDetail>(['events', event.id], prev => ({
+        ...prev!,
+        isJoinRequestSentByCurrentUser: false
+      }))
+      successToast(t('requestUnsent'))
+    } catch (err) {
+      apiErrorToast(err, t)
+    }
+    setIsJoinRequestLoading(false)
+  }
 
   return (
     <Wrapper>
@@ -218,6 +255,37 @@ const EventDetailTemplate = ({ eventId }: IProps) => {
                     {t('delete')}
                   </Button>
                 </>
+              )}
+
+              {!isOrganizer && !event.isCurrentUserAttendee && !event.isCurrentUserInvited && (
+                <AuthCheck
+                  fallback={loginUrl => (
+                    <Link href={loginUrl}>
+                      <Button endIcon={<PersonAddOutlined />}>{t('sendJoinRequest')}</Button>
+                    </Link>
+                  )}
+                >
+                  <Button
+                    loading={isJoinRequestLoading}
+                    variant={event.isJoinRequestSentByCurrentUser ? 'text' : 'contained'}
+                    startIcon={
+                      event.isJoinRequestSentByCurrentUser ? (
+                        <PersonAddDisabledOutlined />
+                      ) : (
+                        <PersonAddOutlined />
+                      )
+                    }
+                    onClick={
+                      event.isJoinRequestSentByCurrentUser
+                        ? handleUnsendRequestClick
+                        : handleSendRequestClick
+                    }
+                  >
+                    {t(
+                      event.isJoinRequestSentByCurrentUser ? 'unsendJoinRequest' : 'sendJoinRequest'
+                    )}
+                  </Button>
+                </AuthCheck>
               )}
             </Box>
           </Container>
