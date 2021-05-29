@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import Link from 'next/link'
 import { lowerFirst } from 'lodash'
 import { useQuery, useQueryClient } from 'react-query'
@@ -22,8 +22,11 @@ import {
 import api from '@api/HttpClient'
 import Banner from './Banner/Banner'
 import { IApiError } from '@api/types'
+import Divider from '@elements/Divider'
 import { toLocalTime } from '@utils/utils'
+import AuthCheck from '@elements/AuthCheck'
 import Button from '@elements/Button/Button'
+import { getGoogleCalendarUrl } from './utils'
 import { Container } from '@elements/Container'
 import useWindowSize from '@hooks/useWindowSize'
 import DeleteEventDialog from './DeleteEventDialog'
@@ -32,12 +35,9 @@ import EventDetailTabs from './Tabs/EventDetailTabs'
 import FetchError from '@elements/FetchError/FetchError'
 import { useAuth } from '@contextProviders/AuthProvider'
 import InvitationPopup from './InvitationPopup/InvitationPopup'
-import CollapseContainer from '@elements/CollapseContainer/CollapseContainer'
 import { apiErrorToast, successToast } from 'services/toastService'
-import Divider from '@elements/Divider'
-import { getGoogleCalendarUrl } from './utils'
+import CollapseContainer from '@elements/CollapseContainer/CollapseContainer'
 import { NAVBAR_HEIGHT } from '@modules/Navbar/Navbar.styled'
-import AuthCheck from '@elements/AuthCheck'
 
 import {
   StyledCard,
@@ -89,6 +89,14 @@ const EventDetailTemplate = ({ eventId }: IProps) => {
   )
   const [isJoinRequestLoading, setIsJoinRequestLoading] = useState(false)
   const queryClient = useQueryClient()
+
+  useEffect(() => {
+    //Invalidate cached tabs
+    queryClient.invalidateQueries(['events', eventId, 'attendees', 'query'])
+    queryClient.invalidateQueries(['events', eventId, 'invitations', 'query'])
+    queryClient.invalidateQueries(['events', eventId, 'joinRequests', 'query'])
+    queryClient.invalidateQueries(['events', eventId, 'comments', 'query'])
+  }, [eventId, queryClient])
 
   if (isLoading || isIdle)
     return (
