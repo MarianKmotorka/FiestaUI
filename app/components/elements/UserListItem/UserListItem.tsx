@@ -1,7 +1,10 @@
-import { Box } from '@material-ui/core'
-import { IUserDto } from 'domainTypes'
 import Link from 'next/link'
-import { ItemSubText, ItemText, StyledAvatar, Wrapper } from './UserListItem.styled'
+import { Box } from '@material-ui/core'
+
+import Avatar from '@elements/Avatar'
+import { IUserDto } from 'domainTypes'
+
+import { ItemSubText, ItemText, Wrapper } from './UserListItem.styled'
 
 interface IUserListItemProps {
   user: IUserDto
@@ -13,7 +16,7 @@ interface IUserListItemProps {
 const UserListItem = ({ user, isLink, href, className }: IUserListItemProps) => {
   const content = (
     <Wrapper className={className} cursor={isLink ? 'pointer' : 'auto'}>
-      <StyledAvatar src={user.pictureUrl} />
+      <Avatar src={user.pictureUrl} />
 
       <Box>
         <ItemText>{user.username}</ItemText>

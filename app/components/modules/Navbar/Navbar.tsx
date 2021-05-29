@@ -1,7 +1,7 @@
 import { useState } from 'react'
 import { useRouter } from 'next/dist/client/router'
 import useTranslation from 'next-translate/useTranslation'
-import { Avatar, Badge, Button, Tooltip } from '@material-ui/core'
+import { Badge, Button, Tooltip } from '@material-ui/core'
 import {
   ChatTwoTone,
   DashboardTwoTone,
@@ -11,6 +11,7 @@ import {
   SearchTwoTone
 } from '@material-ui/icons'
 
+import Avatar from '@elements/Avatar'
 import NavLink from '@elements/NavLink'
 import useWindowSize from '@hooks/useWindowSize'
 import NavbarMenu from './NavbarMenu/NavbarMenu'

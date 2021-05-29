@@ -1,12 +1,12 @@
 import Link from 'next/link'
 import { useState } from 'react'
 import { useQuery } from 'react-query'
-import { Avatar } from '@material-ui/core'
 import { KeyboardArrowRight } from '@material-ui/icons'
 import useTranslation from 'next-translate/useTranslation'
 
 import api from '@api/HttpClient'
 import EventItem from './EventItem'
+import Avatar from '@elements/Avatar'
 import { IApiError } from '@api/types'
 import useDebounce from '@hooks/useDebounce'
 import FetchError from '@elements/FetchError/FetchError'

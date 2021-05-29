@@ -32,7 +32,7 @@ import {
   UserName,
   ViewRepliesButton
 } from './Comment.styled'
-import { StyledAvatar } from '../Discussion.styled'
+import Avatar from '@elements/Avatar'
 
 interface ICommentProps {
   comment: IComment
@@ -113,7 +113,12 @@ const Comment = memo(
           <Box display='flex'>
             <Link href={userHref}>
               <Box width={comment.parentId ? '40px' : '50px'}>
-                <StyledAvatar src={comment.sender.pictureUrl} small={comment.parentId ? 1 : 0} />
+                <Avatar
+                  clickable
+                  src={comment.sender.pictureUrl}
+                  size={comment.parentId ? '30px' : undefined}
+                  smSize={comment.parentId ? '25px' : undefined}
+                />
               </Box>
             </Link>
 

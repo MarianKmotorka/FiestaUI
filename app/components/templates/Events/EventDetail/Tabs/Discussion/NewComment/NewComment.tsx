@@ -2,11 +2,10 @@ import { useEffect, useState } from 'react'
 import { Box } from '@material-ui/core'
 import useTranslation from 'next-translate/useTranslation'
 
+import Avatar from '@elements/Avatar'
 import Button from '@elements/Button/Button'
 import TextBox from '@elements/TextBox/TextBox'
 import { useAuthorizedUser } from '@contextProviders/AuthProvider'
-
-import { StyledAvatar } from '../Discussion.styled'
 
 interface INewCommentProps {
   onSend: (text: string) => Promise<void>
@@ -55,7 +54,11 @@ const NewComment = ({
   return (
     <Box marginBottom='10px' marginTop='2px'>
       <Box display='flex' gridGap='15px'>
-        <StyledAvatar src={currentUser.pictureUrl} small={smallAvatar ? 1 : 0} />
+        <Avatar
+          src={currentUser.pictureUrl}
+          size={smallAvatar ? '30px' : undefined}
+          smSize={smallAvatar ? '25px' : undefined}
+        />
 
         <TextBox
           value={text}

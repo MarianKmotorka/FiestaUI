@@ -1,8 +1,9 @@
 import Link from 'next/link'
 import moment from 'moment'
-import { Avatar, Box } from '@material-ui/core'
+import { Box } from '@material-ui/core'
 import { Edit, Event, KeyboardArrowRight, LocationOn, Schedule } from '@material-ui/icons'
 
+import Avatar from '@elements/Avatar'
 import { EventAndUserSelectorItem, ItemType } from './types'
 import { EllipsisOverflow, Item, ItemInfo } from './NavbarSearch.styled'
 

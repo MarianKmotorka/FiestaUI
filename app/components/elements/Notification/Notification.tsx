@@ -1,8 +1,10 @@
-import { ReactNode } from 'react'
 import moment from 'moment'
+import { ReactNode } from 'react'
 import { useRouter } from 'next/router'
-import { Avatar, Box } from '@material-ui/core'
+import { Box } from '@material-ui/core'
 import { FiberManualRecord, NotificationsTwoTone } from '@material-ui/icons'
+
+import Avatar from '@elements/Avatar'
 import { Content, CreatedAt, Wrapper } from './Notification.styled'
 
 interface INotificationProps {

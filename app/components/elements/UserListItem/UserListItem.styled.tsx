@@ -1,13 +1,4 @@
-import { SM } from '@contextProviders/AppThemeProvider/theme'
-import { Avatar } from '@material-ui/core'
 import styled from 'styled-components'
-
-export const StyledAvatar = styled(Avatar)`
-  @media screen and (max-width: ${SM}px) {
-    width: 36px;
-    height: 36px;
-  }
-`
 
 export const Wrapper = styled.div<{ cursor: string }>`
   display: flex;
