@@ -41,6 +41,7 @@ export const Overlay = styled.div<{ opacity: 0 | 1 }>`
 
 export const Image = styled.img`
   object-fit: contain;
+  min-height: 200px;
   max-height: 50vh;
   max-width: 100%;
   display: block;
