@@ -2,11 +2,12 @@ import { useRef, ChangeEvent } from 'react'
 import { useQueryClient } from 'react-query'
 import { DeleteOutline, Publish } from '@material-ui/icons'
 import useTranslation from 'next-translate/useTranslation'
+import compress from 'browser-image-compression'
 
 import api from '@api/HttpClient'
 import { IUserDetail } from 'domainTypes'
 import { Menu } from '@elements/Menu/Menu'
-import { apiErrorToast, successToast } from 'services/toastService'
+import { apiErrorToast, errorToast, successToast } from 'services/toastService'
 import { useAuthorizedUser } from '@contextProviders/AuthProvider'
 
 import { StyledInput, StyledMenuItem } from './ProfilePictureMenu.styled'
@@ -49,12 +50,14 @@ const ProfilePictureMenu = ({ anchorEl, onClose, setLoading }: IProfilePictureMe
   const handleInputChanged = async (e: ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0]
     if (!file) return
+    if (!file.type.startsWith('image/')) return errorToast(t('validator.unsupportedMediaType'))
 
+    setLoading(true)
+    const compressed = file.size < 500_000 ? file : await compress(file, { maxSizeMB: 0.4 })
     const formData = new FormData()
-    formData.append('profilePicture', file as Blob)
+    formData.append('profilePicture', compressed as Blob)
 
     try {
-      setLoading(true)
       const { data } = await api.post(`/users/${currentUser.id}/profile-picture`, formData)
       updateUser(data)
       queryClient.setQueryData<IUserDetail>(['users', currentUser.id], prev => ({

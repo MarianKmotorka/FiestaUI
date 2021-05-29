@@ -2,12 +2,11 @@ import React, { useState } from 'react'
 import { ExpandMore } from '@material-ui/icons'
 import { useQuery, useQueryClient } from 'react-query'
 import useTranslation from 'next-translate/useTranslation'
-import { AccordionDetails, AccordionSummary } from '@material-ui/core'
+import { AccordionDetails, AccordionSummary, CircularProgress } from '@material-ui/core'
 
 import api from '@api/HttpClient'
 import { IApiError } from '@api/types'
 import { IUserDetail } from 'domainTypes'
-import Spinner from '@elements/Spinner'
 import Form from '@elements/HookForm/Form'
 import { onlyDirtyValues } from '@utils/utils'
 import LoadingAccordion from './LoadingAccordion'
@@ -78,7 +77,7 @@ const EditProfileTab = () => {
 
         <AccordionDetails>
           {profilePictureLoading ? (
-            <Spinner themed />
+            <CircularProgress />
           ) : (
             <StyledAvatar
               src={user.pictureUrl}

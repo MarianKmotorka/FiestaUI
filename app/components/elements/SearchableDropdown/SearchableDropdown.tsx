@@ -1,11 +1,10 @@
 import { useEffect, useState } from 'react'
-import { Box } from '@material-ui/core'
+import { Box, CircularProgress } from '@material-ui/core'
 import { isArray, isEmpty, toLower } from 'lodash'
 import useTranslation from 'next-translate/useTranslation'
 import { Clear, ExpandLess, ExpandMore } from '@material-ui/icons'
 
 import api from '@api/HttpClient'
-import Spinner from '@elements/Spinner'
 import useDebounce from '@hooks/useDebounce'
 import TextBox from '@elements/TextBox/TextBox'
 import useOnClickOutside from '@hooks/useOnClickOutside'
@@ -67,7 +66,7 @@ const SearchableDropdown = <
       const {
         url,
         params,
-        formatter = x => (x as never) as TFormatted
+        formatter = x => x as never as TFormatted
       } = initialOptions as IFetchOptions<TValue, TFormatted>
 
       setFetching(true)
@@ -129,7 +128,7 @@ const SearchableDropdown = <
         <Expander elevation={4} maxHeight={maxHeight}>
           {fetching && (
             <Box display='flex' justifyContent='center'>
-              <Spinner />
+              <CircularProgress />
             </Box>
           )}
 

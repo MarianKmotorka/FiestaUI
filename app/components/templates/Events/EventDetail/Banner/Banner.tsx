@@ -3,10 +3,11 @@ import { Publish } from '@material-ui/icons'
 import { useQueryClient } from 'react-query'
 import { Box, CircularProgress } from '@material-ui/core'
 import useTranslation from 'next-translate/useTranslation'
+import compress from 'browser-image-compression'
 
 import api from '@api/HttpClient'
 import { IEventDetail } from '../EventDetailTemplate'
-import { apiErrorToast, successToast } from 'services/toastService'
+import { apiErrorToast, errorToast, successToast } from 'services/toastService'
 import { Image, ImageWrapper, Overlay, Wrapper } from './Banner.styled'
 
 interface IBannerProps {
@@ -24,12 +25,14 @@ const Banner = ({ src, canUpload, eventId }: IBannerProps) => {
   const handleInputChanged = async (e: ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0]
     if (!file) return
+    if (!file.type.startsWith('image/')) return errorToast(t('validator.unsupportedMediaType'))
 
+    setLoading(true)
+    const compressed = file.size < 500_000 ? file : await compress(file, { maxSizeMB: 0.4 })
     const formData = new FormData()
-    formData.append('banner', file as Blob)
+    formData.append('banner', compressed as Blob)
 
     try {
-      setLoading(true)
       const { data } = await api.post(`/events/${eventId}/banner`, formData)
       queryClient.setQueryData<IEventDetail>(['events', eventId], prev => ({
         ...prev,
