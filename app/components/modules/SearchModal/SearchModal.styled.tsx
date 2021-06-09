@@ -37,6 +37,7 @@ export const StyledCloseButton = styled(IconButton)`
 export const ItemsContainer = styled.div`
   overflow: auto;
   max-height: calc(100% - 150px);
+  padding-bottom: 10px; //Note: needed for <Observer/> to work properly
 `
 
 export const SearchModalItem = styled(MenuItem)`
