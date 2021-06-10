@@ -3,6 +3,7 @@ import { useQuery } from 'react-query'
 import { Edit, Message } from '@material-ui/icons'
 import useTranslation from 'next-translate/useTranslation'
 import { Avatar, Box, CircularProgress } from '@material-ui/core'
+import { useState } from 'react'
 
 import api from '@api/HttpClient'
 import { IUserDetail } from 'domainTypes'
@@ -13,16 +14,26 @@ import FriendButton from './FriendMenu/FriendButton'
 import FetchError from '@elements/FetchError/FetchError'
 import { useAuth } from '@contextProviders/AuthProvider'
 import CollapseContainer from '@elements/CollapseContainer/CollapseContainer'
+import FriendsSearch from './FriendsSearch/FriendsSearch'
+import {
+  handleFriendAdded,
+  handleFriendRemoved,
+  handleFriendRequestAccepted,
+  handleFriendRequestRejected,
+  handleFriendRequestUnsent
+} from './utils'
 
 import {
   AvatarWrapper,
   BioText,
   ButtonsWrapper,
+  FriendsWrapper,
   NameAndButtonsAndBioWrapper,
   NameAndButtonsWrapper,
-  NameWrapper,
+  NameAndFriendsWrapper,
   TopSection
 } from './UserDetailTemplate.styled'
+import AuthCheck from '@elements/AuthCheck'
 
 interface IUserDetailTemplateProps {
   userId: string
@@ -31,6 +42,7 @@ interface IUserDetailTemplateProps {
 const UserDetailTemplate = ({ userId }: IUserDetailTemplateProps) => {
   const auth = useAuth()
   const { t } = useTranslation('common')
+  const [searchOpen, setSearchOpen] = useState(false)
 
   const { data, error, isLoading, isIdle } = useQuery<IUserDetail, IApiError>(
     ['users', userId],
@@ -53,10 +65,32 @@ const UserDetailTemplate = ({ userId }: IUserDetailTemplateProps) => {
 
         <NameAndButtonsAndBioWrapper>
           <NameAndButtonsWrapper>
-            <NameWrapper>
+            <NameAndFriendsWrapper>
               <h1>{user.username}</h1>
               <p>{user.fullName}</p>
-            </NameWrapper>
+
+              <AuthCheck
+                fallback={loginUrl => (
+                  <Link href={loginUrl}>
+                    <FriendsWrapper>
+                      <p>
+                        {t('friends')}: <span>{user.numberOfFriends}</span>
+                      </p>
+                    </FriendsWrapper>
+                  </Link>
+                )}
+              >
+                <FriendsWrapper
+                  onClick={() => {
+                    auth.isLoggedIn ? setSearchOpen(true) : null
+                  }}
+                >
+                  <p>
+                    {t('friends')}: <span>{user.numberOfFriends}</span>
+                  </p>
+                </FriendsWrapper>
+              </AuthCheck>
+            </NameAndFriendsWrapper>
 
             <ButtonsWrapper>
               {isCurrUser && (
@@ -73,7 +107,17 @@ const UserDetailTemplate = ({ userId }: IUserDetailTemplateProps) => {
                 </Button>
               )}
 
-              {!isCurrUser && <FriendButton user={user} />}
+              {!isCurrUser && (
+                <FriendButton
+                  userId={user.id}
+                  friendStatus={user.friendStatus}
+                  onFriendAdded={handleFriendAdded}
+                  onFriendRemoved={handleFriendRemoved}
+                  onFriendRequestUnsent={handleFriendRequestUnsent}
+                  onFriendRequestAccepted={handleFriendRequestAccepted}
+                  onFriendRequestRejected={handleFriendRequestRejected}
+                />
+              )}
             </ButtonsWrapper>
           </NameAndButtonsWrapper>
 
@@ -90,6 +134,14 @@ const UserDetailTemplate = ({ userId }: IUserDetailTemplateProps) => {
       <Box margin='30px auto'>
         <Divider />
       </Box>
+
+      {searchOpen && auth.isLoggedIn && (
+        <FriendsSearch
+          onClose={() => setSearchOpen(false)}
+          userId={userId}
+          currUserId={auth.currentUser.id}
+        />
+      )}
     </>
   )
 }

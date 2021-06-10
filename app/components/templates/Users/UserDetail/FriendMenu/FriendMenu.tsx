@@ -1,10 +1,10 @@
-import { useQueryClient } from 'react-query'
+import { QueryClient, useQueryClient } from 'react-query'
 import useTranslation from 'next-translate/useTranslation'
 import { Block, Cancel, CancelScheduleSend, Check } from '@material-ui/icons'
 
 import api from '@api/HttpClient'
 import { Menu } from '@elements/Menu/Menu'
-import { FriendStatus, IUserDetail } from 'domainTypes'
+import { FriendStatus } from 'domainTypes'
 import { errorToast, successToast } from 'services/toastService'
 
 import { StyledMenuItem } from './FriendMenu.styled'
@@ -15,9 +15,23 @@ interface IFriendMenuProps {
   anchorEl?: HTMLElement
   setLoading: (loading: boolean) => void
   onClose: () => void
+  onFriendRemoved: (id: string, queryClient: QueryClient) => void
+  onFriendRequestUnsent: (id: string, queryClient: QueryClient) => void
+  onFriendRequestAccepted: (id: string, queryClient: QueryClient) => void
+  onFriendRequestRejected: (id: string, queryClient: QueryClient) => void
 }
 
-const FriendMenu = ({ anchorEl, onClose, setLoading, userId, friendStatus }: IFriendMenuProps) => {
+const FriendMenu = ({
+  anchorEl,
+  onClose,
+  setLoading,
+  userId,
+  friendStatus,
+  onFriendRemoved,
+  onFriendRequestUnsent,
+  onFriendRequestAccepted,
+  onFriendRequestRejected
+}: IFriendMenuProps) => {
   const { t } = useTranslation('common')
   const queryClient = useQueryClient()
 
@@ -26,10 +40,7 @@ const FriendMenu = ({ anchorEl, onClose, setLoading, userId, friendStatus }: IFr
       setLoading(true)
       onClose()
       await api.delete(`/friends/${userId}`)
-      queryClient.setQueryData<IUserDetail>(['users', userId], prev => ({
-        ...prev!,
-        friendStatus: FriendStatus.None
-      }))
+      onFriendRemoved(userId, queryClient)
       successToast(t('friendRemoved'))
     } catch (_) {
       errorToast(t('somethingWentWrong'))
@@ -42,10 +53,7 @@ const FriendMenu = ({ anchorEl, onClose, setLoading, userId, friendStatus }: IFr
       setLoading(true)
       onClose()
       await api.post(`/friends/unsend-request`, { friendId: userId })
-      queryClient.setQueryData<IUserDetail>(['users', userId], prev => ({
-        ...prev!,
-        friendStatus: FriendStatus.None
-      }))
+      onFriendRequestUnsent(userId, queryClient)
       successToast(t('requestUnsent'))
     } catch (_) {
       errorToast(t('somethingWentWrong'))
@@ -58,10 +66,7 @@ const FriendMenu = ({ anchorEl, onClose, setLoading, userId, friendStatus }: IFr
       setLoading(true)
       onClose()
       await api.post(`/friends/confirm-request`, { friendId: userId })
-      queryClient.setQueryData<IUserDetail>(['users', userId], prev => ({
-        ...prev!,
-        friendStatus: FriendStatus.Friend
-      }))
+      onFriendRequestAccepted(userId, queryClient)
       successToast(t('requestAccepted'))
     } catch (_) {
       errorToast(t('somethingWentWrong'))
@@ -74,10 +79,7 @@ const FriendMenu = ({ anchorEl, onClose, setLoading, userId, friendStatus }: IFr
       setLoading(true)
       onClose()
       await api.post(`/friends/reject-request`, { friendId: userId })
-      queryClient.setQueryData<IUserDetail>(['users', userId], prev => ({
-        ...prev!,
-        friendStatus: FriendStatus.None
-      }))
+      onFriendRequestRejected(userId, queryClient)
       successToast(t('requestRejected'))
     } catch (_) {
       errorToast(t('somethingWentWrong'))

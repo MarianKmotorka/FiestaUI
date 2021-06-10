@@ -74,7 +74,7 @@ export const AvatarWrapper = styled.div`
   }
 `
 
-export const NameWrapper = styled.div`
+export const NameAndFriendsWrapper = styled.div`
   display: flex;
   flex-direction: column;
   align-items: flex-start;
@@ -107,5 +107,18 @@ export const NameWrapper = styled.div`
     h1 {
       margin: 8px 0 6px;
     }
+  }
+`
+
+export const FriendsWrapper = styled.div`
+  p {
+    color: ${({ theme }) => theme.palette.themeText.themeBlack};
+    font-size: ${({ theme }) => theme.typography.subtitle1.fontSize};
+    margin-top: 5px;
+    cursor: pointer;
+  }
+
+  span {
+    color: ${({ theme }) => theme.palette.primary.main};
   }
 `

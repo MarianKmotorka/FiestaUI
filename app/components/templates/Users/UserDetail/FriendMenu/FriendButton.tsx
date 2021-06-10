@@ -1,6 +1,6 @@
 import { useState } from 'react'
 import Link from 'next/link'
-import { useQueryClient } from 'react-query'
+import { QueryClient, useQueryClient } from 'react-query'
 import { PersonAdd } from '@material-ui/icons'
 import useTranslation from 'next-translate/useTranslation'
 
@@ -8,16 +8,32 @@ import api from '@api/HttpClient'
 import FriendMenu from './FriendMenu'
 import AuthCheck from '@elements/AuthCheck'
 import Button from '@elements/Button/Button'
-import { FriendStatus, IUserDetail } from 'domainTypes'
-import { errorToast, successToast } from 'services/toastService'
-
+import { FriendStatus } from 'domainTypes'
+import { apiErrorToast, successToast } from 'services/toastService'
 import { friendStatusEndIconMap, friendStatusStartIconMap, friendStatusTextMap } from './utils'
+import { ButtonProps } from '@material-ui/core'
 
 interface IProps {
-  user: IUserDetail
+  userId: string
+  friendStatus: FriendStatus
+  size?: ButtonProps['size']
+  onFriendAdded: (id: string, queryClient: QueryClient) => void
+  onFriendRemoved: (id: string, queryClient: QueryClient) => void
+  onFriendRequestUnsent: (id: string, queryClient: QueryClient) => void
+  onFriendRequestAccepted: (id: string, queryClient: QueryClient) => void
+  onFriendRequestRejected: (id: string, queryClient: QueryClient) => void
 }
 
-const FriendButton = ({ user }: IProps) => {
+const FriendButton = ({
+  userId,
+  friendStatus,
+  size,
+  onFriendAdded,
+  onFriendRemoved,
+  onFriendRequestUnsent,
+  onFriendRequestAccepted,
+  onFriendRequestRejected
+}: IProps) => {
   const { t } = useTranslation('common')
   const queryClient = useQueryClient()
   const [friendEl, setFriendEl] = useState<HTMLElement>()
@@ -26,14 +42,11 @@ const FriendButton = ({ user }: IProps) => {
   const handleAddFriendClick = async () => {
     try {
       setFriendStatusLoading(true)
-      await api.post(`/friends/send-request`, { friendId: user.id })
-      queryClient.setQueryData<IUserDetail>(['users', user.id], prev => ({
-        ...prev!,
-        friendStatus: FriendStatus.FriendRequestSent
-      }))
+      await api.post(`/friends/send-request`, { friendId: userId })
+      onFriendAdded(userId, queryClient)
       successToast(t('requestSent'))
-    } catch (_) {
-      errorToast(t('somethingWentWrong'))
+    } catch (err) {
+      apiErrorToast(err, t)
     }
     setFriendStatusLoading(false)
   }
@@ -52,25 +65,30 @@ const FriendButton = ({ user }: IProps) => {
         <Button
           variant='outlined'
           loading={friendStatusLoading}
-          color={user.friendStatus === FriendStatus.FriendRequestRecieved ? 'primary' : 'secondary'}
-          startIcon={friendStatusStartIconMap[user.friendStatus]}
-          endIcon={friendStatusEndIconMap[user.friendStatus]}
+          color={friendStatus === FriendStatus.FriendRequestRecieved ? 'primary' : 'secondary'}
+          startIcon={friendStatusStartIconMap[friendStatus]}
+          endIcon={friendStatusEndIconMap[friendStatus]}
           onClick={e =>
-            user.friendStatus === FriendStatus.None
+            friendStatus === FriendStatus.None
               ? handleAddFriendClick()
               : setFriendEl(friendEl ? undefined : e.currentTarget)
           }
+          size={size}
         >
-          {t(friendStatusTextMap[user.friendStatus])}
+          {t(friendStatusTextMap[friendStatus])}
         </Button>
       </AuthCheck>
 
       <FriendMenu
-        userId={user.id}
-        friendStatus={user.friendStatus}
+        userId={userId}
+        friendStatus={friendStatus}
         onClose={() => setFriendEl(undefined)}
         anchorEl={friendEl}
         setLoading={setFriendStatusLoading}
+        onFriendRemoved={onFriendRemoved}
+        onFriendRequestUnsent={onFriendRequestUnsent}
+        onFriendRequestAccepted={onFriendRequestAccepted}
+        onFriendRequestRejected={onFriendRequestRejected}
       />
     </>
   )

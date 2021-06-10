@@ -11,11 +11,12 @@ interface IUserListItemProps {
   href?: string
   className?: string
   isLink?: boolean
+  onClick?: () => void
 }
 
-const UserListItem = ({ user, isLink, href, className }: IUserListItemProps) => {
+const UserListItem = ({ user, isLink, href, className, onClick }: IUserListItemProps) => {
   const content = (
-    <Wrapper className={className} cursor={isLink ? 'pointer' : 'auto'}>
+    <Wrapper className={className} cursor={isLink ? 'pointer' : 'auto'} onClick={onClick}>
       <Avatar src={user.pictureUrl} />
 
       <Box>
