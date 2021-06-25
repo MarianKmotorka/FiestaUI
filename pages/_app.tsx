@@ -12,6 +12,7 @@ import NotificationsProvider from '@modules/Notifications/NotificationsProvider'
 
 import '../public/globals.css'
 import 'react-toastify/dist/ReactToastify.min.css'
+import FriendRequestsProvider from '@modules/FriendRequests/FriendRequestsProvider'
 
 const queryClient = new QueryClient({
   defaultOptions: { queries: { retry: false, refetchOnWindowFocus: false } }
@@ -26,13 +27,15 @@ const MyApp = ({ Component, pageProps }: AppProps) => {
     <QueryClientProvider client={queryClient}>
       <AuthProvider>
         <MuiPickersUtilsProvider utils={MomentUtils}>
-          <NotificationsProvider>
-            <AppThemeProvider>
-              <Component {...pageProps} />
+          <FriendRequestsProvider>
+            <NotificationsProvider>
+              <AppThemeProvider>
+                <Component {...pageProps} />
 
-              <ToastContainer />
-            </AppThemeProvider>
-          </NotificationsProvider>
+                <ToastContainer />
+              </AppThemeProvider>
+            </NotificationsProvider>
+          </FriendRequestsProvider>
         </MuiPickersUtilsProvider>
       </AuthProvider>
     </QueryClientProvider>

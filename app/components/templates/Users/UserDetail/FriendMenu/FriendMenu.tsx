@@ -6,6 +6,7 @@ import api from '@api/HttpClient'
 import { Menu } from '@elements/Menu/Menu'
 import { FriendStatus } from 'domainTypes'
 import { errorToast, successToast } from 'services/toastService'
+import { useFriendRequests } from '@modules/FriendRequests/FriendRequestsProvider'
 
 import { StyledMenuItem } from './FriendMenu.styled'
 
@@ -22,11 +23,11 @@ interface IFriendMenuProps {
 }
 
 const FriendMenu = ({
+  userId,
   anchorEl,
+  friendStatus,
   onClose,
   setLoading,
-  userId,
-  friendStatus,
   onFriendRemoved,
   onFriendRequestUnsent,
   onFriendRequestAccepted,
@@ -34,6 +35,7 @@ const FriendMenu = ({
 }: IFriendMenuProps) => {
   const { t } = useTranslation('common')
   const queryClient = useQueryClient()
+  const { removeFriendRequest } = useFriendRequests()
 
   const handleRemoveFriendClicked = async () => {
     try {
@@ -67,6 +69,7 @@ const FriendMenu = ({
       onClose()
       await api.post(`/friends/confirm-request`, { friendId: userId })
       onFriendRequestAccepted(userId, queryClient)
+      removeFriendRequest(userId)
       successToast(t('requestAccepted'))
     } catch (_) {
       errorToast(t('somethingWentWrong'))
@@ -80,6 +83,7 @@ const FriendMenu = ({
       onClose()
       await api.post(`/friends/reject-request`, { friendId: userId })
       onFriendRequestRejected(userId, queryClient)
+      removeFriendRequest(userId)
       successToast(t('requestRejected'))
     } catch (_) {
       errorToast(t('somethingWentWrong'))

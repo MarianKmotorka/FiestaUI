@@ -4,10 +4,21 @@ export interface IButtonProps extends ButtonProps {
   loading?: boolean
 }
 
-const Button = ({ loading, children, variant, color, disabled, ...rest }: IButtonProps) => {
+const Button = ({
+  loading,
+  children,
+  variant,
+  color,
+  disabled,
+  startIcon,
+  endIcon,
+  ...rest
+}: IButtonProps) => {
   return (
     <MuiButton
       {...rest}
+      startIcon={loading ? undefined : startIcon}
+      endIcon={loading ? undefined : endIcon}
       variant={variant || 'contained'}
       color={color || 'primary'}
       disabled={disabled || loading}

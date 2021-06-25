@@ -50,6 +50,7 @@ const NotificationsProvider: FC = ({ children }) => {
     },
     {
       staleTime: Number.POSITIVE_INFINITY,
+      cacheTime: Number.POSITIVE_INFINITY,
       enabled: isLoggedIn,
       keepPreviousData: true,
       getNextPageParam: ({ hasMore }, allPages) =>

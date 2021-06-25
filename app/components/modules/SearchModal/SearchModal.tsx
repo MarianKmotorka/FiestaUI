@@ -58,6 +58,7 @@ const SearchModal = <T extends { id: string }>({
         <Box margin='40px auto 20px' width='84%'>
           <TextBox
             fullWidth
+            autoFocus
             value={search}
             onChange={setSearch}
             placeholder={searchPlaceholder || t('search')}

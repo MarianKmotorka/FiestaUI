@@ -19,7 +19,9 @@ import HideOnScroll from '@elements/HideOnScroll'
 import NavbarSearch from './NavbarSearch/NavbarSearch'
 import { useAuth } from '@contextProviders/AuthProvider'
 import Notifications from '@modules/Notifications/Notifications'
+import FriendRequests from '@modules/FriendRequests/FriendRequests'
 import { useNotifications } from '@modules/Notifications/NotificationsProvider'
+import { useFriendRequests } from '@modules/FriendRequests/FriendRequestsProvider'
 
 import {
   Logo,
@@ -43,7 +45,9 @@ const Navbar = ({ forceUnauthorizedNavbar, transparent }: INavbarProps) => {
   const [searchOpen, setSearchOpen] = useState(false)
   const [avatarEl, setAvatarEl] = useState<HTMLElement>()
   const [notificationsEl, setNotificationsEl] = useState<HTMLElement>()
+  const [friendRequestsEl, setFriendRequestsEl] = useState<HTMLElement>()
   const { unseenCount } = useNotifications()
+  const { totalCount: friendRequestsCount } = useFriendRequests()
 
   const notificationButton = (
     <NavIconButton
@@ -52,6 +56,17 @@ const Navbar = ({ forceUnauthorizedNavbar, transparent }: INavbarProps) => {
     >
       <Badge badgeContent={unseenCount} color='primary'>
         <NotificationsTwoTone />
+      </Badge>
+    </NavIconButton>
+  )
+
+  const friendRequestsButton = (
+    <NavIconButton
+      onClick={e => setFriendRequestsEl(friendRequestsEl ? undefined : e.currentTarget)}
+      active={friendRequestsEl ? 1 : 0}
+    >
+      <Badge badgeContent={friendRequestsCount} color='primary'>
+        <PeopleTwoTone />
       </Badge>
     </NavIconButton>
   )
@@ -66,9 +81,7 @@ const Navbar = ({ forceUnauthorizedNavbar, transparent }: INavbarProps) => {
         <ChatTwoTone />
       </NavIconButton>
 
-      <NavIconButton>
-        <PeopleTwoTone />
-      </NavIconButton>
+      {friendRequestsButton}
 
       {notificationButton}
     </>
@@ -98,19 +111,15 @@ const Navbar = ({ forceUnauthorizedNavbar, transparent }: INavbarProps) => {
         </NavIconButton>
       </Tooltip>
 
-      <Tooltip title={t('friendRequests')}>
-        <NavIconButton>
-          <PeopleTwoTone />
-        </NavIconButton>
-      </Tooltip>
+      <Tooltip title={t('friendRequests')}>{friendRequestsButton}</Tooltip>
+
+      <Tooltip title={t('notifications')}>{notificationButton}</Tooltip>
 
       <Tooltip title={t('search')}>
         <NavIconButton onClick={() => setSearchOpen(true)}>
           <SearchTwoTone />
         </NavIconButton>
       </Tooltip>
-
-      <Tooltip title={t('notifications')}>{notificationButton}</Tooltip>
 
       <Avatar
         src={auth.currentUser.pictureUrl}
@@ -162,6 +171,13 @@ const Navbar = ({ forceUnauthorizedNavbar, transparent }: INavbarProps) => {
 
         {notificationsEl && (
           <Notifications anchorEl={notificationsEl} onClose={() => setNotificationsEl(undefined)} />
+        )}
+
+        {friendRequestsEl && (
+          <FriendRequests
+            anchorEl={friendRequestsEl}
+            onClose={() => setFriendRequestsEl(undefined)}
+          />
         )}
       </StyledAppBar>
     </HideOnScroll>

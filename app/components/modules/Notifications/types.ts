@@ -4,7 +4,9 @@ export enum NotificationType {
   EventAttendeeRemoved = 3,
   EventAttendeeLeft = 4,
   EventJoinRequestCreated = 5,
-  EventJoinRequestReply = 6
+  EventJoinRequestReply = 6,
+  FriendRequestReply = 7,
+  FriendRemoved = 8
 }
 
 export interface INotification<TModel> {
