@@ -1,6 +1,6 @@
 import { isEmpty } from 'lodash'
-import { useQueryClient } from 'react-query'
 import { PeopleTwoTone } from '@material-ui/icons'
+import useQueryClientPlus from '@hooks/useQueryClientPlus'
 import useTranslation from 'next-translate/useTranslation'
 import { Box, Typography, CircularProgress } from '@material-ui/core'
 
@@ -19,7 +19,7 @@ interface IFriendRequestsProps {
 
 const FriendRequests = ({ anchorEl, onClose }: IFriendRequestsProps) => {
   const { t } = useTranslation('common')
-  const queryClient = useQueryClient()
+  const queryClient = useQueryClientPlus()
   const { friendRequests, error, hasMore, isLoading, loadMore, removeFriendRequest } =
     useFriendRequests()
 

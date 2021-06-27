@@ -1,7 +1,7 @@
 import { useCallback } from 'react'
 import { CircularProgress } from '@material-ui/core'
 import useTranslation from 'next-translate/useTranslation'
-import { useInfiniteQuery, useQueryClient } from 'react-query'
+import { useInfiniteQuery } from 'react-query'
 
 import api from '@api/HttpClient'
 import { IUserDto } from 'domainTypes'
@@ -11,6 +11,7 @@ import NewComment from './NewComment/NewComment'
 import { apiErrorToast } from 'services/toastService'
 import FetchError from '@elements/FetchError/FetchError'
 import { IEventDetail } from '../../EventDetailTemplate'
+import useQueryClientPlus from '@hooks/useQueryClientPlus'
 import { IApiError, ISkippedItemsDocument, ISkippedItemsResponse } from '@api/types'
 
 import { addComment, increaseReplyCount } from './utils'
@@ -26,12 +27,12 @@ export interface IComment {
   replyCount: number
   sender: IUserDto
   isEdited: boolean
-  parentId: string | null // keep null instead of undefined because BE returns null a parentId is used in queryKey
+  parentId: string | null // keep null instead of undefined because BE returns null and parentId is used in queryKey
 }
 
 const Discussion = ({ event }: IDiscussionProps) => {
   const { t } = useTranslation('common')
-  const queryClient = useQueryClient()
+  const queryClient = useQueryClientPlus()
   const getQueryKey = useCallback(
     (parentId: string | null = null) => ['event', event.id, 'comments', 'query', { parentId }],
     [event.id]
@@ -69,8 +70,6 @@ const Discussion = ({ event }: IDiscussionProps) => {
         addComment(queryClient, getQueryKey(parentId), data)
 
         if (parentId) {
-          // Invalidate cache so it refetches replies when viewed
-          queryClient.invalidateQueries(getQueryKey(parentId), { refetchActive: false })
           increaseReplyCount(queryClient, getQueryKey(), parentId)
         }
       } catch (err) {

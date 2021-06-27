@@ -1,7 +1,7 @@
 import { memo, useState } from 'react'
 import moment from 'moment'
 import Link from 'next/link'
-import { useInfiniteQuery, useQueryClient } from 'react-query'
+import { useInfiniteQuery } from 'react-query'
 import { Box, CircularProgress, Tooltip } from '@material-ui/core'
 import useTranslation from 'next-translate/useTranslation'
 import {
@@ -13,6 +13,7 @@ import {
 } from '@material-ui/icons'
 
 import api from '@api/HttpClient'
+import Avatar from '@elements/Avatar'
 import { editComment } from '../utils'
 import { IComment } from '../Discussion'
 import Button from '@elements/Button/Button'
@@ -20,6 +21,7 @@ import NewComment from '../NewComment/NewComment'
 import { apiErrorToast } from 'services/toastService'
 import CommentMenu from './CommentMenu/CommentMenu'
 import FetchError from '@elements/FetchError/FetchError'
+import useQueryClientPlus from '@hooks/useQueryClientPlus'
 import { useAuthorizedUser } from '@contextProviders/AuthProvider'
 import CollapseContainer from '@elements/CollapseContainer/CollapseContainer'
 import { IApiError, ISkippedItemsDocument, ISkippedItemsResponse } from '@api/types'
@@ -32,7 +34,6 @@ import {
   UserName,
   ViewRepliesButton
 } from './Comment.styled'
-import Avatar from '@elements/Avatar'
 
 interface ICommentProps {
   comment: IComment
@@ -45,7 +46,7 @@ interface ICommentProps {
 const Comment = memo(
   ({ comment, eventId, organizerId, getCommentsQueryKey, onReply }: ICommentProps) => {
     const { t } = useTranslation('common')
-    const queryClient = useQueryClient()
+    const queryClient = useQueryClientPlus()
     const { currentUser } = useAuthorizedUser()
     const [isEditing, setIsEditing] = useState(false)
     const [showNewReply, setShowNewReply] = useState(false)

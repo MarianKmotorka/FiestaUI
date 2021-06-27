@@ -1,5 +1,4 @@
 import { useState } from 'react'
-import { useQueryClient } from 'react-query'
 import { Menu } from '@material-ui/core'
 import useTranslation from 'next-translate/useTranslation'
 import { Delete, Edit, MoreVert } from '@material-ui/icons'
@@ -7,6 +6,7 @@ import { Delete, Edit, MoreVert } from '@material-ui/icons'
 import api from '@api/HttpClient'
 import { IComment } from '../../Discussion'
 import { apiErrorToast } from 'services/toastService'
+import useQueryClientPlus from '@hooks/useQueryClientPlus'
 import { increaseReplyCount, removeComment } from '../../utils'
 
 import { IconWrapper, StyledMenuItem } from './CommentMenu.styled'
@@ -21,7 +21,7 @@ interface ICommentMenuProps {
 const CommentMenu = ({ eventId, comment, getCommentsQueryKey, onEdit }: ICommentMenuProps) => {
   const [anchorEl, setAnchorEl] = useState<HTMLDivElement>()
   const { t } = useTranslation('common')
-  const queryClient = useQueryClient()
+  const queryClient = useQueryClientPlus()
 
   const handleDeleted = async () => {
     try {
