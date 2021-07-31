@@ -23,6 +23,7 @@ import api from '@api/HttpClient'
 import Banner from './Banner/Banner'
 import { IApiError } from '@api/types'
 import Divider from '@elements/Divider'
+import Linkify from '@elements/Linkify'
 import { toLocalTime } from '@utils/utils'
 import AuthCheck from '@elements/AuthCheck'
 import Button from '@elements/Button/Button'
@@ -157,7 +158,9 @@ const EventDetailTemplate = ({ eventId }: IProps) => {
 
             {event.description && (
               <CollapseContainer collapsedHeight={80}>
-                <EventDescription>{event.description}</EventDescription>
+                <EventDescription>
+                  <Linkify>{event.description}</Linkify>
+                </EventDescription>
               </CollapseContainer>
             )}
 

@@ -15,6 +15,7 @@ import {
 import api from '@api/HttpClient'
 import Avatar from '@elements/Avatar'
 import { editComment } from '../utils'
+import Linkify from '@elements/Linkify'
 import { IComment } from '../Discussion'
 import Button from '@elements/Button/Button'
 import NewComment from '../NewComment/NewComment'
@@ -135,7 +136,9 @@ const Comment = memo(
               </Box>
 
               <CollapseContainer collapsedHeight={90}>
-                <Content>{comment.text}</Content>
+                <Content>
+                  <Linkify>{comment.text}</Linkify>
+                </Content>
               </CollapseContainer>
 
               {!comment.parentId && (

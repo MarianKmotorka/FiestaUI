@@ -1,14 +1,16 @@
 import Link from 'next/link'
+import { useState } from 'react'
 import { useQuery } from 'react-query'
 import { Edit, Message } from '@material-ui/icons'
 import useTranslation from 'next-translate/useTranslation'
 import { Avatar, Box, CircularProgress } from '@material-ui/core'
-import { useState } from 'react'
 
 import api from '@api/HttpClient'
 import { IUserDetail } from 'domainTypes'
 import { IApiError } from '@api/types'
 import Divider from '@elements/Divider'
+import Linkify from '@elements/Linkify'
+import AuthCheck from '@elements/AuthCheck'
 import Button from '@elements/Button/Button'
 import FriendButton from './FriendMenu/FriendButton'
 import FetchError from '@elements/FetchError/FetchError'
@@ -33,7 +35,6 @@ import {
   NameAndFriendsWrapper,
   TopSection
 } from './UserDetailTemplate.styled'
-import AuthCheck from '@elements/AuthCheck'
 
 interface IUserDetailTemplateProps {
   userId: string
@@ -124,7 +125,9 @@ const UserDetailTemplate = ({ userId }: IUserDetailTemplateProps) => {
           {user.bio && (
             <Box marginTop='20px'>
               <CollapseContainer>
-                <BioText>{user.bio}</BioText>
+                <BioText>
+                  <Linkify>{user.bio}</Linkify>
+                </BioText>
               </CollapseContainer>
             </Box>
           )}
