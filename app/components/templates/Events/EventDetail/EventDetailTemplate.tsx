@@ -82,6 +82,7 @@ const EventDetailTemplate = ({ eventId }: IProps) => {
   const auth = useAuth()
   const { t } = useTranslation('common')
   const [showDeleteDialog, setShowDeleteDialog] = useState(false)
+  const [sendJoinRequestDisabled, setSendJoinRequestDisabled] = useState(false)
   const { width, height, minMedium, maxMedium } = useWindowSize()
   const { data, isLoading, error, isIdle } = useQuery<IEventDetail, IApiError>(
     ['events', eventId],
@@ -137,6 +138,7 @@ const EventDetailTemplate = ({ eventId }: IProps) => {
         isJoinRequestSentByCurrentUser: false
       }))
       successToast(t('requestUnsent'))
+      setSendJoinRequestDisabled(true)
     } catch (err) {
       apiErrorToast(err, t)
     }
@@ -278,6 +280,7 @@ const EventDetailTemplate = ({ eventId }: IProps) => {
                 >
                   <Button
                     loading={isJoinRequestLoading}
+                    disabled={sendJoinRequestDisabled}
                     variant={event.isJoinRequestSentByCurrentUser ? 'text' : 'contained'}
                     startIcon={
                       event.isJoinRequestSentByCurrentUser ? (
