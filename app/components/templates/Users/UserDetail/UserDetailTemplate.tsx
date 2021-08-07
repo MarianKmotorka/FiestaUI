@@ -12,6 +12,7 @@ import Divider from '@elements/Divider'
 import Linkify from '@elements/Linkify'
 import AuthCheck from '@elements/AuthCheck'
 import Button from '@elements/Button/Button'
+import UserDetailTabs from './Tabs/UserDetailTabs'
 import FriendButton from './FriendMenu/FriendButton'
 import FetchError from '@elements/FetchError/FetchError'
 import { useAuth } from '@contextProviders/AuthProvider'
@@ -137,6 +138,8 @@ const UserDetailTemplate = ({ userId }: IUserDetailTemplateProps) => {
       <Box margin='30px auto'>
         <Divider />
       </Box>
+
+      <UserDetailTabs />
 
       {searchOpen && auth.isLoggedIn && (
         <FriendsSearch
