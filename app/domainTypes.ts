@@ -32,6 +32,17 @@ export interface IUserDto {
   fullName: string
 }
 
+export interface IEventDto {
+  id: string
+  name: string
+  bannerUrl: string
+  startDate: string
+  endDate: string
+  accessibilityType: AccessibilityTypeEnum
+  location: string
+  isCurrentUserAttending: boolean
+}
+
 export enum AuthProviderFlags {
   Google = 1,
   EmailAndPassword = 2,

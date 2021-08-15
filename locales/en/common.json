@@ -9,6 +9,7 @@
   "alert": "Alert",
   "addFriend": "Add friend",
   "attendees": "Attendees",
+  "attending": "Attending",
   "attendedEvents": "Attended events",
   "accessibility": "Accessibility",
   "acceptFriendRequest": "Accept friend request",
@@ -51,6 +52,7 @@
   "eventInfo": "Event info",
   "events": "Events",
   "explore": "Explore",
+  "exploreEvents": "Explore events",
   "firstName": "First name",
   "filter": "Filter",
   "filters": "Filters",
@@ -125,6 +127,8 @@
   "somethingWentWrong": "Oops... something went wrong",
   "thisEventHasCountAttendees": "This event has {{count}} attendees.",
   "thisEventHasCountInvitations": "{{count}} people are invited for this event.",
+  "thisUserOrganizesCountEvents": "This user organizes {{count}} events",
+  "thisUserAttendsCountEvents": "This user attends {{count}} events",
   "uploadPicture": "Upload picture",
   "username": "Username",
   "unexpectedErrorOccuredWhileLoadingData": "Unexpected error occured while loading data.",
@@ -137,6 +141,8 @@
   "youMustBeLoggedIn": "You must be logged in.",
   "youHaveBeenInvitedToThisEvent": "You have been invited to this event.",
   "youAreAttendingThisEvent": "You are attending this event",
+  "youOrganizeCountEvents": "You organize {{count}} events",
+  "youAttendCountEvents": "You attend {{count}} events",
 
   "validator": {
     "alreadyExists": "Already exists",

@@ -139,7 +139,7 @@ const UserDetailTemplate = ({ userId }: IUserDetailTemplateProps) => {
         <Divider />
       </Box>
 
-      <UserDetailTabs />
+      <UserDetailTabs userId={userId} isCurrentUser={isCurrUser} />
 
       {searchOpen && auth.isLoggedIn && (
         <FriendsSearch

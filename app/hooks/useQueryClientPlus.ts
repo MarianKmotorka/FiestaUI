@@ -27,8 +27,7 @@ const useQueryClientPlus = (): QueryClientPlus => {
     return queryClient.setQueryData(queryKey, updater as Updater<TData | undefined, TData>, options)
   }
 
-  // Note: needs to be explicitly casted to QueryClientPlus because TS can't infer it
-  return { ...queryClient, setLoadedQueryData } as QueryClientPlus
+  return Object.assign(queryClient, { setLoadedQueryData })
 }
 
 export default useQueryClientPlus
