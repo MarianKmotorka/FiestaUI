@@ -1,7 +1,7 @@
-import DefaultLayout from '@layouts/DefaultLayout'
+import LandingPage from '@templates/LandingPage/LandingPage'
 
 const HomePage = () => {
-  return <DefaultLayout title='Fiesta'>PRODUCT PAGE</DefaultLayout>
+  return <LandingPage />
 }
 
 export default HomePage
