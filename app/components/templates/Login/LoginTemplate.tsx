@@ -13,7 +13,12 @@ import ForgotPasswordDialog from './ForgotPasswordDialog/ForgotPasswordDialog'
 import { getGoogleLoginUrl, loginWithEmailAndPassword } from 'services/authService'
 import { combineValidators, minLengthValidator, requiredValidator } from 'utils/validators'
 
-import { FormContent, StyledCard, StyledForgotPasswordButton } from './LoginTemplate.styled'
+import {
+  FormContent,
+  GoogleLoginButton,
+  StyledCard,
+  StyledForgotPasswordButton
+} from './LoginTemplate.styled'
 
 interface IFormValues {
   emailOrUsername: string
@@ -85,9 +90,12 @@ const LoginTemplate = () => {
 
         <Divider />
 
-        <Button color='secondary' onClick={handleGoogleLogin}>
+        <GoogleLoginButton
+          onClick={handleGoogleLogin}
+          startIcon={<img src='google-btn-icon.svg' />}
+        >
           {t('login:loginWithGoogle')}
-        </Button>
+        </GoogleLoginButton>
       </StyledCard>
 
       {emailToConfirm && (

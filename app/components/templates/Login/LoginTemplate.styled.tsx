@@ -39,3 +39,20 @@ export const StyledForgotPasswordButton = styled(Button)`
   margin-bottom: -25px;
   font-size: 0.9em;
 `
+
+export const GoogleLoginButton = styled(Button)`
+  background: #fff !important;
+  color: ${({ theme }) => theme.palette.grey[700]};
+  height: 40px;
+  padding: 0;
+  position: relative;
+  text-transform: uppercase;
+  font-weight: 500;
+  img {
+    position: absolute;
+    left: 10px;
+    top: 0px;
+    display: inline-block;
+    height: 100%;
+  }
+`
