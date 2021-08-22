@@ -24,6 +24,9 @@ const lightTheme: ThemeOptions = {
     error: {
       main: red.A700
     },
+    gradients: {
+      primary: 'linear-gradient(to left, #fa7268, #fe2c55)'
+    },
     themeText: {
       black: '#000000',
       white: '#ffffff',
@@ -67,7 +70,8 @@ const darkTheme: ThemeOptions = {
     background: {
       default: '#0B0E11',
       paper: '#151A21'
-    }
+    },
+    gradients: lightTheme.palette!.gradients
   }
 }
 

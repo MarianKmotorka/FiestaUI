@@ -60,7 +60,6 @@ export const Section = styled.section<{ center?: true; height?: string; bg?: str
     font-weight: 500;
     font-size: 1.3rem;
     text-transform: uppercase;
-    background: linear-gradient(to left, #fa7268, #fe2c55);
     transition: transform 0.2s;
     svg {
       font-size: 2rem;
@@ -74,14 +73,16 @@ export const Section = styled.section<{ center?: true; height?: string; bg?: str
       width: 250px;
       height: 50px;
     }
-    @media screen and (max-width: 500px) {
-      font-size: 0.85rem;
-      width: 200px;
+    @media screen and (max-width: 700px) {
       margin: 0 auto;
       display: block;
       > * {
         display: flex;
       }
+    }
+    @media screen and (max-width: 500px) {
+      font-size: 0.85rem;
+      width: 200px;
     }
   }
 `

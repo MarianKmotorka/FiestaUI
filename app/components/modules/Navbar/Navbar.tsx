@@ -1,7 +1,7 @@
 import { useState } from 'react'
 import { useRouter } from 'next/dist/client/router'
 import useTranslation from 'next-translate/useTranslation'
-import { Badge, Button, Tooltip } from '@material-ui/core'
+import { Badge, Tooltip } from '@material-ui/core'
 import {
   ChatTwoTone,
   DashboardTwoTone,
@@ -13,6 +13,7 @@ import {
 
 import Avatar from '@elements/Avatar'
 import NavLink from '@elements/NavLink'
+import Button from '@elements/Button/Button'
 import useWindowSize from '@hooks/useWindowSize'
 import NavbarMenu from './NavbarMenu/NavbarMenu'
 import HideOnScroll from '@elements/HideOnScroll'
@@ -149,17 +150,12 @@ const Navbar = ({ forceUnauthorizedNavbar, transparent }: INavbarProps) => {
                   color='secondary'
                   variant='text'
                   size={maxMedium ? 'small' : 'large'}
-                  onClick={() => router.push('/login')}
+                  href='/login'
                 >
                   {t('login').toUpperCase()}
                 </Button>
 
-                <Button
-                  color='primary'
-                  variant='contained'
-                  size={maxMedium ? 'small' : 'large'}
-                  onClick={() => router.push('/signup')}
-                >
+                <Button size={maxMedium ? 'small' : 'large'} href='/signup'>
                   {t('signup').toUpperCase()}
                 </Button>
               </StyledButtonGroup>

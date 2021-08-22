@@ -1,6 +1,7 @@
 import { useAppTheme } from '@contextProviders/AppThemeProvider/AppThemeProvider'
 import Button from '@elements/Button/Button'
 import { Container } from '@elements/Container'
+import useWindowSize from '@hooks/useWindowSize'
 import FullWidthLayout from '@layouts/FullWidthLayout'
 import { Fab } from '@material-ui/core'
 import { ChevronRight, EventAvailable } from '@material-ui/icons'
@@ -32,12 +33,17 @@ const ThemeBtn = () => {
 }
 
 const LandingPage = () => {
+  const { minLarge } = useWindowSize()
   return (
     <Wrapper>
       <FullWidthLayout transparentNavbar forceUnauthorizedNavbar title='Fiesta'>
         <ThemeBtn />
 
-        <Section center height='70vh' style={{ paddingTop: '100px' }}>
+        <Section
+          center
+          height={minLarge ? '70vh' : '85vh'}
+          style={{ paddingTop: minLarge ? '100px' : '50px' }}
+        >
           <Container>
             <h1>
               We Have All The Events

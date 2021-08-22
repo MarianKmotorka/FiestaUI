@@ -12,7 +12,7 @@ const FiestaH1 = styled.h1<{ fontSize?: string }>`
     height: 1em;
     width: 100%;
     border-radius: 5px;
-    background-color: ${({ theme }) => theme.palette.primary.main};
+    background: ${({ theme }) => theme.palette.gradients.primary};
 
     position: absolute;
     bottom: 10px;

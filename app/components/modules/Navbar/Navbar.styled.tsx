@@ -76,5 +76,11 @@ export const StyledButtonGroup = styled(ButtonGroup)`
     min-width: 80px;
     border-radius: 0;
     box-shadow: none;
+    border: none;
+  }
+
+  button + button {
+    background: ${({ theme }) => theme.palette.gradients.primary};
+    color: white !important;
   }
 `

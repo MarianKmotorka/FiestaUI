@@ -1,5 +1,6 @@
-import { Button as MuiButton, ButtonProps, CircularProgress } from '@material-ui/core'
+import { ButtonProps, CircularProgress } from '@material-ui/core'
 import Link from 'next/link'
+import { StyledMuiButton } from './Button.styled'
 
 export interface IButtonProps extends ButtonProps {
   loading?: boolean
@@ -17,7 +18,7 @@ const Button = ({
   ...rest
 }: IButtonProps) => {
   const btn = (
-    <MuiButton
+    <StyledMuiButton
       {...rest}
       startIcon={loading ? undefined : startIcon}
       endIcon={loading ? undefined : endIcon}
@@ -26,7 +27,7 @@ const Button = ({
       disabled={disabled || loading}
     >
       {loading ? <CircularProgress size='1.3rem' /> : children}
-    </MuiButton>
+    </StyledMuiButton>
   )
 
   return href ? <Link href={href}>{btn}</Link> : btn
