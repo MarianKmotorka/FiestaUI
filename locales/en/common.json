@@ -143,6 +143,7 @@
   "youAreAttendingThisEvent": "You are attending this event",
   "youOrganizeCountEvents": "You organize {{count}} events",
   "youAttendCountEvents": "You attend {{count}} events",
+  "youAreInvitedToCountEvents": "You are invited to {{count}} events",
 
   "validator": {
     "alreadyExists": "Already exists",

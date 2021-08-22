@@ -4,6 +4,7 @@ import { Box, Tab, Tabs } from '@material-ui/core'
 import useTranslation from 'next-translate/useTranslation'
 
 import AuthCheck from '@elements/AuthCheck'
+import Invitations from './Invitations/Invitations'
 import useQueryClientPlus from '@hooks/useQueryClientPlus'
 import AttendedEvents from './AttendedEvents/AttendedEvents'
 import OrganizedEvents from './OrganizedEvents/OrganizedEvents'
@@ -25,6 +26,7 @@ const UserDetailTabs = ({ userId, isCurrentUser }: IUserDetailTabsProps) => {
     // Invalidate cached tabs
     queryClient.invalidateQueries(['users', userId, 'organized-events'])
     queryClient.invalidateQueries(['users', userId, 'attended-events'])
+    queryClient.invalidateQueries(['users', userId, 'event-invitations'])
   }, [queryClient, userId])
 
   const handleTabChanged = (value: string) => {
@@ -45,6 +47,7 @@ const UserDetailTabs = ({ userId, isCurrentUser }: IUserDetailTabsProps) => {
       >
         <Tab value='attendedEvents' label={t('attendedEvents')} />
         <Tab value='organizedEvents' label={t('organizedEvents')} />
+        {isCurrentUser && <Tab value='invitations' label={t('invitations')} />}
       </Tabs>
 
       <Box minHeight='400px'>
@@ -58,6 +61,10 @@ const UserDetailTabs = ({ userId, isCurrentUser }: IUserDetailTabsProps) => {
           <AuthCheck>
             <OrganizedEvents userId={userId} isCurrentUser={isCurrentUser} />
           </AuthCheck>
+        </StyledPanel>
+
+        <StyledPanel index='invitations' value={currTab}>
+          {isCurrentUser && <Invitations userId={userId} />}
         </StyledPanel>
       </Box>
     </>
