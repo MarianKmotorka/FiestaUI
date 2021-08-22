@@ -9,6 +9,8 @@ export interface ICurrentUser {
   authProvider: AuthProviderFlags
   role: RoleEnum
   googleEmail?: string
+  isAdmin: boolean
+  isPremium: boolean
 }
 
 export interface IUserDetail {

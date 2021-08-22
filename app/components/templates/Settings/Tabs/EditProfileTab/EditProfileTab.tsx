@@ -2,7 +2,7 @@ import React, { useState } from 'react'
 import { ExpandMore } from '@material-ui/icons'
 import { useQuery, useQueryClient } from 'react-query'
 import useTranslation from 'next-translate/useTranslation'
-import { AccordionDetails, AccordionSummary, CircularProgress } from '@material-ui/core'
+import { AccordionDetails, AccordionSummary, Badge, CircularProgress } from '@material-ui/core'
 
 import api from '@api/HttpClient'
 import { IApiError } from '@api/types'
@@ -79,10 +79,12 @@ const EditProfileTab = () => {
           {profilePictureLoading ? (
             <CircularProgress />
           ) : (
-            <StyledAvatar
-              src={user.pictureUrl}
-              onClick={e => setProfilePictureEl(profilePictureEl ? undefined : e.currentTarget)}
-            />
+            <Badge badgeContent='Admin' color='primary' invisible={!currentUser.isAdmin}>
+              <StyledAvatar
+                src={user.pictureUrl}
+                onClick={e => setProfilePictureEl(profilePictureEl ? undefined : e.currentTarget)}
+              />
+            </Badge>
           )}
 
           <StyledDivider />
