@@ -15,8 +15,7 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
     Object.keys(returnedHeaders).forEach(key => res.setHeader(key, returnedHeaders[key]))
     res.status(200).json(data)
   } catch (e) {
-    console.error(e.code)
-    console.error('COMPLETE ERRROR', e)
+    console.error('COMPLETE ERRROR', e.toJSON())
     const response = e.response
     res.status(response?.status).json(response?.data)
   }
