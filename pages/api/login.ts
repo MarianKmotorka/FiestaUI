@@ -1,14 +1,11 @@
-import axios from 'axios'
 import { NextApiRequest, NextApiResponse } from 'next'
 
 export default async (req: NextApiRequest, res: NextApiResponse) => {
-  const { method, headers, body } = req
+  const { method } = req
 
   if (method !== 'POST') {
     res.status(404).end()
   }
-
-  const loginEndpoint = `${process.env.NEXT_PUBLIC_API_BASE_URL}/auth/login`
 
   try {
     const data = await fetch('https://jsonplaceholder.typicode.com/todos/1').then(response =>
