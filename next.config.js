@@ -1,15 +1,13 @@
 const webpack = require('webpack')
 const nextTranslate = require('next-translate')
 
-console.log('Next.config.js file detected')
-
 module.exports = nextTranslate({
   webpack: config => {
     config.node = {
       fs: 'empty'
     }
 
-    if (process.env.NODE_ENV === 'development') process.env.NODE_TLS_REJECT_UNAUTHORIZED = '0'
+    process.env.NODE_TLS_REJECT_UNAUTHORIZED = '0'
 
     const env = Object.keys(process.env).reduce((acc, curr) => {
       acc[`process.env.${curr}`] = JSON.stringify(process.env[curr])
@@ -22,6 +20,5 @@ module.exports = nextTranslate({
   },
   images: {
     domains: ['res.cloudinary.com', 'lh4.googleusercontent.com', 'lh3.googleusercontent.com']
-  },
-  target: 'serverless'
+  }
 })
