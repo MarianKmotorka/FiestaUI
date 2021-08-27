@@ -11,8 +11,12 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
   const loginEndpoint = `${process.env.NEXT_PUBLIC_API_BASE_URL}/auth/login`
 
   try {
-    const { data, headers: returnedHeaders } = await axios.post(loginEndpoint, body, { headers })
-    Object.keys(returnedHeaders).forEach(key => res.setHeader(key, returnedHeaders[key]))
+    const data = await fetch('https://jsonplaceholder.typicode.com/todos/1').then(response =>
+      response.json()
+    )
+
+    // const { data, headers: returnedHeaders } = await axios.post(loginEndpoint, body, { headers })
+    // Object.keys(returnedHeaders).forEach(key => res.setHeader(key, returnedHeaders[key]))
     res.status(200).json(data)
   } catch (e) {
     console.error('COMPLETE ERRROR', e.toJSON())
