@@ -9,10 +9,15 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
   }
 
   try {
-    const {
-      data,
-      headers: returnedHeaders
-    } = await axios.get(`${process.env.NEXT_PUBLIC_API_BASE_URL}/auth/refresh-token`, { headers })
+    const { data, headers: returnedHeaders } = await axios.get(
+      `${process.env.NEXT_PUBLIC_API_BASE_URL}/auth/refresh-token`,
+      {
+        headers: {
+          accept: headers.accept,
+          cookie: headers.cookie
+        }
+      }
+    )
     Object.keys(returnedHeaders).forEach(key => res.setHeader(key, returnedHeaders[key]))
     res.status(200).json(data)
   } catch (e) {
