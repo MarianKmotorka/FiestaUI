@@ -16,6 +16,7 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
     res.status(200).json(data)
   } catch (e) {
     console.error(e.code)
+    console.error('COMPLETE ERRROR', e)
     const response = e.response
     res.status(response?.status).json(response?.data)
   }

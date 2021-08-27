@@ -9,7 +9,7 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
   }
 
   const loginEndpoint = `${process.env.NEXT_PUBLIC_API_BASE_URL}${process.env.NEXT_PUBLIC_SERVER_AUTH_CALLBACK_URL}`
-  console.log('LOGIN ENDPOINT', loginEndpoint)
+
   try {
     const { data, headers: returnedHeaders } = await axios.post(loginEndpoint, body, { headers })
     Object.keys(returnedHeaders).forEach(key => res.setHeader(key, returnedHeaders[key]))
