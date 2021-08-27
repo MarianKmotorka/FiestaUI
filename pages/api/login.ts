@@ -1,3 +1,4 @@
+import axios from 'axios'
 import { NextApiRequest, NextApiResponse } from 'next'
 
 export default async (req: NextApiRequest, res: NextApiResponse) => {
@@ -8,9 +9,7 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
   }
 
   try {
-    const data = await fetch('https://jsonplaceholder.typicode.com/todos/1').then(response =>
-      response.json()
-    )
+    const { data } = await axios.get('https://jsonplaceholder.typicode.com/todos/1')
 
     // const { data, headers: returnedHeaders } = await axios.post(loginEndpoint, body, { headers })
     // Object.keys(returnedHeaders).forEach(key => res.setHeader(key, returnedHeaders[key]))
