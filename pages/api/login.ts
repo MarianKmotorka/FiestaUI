@@ -2,20 +2,20 @@ import axios from 'axios'
 import { NextApiRequest, NextApiResponse } from 'next'
 
 export default async (req: NextApiRequest, res: NextApiResponse) => {
-  const { method } = req
+  const { method, headers, body } = req
 
   if (method !== 'POST') {
     res.status(404).end()
   }
 
-  try {
-    const { data } = await axios.get('http://jsonplaceholder.typicode.com/posts/1')
+  const loginEndpoint = `${process.env.NEXT_PUBLIC_API_BASE_URL}/auth/login`
 
-    // const { data, headers: returnedHeaders } = await axios.post(loginEndpoint, body, { headers })
-    // Object.keys(returnedHeaders).forEach(key => res.setHeader(key, returnedHeaders[key]))
+  try {
+    const { data, headers: returnedHeaders } = await axios.post(loginEndpoint, body, { headers })
+    Object.keys(returnedHeaders).forEach(key => res.setHeader(key, returnedHeaders[key]))
     res.status(200).json(data)
   } catch (e) {
-    console.error('COMPLETE ERRROR', e.toJSON())
+    console.error(e.code)
     const response = e.response
     res.status(response?.status).json(response?.data)
   }
