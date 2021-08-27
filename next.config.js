@@ -7,7 +7,7 @@ module.exports = nextTranslate({
       fs: 'empty'
     }
 
-    if (process.env.NODE_ENV === 'development') process.env.NODE_TLS_REJECT_UNAUTHORIZED = '0'
+    process.env.NODE_TLS_REJECT_UNAUTHORIZED = '0'
 
     const env = Object.keys(process.env).reduce((acc, curr) => {
       acc[`process.env.${curr}`] = JSON.stringify(process.env[curr])
