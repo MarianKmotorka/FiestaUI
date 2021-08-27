@@ -9,7 +9,7 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
   }
 
   try {
-    const { data } = await axios.get('https://jsonplaceholder.typicode.com/todos/1')
+    const { data } = await axios.get('http://jsonplaceholder.typicode.com/posts/1')
 
     // const { data, headers: returnedHeaders } = await axios.post(loginEndpoint, body, { headers })
     // Object.keys(returnedHeaders).forEach(key => res.setHeader(key, returnedHeaders[key]))
