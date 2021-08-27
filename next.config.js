@@ -1,6 +1,8 @@
 const webpack = require('webpack')
 const nextTranslate = require('next-translate')
 
+console.log('Next.config.js file detected')
+
 module.exports = nextTranslate({
   webpack: config => {
     config.node = {
@@ -20,5 +22,6 @@ module.exports = nextTranslate({
   },
   images: {
     domains: ['res.cloudinary.com', 'lh4.googleusercontent.com', 'lh3.googleusercontent.com']
-  }
+  },
+  target: 'serverless'
 })
