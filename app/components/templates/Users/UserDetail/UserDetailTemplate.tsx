@@ -104,12 +104,6 @@ const UserDetailTemplate = ({ userId }: IUserDetailTemplateProps) => {
               )}
 
               {!isCurrUser && (
-                <Button variant='outlined' color='secondary' endIcon={<Message />}>
-                  {t('message')}
-                </Button>
-              )}
-
-              {!isCurrUser && (
                 <FriendButton
                   userId={user.id}
                   friendStatus={user.friendStatus}

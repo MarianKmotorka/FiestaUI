@@ -3,7 +3,6 @@ import { useRouter } from 'next/dist/client/router'
 import useTranslation from 'next-translate/useTranslation'
 import { Badge, Tooltip } from '@material-ui/core'
 import {
-  ChatTwoTone,
   DashboardTwoTone,
   ExploreTwoTone,
   NotificationsTwoTone,
@@ -78,10 +77,6 @@ const Navbar = ({ forceUnauthorizedNavbar, transparent }: INavbarProps) => {
         <SearchTwoTone />
       </NavIconButton>
 
-      <NavIconButton>
-        <ChatTwoTone />
-      </NavIconButton>
-
       {friendRequestsButton}
 
       {notificationButton}
@@ -105,12 +100,6 @@ const Navbar = ({ forceUnauthorizedNavbar, transparent }: INavbarProps) => {
           </NavIconButton>
         </Tooltip>
       </NavLink>
-
-      <Tooltip title={t('messages')}>
-        <NavIconButton>
-          <ChatTwoTone />
-        </NavIconButton>
-      </Tooltip>
 
       <Tooltip title={t('friendRequests')}>{friendRequestsButton}</Tooltip>
 
