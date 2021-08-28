@@ -52,7 +52,7 @@ const LandingPage = () => {
 
             <h3>BETA version</h3>
 
-            <Button endIcon={<ChevronRight />} id='get-started-btn' href='/login'>
+            <Button endIcon={<ChevronRight />} id='get-started-btn' href='/signup'>
               Get started
             </Button>
 
