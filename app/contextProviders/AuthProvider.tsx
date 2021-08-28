@@ -98,7 +98,7 @@ const useRefreshToken = (isLoggedIn: boolean) => {
   useEffect(() => {
     if (!isLoggedIn) return
 
-    const intervalId = setInterval(() => authService.refreshToken(), 570_000) // 9.5 minutes
+    const intervalId = setInterval(() => authService.refreshToken(), 1_770_000) // 29.5 minutes
     return () => clearInterval(intervalId)
   }, [isLoggedIn])
 }
