@@ -32,3 +32,20 @@ export const FormContent = styled.div`
     margin-top: 30px;
   }
 `
+
+export const CenteredOr = styled.p`
+  width: 100%;
+  text-align: center;
+  border-bottom: 1px solid ${({ theme }) => theme.palette.themeText.themeGray};
+  line-height: 0.1em;
+  margin-bottom: 0;
+
+  span {
+    font-size: 1.2rem;
+    background: ${({ theme }) => theme.palette.background.paper};
+    color: ${({ theme }) => theme.palette.themeText.themeGray};
+    padding: 0 10px;
+    font-weight: 500;
+    text-transform: uppercase;
+  }
+`
