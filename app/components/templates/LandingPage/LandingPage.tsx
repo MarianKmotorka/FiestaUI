@@ -46,13 +46,13 @@ const LandingPage = () => {
         >
           <Container>
             <h1>
-              We Have All The Events
-              <br /> You Can Think Of
+              Number #1 Platform
+              <br /> For Event Management
             </h1>
 
-            <h3>Platform #1 for managing your events</h3>
+            <h3>BETA version</h3>
 
-            <Button endIcon={<ChevronRight />} id='get-started-btn' href='/signup'>
+            <Button endIcon={<ChevronRight />} id='get-started-btn' href='/login'>
               Get started
             </Button>
 
