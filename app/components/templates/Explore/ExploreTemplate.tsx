@@ -28,6 +28,7 @@ import {
   ExploreGrid
 } from './ExploreTemplate.styled'
 import Linkify from '@elements/Linkify'
+import { PageSubTitle, PageTitle } from '@elements/PageTitle'
 
 interface IExploreEvent extends IEventDto {
   organizerPictureUrl?: string
@@ -75,11 +76,14 @@ const ExploreTemplate = () => {
 
   return (
     <Wrapper>
-      <h1>
+      <PageTitle>
         {t('explore')}
         <Explore />
-      </h1>
-      <h2>Here you can find events from all over the world that you might be interested in.</h2>
+      </PageTitle>
+
+      <PageSubTitle>
+        Here you can find events from all over the world that you might be interested in.
+      </PageSubTitle>
 
       <ExploreGrid>
         {pages.map(page =>

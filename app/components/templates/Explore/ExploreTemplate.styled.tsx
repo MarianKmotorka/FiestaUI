@@ -11,19 +11,6 @@ to{
 
 export const Wrapper = styled.div`
   padding-bottom: 50px;
-
-  h1 {
-    display: flex;
-    align-items: center;
-    svg {
-      margin-left: 5px;
-    }
-  }
-  h2 {
-    font-weight: 300;
-    font-size: 1.3rem;
-    margin-bottom: 40px;
-  }
 `
 
 export const ExploreGrid = styled.div`
@@ -82,7 +69,7 @@ export const StartDate = styled.div`
   place-items: center;
   font-size: 1.5rem;
   font-weight: 700;
-  transition: top 0.2s ease-in-out;
+  transition: top 0.3s ease-in-out;
   cursor: pointer;
 
   svg {
@@ -101,7 +88,7 @@ export const BottomWrapper = styled.div`
   height: 225px;
   border-radius: 25px 25px 0 0;
   background: ${({ theme }) => theme.palette.background.paper};
-  transition: height 0.2s ease-in-out;
+  transition: height 0.3s ease-in-out;
   display: flex;
   flex-direction: column;
 
