@@ -5,7 +5,7 @@ from{
   transform:scale(0.8);
 }
 to{
-  transform:scale(1.18);
+  transform:scale(1.1);
 }
 `
 
@@ -64,6 +64,7 @@ export const StartDate = styled.div`
   right: 10px;
   border: 10px solid ${({ theme }) => theme.palette.background.paper};
   background: ${({ theme }) => theme.palette.gradients.primary};
+  color: ${({ theme }) => theme.palette.themeText.white};
   margin-left: auto;
   display: grid;
   place-items: center;
@@ -96,7 +97,6 @@ export const BottomWrapper = styled.div`
     margin: 10px 90px 10px 0;
     font-size: 1.2rem;
     max-height: 55px;
-    overflow: hidden;
     ::first-letter {
       color: ${({ theme }) => theme.palette.primary.main};
     }
