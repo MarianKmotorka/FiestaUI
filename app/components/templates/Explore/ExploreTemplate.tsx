@@ -76,10 +76,11 @@ const ExploreTemplate = () => {
 
   return (
     <Wrapper>
-      <PageTitle>
+      <h1>
         {t('explore')}
         <Explore />
-      </PageTitle>
+      </h1>
+      <h2>Here you can find events from all over the world that you might be interested in.</h2>
 
       <ExploreGrid>
         {pages.map(page =>

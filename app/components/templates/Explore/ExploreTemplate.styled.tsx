@@ -11,14 +11,18 @@ to{
 
 export const Wrapper = styled.div`
   padding-bottom: 50px;
-`
 
-export const PageTitle = styled.h1`
-  margin-bottom: 40px;
-  display: flex;
-  align-items: center;
-  svg {
-    margin-left: 5px;
+  h1 {
+    display: flex;
+    align-items: center;
+    svg {
+      margin-left: 5px;
+    }
+  }
+  h2 {
+    font-weight: 300;
+    font-size: 1.3rem;
+    margin-bottom: 40px;
   }
 `
 
