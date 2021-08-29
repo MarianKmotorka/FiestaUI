@@ -24,8 +24,9 @@ const InvitationPopup = ({ event }: IInvitationPopupProps) => {
   const queryClient = useQueryClient()
   const { maxMedium } = useWindowSize()
 
-  const [invitationLoading, setInvitationLoading] =
-    useState<'accept' | 'decline' | undefined>(undefined)
+  const [invitationLoading, setInvitationLoading] = useState<'accept' | 'decline' | undefined>(
+    undefined
+  )
 
   const handleInvitation = async (accepted: boolean) => {
     if (invitationLoading) return
@@ -35,7 +36,7 @@ const InvitationPopup = ({ event }: IInvitationPopupProps) => {
       await api.post(`/events/${event.id}/invitations/reply`, { accepted })
 
       if (!accepted) {
-        event.accessibilityType !== AccessibilityTypeEnum.Public && router.replace('/events')
+        event.accessibilityType !== AccessibilityTypeEnum.Public && router.replace('/home')
         queryClient.setQueryData<IEventDetail>(['events', event.id], prev => ({
           ...prev!,
           isCurrentUserInvited: false

@@ -124,7 +124,7 @@ const Navbar = ({ forceUnauthorizedNavbar, transparent }: INavbarProps) => {
     <HideOnScroll>
       <StyledAppBar elevation={0} transparent={transparent ? 1 : 0}>
         <StyledContainer>
-          <Logo onClick={() => router.push(auth.isLoggedIn ? '/events' : '/')} />
+          <Logo onClick={() => router.push(auth.isLoggedIn ? '/home' : '/')} />
 
           <Menu>
             {auth.isLoggedIn && !forceUnauthorizedNavbar ? (
