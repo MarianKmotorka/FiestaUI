@@ -59,7 +59,7 @@ const CreateOrUpdateEvent = ({ event, eventFetching, fetchError }: IProps) => {
     })
 
   const { onSubmit, submitting } = useSubmitForm<ICreateEventFormValues, { id: string }>({
-    url: event ? `/events/${event.id}` : '/home',
+    url: event ? `/events/${event.id}` : '/events',
     method: event ? 'patch' : 'post',
     canSubmit: step === stepIndexes.reviewStep,
     successCallback: ({ id }) => {
