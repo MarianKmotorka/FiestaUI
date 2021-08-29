@@ -3,7 +3,7 @@ import { useRouter } from 'next/dist/client/router'
 import useTranslation from 'next-translate/useTranslation'
 import { Badge, Tooltip } from '@material-ui/core'
 import {
-  DashboardTwoTone,
+  HomeTwoTone,
   ExploreTwoTone,
   NotificationsTwoTone,
   PeopleTwoTone,
@@ -85,10 +85,10 @@ const Navbar = ({ forceUnauthorizedNavbar, transparent }: INavbarProps) => {
 
   const desktopContent = auth.isLoggedIn && (
     <>
-      <NavLink href='/events'>
-        <Tooltip title={t('events')}>
+      <NavLink href='/home'>
+        <Tooltip title={t('home')}>
           <NavIconButton>
-            <DashboardTwoTone />
+            <HomeTwoTone />
           </NavIconButton>
         </Tooltip>
       </NavLink>
