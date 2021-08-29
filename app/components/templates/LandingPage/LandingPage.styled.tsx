@@ -1,3 +1,5 @@
+import { MD } from '@contextProviders/AppThemeProvider/theme'
+import { Container } from '@elements/Container'
 import styled, { css } from 'styled-components'
 
 export const Wrapper = styled.div`
@@ -127,5 +129,64 @@ export const Blob = styled.div`
 
   @media screen and (max-width: 800px) {
     display: none;
+  }
+`
+
+export const StepContainer = styled.div`
+  display: flex;
+`
+
+export const Step = styled.section`
+  flex: 1;
+  padding: 20px 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  h1 {
+    font-size: 2rem;
+    font-weight: 300;
+    border-bottom: solid 1px;
+    display: inline-block;
+  }
+
+  img {
+    flex: 1;
+    object-fit: contain;
+    margin: 0 auto;
+    display: block;
+    max-width: 60%;
+    max-height: 60vh;
+    border-radius: 15px;
+    box-shadow: 0 15px 25px rgba(0, 0, 0, 0.2);
+  }
+
+  @media screen and (max-width: ${MD}px) {
+    h1 {
+      font-size: 1.5rem;
+    }
+    img {
+      max-width: 80%;
+      max-height: 80vh;
+    }
+  }
+`
+
+export const StepLine = styled.div<{ isFirst?: 1 | 0 }>`
+  margin-right: 30px;
+  position: relative;
+  width: 1px;
+  background: ${({ theme }) => theme.palette.themeText.themeGray};
+
+  ${({ isFirst }) => isFirst && 'margin-top:70px'};
+
+  ::before {
+    content: '';
+    position: absolute;
+    top: ${({ isFirst }) => (isFirst ? 0 : '70px')};
+    left: -7px;
+    height: 15px;
+    width: 15px;
+    border-radius: 50%;
+    background: ${({ theme }) => theme.palette.gradients.primary};
   }
 `

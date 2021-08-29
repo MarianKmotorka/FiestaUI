@@ -5,7 +5,7 @@ import useWindowSize from '@hooks/useWindowSize'
 import FullWidthLayout from '@layouts/FullWidthLayout'
 import { Fab } from '@material-ui/core'
 import { ChevronRight, EventAvailable } from '@material-ui/icons'
-import { Blob, Layer1, Section, Wrapper } from './LandingPage.styled'
+import { Blob, Layer1, Section, Step, StepContainer, StepLine, Wrapper } from './LandingPage.styled'
 
 const ThemeBtn = () => {
   const { switchTheme } = useAppTheme()
@@ -34,6 +34,7 @@ const ThemeBtn = () => {
 
 const LandingPage = () => {
   const { minLarge } = useWindowSize()
+  const { isDark } = useAppTheme()
   return (
     <Wrapper>
       <FullWidthLayout transparentNavbar forceUnauthorizedNavbar title='Fiesta'>
@@ -63,6 +64,44 @@ const LandingPage = () => {
         </Section>
 
         <Layer1 />
+
+        <Container>
+          <StepContainer>
+            <StepLine isFirst={1} />
+            <Step>
+              <h1>Create Event</h1>
+
+              <img src={isDark ? 'createEventScreenshot-dark.png' : 'createEventScreenshot.png'} />
+            </Step>
+          </StepContainer>
+
+          <StepContainer>
+            <StepLine />
+            <Step>
+              <h1>Upload Your Banner</h1>
+
+              <img src={isDark ? 'eventDetailScreenshot-dark.png' : 'eventDetailScreenshot.png'} />
+            </Step>
+          </StepContainer>
+
+          <StepContainer>
+            <StepLine />
+            <Step>
+              <h1>Invite People</h1>
+
+              <img src={isDark ? 'inviteScreenshot-dark.png' : 'inviteScreenshot.png'} />
+            </Step>
+          </StepContainer>
+
+          <StepContainer>
+            <StepLine />
+            <Step>
+              <h1>Discuss About Event</h1>
+
+              <img src={isDark ? 'commentsScreenshot-dark.png' : 'commentsScreenshot.png'} />
+            </Step>
+          </StepContainer>
+        </Container>
       </FullWidthLayout>
     </Wrapper>
   )
