@@ -49,7 +49,7 @@ const ExploreTemplate = () => {
     async ({ pageParam = 0 }) => {
       const queryDocument: IQueryDocument = {
         page: pageParam,
-        pageSize: 4
+        pageSize: 20
       }
       const res = await api.post('/events/explore', {
         queryDocument
