@@ -1,10 +1,12 @@
-import { useAppTheme } from '@contextProviders/AppThemeProvider/AppThemeProvider'
+import { Fab } from '@material-ui/core'
+import { ChevronRight, EventAvailable } from '@material-ui/icons'
+
 import Button from '@elements/Button/Button'
 import { Container } from '@elements/Container'
 import useWindowSize from '@hooks/useWindowSize'
 import FullWidthLayout from '@layouts/FullWidthLayout'
-import { Fab } from '@material-ui/core'
-import { ChevronRight, EventAvailable } from '@material-ui/icons'
+import { useAppTheme } from '@contextProviders/AppThemeProvider/AppThemeProvider'
+
 import { Blob, Layer1, Section, Step, StepContainer, StepLine, Wrapper } from './LandingPage.styled'
 
 const ThemeBtn = () => {

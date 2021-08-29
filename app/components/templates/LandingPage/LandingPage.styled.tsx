@@ -1,6 +1,5 @@
-import { MD } from '@contextProviders/AppThemeProvider/theme'
-import { Container } from '@elements/Container'
 import styled, { css } from 'styled-components'
+import { MD } from '@contextProviders/AppThemeProvider/theme'
 
 export const Wrapper = styled.div`
   background-color: ${({ theme }) =>
