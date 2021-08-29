@@ -1,8 +1,15 @@
 import Link from 'next/link'
 import { useInfiniteQuery } from 'react-query'
 import useTranslation from 'next-translate/useTranslation'
-import { CircularProgress, Grid } from '@material-ui/core'
-import { ChevronRightRounded, LocationOn, People, Person, Schedule } from '@material-ui/icons'
+import { CircularProgress } from '@material-ui/core'
+import {
+  ChevronRightRounded,
+  Explore,
+  LocationOn,
+  People,
+  Person,
+  Schedule
+} from '@material-ui/icons'
 
 import api from '@api/HttpClient'
 import { IEventDto } from 'domainTypes'
@@ -18,7 +25,8 @@ import {
   CardWrapper,
   TopWrapper as TopWrapper,
   Wrapper,
-  PageTitle
+  PageTitle,
+  ExploreGrid
 } from './ExploreTemplate.styled'
 
 interface IExploreEvent extends IEventDto {
@@ -60,15 +68,19 @@ const ExploreTemplate = () => {
   const { pages } = data!
 
   const getTrimmedName = (name: string) => {
-    if (name.length > 25) return name.slice(0, 23) + '...'
+    const maxChars = 30
+    if (name.length > maxChars) return name.slice(0, maxChars - 2) + '...'
     return name
   }
 
   return (
     <Wrapper>
-      <PageTitle>{t('explore')}</PageTitle>
+      <PageTitle>
+        {t('explore')}
+        <Explore />
+      </PageTitle>
 
-      <Grid container spacing={5}>
+      <ExploreGrid>
         {pages.map(page =>
           page.entries.map(
             ({
@@ -84,60 +96,58 @@ const ExploreTemplate = () => {
               organizerId
             }) => {
               return (
-                <Grid item xs={12} md={6} lg={4} key={id}>
-                  <CardWrapper>
-                    <TopWrapper>
-                      <Link href={`/events/${id}`}>
-                        <BannerWrapper>
-                          <img
-                            className='banner'
-                            src={bannerUrl || '/eventDetailBanner.png'}
-                            alt='banner'
-                          />
-                        </BannerWrapper>
-                      </Link>
-                    </TopWrapper>
+                <CardWrapper key={id}>
+                  <TopWrapper>
+                    <Link href={`/events/${id}`}>
+                      <BannerWrapper>
+                        <img
+                          className='banner'
+                          src={bannerUrl || '/eventDetailBanner.png'}
+                          alt='banner'
+                        />
+                      </BannerWrapper>
+                    </Link>
+                  </TopWrapper>
 
-                    <BottomWrapper>
-                      <Link href={`/events/${id}`}>
-                        <StartDate className='start-date-avatar'>
-                          <span>{new Date(startDate).getDate()}</span>
-                          <ChevronRightRounded />
-                        </StartDate>
-                      </Link>
+                  <BottomWrapper>
+                    <Link href={`/events/${id}`}>
+                      <StartDate className='start-date-avatar'>
+                        <span>{new Date(startDate).getDate()}</span>
+                        <ChevronRightRounded />
+                      </StartDate>
+                    </Link>
 
-                      <h3>{getTrimmedName(name)}</h3>
+                    <h3>{getTrimmedName(name)}</h3>
 
-                      <div className='event-info'>
-                        <p>
-                          <Person />
-                          <Link href={`/users/${organizerId}`}>
-                            <span className='username'>{organizerUsername}</span>
-                          </Link>
-                        </p>
-                        <p>
-                          <People />
-                          {attendeesCount}/{capacity}
-                        </p>
-                        <p>
-                          <Schedule />
-                          {toLocalTime(startDate, 'DD MMMM yyyy')}
-                        </p>
-                        <p>
-                          <LocationOn />
-                          {location}
-                        </p>
+                    <div className='event-info'>
+                      <p>
+                        <Person />
+                        <Link href={`/users/${organizerId}`}>
+                          <span className='username'>{organizerUsername}</span>
+                        </Link>
+                      </p>
+                      <p>
+                        <People />
+                        {attendeesCount}/{capacity}
+                      </p>
+                      <p>
+                        <Schedule />
+                        {toLocalTime(startDate, 'DD MMMM yyyy')}
+                      </p>
+                      <p>
+                        <LocationOn />
+                        {location}
+                      </p>
 
-                        <p className='event-description'>{description}</p>
-                      </div>
-                    </BottomWrapper>
-                  </CardWrapper>
-                </Grid>
+                      <p className='event-description'>{description}</p>
+                    </div>
+                  </BottomWrapper>
+                </CardWrapper>
               )
             }
           )
         )}
-      </Grid>
+      </ExploreGrid>
 
       <Observer disabled={isFetching || !hasNextPage} callback={fetchNextPage} />
 

@@ -9,10 +9,24 @@ to{
 }
 `
 
-export const Wrapper = styled.div``
+export const Wrapper = styled.div`
+  padding-bottom: 50px;
+`
 
 export const PageTitle = styled.h1`
   margin-bottom: 40px;
+  display: flex;
+  align-items: center;
+  svg {
+    margin-left: 5px;
+  }
+`
+
+export const ExploreGrid = styled.div`
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  grid-gap: 50px;
+  justify-items: center;
 `
 
 export const CardWrapper = styled.div`
@@ -21,8 +35,7 @@ export const CardWrapper = styled.div`
   overflow: hidden;
   height: 400px;
   width: 100%;
-  min-width: 300px;
-  max-width: 320px;
+  width: 320px;
   box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2);
   position: relative;
 
@@ -85,10 +98,14 @@ export const BottomWrapper = styled.div`
   border-radius: 25px 25px 0 0;
   background: ${({ theme }) => theme.palette.background.paper};
   transition: height 0.2s ease-in-out;
+  display: flex;
+  flex-direction: column;
 
   h3 {
-    margin: 10px 90px 10px 0px;
+    margin: 10px 90px 10px 0;
     font-size: 1.2rem;
+    max-height: 55px;
+    overflow: hidden;
     ::first-letter {
       color: ${({ theme }) => theme.palette.primary.main};
     }
@@ -99,7 +116,7 @@ export const BottomWrapper = styled.div`
     align-items: center;
     font-size: 0.9rem;
     color: ${({ theme }) => theme.palette.themeText.themeGray};
-    margin: 15px 0;
+    margin: 10px 0;
     svg {
       color: ${({ theme }) => theme.palette.themeText.themeBlack};
       margin-right: 7px;
@@ -114,8 +131,7 @@ export const BottomWrapper = styled.div`
   }
 
   .event-info {
-    overflow-y: auto;
-    height: 300px;
+    flex: 1;
 
     .event-description {
       display: none;
@@ -133,6 +149,9 @@ export const BottomWrapper = styled.div`
       svg {
         display: block;
       }
+    }
+    .event-info {
+      overflow-y: auto;
     }
     .event-description {
       display: block;
