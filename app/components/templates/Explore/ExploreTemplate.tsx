@@ -25,7 +25,6 @@ import {
   CardWrapper,
   TopWrapper as TopWrapper,
   Wrapper,
-  PageTitle,
   ExploreGrid
 } from './ExploreTemplate.styled'
 import Linkify from '@elements/Linkify'
