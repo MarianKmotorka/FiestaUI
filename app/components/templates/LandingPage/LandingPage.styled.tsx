@@ -2,8 +2,8 @@ import styled, { css } from 'styled-components'
 import { MD } from '@contextProviders/AppThemeProvider/theme'
 
 export const Wrapper = styled.div`
-  background-color: ${({ theme }) =>
-    theme.palette.isDark ? '#001220' : theme.palette.background.default};
+  /* background-color: ${({ theme }) =>
+    theme.palette.isDark ? '#001220' : theme.palette.background.default}; */
 `
 
 const Spacer = styled.div`
@@ -16,6 +16,9 @@ const Spacer = styled.div`
 
 export const Layer1 = styled(Spacer)`
   background-image: url('wave-overlap.svg');
+`
+export const Layer2 = styled(Spacer)`
+  background-image: url('wave-overlap-reversed.svg');
 `
 
 export const Section = styled.section<{ center?: true; height?: string; bg?: string }>`
@@ -133,18 +136,15 @@ export const Blob = styled.div`
 
 export const StepContainer = styled.div`
   display: flex;
+  height: 60vh;
 `
 
 export const Step = styled.section`
-  flex: 1;
+  height: 100%;
+  max-width: 60%;
   padding: 50px 0;
-
-  > .img-wrapper {
-    width: 100%;
-    max-width: 60%;
-    margin: 0 auto;
-    position: relative;
-  }
+  margin: 0 auto;
+  position: relative;
 
   h1 {
     font-size: 1.5rem;
@@ -156,18 +156,23 @@ export const Step = styled.section`
     color: ${({ theme }) => theme.palette.themeText.white};
     background: ${({ theme }) => theme.palette.gradients.primary};
     position: absolute;
-    top: 0;
+    top: 50px;
     left: 0;
   }
 
   img {
     flex: 1;
     object-fit: contain;
-    margin: 0 auto;
     display: block;
-    width: 100%;
     border-radius: 30px;
+    width: 100%;
+    height: 100%;
     box-shadow: 0 15px 25px rgba(0, 0, 0, 0.2);
+    ${({ theme }) =>
+      theme.palette.isDark &&
+      css`
+        border: solid 1px ${theme.palette.grey[800]};
+      `};
   }
 
   @media screen and (max-width: ${MD}px) {
@@ -176,28 +181,46 @@ export const Step = styled.section`
       padding: 7px 12px;
       font-weight: 300;
     }
-    > .img-wrapper {
-      max-width: 100%;
-    }
+    max-width: 100%;
   }
 `
 
-export const StepLine = styled.div<{ isFirst?: 1 | 0 }>`
+export const StepLine = styled.div<{ position?: 'first' | 'last' }>`
   margin-right: 30px;
   position: relative;
   width: 1px;
   background: ${({ theme }) => theme.palette.themeText.themeGray};
 
-  ${({ isFirst }) => isFirst && 'margin-top:70px'};
+  ${({ position }) => position === 'first' && 'margin-top: 30vh'};
+  ${({ position }) => position === 'last' && 'margin-bottom: 30vh'};
 
   ::before {
     content: '';
     position: absolute;
-    top: ${({ isFirst }) => (isFirst ? 0 : '70px')};
+    top: ${({ position }) => (position === 'first' ? 0 : position === 'last' ? '100%' : '50%')};
     left: -7px;
     height: 15px;
     width: 15px;
     border-radius: 50%;
     background: ${({ theme }) => theme.palette.gradients.primary};
+  }
+`
+
+export const Footer = styled.footer`
+  height: 70vh;
+  background-color: ${({ theme }) => theme.palette.grey[900]};
+  display: grid;
+  place-items: center;
+
+  h1 {
+    color: ${({ theme }) => theme.palette.themeText.white};
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    svg {
+      color: ${({ theme }) => theme.palette.primary.main};
+      font-size: 3em;
+    }
   }
 `

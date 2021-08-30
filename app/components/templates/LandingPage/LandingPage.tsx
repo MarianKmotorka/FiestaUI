@@ -1,5 +1,5 @@
 import { Fab } from '@material-ui/core'
-import { ChevronRight, EventAvailable } from '@material-ui/icons'
+import { ChevronRight, EventAvailable, Warning } from '@material-ui/icons'
 
 import Button from '@elements/Button/Button'
 import { Container } from '@elements/Container'
@@ -7,7 +7,17 @@ import useWindowSize from '@hooks/useWindowSize'
 import FullWidthLayout from '@layouts/FullWidthLayout'
 import { useAppTheme } from '@contextProviders/AppThemeProvider/AppThemeProvider'
 
-import { Blob, Layer1, Section, Step, StepContainer, StepLine, Wrapper } from './LandingPage.styled'
+import {
+  Blob,
+  Footer,
+  Layer1,
+  Layer2,
+  Section,
+  Step,
+  StepContainer,
+  StepLine,
+  Wrapper
+} from './LandingPage.styled'
 
 const ThemeBtn = () => {
   const { switchTheme } = useAppTheme()
@@ -44,7 +54,7 @@ const LandingPage = () => {
 
         <Section
           center
-          height={minLarge ? '70vh' : '85vh'}
+          height={minLarge ? '60vh' : '85vh'}
           style={{ paddingTop: minLarge ? '100px' : '50px' }}
         >
           <Container>
@@ -53,7 +63,7 @@ const LandingPage = () => {
               <br /> For Event Management
             </h1>
 
-            <h3>BETA version</h3>
+            <h3>BETA - still under development</h3>
 
             <Button endIcon={<ChevronRight />} id='get-started-btn' href='/signup'>
               Get started
@@ -66,54 +76,52 @@ const LandingPage = () => {
         </Section>
 
         <Layer1 />
+        <Layer2 />
 
         <Container>
           <StepContainer>
-            <StepLine isFirst={1} />
+            <StepLine position='first' />
             <Step>
-              <div className='img-wrapper'>
-                <h1>Create Event</h1>
-                <img
-                  src={isDark ? 'createEventScreenshot-dark.png' : 'createEventScreenshot.png'}
-                />
-              </div>
+              <h1>Create Event</h1>
+              <img src={isDark ? 'createEventScreenshot-dark.png' : 'createEventScreenshot.png'} />
             </Step>
           </StepContainer>
 
           <StepContainer>
             <StepLine />
             <Step>
-              <div className='img-wrapper'>
-                <h1>Upload Your Banner</h1>
-                <img
-                  src={isDark ? 'eventDetailScreenshot-dark.png' : 'eventDetailScreenshot.png'}
-                />
-              </div>
+              <h1>Upload Your Banner</h1>
+              <img src={isDark ? 'eventDetailScreenshot-dark.png' : 'eventDetailScreenshot.png'} />
             </Step>
           </StepContainer>
 
           <StepContainer>
             <StepLine />
             <Step>
-              <div className='img-wrapper'>
-                <h1>Invite People</h1>
+              <h1>Invite People</h1>
 
-                <img src={isDark ? 'inviteScreenshot-dark.png' : 'inviteScreenshot.png'} />
-              </div>
+              <img src={isDark ? 'inviteScreenshot-dark.png' : 'inviteScreenshot.png'} />
             </Step>
           </StepContainer>
 
           <StepContainer>
-            <StepLine />
+            <StepLine position='last' />
             <Step>
-              <div className='img-wrapper'>
-                <h1>Discuss About Event</h1>
+              <h1>Discuss About Event</h1>
 
-                <img src={isDark ? 'commentsScreenshot-dark.png' : 'commentsScreenshot.png'} />
-              </div>
+              <img src={isDark ? 'commentsScreenshot-dark.png' : 'commentsScreenshot.png'} />
             </Step>
           </StepContainer>
         </Container>
+
+        <Footer>
+          <Container>
+            <h1>
+              <Warning /> Under construction
+              <Warning />
+            </h1>
+          </Container>
+        </Footer>
       </FullWidthLayout>
     </Wrapper>
   )
