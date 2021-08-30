@@ -137,15 +137,27 @@ export const StepContainer = styled.div`
 
 export const Step = styled.section`
   flex: 1;
-  padding: 20px 0;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
+  padding: 50px 0;
+
+  > .img-wrapper {
+    width: 100%;
+    max-width: 60%;
+    margin: 0 auto;
+    position: relative;
+  }
+
   h1 {
-    font-size: 2rem;
-    font-weight: 300;
-    border-bottom: solid 1px;
-    display: inline-block;
+    font-size: 1.5rem;
+    font-weight: 500;
+    padding: 10px 25px;
+    margin: 0;
+    border-radius: 150px;
+    box-shadow: 0 10px 10px rgba(0, 0, 0, 0.2);
+    color: ${({ theme }) => theme.palette.themeText.white};
+    background: ${({ theme }) => theme.palette.gradients.primary};
+    position: absolute;
+    top: 0;
+    left: 0;
   }
 
   img {
@@ -153,19 +165,19 @@ export const Step = styled.section`
     object-fit: contain;
     margin: 0 auto;
     display: block;
-    max-width: 60%;
-    max-height: 60vh;
-    border-radius: 15px;
+    width: 100%;
+    border-radius: 30px;
     box-shadow: 0 15px 25px rgba(0, 0, 0, 0.2);
   }
 
   @media screen and (max-width: ${MD}px) {
     h1 {
-      font-size: 1.5rem;
+      font-size: 1rem;
+      padding: 7px 12px;
+      font-weight: 300;
     }
-    img {
-      max-width: 80%;
-      max-height: 80vh;
+    > .img-wrapper {
+      max-width: 100%;
     }
   }
 `

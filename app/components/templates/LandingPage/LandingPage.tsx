@@ -71,36 +71,46 @@ const LandingPage = () => {
           <StepContainer>
             <StepLine isFirst={1} />
             <Step>
-              <h1>Create Event</h1>
-
-              <img src={isDark ? 'createEventScreenshot-dark.png' : 'createEventScreenshot.png'} />
+              <div className='img-wrapper'>
+                <h1>Create Event</h1>
+                <img
+                  src={isDark ? 'createEventScreenshot-dark.png' : 'createEventScreenshot.png'}
+                />
+              </div>
             </Step>
           </StepContainer>
 
           <StepContainer>
             <StepLine />
             <Step>
-              <h1>Upload Your Banner</h1>
-
-              <img src={isDark ? 'eventDetailScreenshot-dark.png' : 'eventDetailScreenshot.png'} />
+              <div className='img-wrapper'>
+                <h1>Upload Your Banner</h1>
+                <img
+                  src={isDark ? 'eventDetailScreenshot-dark.png' : 'eventDetailScreenshot.png'}
+                />
+              </div>
             </Step>
           </StepContainer>
 
           <StepContainer>
             <StepLine />
             <Step>
-              <h1>Invite People</h1>
+              <div className='img-wrapper'>
+                <h1>Invite People</h1>
 
-              <img src={isDark ? 'inviteScreenshot-dark.png' : 'inviteScreenshot.png'} />
+                <img src={isDark ? 'inviteScreenshot-dark.png' : 'inviteScreenshot.png'} />
+              </div>
             </Step>
           </StepContainer>
 
           <StepContainer>
             <StepLine />
             <Step>
-              <h1>Discuss About Event</h1>
+              <div className='img-wrapper'>
+                <h1>Discuss About Event</h1>
 
-              <img src={isDark ? 'commentsScreenshot-dark.png' : 'commentsScreenshot.png'} />
+                <img src={isDark ? 'commentsScreenshot-dark.png' : 'commentsScreenshot.png'} />
+              </div>
             </Step>
           </StepContainer>
         </Container>
