@@ -66,9 +66,11 @@ const SettingsTemplate = () => {
           <EditProfileTab />
         </StyledPanel>
 
-        <StyledPanel index='changePassword' value={currTab} alwaysVisible={maxMedium}>
-          <ChangePasswordTab />
-        </StyledPanel>
+        {hasAuthProvider(currentUser, AuthProviderFlags.EmailAndPassword) && (
+          <StyledPanel index='changePassword' value={currTab} alwaysVisible={maxMedium}>
+            <ChangePasswordTab />
+          </StyledPanel>
+        )}
 
         <StyledPanel index='signInMethods' value={currTab} alwaysVisible={maxMedium}>
           <SignInMethodsTab />
