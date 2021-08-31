@@ -63,7 +63,7 @@ const LandingPage = () => {
               <br /> For Event Management
             </h1>
 
-            <h3>BETA - still under development</h3>
+            <h3>ALPHA - still under development</h3>
 
             <Button endIcon={<ChevronRight />} id='get-started-btn' href='/signup'>
               Get started
@@ -81,7 +81,7 @@ const LandingPage = () => {
         <Container>
           <StepContainer>
             <StepLine position='first' />
-            <Step>
+            <Step className='step'>
               <h1>Create Event</h1>
               <img src={isDark ? 'createEventScreenshot-dark.png' : 'createEventScreenshot.png'} />
             </Step>
@@ -89,7 +89,7 @@ const LandingPage = () => {
 
           <StepContainer>
             <StepLine />
-            <Step>
+            <Step className='step'>
               <h1>Upload Your Banner</h1>
               <img src={isDark ? 'eventDetailScreenshot-dark.png' : 'eventDetailScreenshot.png'} />
             </Step>
@@ -97,7 +97,7 @@ const LandingPage = () => {
 
           <StepContainer>
             <StepLine />
-            <Step>
+            <Step className='step'>
               <h1>Invite People</h1>
 
               <img src={isDark ? 'inviteScreenshot-dark.png' : 'inviteScreenshot.png'} />
@@ -106,7 +106,7 @@ const LandingPage = () => {
 
           <StepContainer>
             <StepLine position='last' />
-            <Step>
+            <Step className='step'>
               <h1>Discuss About Event</h1>
 
               <img src={isDark ? 'commentsScreenshot-dark.png' : 'commentsScreenshot.png'} />
