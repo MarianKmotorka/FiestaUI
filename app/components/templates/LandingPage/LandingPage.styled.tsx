@@ -188,7 +188,6 @@ export const Step = styled.section`
   @media screen and (max-width: ${MD}px) {
     h1 {
       font-size: 1rem;
-      padding: 7px 12px;
     }
     max-width: 100%;
   }
