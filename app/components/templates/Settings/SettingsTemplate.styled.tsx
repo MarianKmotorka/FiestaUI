@@ -36,6 +36,11 @@ export const TabPanelContainer = styled.div`
 export const StyledTab = styled(Tab)`
   font-size: 0.9rem;
   padding: 17px 0;
+
+  .MuiTab-wrapper {
+    display: inline;
+    text-align: start;
+  }
 `
 
 export const StyledPanel = styled(TabPanel)`
