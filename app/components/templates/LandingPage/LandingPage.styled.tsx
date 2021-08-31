@@ -1,10 +1,7 @@
 import styled, { css } from 'styled-components'
-import { MD } from '@contextProviders/AppThemeProvider/theme'
+import { LG, MD } from '@contextProviders/AppThemeProvider/theme'
 
-export const Wrapper = styled.div`
-  /* background-color: ${({ theme }) =>
-    theme.palette.isDark ? '#001220' : theme.palette.background.default}; */
-`
+export const Wrapper = styled.div``
 
 const Spacer = styled.div`
   aspect-ratio: 960/300;
@@ -137,21 +134,34 @@ export const Blob = styled.div`
 export const StepContainer = styled.div`
   display: flex;
   height: 60vh;
+
+  @media screen and (min-width: ${LG}px) {
+    :nth-child(odd) {
+      .step {
+        right: 10%;
+      }
+    }
+    :nth-child(even) {
+      .step {
+        left: 10%;
+      }
+    }
+  }
 `
 
 export const Step = styled.section`
   height: 100%;
-  max-width: 60%;
   padding: 50px 0;
   margin: 0 auto;
   position: relative;
+  max-width: 60%;
 
   h1 {
-    font-size: 1.5rem;
+    font-size: 24px;
     font-weight: 500;
-    padding: 10px 25px;
+    padding: 5px 25px;
     margin: 0;
-    border-radius: 150px;
+    border-radius: 30px 0;
     box-shadow: 0 10px 10px rgba(0, 0, 0, 0.2);
     color: ${({ theme }) => theme.palette.themeText.white};
     background: ${({ theme }) => theme.palette.gradients.primary};
@@ -179,7 +189,6 @@ export const Step = styled.section`
     h1 {
       font-size: 1rem;
       padding: 7px 12px;
-      font-weight: 300;
     }
     max-width: 100%;
   }
@@ -208,12 +217,11 @@ export const StepLine = styled.div<{ position?: 'first' | 'last' }>`
 
 export const Footer = styled.footer`
   height: 70vh;
-  background-color: ${({ theme }) => theme.palette.grey[900]};
+  background-color: ${({ theme }) => theme.palette.background.paper};
   display: grid;
   place-items: center;
 
   h1 {
-    color: ${({ theme }) => theme.palette.themeText.white};
     display: flex;
     align-items: center;
     justify-content: center;
