@@ -15,8 +15,7 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
       {
         headers: {
           accept: headers.accept,
-          cookie: headers.cookie,
-          referer: headers.referer
+          cookie: headers.cookie
         }
       }
     )

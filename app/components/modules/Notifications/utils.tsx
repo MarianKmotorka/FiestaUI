@@ -11,6 +11,7 @@ import EventJoinRequestCreated from './variants/EventJoinRequestCreated'
 import EventJoinRequestReply from './variants/EventJoinRequestReply'
 import FriendRequestReply from './variants/FriendRequestReply'
 import FriendRemoved from './variants/FriendRemoved'
+import NewUserWelcome from './variants/NewUserWelcome'
 
 export const getNotificationVariant = (notification: INotification<any>) => {
   const notificationMap: Record<NotificationType, ReactNode> = {
@@ -25,7 +26,8 @@ export const getNotificationVariant = (notification: INotification<any>) => {
     ),
     [NotificationType.EventJoinRequestReply]: <EventJoinRequestReply notification={notification} />,
     [NotificationType.FriendRequestReply]: <FriendRequestReply notification={notification} />,
-    [NotificationType.FriendRemoved]: <FriendRemoved notification={notification} />
+    [NotificationType.FriendRemoved]: <FriendRemoved notification={notification} />,
+    [NotificationType.NewUserWelcome]: <NewUserWelcome notification={notification} />
   }
 
   return notificationMap[notification.type]

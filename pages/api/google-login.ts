@@ -2,7 +2,7 @@ import axios from 'axios'
 import { NextApiRequest, NextApiResponse } from 'next'
 
 export default async (req: NextApiRequest, res: NextApiResponse) => {
-  const { method, body, headers } = req
+  const { method, body } = req
 
   if (method !== 'POST') {
     res.status(404).end()
@@ -11,11 +11,7 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
   const loginEndpoint = `${process.env.NEXT_PUBLIC_API_BASE_URL}${process.env.NEXT_PUBLIC_SERVER_AUTH_CALLBACK_URL}`
 
   try {
-    const { data, headers: returnedHeaders } = await axios.post(loginEndpoint, body, {
-      headers: {
-        referer: headers.referer
-      }
-    })
+    const { data, headers: returnedHeaders } = await axios.post(loginEndpoint, body)
     Object.keys(returnedHeaders).forEach(key => res.setHeader(key, returnedHeaders[key]))
     res.status(200).json(data)
   } catch (e) {
