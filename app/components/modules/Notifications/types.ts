@@ -6,7 +6,8 @@ export enum NotificationType {
   EventJoinRequestCreated = 5,
   EventJoinRequestReply = 6,
   FriendRequestReply = 7,
-  FriendRemoved = 8
+  FriendRemoved = 8,
+  NewUserWelcome = 9
 }
 
 export interface INotification<TModel> {

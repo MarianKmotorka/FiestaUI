@@ -187,7 +187,8 @@
     "eventJoinRequestDeclined": "<0>{{responder}}</0> has declined your request to join <0>{{event}}</0>",
     "friendRequestAccepted": "<0>{{friend}}</0> has accepted your friend request.",
     "friendRequestRejected": "<0>{{friend}}</0> has rejected your friend request.",
-    "friendRemoved": "<0>{{friend}}</0> has removed you from his friends"
+    "friendRemoved": "<0>{{friend}}</0> has removed you from his friends",
+    "newUserWelcome": "<0>Welcome on board {{firstName}}!</0><1></1>You can start by <2>exploring</2> events nearby."
   },
 
   "enum": {
