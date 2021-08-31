@@ -2,7 +2,7 @@ import useTranslation from 'next-translate/useTranslation'
 import { BottomNavigation as MuiNavigation, BottomNavigationAction } from '@material-ui/core'
 import {
   AccountCircleTwoTone,
-  DashboardTwoTone,
+  HomeTwoTone,
   ExploreTwoTone,
   SettingsTwoTone
 } from '@material-ui/icons'
@@ -25,8 +25,8 @@ const BottomNavigation = () => {
   return (
     <Wrapper>
       <MuiNavigation>
-        <NavLink href='/events' activeClassName={SELECTED}>
-          <BottomNavigationAction label={t('events')} icon={<DashboardTwoTone />} showLabel />
+        <NavLink href='/home' activeClassName={SELECTED}>
+          <BottomNavigationAction label={t('home')} icon={<HomeTwoTone />} showLabel />
         </NavLink>
 
         <NavLink href='/explore' activeClassName={SELECTED}>

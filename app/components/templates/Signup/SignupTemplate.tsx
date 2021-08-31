@@ -4,6 +4,7 @@ import useTranslation from 'next-translate/useTranslation'
 import Form from '@elements/HookForm/Form'
 import FormInput from '@elements/HookForm/FormInput'
 import SubmitButton from '@elements/HookForm/SubmitButton'
+import GoogleLoginButton from '@elements/GoogleLoginButton'
 import { PageMinHeightWrapper } from '@elements/PageMinHeightWrapper'
 import { useSubmitForm } from '@elements/HookForm/hooks/useSubmitForm'
 import SignupSuccessDialog from './SignupSuccessDialog/SignupSuccessDialog'
@@ -15,7 +16,7 @@ import {
   createRepeatPasswordValidator
 } from 'utils/validators'
 
-import { FormContent, StyledCard } from './SignupTemplate.styled'
+import { CenteredOr, FormContent, StyledCard } from './SignupTemplate.styled'
 
 export interface ISignupFormValues {
   firstName: string
@@ -45,6 +46,12 @@ const SignupTemplate = () => {
   return (
     <PageMinHeightWrapper center>
       <StyledCard>
+        <GoogleLoginButton text={t('signUpWithGoogle')} />
+
+        <CenteredOr>
+          <span>{t('or')}</span>
+        </CenteredOr>
+
         <Form onSubmit={onSubmit} defaultValues={defaultValues}>
           <FormContent>
             <FormInput name='firstName' label={t('firstName')} validate={requiredValidator} />

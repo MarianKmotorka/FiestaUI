@@ -1,7 +1,7 @@
 import Link from 'next/link'
 import { useState } from 'react'
 import { useQuery } from 'react-query'
-import { Edit, Message } from '@material-ui/icons'
+import { Edit } from '@material-ui/icons'
 import useTranslation from 'next-translate/useTranslation'
 import { Avatar, Box, CircularProgress } from '@material-ui/core'
 
@@ -101,12 +101,6 @@ const UserDetailTemplate = ({ userId }: IUserDetailTemplateProps) => {
                     {t('edit')}
                   </Button>
                 </Link>
-              )}
-
-              {!isCurrUser && (
-                <Button variant='outlined' color='secondary' endIcon={<Message />}>
-                  {t('message')}
-                </Button>
               )}
 
               {!isCurrUser && (

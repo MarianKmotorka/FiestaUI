@@ -3,8 +3,7 @@ import { useRouter } from 'next/dist/client/router'
 import useTranslation from 'next-translate/useTranslation'
 import { Badge, Tooltip } from '@material-ui/core'
 import {
-  ChatTwoTone,
-  DashboardTwoTone,
+  HomeTwoTone,
   ExploreTwoTone,
   NotificationsTwoTone,
   PeopleTwoTone,
@@ -78,10 +77,6 @@ const Navbar = ({ forceUnauthorizedNavbar, transparent }: INavbarProps) => {
         <SearchTwoTone />
       </NavIconButton>
 
-      <NavIconButton>
-        <ChatTwoTone />
-      </NavIconButton>
-
       {friendRequestsButton}
 
       {notificationButton}
@@ -90,10 +85,10 @@ const Navbar = ({ forceUnauthorizedNavbar, transparent }: INavbarProps) => {
 
   const desktopContent = auth.isLoggedIn && (
     <>
-      <NavLink href='/events'>
-        <Tooltip title={t('events')}>
+      <NavLink href='/home'>
+        <Tooltip title={t('home')}>
           <NavIconButton>
-            <DashboardTwoTone />
+            <HomeTwoTone />
           </NavIconButton>
         </Tooltip>
       </NavLink>
@@ -105,12 +100,6 @@ const Navbar = ({ forceUnauthorizedNavbar, transparent }: INavbarProps) => {
           </NavIconButton>
         </Tooltip>
       </NavLink>
-
-      <Tooltip title={t('messages')}>
-        <NavIconButton>
-          <ChatTwoTone />
-        </NavIconButton>
-      </Tooltip>
 
       <Tooltip title={t('friendRequests')}>{friendRequestsButton}</Tooltip>
 
@@ -135,7 +124,7 @@ const Navbar = ({ forceUnauthorizedNavbar, transparent }: INavbarProps) => {
     <HideOnScroll>
       <StyledAppBar elevation={0} transparent={transparent ? 1 : 0}>
         <StyledContainer>
-          <Logo onClick={() => router.push(auth.isLoggedIn ? '/events' : '/')} />
+          <Logo onClick={() => router.push(auth.isLoggedIn ? '/home' : '/')} />
 
           <Menu>
             {auth.isLoggedIn && !forceUnauthorizedNavbar ? (

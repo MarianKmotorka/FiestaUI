@@ -1,11 +1,23 @@
-import { useAppTheme } from '@contextProviders/AppThemeProvider/AppThemeProvider'
+import { Fab } from '@material-ui/core'
+import { ChevronRight, EventAvailable, Warning } from '@material-ui/icons'
+
 import Button from '@elements/Button/Button'
 import { Container } from '@elements/Container'
 import useWindowSize from '@hooks/useWindowSize'
 import FullWidthLayout from '@layouts/FullWidthLayout'
-import { Fab } from '@material-ui/core'
-import { ChevronRight, EventAvailable } from '@material-ui/icons'
-import { Blob, Layer1, Section, Wrapper } from './LandingPage.styled'
+import { useAppTheme } from '@contextProviders/AppThemeProvider/AppThemeProvider'
+
+import {
+  Blob,
+  Footer,
+  Layer1,
+  Layer2,
+  Section,
+  Step,
+  StepContainer,
+  StepLine,
+  Wrapper
+} from './LandingPage.styled'
 
 const ThemeBtn = () => {
   const { switchTheme } = useAppTheme()
@@ -34,6 +46,7 @@ const ThemeBtn = () => {
 
 const LandingPage = () => {
   const { minLarge } = useWindowSize()
+  const { isDark } = useAppTheme()
   return (
     <Wrapper>
       <FullWidthLayout transparentNavbar forceUnauthorizedNavbar title='Fiesta'>
@@ -41,16 +54,16 @@ const LandingPage = () => {
 
         <Section
           center
-          height={minLarge ? '70vh' : '85vh'}
+          height={minLarge ? '60vh' : '85vh'}
           style={{ paddingTop: minLarge ? '100px' : '50px' }}
         >
           <Container>
             <h1>
-              We Have All The Events
-              <br /> You Can Think Of
+              Number #1 Platform
+              <br /> For Event Management
             </h1>
 
-            <h3>Platform #1 for managing your events</h3>
+            <h3>BETA - still under development</h3>
 
             <Button endIcon={<ChevronRight />} id='get-started-btn' href='/signup'>
               Get started
@@ -63,6 +76,52 @@ const LandingPage = () => {
         </Section>
 
         <Layer1 />
+        <Layer2 />
+
+        <Container>
+          <StepContainer>
+            <StepLine position='first' />
+            <Step>
+              <h1>Create Event</h1>
+              <img src={isDark ? 'createEventScreenshot-dark.png' : 'createEventScreenshot.png'} />
+            </Step>
+          </StepContainer>
+
+          <StepContainer>
+            <StepLine />
+            <Step>
+              <h1>Upload Your Banner</h1>
+              <img src={isDark ? 'eventDetailScreenshot-dark.png' : 'eventDetailScreenshot.png'} />
+            </Step>
+          </StepContainer>
+
+          <StepContainer>
+            <StepLine />
+            <Step>
+              <h1>Invite People</h1>
+
+              <img src={isDark ? 'inviteScreenshot-dark.png' : 'inviteScreenshot.png'} />
+            </Step>
+          </StepContainer>
+
+          <StepContainer>
+            <StepLine position='last' />
+            <Step>
+              <h1>Discuss About Event</h1>
+
+              <img src={isDark ? 'commentsScreenshot-dark.png' : 'commentsScreenshot.png'} />
+            </Step>
+          </StepContainer>
+        </Container>
+
+        <Footer>
+          <Container>
+            <h1>
+              <Warning /> Under construction
+              <Warning />
+            </h1>
+          </Container>
+        </Footer>
       </FullWidthLayout>
     </Wrapper>
   )

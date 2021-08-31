@@ -21,7 +21,7 @@ const DeleteEventDialog = ({ eventId, onClose }: IDeleteEventDialogProps) => {
       setLoading(true)
       await api.delete(`/events/${eventId}`)
       successToast('success')
-      router.replace('/events')
+      router.replace('/home')
     } catch (err) {
       apiErrorToast(err, t)
       onClose()

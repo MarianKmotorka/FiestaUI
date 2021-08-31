@@ -3,22 +3,18 @@ import { useRouter } from 'next/router'
 import useTranslation from 'next-translate/useTranslation'
 
 import Divider from '@elements/Divider'
-import Form, { IFormProps } from '@elements/HookForm/Form'
 import Button from '@elements/Button/Button'
 import FormInput from '@elements/HookForm/FormInput'
 import { useAuth } from '@contextProviders/AuthProvider'
+import Form, { IFormProps } from '@elements/HookForm/Form'
+import GoogleLoginButton from '@elements/GoogleLoginButton'
 import { PageMinHeightWrapper } from '@elements/PageMinHeightWrapper'
 import ConfirmEmailDialog from './ConfirmEmailDialog/ConfirmEmailDialog'
 import ForgotPasswordDialog from './ForgotPasswordDialog/ForgotPasswordDialog'
-import { getGoogleLoginUrl, loginWithEmailAndPassword } from 'services/authService'
+import { loginWithEmailAndPassword } from 'services/authService'
 import { combineValidators, minLengthValidator, requiredValidator } from 'utils/validators'
 
-import {
-  FormContent,
-  GoogleLoginButton,
-  StyledCard,
-  StyledForgotPasswordButton
-} from './LoginTemplate.styled'
+import { FormContent, StyledCard, StyledForgotPasswordButton } from './LoginTemplate.styled'
 
 interface IFormValues {
   emailOrUsername: string
@@ -38,11 +34,6 @@ const LoginTemplate = () => {
   const [emailToConfirm, setEmailToConfirm] = useState<string>()
   const [showResetPasswordDialog, setShowResetPasswordDialog] = useState(false)
 
-  const handleGoogleLogin = () => {
-    const url = getGoogleLoginUrl(router.query.redirectedFrom as string)
-    window.location.assign(url)
-  }
-
   const handleSubmit: IFormProps<IFormValues>['onSubmit'] = async (values, { setError }) => {
     setSubmitting(true)
     const successOrError = await loginWithEmailAndPassword(values)
@@ -54,7 +45,7 @@ const LoginTemplate = () => {
     }
 
     await fetchUser()
-    router.replace((router.query.redirectedFrom as string) || '/events')
+    router.replace((router.query.redirectedFrom as string) || '/home')
   }
 
   return (
@@ -90,12 +81,7 @@ const LoginTemplate = () => {
 
         <Divider />
 
-        <GoogleLoginButton
-          onClick={handleGoogleLogin}
-          startIcon={<img src='google-btn-icon.svg' />}
-        >
-          {t('login:loginWithGoogle')}
-        </GoogleLoginButton>
+        <GoogleLoginButton text={t('login:loginWithGoogle')} />
       </StyledCard>
 
       {emailToConfirm && (

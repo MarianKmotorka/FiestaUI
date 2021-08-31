@@ -66,7 +66,7 @@ const Attendees = ({ event, isOrganizer }: IAttendeesProps) => {
       await api.post(`/events/${event.id}/attendees/delete`, { removeUserIds: [toRemove!.id] })
 
       if (toRemove!.id === currentUser.id) {
-        router.replace('/events')
+        router.replace('/home')
         return successToast(t('success'))
       }
 

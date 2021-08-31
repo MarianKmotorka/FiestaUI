@@ -13,7 +13,10 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
       `${process.env.NEXT_PUBLIC_API_BASE_URL}/auth/logout`,
       undefined,
       {
-        headers
+        headers: {
+          accept: headers.accept,
+          cookie: headers.cookie
+        }
       }
     )
 
