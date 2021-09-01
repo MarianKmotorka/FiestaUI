@@ -41,6 +41,11 @@ export const Section = styled.section<{ center?: true; height?: string; bg?: str
       font-size: 2rem;
       text-align: center;
     }
+    span {
+      background: ${({ theme }) => theme.palette.gradients.primary};
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
   }
   h3 {
     font-size: 1.5rem;

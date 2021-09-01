@@ -2,6 +2,7 @@ import { useState } from 'react'
 import { Fab } from '@material-ui/core'
 import useObserver from '@hooks/useObserver'
 import { ChevronRight, EventAvailable, Warning } from '@material-ui/icons'
+import { Cursor, useTypewriter } from 'react-simple-typewriter'
 
 import Button from '@elements/Button/Button'
 import { Container } from '@elements/Container'
@@ -54,6 +55,10 @@ const LandingPage = () => {
   const secondStepRef = useObserver<HTMLDivElement>(() => setInViewStepIndexes(x => [...x, 1]))
   const thirdStepRef = useObserver<HTMLDivElement>(() => setInViewStepIndexes(x => [...x, 2]))
   const fourthStepRef = useObserver<HTMLDivElement>(() => setInViewStepIndexes(x => [...x, 3]))
+  const { text } = useTypewriter({
+    words: ['Event Management', 'Discovering Events', 'Getting Social'],
+    loop: true
+  })
 
   return (
     <Wrapper>
@@ -68,7 +73,9 @@ const LandingPage = () => {
           <Container>
             <h1>
               Number #1 Platform
-              <br /> For Event Management
+              <br />
+              For <span>{text}</span>
+              <Cursor />
             </h1>
 
             <h3>ALPHA - still under development</h3>
