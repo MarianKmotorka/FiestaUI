@@ -1,7 +1,7 @@
 import { useState } from 'react'
 import { Fab } from '@material-ui/core'
 import useObserver from '@hooks/useObserver'
-import { ChevronRight, EventAvailable, Warning } from '@material-ui/icons'
+import { ChevronRight, Warning } from '@material-ui/icons'
 import { Cursor, useTypewriter } from 'react-simple-typewriter'
 
 import Button from '@elements/Button/Button'
@@ -11,7 +11,6 @@ import FullWidthLayout from '@layouts/FullWidthLayout'
 import { useAppTheme } from '@contextProviders/AppThemeProvider/AppThemeProvider'
 
 import {
-  Blob,
   Footer,
   HappyPerson,
   Layer1,
