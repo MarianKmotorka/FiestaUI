@@ -13,6 +13,7 @@ import { useAppTheme } from '@contextProviders/AppThemeProvider/AppThemeProvider
 import {
   Blob,
   Footer,
+  HappyPerson,
   Layer1,
   Layer2,
   Section,
@@ -84,9 +85,7 @@ const LandingPage = () => {
               Get started
             </Button>
 
-            <Blob>
-              <EventAvailable />
-            </Blob>
+            <HappyPerson src='happy-person.png' />
           </Container>
         </Section>
 

@@ -95,46 +95,26 @@ export const Section = styled.section<{ center?: true; height?: string; bg?: str
   }
 `
 
-export const Blob = styled.div`
-  background-image: url('blob.svg');
-  height: 400px;
-  width: 400px;
+export const HappyPerson = styled.img`
+  max-height: 600px;
   position: absolute;
-  background-size: contain;
+  object-fit: contain;
   right: 150px;
-  top: 230px;
-  display: grid;
-  place-items: center;
-  animation: ${keyframes`${fadeInRight}`} 0.8s ease-out;
-  svg {
-    height: 150px;
-    width: 150px;
-    color: ${({ theme }) => theme.palette.themeText.themeWhite};
+  top: 50px;
+  z-index: -1;
+  filter: drop-shadow(0 15px 20px rgba(0, 0, 0, 0.9));
+
+  @media screen and (max-width: 1240px) {
+    max-height: 500px;
+    top: 100px;
   }
 
-  @media screen and (max-width: 1150px) {
-    height: 300px;
-    width: 300px;
-    top: 300px;
-    right: 100px;
-    svg {
-      height: 120px;
-      width: 120px;
-    }
+  @media screen and (max-width: 1170px) {
+    max-height: 400px;
+    top: 250px;
   }
 
-  @media screen and (max-width: 950px) {
-    height: 250px;
-    width: 250px;
-    top: 350px;
-    right: 60px;
-    svg {
-      height: 100px;
-      width: 100px;
-    }
-  }
-
-  @media screen and (max-width: 800px) {
+  @media screen and (max-width: 1100px) {
     display: none;
   }
 `
