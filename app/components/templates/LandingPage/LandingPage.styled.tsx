@@ -1,4 +1,5 @@
-import styled, { css } from 'styled-components'
+import styled, { css, keyframes } from 'styled-components'
+import { fadeInDown, fadeInLeft, fadeInRight } from 'react-animations'
 import { LG, MD } from '@contextProviders/AppThemeProvider/theme'
 
 export const Wrapper = styled.div``
@@ -32,6 +33,7 @@ export const Section = styled.section<{ center?: true; height?: string; bg?: str
   h1 {
     font-size: 3.6rem;
     font-weight: 600;
+    animation: ${keyframes`${fadeInDown}`} 1s ease-out;
     @media screen and (max-width: 800px) {
       font-size: 3rem;
     }
@@ -98,6 +100,7 @@ export const Blob = styled.div`
   top: 230px;
   display: grid;
   place-items: center;
+  animation: ${keyframes`${fadeInRight}`} 0.8s ease-out;
   svg {
     height: 150px;
     width: 150px;
@@ -131,19 +134,33 @@ export const Blob = styled.div`
   }
 `
 
-export const StepContainer = styled.div`
+export const StepContainer = styled.div<{ inView: boolean }>`
   display: flex;
   height: 60vh;
 
   @media screen and (min-width: ${LG}px) {
     :nth-child(odd) {
       .step {
+        display: none;
         right: 10%;
+        ${({ inView }) =>
+          inView &&
+          css`
+            display: block;
+            animation: ${keyframes`${fadeInRight}`} 0.8s ease-in-out;
+          `}
       }
     }
     :nth-child(even) {
       .step {
+        display: none;
         left: 10%;
+        ${({ inView }) =>
+          inView &&
+          css`
+            display: block;
+            animation: ${keyframes`${fadeInLeft}`} 0.8s ease-in-out;
+          `}
       }
     }
   }
