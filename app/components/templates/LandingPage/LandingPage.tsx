@@ -1,4 +1,6 @@
+import { useState } from 'react'
 import { Fab } from '@material-ui/core'
+import useObserver from '@hooks/useObserver'
 import { ChevronRight, EventAvailable, Warning } from '@material-ui/icons'
 
 import Button from '@elements/Button/Button'
@@ -47,6 +49,12 @@ const ThemeBtn = () => {
 const LandingPage = () => {
   const { minLarge } = useWindowSize()
   const { isDark } = useAppTheme()
+  const [inViewStepIndexes, setInViewStepIndexes] = useState<number[]>([])
+  const firstStepRef = useObserver<HTMLDivElement>(() => setInViewStepIndexes(x => [...x, 0]))
+  const secondStepRef = useObserver<HTMLDivElement>(() => setInViewStepIndexes(x => [...x, 1]))
+  const thirdStepRef = useObserver<HTMLDivElement>(() => setInViewStepIndexes(x => [...x, 2]))
+  const fourthStepRef = useObserver<HTMLDivElement>(() => setInViewStepIndexes(x => [...x, 3]))
+
   return (
     <Wrapper>
       <FullWidthLayout transparentNavbar forceUnauthorizedNavbar title='Fiesta'>
@@ -79,7 +87,7 @@ const LandingPage = () => {
         <Layer2 />
 
         <Container>
-          <StepContainer>
+          <StepContainer inView={inViewStepIndexes.includes(0)} ref={firstStepRef}>
             <StepLine position='first' />
             <Step className='step'>
               <h1>Create Event</h1>
@@ -87,7 +95,7 @@ const LandingPage = () => {
             </Step>
           </StepContainer>
 
-          <StepContainer>
+          <StepContainer inView={inViewStepIndexes.includes(1)} ref={secondStepRef}>
             <StepLine />
             <Step className='step'>
               <h1>Upload Your Banner</h1>
@@ -95,7 +103,7 @@ const LandingPage = () => {
             </Step>
           </StepContainer>
 
-          <StepContainer>
+          <StepContainer inView={inViewStepIndexes.includes(2)} ref={thirdStepRef}>
             <StepLine />
             <Step className='step'>
               <h1>Invite People</h1>
@@ -104,7 +112,7 @@ const LandingPage = () => {
             </Step>
           </StepContainer>
 
-          <StepContainer>
+          <StepContainer inView={inViewStepIndexes.includes(3)} ref={fourthStepRef}>
             <StepLine position='last' />
             <Step className='step'>
               <h1>Discuss About Event</h1>
