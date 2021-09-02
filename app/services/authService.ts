@@ -2,7 +2,6 @@ import { AxiosInstance } from 'axios'
 import { IApiError } from '@api/types'
 import { ICurrentUser } from 'domainTypes'
 import api, { setAuthHeader } from '../api/HttpClient'
-import { IS_SIGNED_IN_LOCAL_STORAGE_KEY } from '@contextProviders/AuthProvider'
 
 export const logout = async () => {
   try {
