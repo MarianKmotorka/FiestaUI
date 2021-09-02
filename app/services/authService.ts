@@ -1,7 +1,8 @@
-import api, { setAuthHeader } from '../api/HttpClient'
+import { AxiosInstance } from 'axios'
 import { IApiError } from '@api/types'
 import { ICurrentUser } from 'domainTypes'
-import { AxiosInstance } from 'axios'
+import api, { setAuthHeader } from '../api/HttpClient'
+import { IS_SIGNED_IN_LOCAL_STORAGE_KEY } from '@contextProviders/AuthProvider'
 
 export const logout = async () => {
   try {
@@ -13,7 +14,12 @@ export const logout = async () => {
 }
 
 export const fetchCurrentUser = async () => {
+  const hasAuthHeader = !!api.defaults.headers['Authorization']
+
   try {
+    if (!hasAuthHeader) {
+      await refreshToken()
+    }
     const res = await api.get('/auth/me')
     return res.data as ICurrentUser
   } catch (err) {
