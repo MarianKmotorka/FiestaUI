@@ -62,7 +62,7 @@ const NotificationsProvider: FC = ({ children }) => {
     if (!data?.pages[0]) return
     setUnseenCount(data.pages[0].additionalData.unseenCount)
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [isLoading])
+  }, [isLoading, isFetching])
 
   const receiveNotification = useCallback(
     (notification: INotification<any>) => {

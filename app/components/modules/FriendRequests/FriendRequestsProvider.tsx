@@ -60,7 +60,7 @@ const FriendRequestsProvider: FC = ({ children }) => {
     if (!data?.pages[0]) return
     setTotalCount(data.pages[0].totalEntries)
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [isLoading])
+  }, [isLoading, isFetching])
 
   const receiveFriendRequest = useCallback(
     (request: IFriendRequest) => {

@@ -1,4 +1,5 @@
 import { createContext, FC, useCallback, useContext, useEffect, useState } from 'react'
+import { useQueryClient } from 'react-query'
 import { ICurrentUser } from 'domainTypes'
 import * as authService from 'services/authService'
 
@@ -38,6 +39,7 @@ export const useAuthorizedUser = () => {
 const AuthProvider: FC = ({ children }) => {
   const [loading, setLoading] = useState(true)
   const [user, setUser] = useState<ICurrentUser>()
+  const queryClient = useQueryClient()
   useRefreshToken(!!user)
 
   const fetchUser = useCallback(async () => {
@@ -62,6 +64,12 @@ const AuthProvider: FC = ({ children }) => {
 
     initialLoad()
   }, [fetchUser])
+
+  useEffect(() => {
+    //NOTE: Clear cache so cached queries are reloaded once logged in (e.g.: notifications, friend-requests)
+    const isLoggedIn = !!user
+    if (!isLoggedIn) queryClient.clear()
+  }, [user, queryClient])
 
   const logout = useCallback(async (shouldCallServer?: boolean) => {
     if (shouldCallServer !== false) await authService.logout()

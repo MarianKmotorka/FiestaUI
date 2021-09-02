@@ -7,12 +7,12 @@ import { QueryClient, QueryClientProvider } from 'react-query'
 import { MuiPickersUtilsProvider } from '@material-ui/pickers'
 
 import AuthProvider from '@contextProviders/AuthProvider'
-import AppThemeProvider from '@contextProviders/AppThemeProvider/AppThemeProvider'
 import NotificationsProvider from '@modules/Notifications/NotificationsProvider'
+import AppThemeProvider from '@contextProviders/AppThemeProvider/AppThemeProvider'
+import FriendRequestsProvider from '@modules/FriendRequests/FriendRequestsProvider'
 
 import '../public/globals.css'
 import 'react-toastify/dist/ReactToastify.min.css'
-import FriendRequestsProvider from '@modules/FriendRequests/FriendRequestsProvider'
 
 const queryClient = new QueryClient({
   defaultOptions: { queries: { retry: false, refetchOnWindowFocus: false } }
