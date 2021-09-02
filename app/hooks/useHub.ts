@@ -59,6 +59,10 @@ const useHub = (url: string) => {
     return () => clearTimeout(timeoutId)
   }, [url, isLoggedIn, setDisconnected, setConnection])
 
+  useEffect(() => {
+    if (!isLoggedIn) hubConnection?.stop()
+  }, [isLoggedIn, hubConnection])
+
   return { hubConnection, disconnected }
 }
 
