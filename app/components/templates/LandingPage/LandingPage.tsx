@@ -1,10 +1,11 @@
 import { useState } from 'react'
 import { Fab } from '@material-ui/core'
 import useObserver from '@hooks/useObserver'
-import { ChevronRight, Facebook, Instagram, Twitter, Warning } from '@material-ui/icons'
+import { ChevronRight, Facebook, Instagram, Twitter } from '@material-ui/icons'
 import { Cursor, useTypewriter } from 'react-simple-typewriter'
 
 import Button from '@elements/Button/Button'
+import FiestaLogo from '@elements/FiestaLogo'
 import { Container } from '@elements/Container'
 import FullWidthLayout from '@layouts/FullWidthLayout'
 import { useAppTheme } from '@contextProviders/AppThemeProvider/AppThemeProvider'
@@ -20,7 +21,6 @@ import {
   Wrapper,
   StepsSection
 } from './LandingPage.styled'
-import FiestaLogo from '@elements/FiestaLogo'
 
 const ThemeBtn = () => {
   const { switchTheme } = useAppTheme()
