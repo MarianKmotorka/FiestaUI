@@ -1,34 +1,31 @@
 import styled, { css, keyframes } from 'styled-components'
 import { fadeInDown, fadeInLeft, fadeInRight } from 'react-animations'
-import { LG, MD } from '@contextProviders/AppThemeProvider/theme'
+import { LG, MD, SM } from '@contextProviders/AppThemeProvider/theme'
 
 export const Wrapper = styled.div``
 
-const Spacer = styled.div`
-  aspect-ratio: 960/300;
+export const Layer1 = styled.img`
+  position: absolute;
+  bottom: 0;
   width: 100%;
-  background-repeat: no-repeat;
-  background-position: center;
-  background-size: cover;
+  height: 200px;
+  object-fit: cover;
+`
+export const Layer2 = styled.img`
+  position: absolute;
+  top: 0;
+  width: 100%;
+  height: 200px;
+  object-fit: cover;
+  filter: drop-shadow(0 10px 5px rgba(0, 0, 0, 0.2));
 `
 
-export const Layer1 = styled(Spacer)`
-  background-image: url('wave-overlap.svg');
-`
-export const Layer2 = styled(Spacer)`
-  background-image: url('wave-overlap-reversed.svg');
-`
-
-export const Section = styled.section<{ center?: true; height?: string; bg?: string }>`
+export const HeroSection = styled.section`
   position: relative;
-  min-height: ${({ height }) => height || '100vh'};
-  background: ${({ bg }) => bg};
-  ${({ center }) =>
-    center &&
-    css`
-      display: grid;
-      place-items: center;
-    `}
+  display: flex;
+  align-items: center;
+  height: 100vh;
+  padding-bottom: 100px;
 
   h1 {
     font-size: 3.6rem;
@@ -95,56 +92,45 @@ export const Section = styled.section<{ center?: true; height?: string; bg?: str
   }
 `
 
-export const HappyPerson = styled.img`
-  max-height: 600px;
-  position: absolute;
-  object-fit: contain;
-  right: 150px;
-  top: 50px;
-  z-index: -1;
-  filter: drop-shadow(0 15px 20px rgba(0, 0, 0, 0.9));
-
-  @media screen and (max-width: 1240px) {
-    max-height: 500px;
-    top: 100px;
-  }
-
-  @media screen and (max-width: 1170px) {
-    max-height: 400px;
-    top: 250px;
-  }
-
-  @media screen and (max-width: 1100px) {
-    display: none;
-  }
+export const StepsSection = styled.section`
+  position: relative;
+  padding: 250px 0 150px;
 `
 
 export const StepContainer = styled.div<{ inView: boolean }>`
   display: flex;
-  height: 60vh;
+  height: 70vh;
+
+  @media screen and (max-width: 450px) {
+    height: 50vh;
+  }
 
   @media screen and (min-width: ${LG}px) {
     :nth-child(odd) {
       .step {
+        opacity: 0;
         display: none;
-        right: 10%;
+        right: 12%;
         ${({ inView }) =>
           inView &&
           css`
             display: block;
-            animation: ${keyframes`${fadeInRight}`} 0.8s ease-in-out;
+            opacity: 1;
+            animation: ${keyframes`${fadeInRight}`} 1s ease-in-out;
           `}
       }
     }
     :nth-child(even) {
       .step {
+        opacity: 0;
         display: none;
-        left: 10%;
+        left: 12%;
         ${({ inView }) =>
           inView &&
           css`
             display: block;
-            animation: ${keyframes`${fadeInLeft}`} 0.8s ease-in-out;
+            opacity: 1;
+            animation: ${keyframes`${fadeInLeft}`} 1s ease-in-out;
           `}
       }
     }
@@ -153,7 +139,7 @@ export const StepContainer = styled.div<{ inView: boolean }>`
 
 export const Step = styled.section`
   height: 100%;
-  padding: 50px 0;
+  padding: 70px 0;
   margin: 0 auto;
   position: relative;
   max-width: 60%;
@@ -163,28 +149,45 @@ export const Step = styled.section`
     font-weight: 500;
     padding: 5px 25px;
     margin: 0;
-    border-radius: 30px 0;
-    box-shadow: 0 10px 10px rgba(0, 0, 0, 0.2);
+    border-radius: 5px;
+    box-shadow: 0 10px 10px rgba(0, 0, 0, 0.3);
     color: ${({ theme }) => theme.palette.themeText.white};
     background: ${({ theme }) => theme.palette.gradients.primary};
     position: absolute;
     top: 50px;
-    left: 0;
+    left: -15px;
   }
 
   img {
     flex: 1;
     object-fit: contain;
     display: block;
-    border-radius: 30px;
+    border-radius: 5px;
     width: 100%;
     height: 100%;
-    box-shadow: 0 15px 25px rgba(0, 0, 0, 0.2);
+    box-shadow: 0 15px 25px rgba(0, 0, 0, 0.3);
+    background: ${({ theme }) => theme.palette.background.default};
     ${({ theme }) =>
       theme.palette.isDark &&
       css`
         border: solid 1px ${theme.palette.grey[800]};
       `};
+  }
+
+  ::after {
+    content: '';
+    position: absolute;
+    width: 70%;
+    height: 50%;
+    bottom: 40px;
+    right: -30px;
+    background: ${({ theme }) => theme.palette.gradients.primary};
+    z-index: -1;
+    border-radius: 5px;
+  }
+
+  @media screen and (max-width: ${LG}px) {
+    max-width: 80%;
   }
 
   @media screen and (max-width: ${MD}px) {
@@ -201,8 +204,13 @@ export const StepLine = styled.div<{ position?: 'first' | 'last' }>`
   width: 1px;
   background: ${({ theme }) => theme.palette.themeText.themeGray};
 
-  ${({ position }) => position === 'first' && 'margin-top: 30vh'};
-  ${({ position }) => position === 'last' && 'margin-bottom: 30vh'};
+  ${({ position }) => position === 'first' && 'margin-top: 35vh'};
+  ${({ position }) => position === 'last' && 'margin-bottom: 35vh'};
+
+  @media screen and (max-width: 450px) {
+    ${({ position }) => position === 'first' && 'margin-top: 25vh'};
+    ${({ position }) => position === 'last' && 'margin-bottom: 25vh'};
+  }
 
   ::before {
     content: '';
@@ -217,19 +225,42 @@ export const StepLine = styled.div<{ position?: 'first' | 'last' }>`
 `
 
 export const Footer = styled.footer`
-  height: 70vh;
+  height: 50vh;
   background-color: ${({ theme }) => theme.palette.background.paper};
-  display: grid;
-  place-items: center;
+  padding: 50px 0;
 
-  h1 {
+  .footer-container {
     display: flex;
-    align-items: center;
-    justify-content: center;
+    align-items: flex-start;
+    justify-content: space-between;
 
-    svg {
-      color: ${({ theme }) => theme.palette.primary.main};
-      font-size: 3em;
+    .logo {
+      > * {
+        font-size: 3rem;
+        z-index: 100;
+        margin: 0;
+
+        @media screen and (max-width: ${SM}px) {
+          font-size: 2rem;
+        }
+      }
+    }
+
+    .socials {
+      display: flex;
+      justify-content: flex-end;
+
+      svg {
+        font-size: 3em;
+        margin-left: 10px;
+        cursor: pointer;
+        transition: all 0.1s ease-in-out;
+
+        :hover {
+          color: ${({ theme }) => theme.palette.primary.main};
+          transform: scale(1.05);
+        }
+      }
     }
   }
 `
