@@ -1,26 +1,26 @@
 import { useState } from 'react'
 import { Fab } from '@material-ui/core'
 import useObserver from '@hooks/useObserver'
-import { ChevronRight, Warning } from '@material-ui/icons'
+import { ChevronRight, Facebook, Instagram, Twitter, Warning } from '@material-ui/icons'
 import { Cursor, useTypewriter } from 'react-simple-typewriter'
 
 import Button from '@elements/Button/Button'
 import { Container } from '@elements/Container'
-import useWindowSize from '@hooks/useWindowSize'
 import FullWidthLayout from '@layouts/FullWidthLayout'
 import { useAppTheme } from '@contextProviders/AppThemeProvider/AppThemeProvider'
 
 import {
   Footer,
-  HappyPerson,
   Layer1,
   Layer2,
-  Section,
+  HeroSection,
   Step,
   StepContainer,
   StepLine,
-  Wrapper
+  Wrapper,
+  StepsSection
 } from './LandingPage.styled'
+import FiestaLogo from '@elements/FiestaLogo'
 
 const ThemeBtn = () => {
   const { switchTheme } = useAppTheme()
@@ -48,7 +48,6 @@ const ThemeBtn = () => {
 }
 
 const LandingPage = () => {
-  const { minLarge } = useWindowSize()
   const { isDark } = useAppTheme()
   const [inViewStepIndexes, setInViewStepIndexes] = useState<number[]>([])
   const firstStepRef = useObserver<HTMLDivElement>(() => setInViewStepIndexes(x => [...x, 0]))
@@ -65,11 +64,7 @@ const LandingPage = () => {
       <FullWidthLayout transparentNavbar forceUnauthorizedNavbar title='Fiesta'>
         <ThemeBtn />
 
-        <Section
-          center
-          height={minLarge ? '60vh' : '85vh'}
-          style={{ paddingTop: minLarge ? '100px' : '50px' }}
-        >
+        <HeroSection>
           <Container>
             <h1>
               Number #1 Platform
@@ -83,56 +78,63 @@ const LandingPage = () => {
             <Button endIcon={<ChevronRight />} id='get-started-btn' href='/signup'>
               Get started
             </Button>
-
-            <HappyPerson src='happy-person.png' />
           </Container>
-        </Section>
 
-        <Layer1 />
-        <Layer2 />
+          <Layer1 src='wave-overlap.svg' />
+        </HeroSection>
 
-        <Container>
-          <StepContainer inView={inViewStepIndexes.includes(0)} ref={firstStepRef}>
-            <StepLine position='first' />
-            <Step className='step'>
-              <h1>Create Event</h1>
-              <img src={isDark ? 'createEventScreenshot-dark.png' : 'createEventScreenshot.png'} />
-            </Step>
-          </StepContainer>
+        <StepsSection>
+          <Layer2 src='wave-overlap-reversed.svg' />
+          <Container>
+            <StepContainer inView={inViewStepIndexes.includes(0)} ref={firstStepRef}>
+              <StepLine position='first' />
+              <Step className='step'>
+                <h1>Create Event</h1>
+                <img
+                  src={isDark ? 'createEventScreenshot-dark.png' : 'createEventScreenshot.png'}
+                />
+              </Step>
+            </StepContainer>
 
-          <StepContainer inView={inViewStepIndexes.includes(1)} ref={secondStepRef}>
-            <StepLine />
-            <Step className='step'>
-              <h1>Upload Your Banner</h1>
-              <img src={isDark ? 'eventDetailScreenshot-dark.png' : 'eventDetailScreenshot.png'} />
-            </Step>
-          </StepContainer>
+            <StepContainer inView={inViewStepIndexes.includes(1)} ref={secondStepRef}>
+              <StepLine />
+              <Step className='step'>
+                <h1>Upload Your Banner</h1>
+                <img
+                  src={isDark ? 'eventDetailScreenshot-dark.png' : 'eventDetailScreenshot.png'}
+                />
+              </Step>
+            </StepContainer>
 
-          <StepContainer inView={inViewStepIndexes.includes(2)} ref={thirdStepRef}>
-            <StepLine />
-            <Step className='step'>
-              <h1>Invite People</h1>
+            <StepContainer inView={inViewStepIndexes.includes(2)} ref={thirdStepRef}>
+              <StepLine />
+              <Step className='step'>
+                <h1>Invite People</h1>
 
-              <img src={isDark ? 'inviteScreenshot-dark.png' : 'inviteScreenshot.png'} />
-            </Step>
-          </StepContainer>
+                <img src={isDark ? 'inviteScreenshot-dark.png' : 'inviteScreenshot.png'} />
+              </Step>
+            </StepContainer>
 
-          <StepContainer inView={inViewStepIndexes.includes(3)} ref={fourthStepRef}>
-            <StepLine position='last' />
-            <Step className='step'>
-              <h1>Discuss About Event</h1>
+            <StepContainer inView={inViewStepIndexes.includes(3)} ref={fourthStepRef}>
+              <StepLine position='last' />
+              <Step className='step'>
+                <h1>Discuss About Event</h1>
 
-              <img src={isDark ? 'commentsScreenshot-dark.png' : 'commentsScreenshot.png'} />
-            </Step>
-          </StepContainer>
-        </Container>
+                <img src={isDark ? 'commentsScreenshot-dark.png' : 'commentsScreenshot.png'} />
+              </Step>
+            </StepContainer>
+          </Container>
+        </StepsSection>
 
         <Footer>
-          <Container>
-            <h1>
-              <Warning /> Under construction
-              <Warning />
-            </h1>
+          <Container className='footer-container'>
+            <div className='logo'>
+              <FiestaLogo />
+            </div>
+
+            <div className='socials'>
+              <Facebook /> <Instagram /> <Twitter />
+            </div>
           </Container>
         </Footer>
       </FullWidthLayout>
