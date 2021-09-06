@@ -1,4 +1,6 @@
 import moment from 'moment'
+import Router from 'next/router'
+import NProgress from 'nprogress'
 import { AppProps } from 'next/app'
 import MomentUtils from '@date-io/moment'
 import { ToastContainer } from 'react-toastify'
@@ -12,7 +14,12 @@ import AppThemeProvider from '@contextProviders/AppThemeProvider/AppThemeProvide
 import FriendRequestsProvider from '@modules/FriendRequests/FriendRequestsProvider'
 
 import '../public/globals.css'
+import 'nprogress/nprogress.css'
 import 'react-toastify/dist/ReactToastify.min.css'
+
+Router.events.on('routeChangeStart', () => NProgress.start())
+Router.events.on('routeChangeComplete', () => NProgress.done())
+Router.events.on('routeChangeError', () => NProgress.done())
 
 const queryClient = new QueryClient({
   defaultOptions: { queries: { retry: false, refetchOnWindowFocus: false } }
