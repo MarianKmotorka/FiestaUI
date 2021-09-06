@@ -94,10 +94,16 @@ export const BottomWrapper = styled.div`
   flex-direction: column;
 
   h3 {
-    margin: 10px 90px 10px 0;
+    padding: 12px 90px 0 0;
+    margin: 0;
     font-size: 1.2rem;
-    max-height: 55px;
-    ::first-letter {
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 2;
+    overflow: hidden;
+    font-weight: 500;
+
+    span {
       color: ${({ theme }) => theme.palette.primary.main};
     }
   }

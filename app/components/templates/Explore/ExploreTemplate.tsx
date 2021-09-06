@@ -68,12 +68,6 @@ const ExploreTemplate = () => {
 
   const { pages } = data!
 
-  const getTrimmedName = (name: string) => {
-    const maxChars = 30
-    if (name.length > maxChars) return name.slice(0, maxChars - 2) + '...'
-    return name
-  }
-
   return (
     <Wrapper>
       <PageTitle>
@@ -122,7 +116,10 @@ const ExploreTemplate = () => {
                       </StartDate>
                     </Link>
 
-                    <h3>{getTrimmedName(name)}</h3>
+                    <h3>
+                      <span>{name[0]}</span>
+                      {name.slice(-name.length + 1)}
+                    </h3>
 
                     <div className='event-info'>
                       <p>
