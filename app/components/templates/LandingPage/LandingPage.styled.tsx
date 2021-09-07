@@ -1,6 +1,6 @@
 import styled, { css, keyframes } from 'styled-components'
 import { fadeInDown } from 'react-animations'
-import { LG, MD, SM, XL } from '@contextProviders/AppThemeProvider/theme'
+import { LG, SM, XL } from '@contextProviders/AppThemeProvider/theme'
 
 export const Wrapper = styled.div``
 
