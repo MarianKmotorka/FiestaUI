@@ -1,6 +1,6 @@
 import styled, { css, keyframes } from 'styled-components'
-import { fadeInDown, fadeInLeft, fadeInRight } from 'react-animations'
-import { LG, MD, SM } from '@contextProviders/AppThemeProvider/theme'
+import { fadeInDown } from 'react-animations'
+import { LG, MD, SM, XL } from '@contextProviders/AppThemeProvider/theme'
 
 export const Wrapper = styled.div``
 
@@ -97,120 +97,125 @@ export const StepsSection = styled.section`
   padding: 250px 0 150px;
 `
 
-export const StepContainer = styled.div<{ inView: boolean }>`
+export const StepContainer = styled.div`
   display: flex;
   height: 70vh;
 
-  @media screen and (max-width: 450px) {
-    height: 50vh;
-  }
+  @media screen and (min-width: ${LG + 1}px) {
+    :nth-child(even) .step {
+      flex-direction: row-reverse;
 
-  @media screen and (min-width: ${LG}px) {
-    :nth-child(odd) {
-      .step {
-        opacity: 0;
-        display: none;
-        right: 12%;
-        ${({ inView }) =>
-          inView &&
-          css`
-            display: block;
-            opacity: 1;
-            animation: ${keyframes`${fadeInRight}`} 1s ease-in-out;
-          `}
-      }
-    }
-    :nth-child(even) {
-      .step {
-        opacity: 0;
-        display: none;
-        left: 12%;
-        ${({ inView }) =>
-          inView &&
-          css`
-            display: block;
-            opacity: 1;
-            animation: ${keyframes`${fadeInLeft}`} 1s ease-in-out;
-          `}
+      .step-image-container {
+        ::after {
+          left: -30px;
+          right: unset;
+        }
       }
     }
   }
 `
 
-export const Step = styled.section`
+export const Step = styled.section<{ inView: boolean }>`
   height: 100%;
+  width: 100%;
   padding: 70px 0;
-  margin: 0 auto;
-  position: relative;
-  max-width: 60%;
+  display: flex;
+  gap: 100px;
 
-  h1 {
-    font-size: 24px;
-    font-weight: 500;
-    padding: 5px 25px;
-    margin: 0;
-    border-radius: 5px;
-    box-shadow: 0 10px 10px rgba(0, 0, 0, 0.3);
-    color: ${({ theme }) => theme.palette.themeText.white};
-    background: ${({ theme }) => theme.palette.gradients.primary};
-    position: absolute;
-    top: 50px;
-    left: -15px;
+  .step-text {
+    flex: 3;
+    margin: 0 50px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+
+    h1 {
+      font-size: 2rem;
+      font-weight: 500;
+      margin: 20px 0;
+      margin: 0;
+    }
+    p {
+      color: ${({ theme }) => theme.palette.themeText.themeGray};
+      font-size: 1.3rem;
+    }
   }
 
-  img {
-    flex: 1;
-    object-fit: contain;
-    display: block;
-    border-radius: 5px;
+  .step-image-container {
+    flex: 4;
+    position: relative;
     width: 100%;
     height: 100%;
-    box-shadow: 0 15px 25px rgba(0, 0, 0, 0.3);
-    background: ${({ theme }) => theme.palette.background.default};
-    ${({ theme }) =>
-      theme.palette.isDark &&
+    visibility: hidden;
+
+    img {
+      object-fit: contain;
+      display: block;
+      border-radius: 5px;
+      box-shadow: 0 15px 25px rgba(0, 0, 0, 0.3);
+      max-width: 100%;
+      max-height: 100%;
+      background: ${({ theme }) => theme.palette.background.default};
+      ${({ theme }) =>
+        theme.palette.isDark &&
+        css`
+          border: solid 1px ${theme.palette.grey[800]};
+        `};
+    }
+
+    ::after {
+      content: '';
+      position: absolute;
+      width: 70%;
+      height: 50%;
+      bottom: -30px;
+      right: -30px;
+      background: ${({ theme }) => theme.palette.gradients.primary};
+      z-index: -1;
+      border-radius: 5px;
+    }
+
+    ${({ inView }) =>
+      inView &&
       css`
-        border: solid 1px ${theme.palette.grey[800]};
-      `};
+        visibility: visible;
+        animation: ${keyframes(fadeInDown)} 1s ease-in-out;
+      `}
   }
 
-  ::after {
-    content: '';
-    position: absolute;
-    width: 70%;
-    height: 50%;
-    bottom: 40px;
-    right: -30px;
-    background: ${({ theme }) => theme.palette.gradients.primary};
-    z-index: -1;
-    border-radius: 5px;
+  @media screen and (max-width: ${XL}px) {
+    gap: 0px;
+    .step-text {
+      align-items: flex-start;
+    }
   }
 
   @media screen and (max-width: ${LG}px) {
-    max-width: 80%;
-  }
-
-  @media screen and (max-width: ${MD}px) {
-    h1 {
-      font-size: 1rem;
+    flex-direction: column;
+    .step-text {
+      margin: 0 0 20px;
+      h1 {
+        font-size: 1.5rem;
+      }
+      p {
+        font-size: 1.2rem;
+      }
     }
-    max-width: 100%;
+    .step-image-container {
+      height: 50%;
+    }
   }
 `
 
 export const StepLine = styled.div<{ position?: 'first' | 'last' }>`
-  margin-right: 30px;
+  margin-right: 80px;
   position: relative;
   width: 1px;
   background: ${({ theme }) => theme.palette.themeText.themeGray};
 
   ${({ position }) => position === 'first' && 'margin-top: 35vh'};
   ${({ position }) => position === 'last' && 'margin-bottom: 35vh'};
-
-  @media screen and (max-width: 450px) {
-    ${({ position }) => position === 'first' && 'margin-top: 25vh'};
-    ${({ position }) => position === 'last' && 'margin-bottom: 25vh'};
-  }
 
   ::before {
     content: '';
@@ -222,16 +227,19 @@ export const StepLine = styled.div<{ position?: 'first' | 'last' }>`
     border-radius: 50%;
     background: ${({ theme }) => theme.palette.gradients.primary};
   }
+
+  @media screen and (max-width: 450px) {
+    margin-right: 30px;
+  }
 `
 
 export const Footer = styled.footer`
-  height: 50vh;
   background-color: ${({ theme }) => theme.palette.background.paper};
   padding: 50px 0;
 
   .footer-container {
     display: flex;
-    align-items: flex-start;
+    align-items: center;
     justify-content: space-between;
 
     .logo {
