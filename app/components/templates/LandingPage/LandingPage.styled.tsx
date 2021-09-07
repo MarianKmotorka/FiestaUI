@@ -225,13 +225,12 @@ export const StepLine = styled.div<{ position?: 'first' | 'last' }>`
 `
 
 export const Footer = styled.footer`
-  height: 50vh;
   background-color: ${({ theme }) => theme.palette.background.paper};
   padding: 50px 0;
 
   .footer-container {
     display: flex;
-    align-items: flex-start;
+    align-items: center;
     justify-content: space-between;
 
     .logo {
