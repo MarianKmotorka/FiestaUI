@@ -86,41 +86,74 @@ const LandingPage = () => {
         <StepsSection>
           <Layer2 src='wave-overlap-reversed.svg' />
           <Container>
-            <StepContainer inView={inViewStepIndexes.includes(0)} ref={firstStepRef}>
+            <StepContainer ref={firstStepRef}>
               <StepLine position='first' />
-              <Step className='step'>
-                <h1>Create Event</h1>
-                <img
-                  src={isDark ? 'createEventScreenshot-dark.png' : 'createEventScreenshot.png'}
-                />
+              <Step inView={inViewStepIndexes.includes(0)} className='step'>
+                <div className='step-text'>
+                  <h1>Create Event</h1>
+                  <p>
+                    By providing minimum of required information you can create new event just like
+                    that.
+                  </p>
+                </div>
+
+                <div className='step-image-container'>
+                  <img
+                    src={isDark ? 'createEventScreenshot-dark.png' : 'createEventScreenshot.png'}
+                  />
+                </div>
               </Step>
             </StepContainer>
 
-            <StepContainer inView={inViewStepIndexes.includes(1)} ref={secondStepRef}>
+            <StepContainer ref={secondStepRef}>
               <StepLine />
-              <Step className='step'>
-                <h1>Upload Your Banner</h1>
-                <img
-                  src={isDark ? 'eventDetailScreenshot-dark.png' : 'eventDetailScreenshot.png'}
-                />
+              <Step inView={inViewStepIndexes.includes(1)} className='step'>
+                <div className='step-text'>
+                  <h1>Upload Your Banner</h1>
+                  <p>
+                    You will make you event stand out by adding a beautiful banner to it. Make it
+                    eye-catching!
+                  </p>
+                </div>
+
+                <div className='step-image-container'>
+                  <img
+                    src={isDark ? 'eventDetailScreenshot-dark.png' : 'eventDetailScreenshot.png'}
+                  />
+                </div>
               </Step>
             </StepContainer>
 
-            <StepContainer inView={inViewStepIndexes.includes(2)} ref={thirdStepRef}>
+            <StepContainer ref={thirdStepRef}>
               <StepLine />
-              <Step className='step'>
-                <h1>Invite People</h1>
+              <Step inView={inViewStepIndexes.includes(2)} className='step'>
+                <div className='step-text'>
+                  <h1>Invite People</h1>
+                  <p>
+                    Get some people on board! Let others know about an amazing event you are up to.
+                  </p>
+                </div>
 
-                <img src={isDark ? 'inviteScreenshot-dark.png' : 'inviteScreenshot.png'} />
+                <div className='step-image-container'>
+                  <img src={isDark ? 'inviteScreenshot-dark.png' : 'inviteScreenshot.png'} />
+                </div>
               </Step>
             </StepContainer>
 
-            <StepContainer inView={inViewStepIndexes.includes(3)} ref={fourthStepRef}>
+            <StepContainer ref={fourthStepRef}>
               <StepLine position='last' />
-              <Step className='step'>
-                <h1>Discuss About Event</h1>
+              <Step inView={inViewStepIndexes.includes(3)} className='step'>
+                <div className='step-text'>
+                  <h1>Discuss About Event</h1>
+                  <p>
+                    There has never been an event description with all information in it. Here you
+                    can get in touch with you attendees.
+                  </p>
+                </div>
 
-                <img src={isDark ? 'commentsScreenshot-dark.png' : 'commentsScreenshot.png'} />
+                <div className='step-image-container'>
+                  <img src={isDark ? 'commentsScreenshot-dark.png' : 'commentsScreenshot.png'} />
+                </div>
               </Step>
             </StepContainer>
           </Container>
