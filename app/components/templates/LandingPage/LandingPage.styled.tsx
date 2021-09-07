@@ -1,6 +1,6 @@
 import styled, { css, keyframes } from 'styled-components'
 import { fadeInDown } from 'react-animations'
-import { LG, SM, XL } from '@contextProviders/AppThemeProvider/theme'
+import { LG, MD, SM, XL } from '@contextProviders/AppThemeProvider/theme'
 
 export const Wrapper = styled.div``
 
@@ -204,6 +204,12 @@ export const Step = styled.section<{ inView: boolean }>`
     }
     .step-image-container {
       height: 50%;
+    }
+  }
+
+  @media screen and (max-width: ${MD}px) {
+    .step-image-container:after {
+      right: 0;
     }
   }
 `
