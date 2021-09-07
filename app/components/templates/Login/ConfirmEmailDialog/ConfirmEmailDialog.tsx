@@ -7,8 +7,10 @@ import { KeyboardArrowRight, Done } from '@material-ui/icons'
 import api from '@api/HttpClient'
 import Modal from '@elements/Modal'
 import Button from '@elements/Button/Button'
+import { apiErrorToast } from 'services/toastService'
 
 import { StyledCard, Title } from './ConfirmEmailDialog.styled'
+import { IApiError } from '@api/types'
 
 interface IConfirmEmailDialogProps {
   email: string
@@ -23,10 +25,15 @@ const ConfirmEmailDialog = ({ email, onClose }: IConfirmEmailDialogProps) => {
 
   const handleSent = async () => {
     if (state === 'sent') return
-
     setState('sending')
-    await api.post('/auth/send-verification-email', { email })
-    setState('sent')
+
+    try {
+      await api.post('/auth/send-verification-email', { emailOrUsername: email })
+      setState('sent')
+    } catch (err) {
+      apiErrorToast(err as IApiError, t)
+    }
+    setState('notSent')
   }
 
   return (

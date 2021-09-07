@@ -36,5 +36,12 @@ export const toLocalTime = (date: string | Date, format?: string) => {
 
 export const getErrorMessage = (error: IApiError, t: Translate) => {
   const detail = error.data.errorDetails?.[0]
-  return detail ? t(`validator.${detail.code}`, detail.customState) : error.data.errorMessage
+  if (detail) {
+    return t(`validator.${detail.code}`, detail.customState)
+  }
+
+  const translated = t(`validator.${error.data.errorMessage}`)
+  const translationExist = !translated.includes('validator.')
+
+  return translationExist ? translated : error.data.errorMessage
 }
