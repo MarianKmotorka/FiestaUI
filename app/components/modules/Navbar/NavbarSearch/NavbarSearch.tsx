@@ -19,6 +19,8 @@ interface INavbarSearchProps {
   onClose: () => void
 }
 
+const MINIMUM_CHARS_TO_SEARCH = 2
+
 const NavbarSearch = ({ onClose }: INavbarSearchProps) => {
   const { t } = useTranslation('common')
   const [search, setSearch] = useState('')
@@ -26,7 +28,10 @@ const NavbarSearch = ({ onClose }: INavbarSearchProps) => {
 
   const { data, error, isFetching } = useQuery<EventAndUserSelectorItem[], IApiError>(
     ['selectors', 'events-and-users', debouncedSearch],
-    async () => (await api.get(`/selectors/events-and-users?search=${debouncedSearch}`)).data,
+    async () => {
+      if (debouncedSearch.length < MINIMUM_CHARS_TO_SEARCH) return []
+      return (await api.get(`/selectors/events-and-users?search=${debouncedSearch}`)).data
+    },
     { initialData: [], keepPreviousData: true }
   )
 
@@ -56,6 +61,9 @@ const NavbarSearch = ({ onClose }: INavbarSearchProps) => {
       items={items}
       search={search}
       isFetching={isFetching}
+      nothingFoundComponent={
+        debouncedSearch.length < MINIMUM_CHARS_TO_SEARCH && t('startTypingToSeeResults')
+      }
       onClose={onClose}
       setSearch={setSearch}
       renderItem={renderItem}

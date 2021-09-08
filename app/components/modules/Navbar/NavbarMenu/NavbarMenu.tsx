@@ -2,9 +2,9 @@ import Link from 'next/link'
 import { PopoverOrigin } from '@material-ui/core'
 import useTranslation from 'next-translate/useTranslation'
 import {
-  Brightness2TwoTone,
+  Brightness2Outlined,
   ExitToAppTwoTone,
-  SettingsTwoTone,
+  SettingsOutlined,
   WbSunnyTwoTone
 } from '@material-ui/icons'
 
@@ -54,13 +54,13 @@ const NavbarMenu = ({ anchorEl, onClose }: INavbarMenuProps) => {
 
       <StyledMenuItem onClick={switchTheme}>
         {t('switchTheme')}
-        {isDark ? <WbSunnyTwoTone id='lightThemeIcon' /> : <Brightness2TwoTone />}
+        {isDark ? <WbSunnyTwoTone id='lightThemeIcon' /> : <Brightness2Outlined />}
       </StyledMenuItem>
 
       <Link href='/settings'>
         <StyledMenuItem>
           {t('settings')}
-          <SettingsTwoTone />
+          <SettingsOutlined />
         </StyledMenuItem>
       </Link>
 
