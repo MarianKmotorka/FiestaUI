@@ -39,15 +39,9 @@ export const StyledContainer = styled(Container)`
   }
 `
 
-export const NavIconButton = styled(IconButton)<{ active?: 0 | 1 }>`
+export const NavIconButton = styled(IconButton)`
   color: ${({ theme }) => theme.palette.themeText.themeBlack};
   background: ${({ theme }) => theme.palette.background.default}88;
-
-  ${({ theme, active }) => active && `color: ${theme.palette.primary.main}`};
-
-  &.active svg {
-    color: ${({ theme }) => theme.palette.primary.main};
-  }
 `
 
 export const Menu = styled.div`

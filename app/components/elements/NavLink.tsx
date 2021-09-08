@@ -1,9 +1,11 @@
-import { Children, cloneElement, isValidElement, PropsWithChildren, ReactNode } from 'react'
+import { Children, cloneElement, isValidElement, ReactNode } from 'react'
 import Link, { LinkProps } from 'next/link'
 import { useRouter } from 'next/router'
+import { isFunction } from 'lodash'
 
-interface IProps extends PropsWithChildren<LinkProps> {
+interface IProps extends LinkProps {
   activeClassName?: string
+  children: ReactNode | ((isActive: boolean) => ReactNode)
 }
 
 const NavLink = ({ href, children, activeClassName, ...rest }: IProps) => {
@@ -18,7 +20,7 @@ const NavLink = ({ href, children, activeClassName, ...rest }: IProps) => {
 
   return (
     <Link {...rest} href={href}>
-      {isActive ? addActiveClass(children) : children}
+      {isFunction(children) ? children(isActive) : isActive ? addActiveClass(children) : children}
     </Link>
   )
 }

@@ -1,6 +1,12 @@
 import Link from 'next/link'
 import Linkify from '@elements/Linkify'
-import { ChevronRightRounded, LocationOn, People, Person, Schedule } from '@material-ui/icons'
+import {
+  ChevronRightRounded,
+  LocationOnOutlined,
+  PeopleOutline,
+  PersonOutlined,
+  Schedule
+} from '@material-ui/icons'
 
 import { toLocalTime } from '@utils/utils'
 
@@ -62,13 +68,13 @@ const EventCard = ({
 
         <div className='event-info'>
           <p>
-            <Person />
+            <PersonOutlined />
             <Link href={`/users/${organizerId}`}>
               <span className='username'>{organizerUsername}</span>
             </Link>
           </p>
           <p>
-            <People />
+            <PeopleOutline />
             {attendeesCount}/{capacity}
           </p>
           <p>
@@ -76,7 +82,7 @@ const EventCard = ({
             {toLocalTime(startDate, 'DD MMMM yyyy')}
           </p>
           <p>
-            <LocationOn />
+            <LocationOnOutlined />
             {location}
           </p>
 

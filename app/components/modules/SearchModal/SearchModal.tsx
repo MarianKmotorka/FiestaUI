@@ -2,7 +2,7 @@ import { ReactNode } from 'react'
 import { isEmpty } from 'lodash'
 import { Box, CircularProgress, Typography } from '@material-ui/core'
 import useTranslation from 'next-translate/useTranslation'
-import { Close, Search, SentimentDissatisfied } from '@material-ui/icons'
+import { Close, Search } from '@material-ui/icons'
 
 import Modal from '@elements/Modal'
 import Observer from '@elements/Observer'
@@ -22,6 +22,7 @@ interface ISearchModalProps<T> {
   title?: string
   searchPlaceholder?: string
   hasNextPage?: boolean
+  nothingFoundComponent?: ReactNode
   onClose: () => void
   fetchNextPage?: () => void
   renderItem: (item: T) => ReactNode
@@ -35,6 +36,7 @@ const SearchModal = <T extends { id: string }>({
   isFetching,
   hasNextPage,
   searchPlaceholder,
+  nothingFoundComponent,
   onClose,
   renderItem,
   setSearch,
@@ -90,8 +92,7 @@ const SearchModal = <T extends { id: string }>({
           {isEmpty(items) && !isFetching && (
             <SearchModalItem disabled>
               <Box display='flex' gridGap='10px'>
-                {t('nothingFound')}
-                <SentimentDissatisfied />
+                {nothingFoundComponent || t('nothingFound')}
               </Box>
             </SearchModalItem>
           )}
