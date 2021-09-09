@@ -1,4 +1,4 @@
-import { ReactNode } from 'react'
+import { ReactNode, useEffect } from 'react'
 import { lowerFirst } from 'lodash'
 import { useFormContext } from 'react-hook-form'
 import { Box, MenuItem } from '@material-ui/core'
@@ -37,7 +37,15 @@ export const eventInfoFormFields = [
 
 const EventInfoStep = ({ nextStep }: IEventInfoStepProps) => {
   const { t } = useTranslation('common')
-  const { trigger } = useFormContext()
+  const { trigger, watch, setValue, getValues } = useFormContext()
+  const startDate: Date = watch('startDate')
+
+  useEffect(() => {
+    const endDate: Date = getValues('endDate')
+    if (!endDate || endDate.getTime() < startDate.getTime()) {
+      setValue('endDate', startDate)
+    }
+  }, [startDate, setValue, getValues])
 
   const handleNext = async () => {
     const isValid = await trigger(eventInfoFormFields)
