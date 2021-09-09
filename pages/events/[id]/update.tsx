@@ -1,6 +1,7 @@
 import moment from 'moment'
 import { useQuery } from 'react-query'
 import { useRouter } from 'next/router'
+import { GetStaticPaths, GetStaticProps } from 'next'
 
 import api from '@api/HttpClient'
 import { IApiError } from '@api/types'
@@ -40,6 +41,19 @@ const UpdateEvent = () => {
       </DefaultLayout>
     </AuthorizedPage>
   )
+}
+
+export const getStaticProps: GetStaticProps = async () => {
+  return {
+    props: {}
+  }
+}
+
+export const getStaticPaths: GetStaticPaths = async () => {
+  return {
+    paths: [],
+    fallback: 'blocking'
+  }
 }
 
 export default UpdateEvent
