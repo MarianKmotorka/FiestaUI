@@ -63,7 +63,13 @@ export const StartDate = styled.div`
 
   span {
     position: relative;
-    top: 5px;
+    top: 7px;
+    :after {
+      content: '.';
+      position: absolute;
+      bottom: 0;
+      right: -7px;
+    }
   }
 
   ::before {
