@@ -1,3 +1,4 @@
+import { FC } from 'react'
 import moment from 'moment'
 import Router from 'next/router'
 import NProgress from 'nprogress'
@@ -32,22 +33,28 @@ const MyApp = ({ Component, pageProps }: AppProps) => {
 
   // Note: Keep AppThemeProvider close to the Component
   return (
-    <QueryClientProvider client={queryClient}>
-      <AuthProvider>
-        <MuiPickersUtilsProvider utils={MomentUtils}>
-          <FriendRequestsProvider>
-            <NotificationsProvider>
-              <AppThemeProvider>
-                <Component {...pageProps} />
+    <SafeHydrate>
+      <QueryClientProvider client={queryClient}>
+        <AuthProvider>
+          <MuiPickersUtilsProvider utils={MomentUtils}>
+            <FriendRequestsProvider>
+              <NotificationsProvider>
+                <AppThemeProvider>
+                  <Component {...pageProps} />
 
-                <ToastContainer />
-              </AppThemeProvider>
-            </NotificationsProvider>
-          </FriendRequestsProvider>
-        </MuiPickersUtilsProvider>
-      </AuthProvider>
-    </QueryClientProvider>
+                  <ToastContainer />
+                </AppThemeProvider>
+              </NotificationsProvider>
+            </FriendRequestsProvider>
+          </MuiPickersUtilsProvider>
+        </AuthProvider>
+      </QueryClientProvider>
+    </SafeHydrate>
   )
+}
+
+const SafeHydrate: FC = ({ children }) => {
+  return <div suppressHydrationWarning>{typeof window === 'undefined' ? null : children}</div>
 }
 
 export default MyApp
