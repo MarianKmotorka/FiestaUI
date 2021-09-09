@@ -99,7 +99,9 @@ const LandingPage = () => {
 
                 <div className='step-image-container'>
                   <img
-                    src={isDark ? 'CreateEventScreenshotDark.png' : 'CreateEventScreenshot.png'}
+                    src={
+                      isDark ? 'CreateEventScreenshotDark.png' : 'CreateEventScreenshotLight.png'
+                    }
                   />
                 </div>
               </Step>
@@ -118,7 +120,9 @@ const LandingPage = () => {
 
                 <div className='step-image-container'>
                   <img
-                    src={isDark ? 'EventDetailScreenshotDark.png' : 'EventDetailScreenshot.png'}
+                    src={
+                      isDark ? 'EventDetailScreenshotDark.png' : 'EventDetailScreenshotLight.png'
+                    }
                   />
                 </div>
               </Step>
@@ -135,7 +139,7 @@ const LandingPage = () => {
                 </div>
 
                 <div className='step-image-container'>
-                  <img src={isDark ? 'InviteScreenshotDark.png' : 'InviteScreenshot.png'} />
+                  <img src={isDark ? 'InviteScreenshotDark.png' : 'InviteScreenshotLight.png'} />
                 </div>
               </Step>
             </StepContainer>
@@ -152,7 +156,9 @@ const LandingPage = () => {
                 </div>
 
                 <div className='step-image-container'>
-                  <img src={isDark ? 'CommentsScreenshotDark.png' : 'CommentsScreenshot.png'} />
+                  <img
+                    src={isDark ? 'CommentsScreenshotDark.png' : 'CommentsScreenshotLight.png'}
+                  />
                 </div>
               </Step>
             </StepContainer>

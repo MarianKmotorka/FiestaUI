@@ -111,7 +111,7 @@ const EventDetailTemplate = ({ eventId }: IProps) => {
   if (error) return <FetchError error={error} />
 
   const event = data!
-  const bannerUrl = event.bannerUrl || '/EventDetailBanner.png'
+  const bannerUrl = event.bannerUrl || '/EventDefaultBanner.png'
   const isOrganizer = auth.isLoggedIn && auth.currentUser.id === event.organizer.id
 
   const handleSendRequestClick = async () => {

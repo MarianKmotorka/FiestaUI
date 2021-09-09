@@ -49,7 +49,7 @@ const EventCard = ({
       <TopWrapper>
         <Link href={`/events/${id}`}>
           <BannerWrapper>
-            <img className='banner' src={bannerUrl || '/EventDetailBanner.png'} alt='banner' />
+            <img className='banner' src={bannerUrl || '/EventDefaultBanner.png'} alt='banner' />
           </BannerWrapper>
         </Link>
       </TopWrapper>
