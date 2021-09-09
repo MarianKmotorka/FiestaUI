@@ -7,7 +7,11 @@ import {
   ExploreTwoTone,
   NotificationsTwoTone,
   PeopleTwoTone,
-  SearchTwoTone
+  SearchTwoTone,
+  HomeOutlined,
+  ExploreOutlined,
+  PeopleOutlined,
+  NotificationsOutlined
 } from '@material-ui/icons'
 
 import Avatar from '@elements/Avatar'
@@ -50,12 +54,9 @@ const Navbar = ({ forceUnauthorizedNavbar, transparent }: INavbarProps) => {
   const { totalCount: friendRequestsCount } = useFriendRequests()
 
   const notificationButton = (
-    <NavIconButton
-      onClick={e => setNotificationsEl(notificationsEl ? undefined : e.currentTarget)}
-      active={notificationsEl ? 1 : 0}
-    >
+    <NavIconButton onClick={e => setNotificationsEl(notificationsEl ? undefined : e.currentTarget)}>
       <Badge badgeContent={unseenCount} color='primary'>
-        <NotificationsTwoTone />
+        {notificationsEl ? <NotificationsTwoTone color='primary' /> : <NotificationsOutlined />}
       </Badge>
     </NavIconButton>
   )
@@ -63,10 +64,9 @@ const Navbar = ({ forceUnauthorizedNavbar, transparent }: INavbarProps) => {
   const friendRequestsButton = (
     <NavIconButton
       onClick={e => setFriendRequestsEl(friendRequestsEl ? undefined : e.currentTarget)}
-      active={friendRequestsEl ? 1 : 0}
     >
       <Badge badgeContent={friendRequestsCount} color='primary'>
-        <PeopleTwoTone />
+        {friendRequestsEl ? <PeopleTwoTone color='primary' /> : <PeopleOutlined />}
       </Badge>
     </NavIconButton>
   )
@@ -86,19 +86,23 @@ const Navbar = ({ forceUnauthorizedNavbar, transparent }: INavbarProps) => {
   const desktopContent = auth.isLoggedIn && (
     <>
       <NavLink href='/home'>
-        <Tooltip title={t('home')}>
-          <NavIconButton>
-            <HomeTwoTone />
-          </NavIconButton>
-        </Tooltip>
+        {isActive => (
+          <Tooltip title={t('home')}>
+            <NavIconButton>
+              {isActive ? <HomeTwoTone color='primary' /> : <HomeOutlined />}
+            </NavIconButton>
+          </Tooltip>
+        )}
       </NavLink>
 
       <NavLink href='/explore'>
-        <Tooltip title={t('explore')}>
-          <NavIconButton>
-            <ExploreTwoTone />
-          </NavIconButton>
-        </Tooltip>
+        {isActive => (
+          <Tooltip title={t('explore')}>
+            <NavIconButton>
+              {isActive ? <ExploreTwoTone color='primary' /> : <ExploreOutlined />}
+            </NavIconButton>
+          </Tooltip>
+        )}
       </NavLink>
 
       <Tooltip title={t('friendRequests')}>{friendRequestsButton}</Tooltip>

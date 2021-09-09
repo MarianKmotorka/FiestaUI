@@ -127,6 +127,7 @@
   "showMore": "Show more",
   "showLess": "Show less",
   "somethingWentWrong": "Oops... something went wrong",
+  "startTypingToSeeResults": "Start typing to see results",
   "thisEventHasCountAttendees": "This event has {{count}} attendees.",
   "thisEventHasCountInvitations": "{{count}} people are invited for this event.",
   "thisUserOrganizesCountEvents": "This user organizes {{count}} events",

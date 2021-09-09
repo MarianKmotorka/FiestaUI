@@ -4,7 +4,11 @@ import {
   AccountCircleTwoTone,
   HomeTwoTone,
   ExploreTwoTone,
-  SettingsTwoTone
+  SettingsTwoTone,
+  HomeOutlined,
+  ExploreOutlined,
+  AccountCircleOutlined,
+  SettingsOutlined
 } from '@material-ui/icons'
 
 import NavLink from '@elements/NavLink'
@@ -12,8 +16,6 @@ import useWindowSize from '@hooks/useWindowSize'
 import { useAuth } from '@contextProviders/AuthProvider'
 
 import { Wrapper } from './BottomNavigation.styled'
-
-const SELECTED = 'Mui-selected'
 
 const BottomNavigation = () => {
   const { t } = useTranslation('common')
@@ -25,20 +27,44 @@ const BottomNavigation = () => {
   return (
     <Wrapper>
       <MuiNavigation>
-        <NavLink href='/home' activeClassName={SELECTED}>
-          <BottomNavigationAction label={t('home')} icon={<HomeTwoTone />} showLabel />
+        <NavLink href='/home'>
+          {isActive => (
+            <BottomNavigationAction
+              showLabel
+              label={t('home')}
+              icon={isActive ? <HomeTwoTone color='primary' /> : <HomeOutlined />}
+            />
+          )}
         </NavLink>
 
-        <NavLink href='/explore' activeClassName={SELECTED}>
-          <BottomNavigationAction label={t('explore')} icon={<ExploreTwoTone />} showLabel />
+        <NavLink href='/explore'>
+          {isActive => (
+            <BottomNavigationAction
+              showLabel
+              label={t('explore')}
+              icon={isActive ? <ExploreTwoTone color='primary' /> : <ExploreOutlined />}
+            />
+          )}
         </NavLink>
 
-        <NavLink href={`/users/${auth.currentUser.id}`} activeClassName={SELECTED}>
-          <BottomNavigationAction label={t('profile')} icon={<AccountCircleTwoTone />} showLabel />
+        <NavLink href={`/users/${auth.currentUser.id}`}>
+          {isActive => (
+            <BottomNavigationAction
+              showLabel
+              label={t('profile')}
+              icon={isActive ? <AccountCircleTwoTone color='primary' /> : <AccountCircleOutlined />}
+            />
+          )}
         </NavLink>
 
-        <NavLink href='/settings' activeClassName={SELECTED}>
-          <BottomNavigationAction label={t('settings')} icon={<SettingsTwoTone />} showLabel />
+        <NavLink href='/settings'>
+          {isActive => (
+            <BottomNavigationAction
+              showLabel
+              label={t('settings')}
+              icon={isActive ? <SettingsTwoTone color='primary' /> : <SettingsOutlined />}
+            />
+          )}
         </NavLink>
       </MuiNavigation>
     </Wrapper>
