@@ -1,3 +1,4 @@
+import moment from 'moment'
 import Link from 'next/link'
 import Linkify from '@elements/Linkify'
 import {
@@ -55,8 +56,8 @@ const EventCard = ({
 
       <BottomWrapper>
         <Link href={`/events/${id}`}>
-          <StartDate className='start-date-avatar'>
-            <span>{new Date(startDate).getDate()}</span>
+          <StartDate className='start-date-avatar' data-month={moment(startDate).format('MMM')}>
+            <span>{new Date(startDate).getDate()}.</span>
             <ChevronRightRounded />
           </StartDate>
         </Link>

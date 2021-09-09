@@ -40,7 +40,7 @@ export const StartDate = styled.div`
   position: absolute;
   width: 90px;
   height: 90px;
-  border-radius: 90px;
+  border-radius: 20px;
   top: -45px;
   right: 10px;
   border: 10px solid ${({ theme }) => theme.palette.background.paper};
@@ -51,13 +51,37 @@ export const StartDate = styled.div`
   place-items: center;
   font-size: 1.5rem;
   font-weight: 700;
-  transition: top 0.3s ease-in-out;
+  transition: all 0.3s ease-in-out;
   cursor: pointer;
+  box-shadow: 0 5px 10px rgba(0, 0, 0, 0.1);
 
   svg {
     display: none;
     font-size: 3rem;
     animation: ${keyframes(pulse)} 0.65s alternate infinite ease-in-out;
+  }
+
+  span {
+    position: relative;
+    top: 5px;
+  }
+
+  ::before {
+    position: absolute;
+    content: attr(data-month);
+    font-size: 0.6em;
+    font-weight: 500;
+    text-align: center;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 20px;
+    background: rgba(0, 0, 0, 0.7);
+    border-radius: 10px 10px 0 0;
+  }
+
+  :hover {
+    transform: scale(0.9);
   }
 `
 
@@ -120,8 +144,12 @@ export const BottomWrapper = styled.div`
     height: 380px;
 
     .start-date-avatar {
+      border-radius: 50%;
       top: 0;
       span {
+        display: none;
+      }
+      ::before {
         display: none;
       }
       svg {
