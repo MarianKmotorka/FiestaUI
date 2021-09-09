@@ -80,11 +80,11 @@ const LandingPage = () => {
             </Button>
           </Container>
 
-          <Layer1 src='wave-overlap.svg' />
+          <Layer1 src='WaveOverlap.svg' />
         </HeroSection>
 
         <StepsSection>
-          <Layer2 src='wave-overlap-reversed.svg' />
+          <Layer2 src='WaveOverlapReversed.svg' />
           <Container>
             <StepContainer ref={firstStepRef}>
               <StepLine position='first' />
@@ -99,7 +99,7 @@ const LandingPage = () => {
 
                 <div className='step-image-container'>
                   <img
-                    src={isDark ? 'createEventScreenshot-dark.png' : 'createEventScreenshot.png'}
+                    src={isDark ? 'CreateEventScreenshotDark.png' : 'CreateEventScreenshot.png'}
                   />
                 </div>
               </Step>
@@ -118,7 +118,7 @@ const LandingPage = () => {
 
                 <div className='step-image-container'>
                   <img
-                    src={isDark ? 'eventDetailScreenshot-dark.png' : 'eventDetailScreenshot.png'}
+                    src={isDark ? 'EventDetailScreenshotDark.png' : 'EventDetailScreenshot.png'}
                   />
                 </div>
               </Step>
@@ -135,7 +135,7 @@ const LandingPage = () => {
                 </div>
 
                 <div className='step-image-container'>
-                  <img src={isDark ? 'inviteScreenshot-dark.png' : 'inviteScreenshot.png'} />
+                  <img src={isDark ? 'InviteScreenshotDark.png' : 'InviteScreenshot.png'} />
                 </div>
               </Step>
             </StepContainer>
@@ -152,7 +152,7 @@ const LandingPage = () => {
                 </div>
 
                 <div className='step-image-container'>
-                  <img src={isDark ? 'commentsScreenshot-dark.png' : 'commentsScreenshot.png'} />
+                  <img src={isDark ? 'CommentsScreenshotDark.png' : 'CommentsScreenshot.png'} />
                 </div>
               </Step>
             </StepContainer>
