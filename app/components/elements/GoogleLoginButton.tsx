@@ -29,7 +29,7 @@ const GoogleLoginButton = ({ text }: { text: string }) => {
   }
 
   return (
-    <StyledButton onClick={handleGoogleLogin} startIcon={<img src='google-btn-icon.svg' />}>
+    <StyledButton onClick={handleGoogleLogin} startIcon={<img src='GoogleBtnIcon.svg' />}>
       {text}
     </StyledButton>
   )
