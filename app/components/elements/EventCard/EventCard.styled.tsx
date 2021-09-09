@@ -84,6 +84,7 @@ export const StartDate = styled.div`
     height: 20px;
     background: rgba(0, 0, 0, 0.7);
     border-radius: 10px 10px 0 0;
+    transition: opacity 0.2s;
   }
 
   :hover {
@@ -156,7 +157,7 @@ export const BottomWrapper = styled.div`
         display: none;
       }
       ::before {
-        display: none;
+        opacity: 0;
       }
       svg {
         display: block;
