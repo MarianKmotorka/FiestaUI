@@ -14,7 +14,10 @@ const UpdateEvent = () => {
 
   const { isLoading, error, data, isIdle } = useQuery<any, IApiError>(
     ['events', query.id, 'update'],
-    async () => (await api.get(`/events/${query.id}/update`)).data,
+    async () => {
+      const { data } = await api.get(`/events/${query.id}/update`)
+      return { ...data, startDate: new Date(data.startDate), endDate: new Date(data.endDate) }
+    },
     {
       enabled: !!query.id && auth.isLoggedIn,
       cacheTime: 0 // cache time needs to be zero for edits, otherwise form initialValues are set from cache
