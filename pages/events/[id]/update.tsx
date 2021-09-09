@@ -1,3 +1,4 @@
+import moment from 'moment'
 import { useQuery } from 'react-query'
 import { useRouter } from 'next/router'
 
@@ -16,7 +17,11 @@ const UpdateEvent = () => {
     ['events', query.id, 'update'],
     async () => {
       const { data } = await api.get(`/events/${query.id}/update`)
-      return { ...data, startDate: new Date(data.startDate), endDate: new Date(data.endDate) }
+      return {
+        ...data,
+        startDate: moment.utc(data.startDate).toDate(),
+        endDate: moment.utc(data.endDate).toDate()
+      }
     },
     {
       enabled: !!query.id && auth.isLoggedIn,
