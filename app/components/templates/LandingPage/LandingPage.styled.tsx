@@ -20,6 +20,87 @@ export const Layer2 = styled.img`
   filter: drop-shadow(0 10px 5px rgba(0, 0, 0, 0.2));
 `
 
+export const TypewriterImage = styled.img`
+  max-width: 500px;
+  max-height: 500px;
+  width: 70%;
+  height: 70%;
+
+  -webkit-animation-name: cross-fade;
+  -webkit-animation-iteration-count: infinite;
+  -webkit-animation-duration: 8s;
+  animation-name: cross-fade;
+  animation-iteration-count: infinite;
+  animation-duration: 8s;
+
+  @media screen and (max-width: 1300px) {
+    width: 50%;
+    height: 50%;
+  }
+
+  @-webkit-keyframes cross-fade {
+    0% {
+      opacity: 0;
+    }
+    20% {
+      opacity: 1;
+    }
+    33% {
+      opacity: 1;
+    }
+    53% {
+      opacity: 0;
+    }
+    100% {
+      opacity: 0;
+    }
+  }
+  @keyframes cross-fade {
+    0% {
+      opacity: 0;
+    }
+    20% {
+      opacity: 1;
+    }
+    33% {
+      opacity: 1;
+    }
+    53% {
+      opacity: 0;
+    }
+    100% {
+      opacity: 0;
+    }
+  }
+`
+
+export const ImagesContainer = styled.div`
+  position: absolute;
+  top: 50vh;
+  transform: translateY(-50%);
+  right: 250px;
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+
+  img:nth-child(2) {
+    -webkit-animation-delay: -4s;
+    animation-delay: -4s;
+  }
+  img:nth-child(3) {
+    -webkit-animation-delay: -2s;
+    animation-delay: -2s;
+  }
+
+  @media screen and (max-width: 1500px) {
+    right: 100px;
+  }
+
+  @media screen and (max-width: 1100px) {
+    display: none;
+  }
+`
+
 export const HeroSection = styled.section`
   position: relative;
   display: flex;
@@ -41,6 +122,7 @@ export const HeroSection = styled.section`
     span {
       background: ${({ theme }) => theme.palette.gradients.primary};
       -webkit-background-clip: text;
+      background-clip: text;
       -webkit-text-fill-color: transparent;
     }
   }

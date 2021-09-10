@@ -19,7 +19,9 @@ import {
   StepContainer,
   StepLine,
   Wrapper,
-  StepsSection
+  StepsSection,
+  TypewriterImage,
+  ImagesContainer
 } from './LandingPage.styled'
 
 const ThemeBtn = () => {
@@ -54,7 +56,7 @@ const LandingPage = () => {
   const secondStepRef = useObserver<HTMLDivElement>(() => setInViewStepIndexes(x => [...x, 1]))
   const thirdStepRef = useObserver<HTMLDivElement>(() => setInViewStepIndexes(x => [...x, 2]))
   const fourthStepRef = useObserver<HTMLDivElement>(() => setInViewStepIndexes(x => [...x, 3]))
-  const { text } = useTypewriter({
+  const { text, count } = useTypewriter({
     words: ['Event Management', 'Discovering Events', 'Getting Social'],
     loop: true
   })
@@ -79,6 +81,12 @@ const LandingPage = () => {
               Get started
             </Button>
           </Container>
+
+          <ImagesContainer>
+            {count % 3 === 0 && <TypewriterImage src='EventManagement.svg' />}
+            {count % 3 === 1 && <TypewriterImage src='DiscoveringEvents.svg' />}
+            {count % 3 === 2 && <TypewriterImage src='GettingSocial.svg' />}
+          </ImagesContainer>
 
           <Layer1 src='WaveOverlap.svg' />
         </HeroSection>
