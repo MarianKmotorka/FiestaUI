@@ -24,7 +24,7 @@ const StartTyping = () => {
 
   return (
     <Wrapper>
-      <img src='StartTyping.svg'></img>
+      <img src='/StartTyping.svg'></img>
       <h2>{t('startTypingToSeeResults')}...</h2>
     </Wrapper>
   )
