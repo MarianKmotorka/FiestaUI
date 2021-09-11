@@ -43,6 +43,10 @@ export const ItemsContainer = styled.div`
 export const SearchModalItem = styled(MenuItem)`
   padding: 13px 8%;
 
+  &.Mui-disabled {
+    opacity: 1;
+  }
+
   ${({ disableRipple }) => disableRipple && 'cursor: auto;'};
 
   @media screen and (max-width: ${MD}px) {

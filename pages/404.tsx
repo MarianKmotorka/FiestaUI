@@ -11,21 +11,32 @@ const Wrapper = styled.div`
   place-items: center;
   padding: 40px;
 
-  h1 {
-    color: ${({ theme }) => theme.palette.primary.main};
-    text-shadow: 5px 5px 30px rgba(255, 8, 102, 0.5);
-    font-size: 2.5rem;
-    text-align: center;
-
-    @media screen and (max-width: ${MD}px) {
-      font-size: 2rem;
-    }
-  }
-
   div {
     display: flex;
     flex-direction: column;
     align-items: center;
+
+    h1 {
+      color: ${({ theme }) => theme.palette.primary.main};
+      text-shadow: 5px 5px 30px rgba(255, 8, 102, 0.5);
+      font-size: 2.5rem;
+      text-align: center;
+      span {
+        font-size: 5rem;
+      }
+      @media screen and (max-width: ${MD}px) {
+        font-size: 2rem;
+        span {
+          font-size: 4rem;
+        }
+      }
+    }
+
+    img {
+      width: 100%;
+      max-height: 50vh;
+      padding: 50px 0 50px 0;
+    }
   }
 `
 
@@ -37,11 +48,11 @@ const NotFound = () => {
     <Wrapper>
       <div>
         <h1>
-          404
+          <span>404</span>
           <br />
-          No Party Here
+          {t('noPartyHere')}
         </h1>
-
+        <img src='404.svg' />
         <Button
           startIcon={<KeyboardArrowLeft />}
           color='primary'

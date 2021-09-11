@@ -10,6 +10,7 @@ import Avatar from '@elements/Avatar'
 import { IApiError } from '@api/types'
 import useDebounce from '@hooks/useDebounce'
 import FetchError from '@elements/FetchError/FetchError'
+import StartTyping from '@elements/StartTyping'
 import { ItemType, EventAndUserSelectorItem } from './types'
 import { SearchModal } from '@modules/SearchModal'
 
@@ -61,9 +62,7 @@ const NavbarSearch = ({ onClose }: INavbarSearchProps) => {
       items={items}
       search={search}
       isFetching={isFetching}
-      nothingFoundComponent={
-        debouncedSearch.length < MINIMUM_CHARS_TO_SEARCH && t('startTypingToSeeResults')
-      }
+      nothingFoundComponent={debouncedSearch.length < MINIMUM_CHARS_TO_SEARCH && <StartTyping />}
       onClose={onClose}
       setSearch={setSearch}
       renderItem={renderItem}

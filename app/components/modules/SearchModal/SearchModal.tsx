@@ -7,6 +7,7 @@ import { Close, Search } from '@material-ui/icons'
 import Modal from '@elements/Modal'
 import Observer from '@elements/Observer'
 import TextBox from '@elements/TextBox/TextBox'
+import NothingFound from '@elements/NothingFound'
 
 import {
   SearchModalItem,
@@ -90,11 +91,7 @@ const SearchModal = <T extends { id: string }>({
           )}
 
           {isEmpty(items) && !isFetching && (
-            <SearchModalItem disabled>
-              <Box display='flex' gridGap='10px'>
-                {nothingFoundComponent || t('nothingFound')}
-              </Box>
-            </SearchModalItem>
+            <SearchModalItem disabled>{nothingFoundComponent || <NothingFound />}</SearchModalItem>
           )}
         </ItemsContainer>
       </StyledCard>
