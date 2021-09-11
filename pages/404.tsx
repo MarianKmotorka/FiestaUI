@@ -52,7 +52,7 @@ const NotFound = () => {
           <br />
           {t('noPartyHere')}
         </h1>
-        <img src='404.svg' />
+        <img src='/404.svg' />
         <Button
           startIcon={<KeyboardArrowLeft />}
           color='primary'
