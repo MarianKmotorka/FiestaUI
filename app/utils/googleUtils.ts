@@ -1,7 +1,7 @@
 import { LatLon } from 'use-places-autocomplete'
 import geo from 'react-geocode'
 
-export interface IGoogleMapLocation {
+export interface ILocationDto {
   latitude: number
   longitude: number
   street?: string
@@ -12,6 +12,7 @@ export interface IGoogleMapLocation {
   administrativeAreaLevel1?: string
   administrativeAreaLevel2?: string
   postalCode?: string
+  googleMapsUrl: string
 }
 
 const getAddressByType = (type: string, addressComponents: any[]): string => {
@@ -22,7 +23,7 @@ const getAddressByType = (type: string, addressComponents: any[]): string => {
   return ''
 }
 
-export const getLocation = async ({ lat, lng }: LatLon): Promise<IGoogleMapLocation> => {
+export const getLocation = async ({ lat, lng }: LatLon): Promise<ILocationDto> => {
   let components = []
   try {
     const detail = await geo.fromLatLng(
@@ -43,6 +44,7 @@ export const getLocation = async ({ lat, lng }: LatLon): Promise<IGoogleMapLocat
     postalCode: getAddressByType('postal_code', components),
     administrativeAreaLevel2: getAddressByType('administrative_area_level_2', components),
     administrativeAreaLevel1: getAddressByType('administrative_area_level_1', components),
-    state: getAddressByType('country', components)
+    state: getAddressByType('country', components),
+    googleMapsUrl: ''
   }
 }

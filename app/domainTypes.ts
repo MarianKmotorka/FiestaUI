@@ -41,7 +41,8 @@ export interface IEventDto {
   startDate: string
   endDate: string
   accessibilityType: AccessibilityTypeEnum
-  location: string
+  location?: string
+  externalLink?: string
   isCurrentUserAttending: boolean
 }
 

@@ -1,13 +1,10 @@
 import { isNumber } from 'lodash'
 import { Validator } from '@elements/HookForm/types'
-import { IGoogleMapLocation } from 'utils/googleUtils'
+import { ILocationDto } from 'utils/googleUtils'
 import { ICreateEventFormValues } from './CreateOrUpdateEventTemplate'
 import { eventInfoFormFields } from './FormSteps/EventInfoStep/EventInfoStep'
 
-export const locationValidator: Validator<ICreateEventFormValues, IGoogleMapLocation> = (
-  value,
-  t
-) => {
+export const locationValidator: Validator<ICreateEventFormValues, ILocationDto> = (value, t) => {
   return isNumber(value?.latitude) && isNumber(value?.longitude)
     ? undefined
     : t('validator.locationMustBeSelected')
@@ -42,4 +39,6 @@ export const redirectToStepByErrorFieldName = (
   redirect: (index: number) => void
 ) => {
   if (errorFields.some(x => eventInfoFormFields.includes(x))) redirect(stepIndexes.eventInfoStep)
+  else if (errorFields.some(x => x === 'location' || x === 'externalLink'))
+    redirect(stepIndexes.locationStep)
 }

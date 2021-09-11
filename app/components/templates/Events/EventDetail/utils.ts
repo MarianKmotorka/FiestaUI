@@ -4,7 +4,7 @@ import { IEventDetail } from './EventDetailTemplate'
 export const getGoogleCalendarUrl = (event: IEventDetail) => {
   const url = new URL('https://calendar.google.com/calendar/u/0/r/eventedit')
 
-  url.searchParams.append('location', event.location)
+  url.searchParams.append('location', event.location?.googleMapsUrl || event.externalLink!)
   url.searchParams.append('text', event.name)
 
   const format = 'YYYYMMDDTHHmm00'

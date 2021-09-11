@@ -1,6 +1,7 @@
 import Link from 'next/link'
-import { Box } from '@material-ui/core'
-import { Event } from '@material-ui/icons'
+import { Box, Chip } from '@material-ui/core'
+import { Event, LiveTv } from '@material-ui/icons'
+import useTranslation from 'next-translate/useTranslation'
 
 import Avatar from '@elements/Avatar'
 import { IEventDto } from 'domainTypes'
@@ -24,7 +25,8 @@ interface IEventListItemProps {
 }
 
 const EventListItem = ({ event, isLink, href, className, onClick }: IEventListItemProps) => {
-  const { startDate, bannerUrl, accessibilityType, id, name, location } = event
+  const { t } = useTranslation('common')
+  const { startDate, bannerUrl, accessibilityType, id, name, location, externalLink } = event
 
   const content = (
     <Wrapper className={className} cursor={isLink ? 'pointer' : 'auto'} onClick={onClick}>
@@ -40,7 +42,8 @@ const EventListItem = ({ event, isLink, href, className, onClick }: IEventListIt
 
         <ItemSubTextContainer>
           <ItemSubText>{toLocalTime(startDate, 'DD MMMM yyyy')}</ItemSubText> •
-          <ItemSubText>{location}</ItemSubText>
+          {location && <ItemSubText>{location}</ItemSubText>}
+          {externalLink && <Chip size='small' icon={<LiveTv />} label={t('online')} />}
         </ItemSubTextContainer>
       </Box>
     </Wrapper>

@@ -45,3 +45,8 @@ export const getErrorMessage = (error: IApiError, t: Translate) => {
 
   return translationExist ? translated : error.data.errorMessage
 }
+
+export const trimToMaxChars = (link: string, maxChars = 20) => {
+  if (link.length > maxChars) return link.slice(0, maxChars) + '...'
+  return link
+}

@@ -9,6 +9,7 @@ import {
 } from 'react-hook-form'
 
 export interface IFormProps<T> {
+  debug?: boolean
   children: ReactNode | ((form: UseFormMethods<T>) => ReactNode)
   defaultValues: DefaultValues<T>
   onSubmit: (values: T, form: UseFormMethods<T>) => Promise<void>
@@ -17,12 +18,18 @@ export interface IFormProps<T> {
 export default function Form<T>({
   defaultValues,
   children,
+  debug,
   onSubmit: initialOnSubmit
 }: IFormProps<T>) {
   const form = useForm<T>({
     mode: 'onTouched',
     defaultValues
   })
+
+  const formValues = form.watch()
+  useEffect(() => {
+    if (debug) console.log('FORM VALUES:', formValues)
+  }, [formValues, debug])
 
   //Note: Fixes form still dirty when typing in same value as initial
   useEffect(() => {
