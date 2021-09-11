@@ -29,7 +29,7 @@ const NothingFound = () => {
 
   return (
     <Wrapper>
-      <img src='NothingFound.svg'></img>
+      <img src='/NothingFound.svg'></img>
       <h1>{t('nothingFound')}...</h1>
       <p>{t('areYouSureYouWereLookingForThis')}</p>
     </Wrapper>
