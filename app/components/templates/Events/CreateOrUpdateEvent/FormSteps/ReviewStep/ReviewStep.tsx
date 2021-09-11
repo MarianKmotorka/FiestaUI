@@ -1,35 +1,47 @@
-import { useFormContext } from 'react-hook-form'
+import { useEffect } from 'react'
 import { keys, lowerFirst } from 'lodash'
+import { useFormContext } from 'react-hook-form'
 import useTranslation from 'next-translate/useTranslation'
-import { EditOutlined, KeyboardArrowLeft } from '@material-ui/icons'
-import { Box, Card, CardContent, Grid, IconButton } from '@material-ui/core'
+import { EditOutlined, KeyboardArrowLeft, OpenInNew } from '@material-ui/icons'
+import { Box, Card, CardContent, Chip, Grid, IconButton } from '@material-ui/core'
 
-import { toLocalTime } from '@utils/utils'
+import Map from '@modules/Map/Map'
 import Button from '@elements/Button/Button'
 import { AccessibilityTypeEnum } from 'domainTypes'
+import { toLocalTime } from '@utils/utils'
 import KeyValueRow from '@elements/KeyValueRow/KeyValueRow'
 import { redirectToStepByErrorFieldName } from '../../utils'
 import { ICreateEventFormValues } from '@templates/Events/CreateOrUpdateEvent/CreateOrUpdateEventTemplate'
 
-import { Title, Wrapper } from './ReviewStep.styled'
+import { MapWrapper, Title, Wrapper } from './ReviewStep.styled'
+import { LinkPreview } from '@dhaiwat10/react-link-preview'
 
 interface IReviewStepProps {
   submitting: boolean
+  isUpdateEvent: boolean
   prevStep: (index?: number) => void
 }
 
-const ReviewStep = ({ prevStep, submitting }: IReviewStepProps) => {
+const ReviewStep = ({ isUpdateEvent, submitting, prevStep }: IReviewStepProps) => {
   const { getValues, trigger, errors } = useFormContext<ICreateEventFormValues>()
   const { t } = useTranslation('common')
   const values = getValues()
-  const { location } = values
+  const {
+    location,
+    name,
+    startDate,
+    endDate,
+    capacity,
+    accessibilityType,
+    description,
+    externalLink
+  } = values
 
-  const validateAndRedirectToErrorStep = async () => {
-    const isFormValid = await trigger()
-    if (!isFormValid) {
-      redirectToStepByErrorFieldName(keys(errors), prevStep)
-    }
-  }
+  useEffect(() => {
+    redirectToStepByErrorFieldName(keys(errors), prevStep)
+    // NOTE: adding prevStep as dependency causes infinite loop
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [errors])
 
   return (
     <Wrapper>
@@ -44,19 +56,19 @@ const ReviewStep = ({ prevStep, submitting }: IReviewStepProps) => {
                 </IconButton>
               </Title>
 
-              <KeyValueRow keyName={t('name')} value={values.name} />
-              <KeyValueRow keyName={t('startDate')} value={toLocalTime(values.startDate)} />
-              <KeyValueRow keyName={t('endDate')} value={toLocalTime(values.endDate)} />
-              <KeyValueRow keyName={t('maxAttendees')} value={values.capacity} />
+              <KeyValueRow keyName={t('name')} value={name} />
+              <KeyValueRow keyName={t('startDate')} value={toLocalTime(startDate)} />
+              <KeyValueRow keyName={t('endDate')} value={toLocalTime(endDate)} />
+              <KeyValueRow keyName={t('maxAttendees')} value={capacity} />
               <KeyValueRow
                 keyName={t('accessibility')}
                 value={t(
                   `enum.accessibilityTypeEnum.${lowerFirst(
-                    AccessibilityTypeEnum[values.accessibilityType]
+                    AccessibilityTypeEnum[accessibilityType]
                   )}`
                 )}
               />
-              <KeyValueRow keyName={t('description')} value={values.description} />
+              <KeyValueRow keyName={t('description')} value={description} />
             </CardContent>
           </Card>
         </Grid>
@@ -71,19 +83,31 @@ const ReviewStep = ({ prevStep, submitting }: IReviewStepProps) => {
                 </IconButton>
               </Title>
 
-              <KeyValueRow keyName={t('streetNumber')} value={location?.streetNumber} />
-              <KeyValueRow keyName={t('street')} value={location?.street} />
-              <KeyValueRow keyName={t('city')} value={location?.city} />
-              <KeyValueRow keyName={t('postalCode')} value={location?.postalCode} />
-              <KeyValueRow
-                keyName={t('administrativeAreaLevel2')}
-                value={location?.administrativeAreaLevel2}
-              />
-              <KeyValueRow
-                keyName={t('administrativeAreaLevel1')}
-                value={location?.administrativeAreaLevel1}
-              />
-              <KeyValueRow keyName={t('state')} value={location?.state} />
+              {location && (
+                <>
+                  {location?.city && <Chip variant='outlined' label={location.city} />}
+                  {location?.state && <Chip variant='outlined' label={location.state} />}
+
+                  <MapWrapper>
+                    <Map
+                      readonly
+                      value={location}
+                      key={`${location?.latitude}${location?.longitude}`}
+                    />
+                  </MapWrapper>
+                </>
+              )}
+
+              {externalLink && (
+                <LinkPreview
+                  url={externalLink}
+                  fallback={
+                    <Button href={externalLink} endIcon={<OpenInNew />} variant='outlined'>
+                      {externalLink}
+                    </Button>
+                  }
+                />
+              )}
             </CardContent>
           </Card>
         </Grid>
@@ -99,13 +123,8 @@ const ReviewStep = ({ prevStep, submitting }: IReviewStepProps) => {
           {t('back')}
         </Button>
 
-        <Button
-          type='submit'
-          size='large'
-          onClick={validateAndRedirectToErrorStep}
-          loading={submitting}
-        >
-          {t('submit').toUpperCase()}
+        <Button type='submit' size='large' onClick={() => trigger()} loading={submitting}>
+          {isUpdateEvent ? t('save') : t('create')}
         </Button>
       </Box>
     </Wrapper>

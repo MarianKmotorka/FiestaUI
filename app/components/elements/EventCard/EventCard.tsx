@@ -3,11 +3,14 @@ import Link from 'next/link'
 import Linkify from '@elements/Linkify'
 import {
   ChevronRightRounded,
+  LiveTv,
   LocationOnOutlined,
   PeopleOutline,
   PersonOutlined,
   Schedule
 } from '@material-ui/icons'
+import { Chip } from '@material-ui/core'
+import useTranslation from 'next-translate/useTranslation'
 
 import { toLocalTime } from '@utils/utils'
 
@@ -27,7 +30,8 @@ interface IEventCardProps {
   capacity: number
   name: string
   bannerUrl?: string
-  location: string
+  location?: string
+  externalLink?: string
   organizerUsername: string
   organizerId: string
 }
@@ -42,8 +46,11 @@ const EventCard = ({
   bannerUrl,
   location,
   organizerUsername,
-  organizerId
+  organizerId,
+  externalLink
 }: IEventCardProps) => {
+  const { t } = useTranslation('common')
+
   return (
     <CardWrapper>
       <TopWrapper>
@@ -82,10 +89,15 @@ const EventCard = ({
             <Schedule />
             {toLocalTime(startDate, 'DD MMMM yyyy')}
           </p>
-          <p>
-            <LocationOnOutlined />
-            {location}
-          </p>
+
+          {location && (
+            <p>
+              <LocationOnOutlined />
+              {location}
+            </p>
+          )}
+
+          {externalLink && <Chip icon={<LiveTv fontSize='small' />} label={t('online')} />}
 
           <p className='event-description'>
             <Linkify>{description}</Linkify>

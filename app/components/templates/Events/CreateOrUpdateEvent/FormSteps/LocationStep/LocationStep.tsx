@@ -1,13 +1,14 @@
-import { useState } from 'react'
-import { Box } from '@material-ui/core'
+import { Box, InputAdornment, Typography } from '@material-ui/core'
 import { useFormContext } from 'react-hook-form'
 import useTranslation from 'next-translate/useTranslation'
-import { KeyboardArrowLeft, KeyboardArrowRight } from '@material-ui/icons'
+import { KeyboardArrowLeft, KeyboardArrowRight, LinkOutlined } from '@material-ui/icons'
 
 import Button from '@elements/Button/Button'
 import { locationValidator } from '../../utils'
-import LocationModal from './LocationModal/LocationModal'
+import FormInput from '@elements/HookForm/FormInput'
+import FormCheckbox from '@elements/HookForm/FormCheckbox'
 import FormGoogleMap from '@elements/HookForm/FormGoogleMap'
+import { combineValidators, requiredValidator, urlValidator } from '@utils/validators'
 
 import { StyledCard } from './LocationStep.styled'
 
@@ -19,18 +20,45 @@ interface ILocationStepProps {
 const LocationStep = ({ nextStep, prevStep }: ILocationStepProps) => {
   const { t } = useTranslation('common')
   const { trigger } = useFormContext()
-  const [modalOpen, setModalOpen] = useState(false)
+  const { watch } = useFormContext()
+  const isOnlineEvent = watch('isOnlineEvent')
 
   const handleNextClick = async () => {
-    const isValid = await trigger('location')
-    isValid && setModalOpen(true)
+    const fieldToValidate = isOnlineEvent ? 'externalLink' : 'location'
+    const isValid = await trigger(fieldToValidate)
+    isValid && nextStep()
   }
 
   return (
     <div>
-      <StyledCard elevation={0}>
-        <FormGoogleMap name='location' validate={locationValidator} />
-      </StyledCard>
+      <FormCheckbox name='isOnlineEvent' label={t('onlineEvent')} />
+
+      {!isOnlineEvent && (
+        <StyledCard elevation={0}>
+          <FormGoogleMap name='location' validate={locationValidator} />
+        </StyledCard>
+      )}
+
+      {isOnlineEvent && (
+        <div style={{ margin: '20px 0 50px' }}>
+          <Typography variant='subtitle2'>
+            {t('provideUrlToWhereAttendeesCanWatchEvent')}
+          </Typography>
+
+          <FormInput
+            InputProps={{
+              startAdornment: (
+                <InputAdornment position='start'>
+                  <LinkOutlined />
+                </InputAdornment>
+              )
+            }}
+            fullWidth
+            name='externalLink'
+            validate={combineValidators([requiredValidator, urlValidator])}
+          />
+        </div>
+      )}
 
       <Box marginY='25px' display='flex' justifyContent='center' gridGap='20px'>
         <Button
@@ -43,11 +71,9 @@ const LocationStep = ({ nextStep, prevStep }: ILocationStepProps) => {
         </Button>
 
         <Button onClick={handleNextClick} endIcon={<KeyboardArrowRight />}>
-          {t('reviewAddress')}
+          {t('next')}
         </Button>
       </Box>
-
-      {modalOpen && <LocationModal onClose={() => setModalOpen(false)} onSuccess={nextStep} />}
     </div>
   )
 }

@@ -1,9 +1,9 @@
-import { useEffect, useState } from 'react'
 import Link from 'next/link'
 import { lowerFirst } from 'lodash'
+import { useEffect, useState } from 'react'
 import { useQuery, useQueryClient } from 'react-query'
 import useTranslation from 'next-translate/useTranslation'
-import { Box, Button as MuiButton, CircularProgress } from '@material-ui/core'
+import { Box, Button as MuiButton, Chip, CircularProgress } from '@material-ui/core'
 import {
   AccountBox,
   DeleteTwoTone,
@@ -12,11 +12,13 @@ import {
   EventBusy,
   EventNoteTwoTone,
   FormatListNumbered,
+  LinkOutlined,
+  LiveTv,
+  LocationOnOutlined,
   LockOpen,
   OpenInNew,
   PersonAddDisabledOutlined,
-  PersonAddOutlined,
-  Public
+  PersonAddOutlined
 } from '@material-ui/icons'
 
 import api from '@api/HttpClient'
@@ -24,7 +26,7 @@ import Banner from './Banner/Banner'
 import { IApiError } from '@api/types'
 import Divider from '@elements/Divider'
 import Linkify from '@elements/Linkify'
-import { toLocalTime } from '@utils/utils'
+import { trimToMaxChars, toLocalTime } from '@utils/utils'
 import AuthCheck from '@elements/AuthCheck'
 import Button from '@elements/Button/Button'
 import { getGoogleCalendarUrl } from './utils'
@@ -32,13 +34,13 @@ import { Container } from '@elements/Container'
 import useWindowSize from '@hooks/useWindowSize'
 import DeleteEventDialog from './DeleteEventDialog'
 import { AccessibilityTypeEnum } from 'domainTypes'
+import { ILocationDto } from '@utils/googleUtils'
 import EventDetailTabs from './Tabs/EventDetailTabs'
 import FetchError from '@elements/FetchError/FetchError'
 import { useAuth } from '@contextProviders/AuthProvider'
 import InvitationPopup from './InvitationPopup/InvitationPopup'
 import { apiErrorToast, successToast } from 'services/toastService'
 import CollapseContainer from '@elements/CollapseContainer/CollapseContainer'
-import { NAVBAR_HEIGHT } from '@modules/Navbar/Navbar.styled'
 
 import {
   StyledCard,
@@ -50,6 +52,7 @@ import {
   Organizer,
   BlurredImageWrapper
 } from './EventDetailTemplate.styled'
+import { NAVBAR_HEIGHT } from '@modules/Navbar/Navbar.styled'
 
 interface IProps {
   eventId: string
@@ -62,8 +65,8 @@ export interface IEventDetail {
   startDate: string
   endDate: string
   bannerUrl?: string
-  googleMapsUrl: string
-  location: string
+  location?: ILocationDto
+  externalLink?: string
   accessibilityType: AccessibilityTypeEnum
   attendeesCount: number
   invitationsCount: number
@@ -158,6 +161,8 @@ const EventDetailTemplate = ({ eventId }: IProps) => {
           <Container disabled={minMedium}>
             <Title>{event.name}</Title>
 
+            {event.externalLink && <Chip icon={<LiveTv fontSize='small' />} label={t('online')} />}
+
             {event.description && (
               <CollapseContainer collapsedHeight={80}>
                 <EventDescription>
@@ -165,19 +170,20 @@ const EventDetailTemplate = ({ eventId }: IProps) => {
                 </EventDescription>
               </CollapseContainer>
             )}
-
             <Box marginY='20px'>
               <InfoRow>
                 <h6>
                   <AccountBox />
                   {t('organizer')}:
                 </h6>
+
                 <Link href={`/users/${event.organizer.id}`}>
                   <Organizer>
                     <span>{event.organizer.username}</span>
                   </Organizer>
                 </Link>
               </InfoRow>
+
               <InfoRow>
                 <h6>
                   <EventAvailable />
@@ -185,6 +191,7 @@ const EventDetailTemplate = ({ eventId }: IProps) => {
                 </h6>
                 <div>{toLocalTime(event.startDate)}</div>
               </InfoRow>
+
               <InfoRow>
                 <h6>
                   <EventBusy />
@@ -192,6 +199,7 @@ const EventDetailTemplate = ({ eventId }: IProps) => {
                 </h6>
                 <div>{toLocalTime(event.endDate)}</div>
               </InfoRow>
+
               <InfoRow>
                 <h6>
                   <LockOpen />
@@ -205,22 +213,45 @@ const EventDetailTemplate = ({ eventId }: IProps) => {
                   )}
                 </div>
               </InfoRow>
-              <InfoRow>
-                <h6>
-                  <Public />
-                  {t('location')}:
-                </h6>
-                <div>
-                  <MuiButton
-                    target='_blank'
-                    rel='noopener noreferrer'
-                    href={event.googleMapsUrl}
-                    endIcon={<OpenInNew />}
-                  >
-                    {event.location}
-                  </MuiButton>
-                </div>
-              </InfoRow>
+
+              {event.location && (
+                <InfoRow>
+                  <h6>
+                    <LocationOnOutlined />
+                    {t('location')}:
+                  </h6>
+                  <div>
+                    <MuiButton
+                      target='_blank'
+                      rel='noopener noreferrer'
+                      href={event.location.googleMapsUrl}
+                      endIcon={<OpenInNew />}
+                    >
+                      {`${event.location.city}, ${event.location.state}`}
+                    </MuiButton>
+                  </div>
+                </InfoRow>
+              )}
+
+              {event.externalLink && (
+                <InfoRow>
+                  <h6>
+                    <LinkOutlined />
+                    {t('externalLink')}:
+                  </h6>
+                  <div>
+                    <MuiButton
+                      target='_blank'
+                      rel='noopener noreferrer'
+                      href={event.externalLink}
+                      endIcon={<OpenInNew />}
+                    >
+                      {trimToMaxChars(event.externalLink)}
+                    </MuiButton>
+                  </div>
+                </InfoRow>
+              )}
+
               <InfoRow>
                 <h6>
                   <FormatListNumbered />

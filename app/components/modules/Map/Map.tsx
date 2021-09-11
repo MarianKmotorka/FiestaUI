@@ -7,22 +7,23 @@ import { compact, join } from 'lodash'
 import Search from './Search/Search'
 import { lightMapStyle, darkMapStyle } from './mapStyles'
 import { useAppTheme } from '@contextProviders/AppThemeProvider/AppThemeProvider'
-import { getLocation, IGoogleMapLocation } from 'utils/googleUtils'
+import { getLocation, ILocationDto } from 'utils/googleUtils'
 
 import { Wrapper } from './Map.styled'
 
 const libraries: Libraries = ['places']
 const defaultCenter = { lat: 48, lng: 12 }
 
-const getInitialLatLng = (location?: IGoogleMapLocation) =>
+const getInitialLatLng = (location?: ILocationDto) =>
   location ? { lat: location.latitude, lng: location.longitude } : undefined
 
 interface IMapProps {
-  value?: IGoogleMapLocation
-  onChange: (address: IGoogleMapLocation) => void
+  value?: ILocationDto
+  onChange?: (address: ILocationDto) => void
+  readonly?: boolean
 }
 
-const Map = ({ value, onChange }: IMapProps) => {
+const Map = ({ value, readonly, onChange }: IMapProps) => {
   const { isDark } = useAppTheme()
   const mapRef = useRef<any>()
   const initialValue = useRef(value)
@@ -66,18 +67,18 @@ const Map = ({ value, onChange }: IMapProps) => {
       )
 
       setSearchValue(locationString, false)
-      onChange(location)
+      onChange?.(location)
       setFetching(false)
     },
     [onChange, setSearchValue]
   )
 
   const handleSearched = useCallback(
-    (location: IGoogleMapLocation) => {
+    (location: ILocationDto) => {
       const latLng = { lat: location.latitude, lng: location.longitude }
       mapRef.current.panTo(latLng)
       mapRef.current.setZoom(14)
-      onChange(location)
+      onChange?.(location)
       setMarkerPosition(latLng)
     },
     [onChange]
@@ -87,7 +88,7 @@ const Map = ({ value, onChange }: IMapProps) => {
     () => ({
       styles: isDark ? darkMapStyle : lightMapStyle,
       disableDefaultUI: true,
-      fullscreenControl: true
+      fullscreenControl: false
     }),
     [isDark]
   )
@@ -97,13 +98,15 @@ const Map = ({ value, onChange }: IMapProps) => {
 
   return (
     <Wrapper>
-      <Search
-        value={searchValue}
-        suggestions={suggestions}
-        ready={autocompleteReady}
-        setValue={setSearchValue}
-        onChange={handleSearched}
-      />
+      {!readonly && (
+        <Search
+          value={searchValue}
+          suggestions={suggestions}
+          ready={autocompleteReady}
+          setValue={setSearchValue}
+          onChange={handleSearched}
+        />
+      )}
 
       <GoogleMap
         zoom={initialLatLng ? 12 : 4}
@@ -112,7 +115,7 @@ const Map = ({ value, onChange }: IMapProps) => {
         onLoad={handleMapLoaded}
         center={initialLatLng || defaultCenter}
         onClick={async ({ latLng }) =>
-          await handleMapClicked({ lat: latLng.lat(), lng: latLng.lng() })
+          !readonly && (await handleMapClicked({ lat: latLng.lat(), lng: latLng.lng() }))
         }
       >
         {markerPosition && <Marker position={markerPosition} />}

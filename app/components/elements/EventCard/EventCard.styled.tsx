@@ -145,6 +145,10 @@ export const BottomWrapper = styled.div`
       margin-top: 20px;
       display: none;
     }
+    .MuiChip-root svg {
+      margin-left: 10px;
+      margin-bottom: 2px;
+    }
   }
 
   :hover {

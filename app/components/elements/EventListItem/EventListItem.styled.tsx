@@ -32,6 +32,13 @@ export const ItemSubTextContainer = styled.div`
   align-items: center;
   color: ${({ theme }) => theme.palette.themeText.themeGray};
   gap: 5px;
+
+  .MuiChip-root svg {
+    height: 13px;
+    width: 13px;
+    margin-left: 5px;
+    margin-bottom: 2px;
+  }
 `
 
 export const ItemSubText = styled.p`

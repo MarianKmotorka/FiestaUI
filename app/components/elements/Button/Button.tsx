@@ -4,6 +4,7 @@ import { StyledMuiButton } from './Button.styled'
 
 export interface IButtonProps extends ButtonProps {
   loading?: boolean
+  isExternalLink?: boolean
 }
 
 const Button = ({
@@ -15,10 +16,15 @@ const Button = ({
   startIcon,
   endIcon,
   href,
+  isExternalLink,
   ...rest
 }: IButtonProps) => {
+  const optionalProps =
+    href && isExternalLink ? { href, target: '_blank', rel: 'noopener noreferrer' } : {}
+
   const btn = (
     <StyledMuiButton
+      {...optionalProps}
       {...rest}
       startIcon={loading ? undefined : startIcon}
       endIcon={loading ? undefined : endIcon}
@@ -30,7 +36,7 @@ const Button = ({
     </StyledMuiButton>
   )
 
-  return href ? <Link href={href}>{btn}</Link> : btn
+  return href && !isExternalLink ? <Link href={href}>{btn}</Link> : btn
 }
 
 export default Button

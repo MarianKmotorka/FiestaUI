@@ -75,7 +75,8 @@ const ExploreTemplate = () => {
               bannerUrl,
               location,
               organizerUsername,
-              organizerId
+              organizerId,
+              externalLink
             }) => (
               <EventCard
                 key={id}
@@ -83,6 +84,7 @@ const ExploreTemplate = () => {
                 name={name}
                 capacity={capacity}
                 location={location}
+                externalLink={externalLink}
                 bannerUrl={bannerUrl}
                 startDate={startDate}
                 description={description}

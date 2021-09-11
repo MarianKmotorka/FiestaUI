@@ -9,7 +9,7 @@ import Hidden from '@elements/Hidden'
 import Form from '@elements/HookForm/Form'
 import { AccessibilityTypeEnum } from 'domainTypes'
 import { successToast } from 'services/toastService'
-import { IGoogleMapLocation } from 'utils/googleUtils'
+import { ILocationDto } from 'utils/googleUtils'
 import FetchError from '@elements/FetchError/FetchError'
 import ReviewStep from './FormSteps/ReviewStep/ReviewStep'
 import LocationStep from './FormSteps/LocationStep/LocationStep'
@@ -30,13 +30,16 @@ export interface ICreateEventFormValues {
   startDate: Date
   endDate: Date
   accessibilityType: number
-  location: IGoogleMapLocation
+  location?: ILocationDto
   capacity: number
-  description: string
+  description?: string
+  externalLink?: string
+  isOnlineEvent: boolean
 }
 
 const defaultValues: Partial<ICreateEventFormValues> = {
   name: '',
+  isOnlineEvent: false,
   accessibilityType: AccessibilityTypeEnum.Public,
   capacity: 2
 }
@@ -111,7 +114,7 @@ const CreateOrUpdateEvent = ({ event, eventFetching, fetchError }: IProps) => {
         </Hidden>
 
         <Hidden hidden={step !== stepIndexes.reviewStep}>
-          <ReviewStep prevStep={prevStep} submitting={submitting} />
+          <ReviewStep prevStep={prevStep} submitting={submitting} isUpdateEvent={!!event} />
         </Hidden>
       </Form>
     </Wrapper>
