@@ -10,7 +10,8 @@ export type EventAndUserSelectorItem =
       displayName: string
       capacity: number
       startDate: Date
-      location: string
+      location?: string
+      externalLink?: string
       description?: string
       pictureUrl?: string
     }
