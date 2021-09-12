@@ -1,5 +1,4 @@
 import { useState } from 'react'
-import { Fab } from '@material-ui/core'
 import useObserver from '@hooks/useObserver'
 import { ChevronRight, Facebook, Instagram, Twitter } from '@material-ui/icons'
 import { Cursor, useTypewriter } from 'react-simple-typewriter'
@@ -24,31 +23,6 @@ import {
   ImagesContainer
 } from './LandingPage.styled'
 
-const ThemeBtn = () => {
-  const { switchTheme } = useAppTheme()
-  return (
-    <div
-      style={{
-        position: 'fixed',
-        left: '20px',
-        top: '20px',
-        zIndex: 99999
-      }}
-    >
-      <Fab
-        color='primary'
-        onClick={switchTheme}
-        style={{
-          background: 'transparent',
-          boxShadow: 'none'
-        }}
-      >
-        {' '}
-      </Fab>
-    </div>
-  )
-}
-
 const LandingPage = () => {
   const { isDark } = useAppTheme()
   const [inViewStepIndexes, setInViewStepIndexes] = useState<number[]>([])
@@ -64,8 +38,6 @@ const LandingPage = () => {
   return (
     <Wrapper>
       <FullWidthLayout transparentNavbar forceUnauthorizedNavbar title='Fiesta'>
-        <ThemeBtn />
-
         <HeroSection>
           <Container>
             <h1>
@@ -93,6 +65,7 @@ const LandingPage = () => {
 
         <StepsSection>
           <Layer2 src='WaveOverlapReversed.svg' />
+
           <Container>
             <StepContainer ref={firstStepRef}>
               <StepLine position='first' />

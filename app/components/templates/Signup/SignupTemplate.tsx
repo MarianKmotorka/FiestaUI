@@ -2,6 +2,7 @@ import { useState } from 'react'
 import useTranslation from 'next-translate/useTranslation'
 
 import Form from '@elements/HookForm/Form'
+import Button from '@elements/Button/Button'
 import FormInput from '@elements/HookForm/FormInput'
 import SubmitButton from '@elements/HookForm/SubmitButton'
 import GoogleLoginButton from '@elements/GoogleLoginButton'
@@ -16,7 +17,7 @@ import {
   createRepeatPasswordValidator
 } from 'utils/validators'
 
-import { CenteredOr, FormContent, StyledCard } from './SignupTemplate.styled'
+import { AlreadyHaveAnAccount, CenteredOr, FormContent, StyledCard } from './SignupTemplate.styled'
 
 export interface ISignupFormValues {
   firstName: string
@@ -82,6 +83,14 @@ const SignupTemplate = () => {
             />
 
             <SubmitButton>{t('signup')}</SubmitButton>
+
+            <AlreadyHaveAnAccount>
+              {t('alreadyHaveAnAccount')}
+
+              <Button variant='text' href='/login'>
+                {t('login')}
+              </Button>
+            </AlreadyHaveAnAccount>
           </FormContent>
         </Form>
       </StyledCard>

@@ -150,9 +150,14 @@ export const HeroSection = styled.section`
     transition: transform 0.2s;
     svg {
       font-size: 2rem;
+      transition: transform 0.2s;
+      transform: translateX(10px);
     }
     :hover {
-      transform: scale(1.1);
+      transform: scale(1.05);
+      svg {
+        transform: translateX(30px);
+      }
     }
 
     @media screen and (max-width: 800px) {
