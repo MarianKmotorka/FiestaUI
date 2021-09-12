@@ -31,6 +31,12 @@ export const ItemInfo = styled.div`
     }
   }
 
+  .MuiChip-root svg {
+    margin: 0 0 2px 7px;
+    height: 13px;
+    width: 13px;
+  }
+
   @media screen and (max-width: ${MD}px) {
     p {
       line-height: 1.25rem;
