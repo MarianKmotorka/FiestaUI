@@ -5,7 +5,7 @@ import { SM } from '@contextProviders/AppThemeProvider/theme'
 export const StyledCard = styled(Card)`
   display: flex;
   flex-direction: column;
-  padding: 50px;
+  padding: 50px 50px 30px;
   max-width: 500px;
   width: 100%;
 
@@ -36,7 +36,7 @@ export const FormContent = styled.div`
 export const CenteredOr = styled.p`
   width: 100%;
   text-align: center;
-  border-bottom: 1px solid ${({ theme }) => theme.palette.themeText.themeGray};
+  border-bottom: 1px dashed ${({ theme }) => theme.palette.themeText.themeGray};
   line-height: 0.1em;
   margin-bottom: 0;
 
@@ -48,4 +48,8 @@ export const CenteredOr = styled.p`
     font-weight: 500;
     text-transform: uppercase;
   }
+`
+
+export const AlreadyHaveAnAccount = styled.p`
+  margin: 3px auto 0;
 `
