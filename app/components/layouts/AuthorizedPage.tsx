@@ -1,9 +1,10 @@
 import { FC } from 'react'
-import styled, { keyframes } from 'styled-components'
-import Router from 'next/router'
-import { useAuth } from '@contextProviders/AuthProvider'
-import FiestaLogo from '@elements/FiestaLogo'
 import Head from 'next/head'
+import Router from 'next/router'
+import FiestaLogo from '@elements/FiestaLogo'
+import styled, { keyframes } from 'styled-components'
+import { useAuth } from '@contextProviders/AuthProvider'
+import { RoleEnum } from 'domainTypes'
 
 const Overlay = styled.div`
   height: 100vh;
@@ -23,7 +24,11 @@ const StyledLogo = styled(FiestaLogo)`
   animation: ${logoMotion} 0.8s linear infinite alternate;
 `
 
-const AuthorizedPage: FC = ({ children }) => {
+interface IProps {
+  roles?: RoleEnum[]
+}
+
+const AuthorizedPage: FC<IProps> = ({ children, roles }) => {
   const auth = useAuth()
 
   const header = (
@@ -40,7 +45,9 @@ const AuthorizedPage: FC = ({ children }) => {
       </Overlay>
     )
 
-  if (!auth.isLoggedIn) {
+  const hasRequiredRole = roles ? auth.isLoggedIn && roles.includes(auth.currentUser.role) : true
+
+  if (!auth.isLoggedIn || !hasRequiredRole) {
     Router.replace(`/login?redirectedFrom=${Router.asPath}`)
     return (
       <Overlay>
