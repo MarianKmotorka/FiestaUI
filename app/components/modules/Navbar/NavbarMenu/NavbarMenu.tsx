@@ -5,11 +5,13 @@ import {
   Brightness2Outlined,
   ExitToAppTwoTone,
   SettingsOutlined,
+  VerifiedUserOutlined,
   WbSunnyTwoTone
 } from '@material-ui/icons'
 
-import { useAppTheme } from '@contextProviders/AppThemeProvider/AppThemeProvider'
+import { RoleEnum } from 'domainTypes'
 import { useAuthorizedUser } from '@contextProviders/AuthProvider'
+import { useAppTheme } from '@contextProviders/AppThemeProvider/AppThemeProvider'
 
 import { Name, StyledAvatar, StyledDivider, StyledMenu, StyledMenuItem } from './NavbarMenu.styled'
 
@@ -63,6 +65,15 @@ const NavbarMenu = ({ anchorEl, onClose }: INavbarMenuProps) => {
           <SettingsOutlined />
         </StyledMenuItem>
       </Link>
+
+      {currentUser.role === RoleEnum.Admin && (
+        <Link href='/admin'>
+          <StyledMenuItem>
+            {'Admin'}
+            <VerifiedUserOutlined />
+          </StyledMenuItem>
+        </Link>
+      )}
 
       <StyledMenuItem onClick={() => logout()}>
         {t('logout')}
