@@ -5,8 +5,9 @@ import useTranslation from 'next-translate/useTranslation'
 import { ExitToAppTwoTone } from '@material-ui/icons'
 
 import { hasAuthProvider } from 'utils/utils'
-import { AuthProviderFlags } from 'domainTypes'
+import { AuthProviderFlags, RoleEnum } from 'domainTypes'
 import useWindowSize from '@hooks/useWindowSize'
+import AdminTab from './Tabs/AdminTab/AdminTab'
 import AppearenceTab from './Tabs/Appearence/Appearence'
 import EditProfileTab from './Tabs/EditProfileTab/EditProfileTab'
 import { useAuthorizedUser } from '@contextProviders/AuthProvider'
@@ -46,6 +47,8 @@ const SettingsTemplate = () => {
             onChange={(_, value) => changeTab(value)}
             orientation='vertical'
           >
+            {currentUser.role === RoleEnum.Admin && <StyledTab value='admin' label='Admin' />}
+
             <StyledTab value='profile' label={t('profile')} />
 
             {hasAuthProvider(currentUser, AuthProviderFlags.EmailAndPassword) && (
@@ -62,6 +65,12 @@ const SettingsTemplate = () => {
       )}
 
       <TabPanelContainer>
+        {currentUser.role === RoleEnum.Admin && (
+          <StyledPanel index='admin' value={currTab} alwaysVisible={maxMedium}>
+            <AdminTab />
+          </StyledPanel>
+        )}
+
         <StyledPanel index='profile' value={currTab} alwaysVisible={maxMedium}>
           <EditProfileTab />
         </StyledPanel>
