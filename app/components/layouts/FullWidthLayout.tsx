@@ -14,17 +14,20 @@ export interface IFullWidthLayoutProps {
   title: string
   forceUnauthorizedNavbar?: true
   transparentNavbar?: true
+  removeNavbarHeightPadding?: true
 }
 
-const Wrapper = styled.div<{ paddingBottom: number; transparentNav: 0 | 1 }>`
-  padding-top: ${({ transparentNav }) => `${transparentNav ? 0 : NAVBAR_HEIGHT}px`};
+const Wrapper = styled.div<{ paddingBottom: number; removeNavbarHeightPadding: 0 | 1 }>`
+  padding-top: ${({ removeNavbarHeightPadding }) =>
+    `${removeNavbarHeightPadding ? 0 : NAVBAR_HEIGHT}px`};
 
   @media screen and (max-width: ${MD}px) {
     padding-bottom: ${({ paddingBottom }) => paddingBottom + 'px'};
   }
 
   @media screen and (max-width: ${SM}px) {
-    padding-top: ${({ transparentNav }) => `${transparentNav ? 0 : NAVBAR_HEIGHT_MOBILE}px`};
+    padding-top: ${({ removeNavbarHeightPadding }) =>
+      `${removeNavbarHeightPadding ? 0 : NAVBAR_HEIGHT_MOBILE}px`};
   }
 `
 
@@ -32,7 +35,8 @@ const FullWidthLayout: FC<IFullWidthLayoutProps> = ({
   children,
   title,
   forceUnauthorizedNavbar,
-  transparentNavbar
+  transparentNavbar,
+  removeNavbarHeightPadding
 }) => {
   // if this causes rerender performance issues, memoize Wrapper upon children
   const { isLoggedIn } = useAuth()
@@ -46,7 +50,7 @@ const FullWidthLayout: FC<IFullWidthLayoutProps> = ({
       <Navbar forceUnauthorizedNavbar={forceUnauthorizedNavbar} transparent={transparentNavbar} />
 
       <Wrapper
-        transparentNav={transparentNavbar ? 1 : 0}
+        removeNavbarHeightPadding={removeNavbarHeightPadding ? 1 : 0}
         paddingBottom={isLoggedIn && !forceUnauthorizedNavbar ? BOTTOM_NAVIGATION_HEIGHT : 0}
       >
         {children}
