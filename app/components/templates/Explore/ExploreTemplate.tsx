@@ -1,14 +1,14 @@
 import { Explore } from '@material-ui/icons'
 import { useInfiniteQuery } from 'react-query'
-import { CircularProgress } from '@material-ui/core'
 import useTranslation from 'next-translate/useTranslation'
 
 import api from '@api/HttpClient'
 import { IEventDto } from 'domainTypes'
 import Observer from '@elements/Observer'
+import FetchHandler from '@elements/FetchHandler'
 import EventCard from '@elements/EventCard/EventCard'
-import FetchError from '@elements/FetchError/FetchError'
 import { PageSubTitle, PageTitle } from '@elements/PageTitle'
+import EventCardSkeleton from '@elements/EventCard/EventCardSkeleton'
 import { IApiError, IQueryDocument, IQueryResponse } from '@api/types'
 
 import { Wrapper, ExploreGrid } from './ExploreTemplate.styled'
@@ -21,6 +21,8 @@ interface IExploreEvent extends IEventDto {
   capacity: number
   attendeesCount: number
 }
+
+const loadingCards = Array.from(Array(5).keys()).map(x => <EventCardSkeleton key={x} />)
 
 const ExploreTemplate = () => {
   const { t } = useTranslation('common')
@@ -46,11 +48,6 @@ const ExploreTemplate = () => {
     }
   )
 
-  if (isLoading) return <CircularProgress />
-  if (error) return <FetchError error={error} />
-
-  const { pages } = data!
-
   return (
     <Wrapper>
       <PageTitle>
@@ -63,43 +60,45 @@ const ExploreTemplate = () => {
       </PageSubTitle>
 
       <ExploreGrid>
-        {pages.map(page =>
-          page.entries.map(
-            ({
-              id,
-              startDate,
-              description,
-              attendeesCount,
-              capacity,
-              name,
-              bannerUrl,
-              location,
-              organizerUsername,
-              organizerId,
-              externalLink
-            }) => (
-              <EventCard
-                key={id}
-                id={id}
-                name={name}
-                capacity={capacity}
-                location={location}
-                externalLink={externalLink}
-                bannerUrl={bannerUrl}
-                startDate={startDate}
-                description={description}
-                organizerId={organizerId}
-                attendeesCount={attendeesCount}
-                organizerUsername={organizerUsername}
-              />
+        <FetchHandler isLoading={isLoading} error={error} loadingComponent={loadingCards}>
+          {data?.pages.map(page =>
+            page.entries.map(
+              ({
+                id,
+                startDate,
+                description,
+                attendeesCount,
+                capacity,
+                name,
+                bannerUrl,
+                location,
+                organizerUsername,
+                organizerId,
+                externalLink
+              }) => (
+                <EventCard
+                  key={id}
+                  id={id}
+                  name={name}
+                  capacity={capacity}
+                  location={location}
+                  externalLink={externalLink}
+                  bannerUrl={bannerUrl}
+                  startDate={startDate}
+                  description={description}
+                  organizerId={organizerId}
+                  attendeesCount={attendeesCount}
+                  organizerUsername={organizerUsername}
+                />
+              )
             )
-          )
-        )}
+          )}
+
+          {isFetching && loadingCards}
+        </FetchHandler>
       </ExploreGrid>
 
       <Observer disabled={isFetching || !hasNextPage} callback={fetchNextPage} />
-
-      {isFetching && <CircularProgress />}
     </Wrapper>
   )
 }
