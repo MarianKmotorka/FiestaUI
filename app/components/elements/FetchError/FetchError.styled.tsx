@@ -7,7 +7,7 @@ export const ErrorCard = styled(Card)`
   left: 50%;
   transform: translate(-50%, -50%);
   min-width: 300px;
-
+  z-index: 999;
   padding: 30px;
 
   h3 {
