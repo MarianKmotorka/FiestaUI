@@ -61,40 +61,42 @@ const ExploreTemplate = () => {
 
       <ExploreGrid>
         <FetchHandler isLoading={isLoading} error={error} loadingComponent={loadingCards}>
-          {data?.pages.map(page =>
-            page.entries.map(
-              ({
-                id,
-                startDate,
-                description,
-                attendeesCount,
-                capacity,
-                name,
-                bannerUrl,
-                location,
-                organizerUsername,
-                organizerId,
-                externalLink
-              }) => (
-                <EventCard
-                  key={id}
-                  id={id}
-                  name={name}
-                  capacity={capacity}
-                  location={location}
-                  externalLink={externalLink}
-                  bannerUrl={bannerUrl}
-                  startDate={startDate}
-                  description={description}
-                  organizerId={organizerId}
-                  attendeesCount={attendeesCount}
-                  organizerUsername={organizerUsername}
-                />
+          <>
+            {data?.pages.map(page =>
+              page.entries.map(
+                ({
+                  id,
+                  startDate,
+                  description,
+                  attendeesCount,
+                  capacity,
+                  name,
+                  bannerUrl,
+                  location,
+                  organizerUsername,
+                  organizerId,
+                  externalLink
+                }) => (
+                  <EventCard
+                    key={id}
+                    id={id}
+                    name={name}
+                    capacity={capacity}
+                    location={location}
+                    externalLink={externalLink}
+                    bannerUrl={bannerUrl}
+                    startDate={startDate}
+                    description={description}
+                    organizerId={organizerId}
+                    attendeesCount={attendeesCount}
+                    organizerUsername={organizerUsername}
+                  />
+                )
               )
-            )
-          )}
+            )}
 
-          {isFetching && loadingCards}
+            {isFetching && loadingCards}
+          </>
         </FetchHandler>
       </ExploreGrid>
 

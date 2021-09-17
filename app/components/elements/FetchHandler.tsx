@@ -6,7 +6,7 @@ import FetchError from './FetchError/FetchError'
 interface IFetchHandlerProps<T> {
   data?: T
   isLoading: boolean
-  children: JSX.Element | ((data: T) => JSX.Element)
+  children: JSX.Element | JSX.Element[] | ((data: T) => JSX.Element)
   error: IApiError | null
   loadingComponent?: JSX.Element | JSX.Element[]
 }
@@ -20,7 +20,7 @@ const FetchHandler = <T extends any>({
 }: IFetchHandlerProps<T>): JSX.Element => {
   if (isLoading) return (loadingComponent as any) || <CircularProgress />
   if (error) return <FetchError error={error} />
-  return typeof children === 'function' ? children(data!) : children
+  return typeof children === 'function' ? children(data!) : (children as any)
 }
 
 export default FetchHandler
