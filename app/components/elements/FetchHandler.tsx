@@ -1,18 +1,26 @@
-import React, { FC } from 'react'
+import React from 'react'
 import { IApiError } from '@api/types'
 import { CircularProgress } from '@material-ui/core'
 import FetchError from './FetchError/FetchError'
 
-interface IFetchHandlerProps {
+interface IFetchHandlerProps<T> {
+  data?: T
   isLoading: boolean
+  children: JSX.Element | ((data: T) => JSX.Element)
   error: IApiError | null
   loadingComponent?: JSX.Element | JSX.Element[]
 }
 
-const FetchHandler: FC<IFetchHandlerProps> = ({ isLoading, loadingComponent, children, error }) => {
-  if (isLoading) return loadingComponent || <CircularProgress />
+const FetchHandler = <T extends any>({
+  isLoading,
+  loadingComponent,
+  children,
+  data,
+  error
+}: IFetchHandlerProps<T>): JSX.Element => {
+  if (isLoading) return (loadingComponent as any) || <CircularProgress />
   if (error) return <FetchError error={error} />
-  return children as any
+  return typeof children === 'function' ? children(data!) : children
 }
 
 export default FetchHandler

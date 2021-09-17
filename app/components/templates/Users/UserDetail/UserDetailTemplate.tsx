@@ -36,6 +36,8 @@ import {
   NameAndFriendsWrapper,
   TopSection
 } from './UserDetailTemplate.styled'
+import UserDetailSkeleton from './UserDetailSkeleton'
+import FetchHandler from '@elements/FetchHandler'
 
 interface IUserDetailTemplateProps {
   userId: string
@@ -52,82 +54,87 @@ const UserDetailTemplate = ({ userId }: IUserDetailTemplateProps) => {
     { enabled: !auth.isLoading }
   )
 
-  if (isLoading || isIdle) return <CircularProgress />
-  if (error) return <FetchError error={error} />
-
   const isCurrUser = auth.isLoggedIn ? auth.currentUser.id === userId : false
-  const user = data!
 
   return (
     <>
-      <TopSection>
-        <AvatarWrapper>
-          <Avatar src={user.pictureUrl} />
-        </AvatarWrapper>
+      <FetchHandler
+        data={data}
+        error={error}
+        isLoading={isLoading || isIdle}
+        loadingComponent={<UserDetailSkeleton />}
+      >
+        {user => (
+          <TopSection>
+            <AvatarWrapper>
+              <Avatar src={user.pictureUrl} />
+            </AvatarWrapper>
 
-        <NameAndButtonsAndBioWrapper>
-          <NameAndButtonsWrapper>
-            <NameAndFriendsWrapper>
-              <h1>{user.username}</h1>
-              <p>{user.fullName}</p>
+            <NameAndButtonsAndBioWrapper>
+              <NameAndButtonsWrapper>
+                <NameAndFriendsWrapper>
+                  <h1>{user.username}</h1>
+                  <p>{user.fullName}</p>
 
-              <AuthCheck
-                fallback={loginUrl => (
-                  <Link href={loginUrl}>
-                    <FriendsWrapper>
+                  <AuthCheck
+                    fallback={loginUrl => (
+                      <Link href={loginUrl}>
+                        <FriendsWrapper>
+                          <p>
+                            {t('friends')}: <span>{user.numberOfFriends}</span>
+                          </p>
+                        </FriendsWrapper>
+                      </Link>
+                    )}
+                  >
+                    <FriendsWrapper
+                      onClick={() => {
+                        auth.isLoggedIn ? setSearchOpen(true) : null
+                      }}
+                    >
                       <p>
                         {t('friends')}: <span>{user.numberOfFriends}</span>
                       </p>
                     </FriendsWrapper>
-                  </Link>
-                )}
-              >
-                <FriendsWrapper
-                  onClick={() => {
-                    auth.isLoggedIn ? setSearchOpen(true) : null
-                  }}
-                >
-                  <p>
-                    {t('friends')}: <span>{user.numberOfFriends}</span>
-                  </p>
-                </FriendsWrapper>
-              </AuthCheck>
-            </NameAndFriendsWrapper>
+                  </AuthCheck>
+                </NameAndFriendsWrapper>
 
-            <ButtonsWrapper>
-              {isCurrUser && (
-                <Link href='/settings?tab=profile'>
-                  <Button variant='outlined' color='secondary' endIcon={<Edit />}>
-                    {t('edit')}
-                  </Button>
-                </Link>
+                <ButtonsWrapper>
+                  {isCurrUser && (
+                    <Link href='/settings?tab=profile'>
+                      <Button variant='outlined' color='secondary' endIcon={<Edit />}>
+                        {t('edit')}
+                      </Button>
+                    </Link>
+                  )}
+
+                  {!isCurrUser && (
+                    <FriendButton
+                      userId={user.id}
+                      friendStatus={user.friendStatus}
+                      onFriendAdded={handleFriendAdded}
+                      onFriendRemoved={handleFriendRemoved}
+                      onFriendRequestUnsent={handleFriendRequestUnsent}
+                      onFriendRequestAccepted={handleFriendRequestAccepted}
+                      onFriendRequestRejected={handleFriendRequestRejected}
+                    />
+                  )}
+                </ButtonsWrapper>
+              </NameAndButtonsWrapper>
+
+              {user.bio && (
+                <Box marginTop='20px'>
+                  <CollapseContainer>
+                    <BioText>
+                      <Linkify>{user.bio}</Linkify>
+                    </BioText>
+                  </CollapseContainer>
+                </Box>
               )}
-
-              {!isCurrUser && (
-                <FriendButton
-                  userId={user.id}
-                  friendStatus={user.friendStatus}
-                  onFriendAdded={handleFriendAdded}
-                  onFriendRemoved={handleFriendRemoved}
-                  onFriendRequestUnsent={handleFriendRequestUnsent}
-                  onFriendRequestAccepted={handleFriendRequestAccepted}
-                  onFriendRequestRejected={handleFriendRequestRejected}
-                />
-              )}
-            </ButtonsWrapper>
-          </NameAndButtonsWrapper>
-
-          {user.bio && (
-            <Box marginTop='20px'>
-              <CollapseContainer>
-                <BioText>
-                  <Linkify>{user.bio}</Linkify>
-                </BioText>
-              </CollapseContainer>
-            </Box>
-          )}
-        </NameAndButtonsAndBioWrapper>
-      </TopSection>
+            </NameAndButtonsAndBioWrapper>
+          </TopSection>
+        )}
+      </FetchHandler>
 
       <Box margin='30px auto'>
         <Divider />
