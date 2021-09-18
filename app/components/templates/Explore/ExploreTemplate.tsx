@@ -1,4 +1,5 @@
 import { Explore } from '@material-ui/icons'
+import { useEffect, useState } from 'react'
 import { useInfiniteQuery } from 'react-query'
 import useTranslation from 'next-translate/useTranslation'
 
@@ -28,6 +29,7 @@ const loadingCards = Array.from(Array(5).keys()).map(x => <EventCardSkeleton key
 
 const ExploreTemplate = () => {
   const { t } = useTranslation('common')
+  const [fetchingBecauseOfFilterChange, setFetchingBecauseOfFilterChange] = useState(false)
   const [filter, setFilter] = useLocalStorage<IEventsFilter>('exploreEventsFilter', {
     onlineFilter: OnlineFilter.All
   })
@@ -55,6 +57,15 @@ const ExploreTemplate = () => {
     }
   )
 
+  useEffect(() => {
+    if (fetchingBecauseOfFilterChange && !isFetching) setFetchingBecauseOfFilterChange(false)
+  }, [isFetching, fetchingBecauseOfFilterChange])
+
+  const handleFilterChanged = (newFilter: IEventsFilter) => {
+    setFetchingBecauseOfFilterChange(true)
+    setFilter(newFilter)
+  }
+
   return (
     <Wrapper>
       <PageTitle>
@@ -64,10 +75,18 @@ const ExploreTemplate = () => {
 
       <PageSubTitle>{t('hereYouCanFindAllEventsYouMightBeInterestedIn')}</PageSubTitle>
 
-      <EventsFilter filter={filter} onChange={setFilter} disabled={isLoading || isFetching} />
+      <EventsFilter
+        filter={filter}
+        onChange={handleFilterChanged}
+        disabled={isLoading || isFetching}
+      />
 
       <ExploreGrid>
-        <FetchHandler isLoading={isLoading} error={error} loadingComponent={loadingCards}>
+        <FetchHandler
+          isLoading={isLoading || fetchingBecauseOfFilterChange}
+          error={error}
+          loadingComponent={loadingCards}
+        >
           <>
             {data?.pages.map(page =>
               page.entries.map(
