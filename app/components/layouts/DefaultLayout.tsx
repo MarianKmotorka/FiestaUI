@@ -5,9 +5,9 @@ import FullWidthLayout, { IFullWidthLayoutProps } from './FullWidthLayout'
 
 interface IDefaultLayoutProps extends IFullWidthLayoutProps {}
 
-const DefaultLayout: FC<IDefaultLayoutProps> = ({ children, title, forceUnauthorizedNavbar }) => {
+const DefaultLayout: FC<IDefaultLayoutProps> = ({ children, ...rest }) => {
   return (
-    <FullWidthLayout title={title} forceUnauthorizedNavbar={forceUnauthorizedNavbar}>
+    <FullWidthLayout {...rest}>
       <Container>{children}</Container>
     </FullWidthLayout>
   )

@@ -1,8 +1,12 @@
 import { FC } from 'react'
 import { Slide, useScrollTrigger } from '@material-ui/core'
 
-const HideOnScroll: FC = ({ children }) => {
-  const trigger = useScrollTrigger()
+interface IProps {
+  disableHysteresis?: boolean
+}
+
+const HideOnScroll: FC<IProps> = ({ children, disableHysteresis }) => {
+  const trigger = useScrollTrigger({ disableHysteresis })
 
   return (
     <Slide appear={false} direction='down' in={!trigger}>
