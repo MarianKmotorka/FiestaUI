@@ -59,7 +59,6 @@ const UserDetailSkeleton = () => {
 
           <ButtonsWrapper>
             <Skeleton variant='rect' width='120px' height='36px' />
-            <Skeleton variant='rect' width='120px' height='36px' />
           </ButtonsWrapper>
         </NameAndButtonsWrapper>
 
