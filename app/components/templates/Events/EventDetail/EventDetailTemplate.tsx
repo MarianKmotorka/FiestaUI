@@ -3,7 +3,7 @@ import { lowerFirst } from 'lodash'
 import { useEffect, useState } from 'react'
 import { useQuery, useQueryClient } from 'react-query'
 import useTranslation from 'next-translate/useTranslation'
-import { Box, Button as MuiButton, Chip, CircularProgress } from '@material-ui/core'
+import { Box, Button as MuiButton, Chip } from '@material-ui/core'
 import {
   AccountBox,
   DeleteTwoTone,
@@ -36,6 +36,7 @@ import DeleteEventDialog from './DeleteEventDialog'
 import { AccessibilityTypeEnum } from 'domainTypes'
 import { ILocationDto } from '@utils/googleUtils'
 import EventDetailTabs from './Tabs/EventDetailTabs'
+import EventDetailSkeleton from './EventDetailSkeleton'
 import FetchError from '@elements/FetchError/FetchError'
 import { useAuth } from '@contextProviders/AuthProvider'
 import InvitationPopup from './InvitationPopup/InvitationPopup'
@@ -52,7 +53,6 @@ import {
   Organizer,
   BlurredImageWrapper
 } from './EventDetailTemplate.styled'
-import { NAVBAR_HEIGHT } from '@modules/Navbar/Navbar.styled'
 
 interface IProps {
   eventId: string
@@ -103,14 +103,7 @@ const EventDetailTemplate = ({ eventId }: IProps) => {
     queryClient.invalidateQueries(['events', eventId, 'comments', 'query'])
   }, [eventId, queryClient])
 
-  if (isLoading || isIdle)
-    return (
-      <Container>
-        <Box marginTop={`${NAVBAR_HEIGHT}px`}>
-          <CircularProgress />
-        </Box>
-      </Container>
-    )
+  if (isLoading || isIdle) return <EventDetailSkeleton />
   if (error) return <FetchError error={error} />
 
   const event = data!
