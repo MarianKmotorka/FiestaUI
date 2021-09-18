@@ -10,3 +10,15 @@ export const ExploreGrid = styled.div`
   grid-gap: 50px;
   justify-items: center;
 `
+
+export const FiltersWrapper = styled.div`
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-bottom: 50px;
+
+  hr {
+    height: 30px;
+  }
+`

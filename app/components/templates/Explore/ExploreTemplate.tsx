@@ -6,10 +6,12 @@ import api from '@api/HttpClient'
 import { IEventDto } from 'domainTypes'
 import Observer from '@elements/Observer'
 import FetchHandler from '@elements/FetchHandler'
+import useLocalStorage from '@hooks/useLocalStorage'
 import EventCard from '@elements/EventCard/EventCard'
 import { PageSubTitle, PageTitle } from '@elements/PageTitle'
 import EventCardSkeleton from '@elements/EventCard/EventCardSkeleton'
 import { IApiError, IQueryDocument, IQueryResponse } from '@api/types'
+import EventsFilter, { IEventsFilter, OnlineFilter } from './EventsFilter'
 
 import { Wrapper, ExploreGrid } from './ExploreTemplate.styled'
 
@@ -26,18 +28,23 @@ const loadingCards = Array.from(Array(5).keys()).map(x => <EventCardSkeleton key
 
 const ExploreTemplate = () => {
   const { t } = useTranslation('common')
+  const [filter, setFilter] = useLocalStorage<IEventsFilter>('exploreEventsFilter', {
+    onlineFilter: OnlineFilter.All
+  })
+
   const { data, isFetching, isLoading, error, hasNextPage, fetchNextPage } = useInfiniteQuery<
     IQueryResponse<IExploreEvent>,
     IApiError
   >(
-    ['events', 'explore'],
+    ['events', 'explore', filter],
     async ({ pageParam = 0 }) => {
       const queryDocument: IQueryDocument = {
         page: pageParam,
         pageSize: 20
       }
       const res = await api.post('/events/explore', {
-        queryDocument
+        queryDocument,
+        ...filter
       })
       return res.data
     },
@@ -55,9 +62,9 @@ const ExploreTemplate = () => {
         <Explore />
       </PageTitle>
 
-      <PageSubTitle>
-        Here you can find events from all over the world that you might be interested in.
-      </PageSubTitle>
+      <PageSubTitle>{t('hereYouCanFindAllEventsYouMightBeInterestedIn')}</PageSubTitle>
+
+      <EventsFilter filter={filter} onChange={setFilter} disabled={isLoading || isFetching} />
 
       <ExploreGrid>
         <FetchHandler isLoading={isLoading} error={error} loadingComponent={loadingCards}>
