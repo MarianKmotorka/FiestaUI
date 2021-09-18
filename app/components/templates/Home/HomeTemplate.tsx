@@ -17,19 +17,21 @@ const HomeTemplate = () => {
         Welcome {currentUser.firstName}! What events are you attending next ?
       </PageSubTitle>
 
-      <Link href='/events/create-event'>
-        <Button startIcon={<Add />} variant='outlined' size='large'>
-          {t('createEvent')}
-        </Button>
-      </Link>
+      <div style={{ marginTop: '30px' }}>
+        <Link href='/events/create-event'>
+          <Button startIcon={<Add />} variant='outlined' size='large'>
+            {t('createEvent')}
+          </Button>
+        </Link>
 
-      <span style={{ padding: '0 10px' }}>{t('or').toUpperCase()}</span>
+        <span style={{ padding: '0 10px' }}>{t('or').toUpperCase()}</span>
 
-      <Link href='/explore'>
-        <Button variant='outlined' startIcon={<Explore />} size='large'>
-          {t('explore')}
-        </Button>
-      </Link>
+        <Link href='/explore'>
+          <Button variant='outlined' startIcon={<Explore />} size='large'>
+            {t('explore')}
+          </Button>
+        </Link>
+      </div>
     </Wrapper>
   )
 }

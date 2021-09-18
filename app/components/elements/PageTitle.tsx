@@ -11,5 +11,4 @@ export const PageTitle = styled.h1`
 export const PageSubTitle = styled.h2`
   font-weight: 300;
   font-size: 1.3rem;
-  margin-bottom: 40px;
 `

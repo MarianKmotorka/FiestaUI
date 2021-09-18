@@ -9,6 +9,7 @@ export const ExploreGrid = styled.div`
   grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
   grid-gap: 50px;
   justify-items: center;
+  margin-top: 40px;
 `
 
 export const FiltersWrapper = styled.div`
@@ -16,9 +17,15 @@ export const FiltersWrapper = styled.div`
   align-items: center;
   flex-wrap: wrap;
   gap: 8px;
-  margin-bottom: 50px;
+  margin-top: 10px;
+  padding: 10px 0;
 
   hr {
     height: 30px;
   }
+
+  position: sticky;
+  background-color: ${({ theme }) => theme.palette.background.default};
+  z-index: 5;
+  top: 0px;
 `

@@ -39,9 +39,10 @@ import {
 interface INavbarProps {
   forceUnauthorizedNavbar?: true
   transparent?: true
+  disableHysteresis?: boolean
 }
 
-const Navbar = ({ forceUnauthorizedNavbar, transparent }: INavbarProps) => {
+const Navbar = ({ forceUnauthorizedNavbar, transparent, disableHysteresis }: INavbarProps) => {
   const auth = useAuth()
   const router = useRouter()
   const { t } = useTranslation('common')
@@ -125,7 +126,7 @@ const Navbar = ({ forceUnauthorizedNavbar, transparent }: INavbarProps) => {
   )
 
   return (
-    <HideOnScroll>
+    <HideOnScroll disableHysteresis={disableHysteresis}>
       <StyledAppBar elevation={0} transparent={transparent ? 1 : 0}>
         <StyledContainer>
           <Logo onClick={() => router.push(auth.isLoggedIn ? '/home' : '/')} />

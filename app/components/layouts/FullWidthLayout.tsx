@@ -15,6 +15,7 @@ export interface IFullWidthLayoutProps {
   forceUnauthorizedNavbar?: true
   transparentNavbar?: true
   removeNavbarHeightPadding?: true
+  disableNavbarHysteresis?: boolean
 }
 
 const Wrapper = styled.div<{ paddingBottom: number; removeNavbarHeightPadding: 0 | 1 }>`
@@ -36,7 +37,8 @@ const FullWidthLayout: FC<IFullWidthLayoutProps> = ({
   title,
   forceUnauthorizedNavbar,
   transparentNavbar,
-  removeNavbarHeightPadding
+  removeNavbarHeightPadding,
+  disableNavbarHysteresis
 }) => {
   // if this causes rerender performance issues, memoize Wrapper upon children
   const { isLoggedIn } = useAuth()
@@ -47,7 +49,11 @@ const FullWidthLayout: FC<IFullWidthLayoutProps> = ({
         <title>{title}</title>
       </Head>
 
-      <Navbar forceUnauthorizedNavbar={forceUnauthorizedNavbar} transparent={transparentNavbar} />
+      <Navbar
+        forceUnauthorizedNavbar={forceUnauthorizedNavbar}
+        transparent={transparentNavbar}
+        disableHysteresis={disableNavbarHysteresis}
+      />
 
       <Wrapper
         removeNavbarHeightPadding={removeNavbarHeightPadding ? 1 : 0}

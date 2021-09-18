@@ -8,7 +8,7 @@ const Explore = () => {
 
   return (
     <AuthorizedPage>
-      <DefaultLayout title={`${t('explore')} • Fiesta`}>
+      <DefaultLayout title={`${t('explore')} • Fiesta`} disableNavbarHysteresis>
         <ExploreTemplate />
       </DefaultLayout>
     </AuthorizedPage>
