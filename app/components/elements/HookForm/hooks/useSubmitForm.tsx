@@ -20,6 +20,7 @@ export function useSubmitForm<TValues, TResponse = any>(
 ) {
   const { t } = useTranslation('common')
   const [submitting, setSubmitting] = useState(false)
+  const [success, setSuccess] = useState(false)
 
   const onSubmit = async (values: TValues, form: UseFormMethods<TValues>) => {
     const {
@@ -49,6 +50,7 @@ export function useSubmitForm<TValues, TResponse = any>(
         isSubmitted: true,
         submitCount: true
       })
+      setSuccess(true)
       successCallback?.(response.data, values, form)
     } catch (err) {
       const errors = (err as IApiError).data.errorDetails
@@ -63,5 +65,5 @@ export function useSubmitForm<TValues, TResponse = any>(
     setSubmitting(false)
   }
 
-  return { onSubmit, submitting }
+  return { onSubmit, submitting, success }
 }

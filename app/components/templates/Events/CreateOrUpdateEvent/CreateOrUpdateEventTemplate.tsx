@@ -61,7 +61,7 @@ const CreateOrUpdateEvent = ({ event, eventFetching, fetchError }: IProps) => {
       shallow: true
     })
 
-  const { onSubmit, submitting } = useSubmitForm<ICreateEventFormValues, { id: string }>({
+  const { onSubmit, submitting, success } = useSubmitForm<ICreateEventFormValues, { id: string }>({
     url: event ? `/events/${event.id}` : '/events',
     method: event ? 'patch' : 'post',
     canSubmit: step === stepIndexes.reviewStep,
@@ -114,7 +114,11 @@ const CreateOrUpdateEvent = ({ event, eventFetching, fetchError }: IProps) => {
         </Hidden>
 
         <Hidden hidden={step !== stepIndexes.reviewStep}>
-          <ReviewStep prevStep={prevStep} submitting={submitting} isUpdateEvent={!!event} />
+          <ReviewStep
+            prevStep={prevStep}
+            submitting={submitting || success} //Note: show loading even after submitted when redirect takes bit longer
+            isUpdateEvent={!!event}
+          />
         </Hidden>
       </Form>
     </Wrapper>

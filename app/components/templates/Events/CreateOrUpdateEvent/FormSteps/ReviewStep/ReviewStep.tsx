@@ -25,7 +25,6 @@ interface IReviewStepProps {
 const ReviewStep = ({ isUpdateEvent, submitting, prevStep }: IReviewStepProps) => {
   const { getValues, trigger, errors } = useFormContext<ICreateEventFormValues>()
   const { t } = useTranslation('common')
-  const values = getValues()
   const {
     location,
     name,
@@ -35,7 +34,7 @@ const ReviewStep = ({ isUpdateEvent, submitting, prevStep }: IReviewStepProps) =
     accessibilityType,
     description,
     externalLink
-  } = values
+  } = getValues()
 
   useEffect(() => {
     redirectToStepByErrorFieldName(keys(errors), prevStep)
