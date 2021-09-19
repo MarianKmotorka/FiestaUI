@@ -45,21 +45,21 @@ const UserDetailTabs = ({ userId, isCurrentUser }: IUserDetailTabsProps) => {
         indicatorColor='primary'
         variant='scrollable'
       >
-        <Tab value='attendedEvents' label={t('attendedEvents')} />
         <Tab value='organizedEvents' label={t('organizedEvents')} />
+        <Tab value='attendedEvents' label={t('attendedEvents')} />
         {isCurrentUser && <Tab value='invitations' label={t('invitations')} />}
       </Tabs>
 
       <Box minHeight='400px'>
-        <StyledPanel index='attendedEvents' value={currTab}>
-          <AuthCheck>
-            <AttendedEvents userId={userId} isCurrentUser={isCurrentUser} />
-          </AuthCheck>
-        </StyledPanel>
-
         <StyledPanel index='organizedEvents' value={currTab}>
           <AuthCheck>
             <OrganizedEvents userId={userId} isCurrentUser={isCurrentUser} />
+          </AuthCheck>
+        </StyledPanel>
+
+        <StyledPanel index='attendedEvents' value={currTab}>
+          <AuthCheck>
+            <AttendedEvents userId={userId} isCurrentUser={isCurrentUser} />
           </AuthCheck>
         </StyledPanel>
 
