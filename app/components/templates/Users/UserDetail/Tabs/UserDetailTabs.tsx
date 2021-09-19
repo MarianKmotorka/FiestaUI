@@ -19,7 +19,7 @@ interface IUserDetailTabsProps {
 const UserDetailTabs = ({ userId, isCurrentUser }: IUserDetailTabsProps) => {
   const { t } = useTranslation('common')
   const router = useRouter()
-  const [currTab, setCurrTab] = useState((router.query.tab as string) || 'attendedEvents')
+  const [currTab, setCurrTab] = useState((router.query.tab as string) || 'organizedEvents')
   const queryClient = useQueryClientPlus()
 
   useEffect(() => {
