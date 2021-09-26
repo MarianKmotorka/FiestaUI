@@ -1,3 +1,4 @@
+import { memo } from 'react'
 import moment from 'moment'
 import Link from 'next/link'
 import Linkify from '@elements/Linkify'
@@ -36,76 +37,77 @@ interface IEventCardProps {
   organizerId: string
 }
 
-const EventCard = ({
-  id,
-  startDate,
-  description,
-  attendeesCount,
-  capacity,
-  name,
-  bannerUrl,
-  location,
-  organizerUsername,
-  organizerId,
-  externalLink
-}: IEventCardProps) => {
-  const { t } = useTranslation('common')
+const EventCard = memo(
+  ({
+    id,
+    startDate,
+    description,
+    attendeesCount,
+    capacity,
+    name,
+    bannerUrl,
+    location,
+    organizerUsername,
+    organizerId,
+    externalLink
+  }: IEventCardProps) => {
+    const { t } = useTranslation('common')
+    return (
+      <CardWrapper>
+        <TopWrapper>
+          <Link href={`/events/${id}`}>
+            <BannerWrapper>
+              <img className='banner' src={bannerUrl || '/EventDefaultBanner.png'} alt='banner' />
+            </BannerWrapper>
+          </Link>
+        </TopWrapper>
 
-  return (
-    <CardWrapper>
-      <TopWrapper>
-        <Link href={`/events/${id}`}>
-          <BannerWrapper>
-            <img className='banner' src={bannerUrl || '/EventDefaultBanner.png'} alt='banner' />
-          </BannerWrapper>
-        </Link>
-      </TopWrapper>
+        <BottomWrapper>
+          <Link href={`/events/${id}`}>
+            <StartDate className='start-date-avatar' data-month={moment(startDate).format('MMM')}>
+              <span>{new Date(startDate).getDate()}</span>
+              <ChevronRightRounded />
+            </StartDate>
+          </Link>
 
-      <BottomWrapper>
-        <Link href={`/events/${id}`}>
-          <StartDate className='start-date-avatar' data-month={moment(startDate).format('MMM')}>
-            <span>{new Date(startDate).getDate()}</span>
-            <ChevronRightRounded />
-          </StartDate>
-        </Link>
+          <h3>
+            <span>{name[0]}</span>
+            {name.slice(-name.length + 1)}
+          </h3>
 
-        <h3>
-          <span>{name[0]}</span>
-          {name.slice(-name.length + 1)}
-        </h3>
-
-        <div className='event-info'>
-          <p>
-            <PersonOutlined />
-            <Link href={`/users/${organizerId}`}>
-              <span className='username'>{organizerUsername}</span>
-            </Link>
-          </p>
-          <p>
-            <PeopleOutline />
-            {attendeesCount}/{capacity}
-          </p>
-          <p>
-            <Schedule />
-            {toLocalTime(startDate, 'DD MMMM yyyy')}
-          </p>
-
-          {location && (
+          <div className='event-info'>
             <p>
-              <LocationOnOutlined />
-              {location}
+              <PersonOutlined />
+              <Link href={`/users/${organizerId}`}>
+                <span className='username'>{organizerUsername}</span>
+              </Link>
             </p>
-          )}
+            <p>
+              <PeopleOutline />
+              {attendeesCount}/{capacity}
+            </p>
+            <p>
+              <Schedule />
+              {toLocalTime(startDate, 'DD MMMM yyyy')}
+            </p>
 
-          {externalLink && <Chip icon={<LiveTv fontSize='small' />} label={t('online')} />}
+            {location && (
+              <p>
+                <LocationOnOutlined />
+                {location}
+              </p>
+            )}
 
-          <p className='event-description'>
-            <Linkify>{description}</Linkify>
-          </p>
-        </div>
-      </BottomWrapper>
-    </CardWrapper>
-  )
-}
+            {externalLink && <Chip icon={<LiveTv fontSize='small' />} label={t('online')} />}
+
+            <p className='event-description'>
+              <Linkify>{description}</Linkify>
+            </p>
+          </div>
+        </BottomWrapper>
+      </CardWrapper>
+    )
+  }
+)
 
 export default EventCard
