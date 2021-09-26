@@ -1,20 +1,21 @@
 import { Explore } from '@material-ui/icons'
 import { useEffect, useState } from 'react'
-import { useInfiniteQuery } from 'react-query'
+import { useInfiniteQuery, useQueryClient } from 'react-query'
 import useTranslation from 'next-translate/useTranslation'
 
 import api from '@api/HttpClient'
 import { IEventDto } from 'domainTypes'
 import Observer from '@elements/Observer'
 import FetchHandler from '@elements/FetchHandler'
+import NothingFound from '@elements/NothingFound'
 import useLocalStorage from '@hooks/useLocalStorage'
 import EventCard from '@elements/EventCard/EventCard'
 import { PageSubTitle, PageTitle } from '@elements/PageTitle'
 import EventCardSkeleton from '@elements/EventCard/EventCardSkeleton'
 import { IApiError, IQueryDocument, IQueryResponse } from '@api/types'
-import EventsFilter, { IEventsFilter, OnlineFilter } from './EventsFilter'
+import EventsFilter, { IEventsFilter, OnlineFilter } from './EventsFilter/EventsFilter'
 
-import { Wrapper, ExploreGrid } from './ExploreTemplate.styled'
+import { Wrapper, ExploreGrid, NothingFoundWrapper } from './ExploreTemplate.styled'
 
 interface IExploreEvent extends IEventDto {
   organizerPictureUrl?: string
@@ -29,6 +30,7 @@ const loadingCards = Array.from(Array(5).keys()).map(x => <EventCardSkeleton key
 
 const ExploreTemplate = () => {
   const { t } = useTranslation('common')
+  const queryClient = useQueryClient()
   const [fetchingBecauseOfFilterChange, setFetchingBecauseOfFilterChange] = useState(false)
   const [filter, setFilter] = useLocalStorage<IEventsFilter>('exploreEventsFilter', {
     onlineFilter: OnlineFilter.All
@@ -62,7 +64,10 @@ const ExploreTemplate = () => {
   }, [isFetching, fetchingBecauseOfFilterChange])
 
   const handleFilterChanged = (newFilter: IEventsFilter) => {
-    setFetchingBecauseOfFilterChange(true)
+    const isNewFilterResultCached = !!queryClient.getQueryData(['events', 'explore', newFilter])
+    if (!isNewFilterResultCached) {
+      setFetchingBecauseOfFilterChange(true)
+    }
     setFilter(newFilter)
   }
 
@@ -125,6 +130,12 @@ const ExploreTemplate = () => {
           </>
         </FetchHandler>
       </ExploreGrid>
+
+      {!data?.pages[0]?.totalEntries && !isLoading && !fetchingBecauseOfFilterChange && (
+        <NothingFoundWrapper>
+          <NothingFound subText={t('thereAreNoEventMatchingFilters')} />
+        </NothingFoundWrapper>
+      )}
 
       <Observer disabled={isFetching || !hasNextPage} callback={fetchNextPage} />
     </Wrapper>

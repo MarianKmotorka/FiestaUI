@@ -16,22 +16,27 @@ export const Wrapper = styled.div`
   }
   h1 {
     color: ${({ theme }) => theme.palette.themeText.themeBlack};
+    font-weight: 500;
   }
   p {
-    font-weight: 500;
+    font-weight: 400;
     margin: 0;
     color: ${({ theme }) => theme.palette.themeText.themeGray};
   }
 `
 
-const NothingFound = () => {
+interface IProps {
+  subText?: string | null
+}
+
+const NothingFound = ({ subText }: IProps) => {
   const { t } = useTranslation('common')
 
   return (
     <Wrapper>
       <img src='/NothingFound.svg'></img>
-      <h1>{t('nothingFound')}...</h1>
-      <p>{t('areYouSureYouWereLookingForThis')}</p>
+      <h1>{t('nothingFound')}</h1>
+      {subText !== null && <p>{subText || t('areYouSureYouWereLookingForThis')}</p>}
     </Wrapper>
   )
 }

@@ -9,23 +9,19 @@ export const ExploreGrid = styled.div`
   grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
   grid-gap: 50px;
   justify-items: center;
-  margin-top: 40px;
+  margin-top: 30px;
 `
 
-export const FiltersWrapper = styled.div`
+export const NothingFoundWrapper = styled.div`
   display: flex;
-  align-items: center;
-  flex-wrap: wrap;
-  gap: 8px;
-  margin-top: 10px;
-  padding: 10px 0;
+  justify-content: center;
+  margin-top: 20px;
 
-  hr {
-    height: 30px;
+  > * {
+    width: 300px;
+
+    img {
+      margin-bottom: 25px;
+    }
   }
-
-  position: sticky;
-  background-color: ${({ theme }) => theme.palette.background.default};
-  z-index: 5;
-  top: 0px;
 `
