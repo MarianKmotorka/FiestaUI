@@ -13,8 +13,8 @@ const getFilePaths = () => {
   )
     throw new Error(`Arguments ${templateParamName} and ${toCompareParamName} must be provided.`)
 
-  const template = argsArray[argsArray.indexOf('--template') + 1]
-  const toCompare = argsArray[argsArray.indexOf('--toCompare') + 1]
+  const template = argsArray[argsArray.indexOf(templateParamName) + 1]
+  const toCompare = argsArray[argsArray.indexOf(toCompareParamName) + 1]
   return { template, toCompare }
 }
 
@@ -52,7 +52,7 @@ const fs = require('fs')
 fs.writeFile(
   './tools/missingKeysReuslt.txt',
   `Missing keys in ${filePaths.toCompare} compared to ${filePaths.template}:
-  
+
   ${JSON.stringify(missingKeys, null, 4)}`,
   console.log
 )
