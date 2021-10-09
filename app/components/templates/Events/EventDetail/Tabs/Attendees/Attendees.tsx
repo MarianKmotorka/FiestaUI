@@ -48,9 +48,12 @@ const Attendees = ({ event, isOrganizer }: IAttendeesProps) => {
         page: pageParam,
         pageSize: 25
       }
-      const res = await api.post(`/events/${event.id}/attendees/query?search=${debouncedSearch}`, {
-        queryDocument
-      })
+      const res = await api.post(
+        `/events/${event.id}/attendees/query?search=${encodeURIComponent(debouncedSearch)}`,
+        {
+          queryDocument
+        }
+      )
       return res.data
     },
     {

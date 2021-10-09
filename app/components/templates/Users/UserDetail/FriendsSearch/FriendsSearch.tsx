@@ -42,9 +42,12 @@ const FriendsSearch = ({ onClose, userId, currUserId }: IFriendsSearchProps) => 
         page: pageParam,
         pageSize: 25
       }
-      const res = await api.post(`/users/${userId}/friends/query?search=${debouncedSearch}`, {
-        queryDocument
-      })
+      const res = await api.post(
+        `/users/${userId}/friends/query?search=${encodeURIComponent(debouncedSearch)}`,
+        {
+          queryDocument
+        }
+      )
       return res.data
     },
     {

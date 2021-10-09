@@ -45,7 +45,7 @@ const JoinRequests = ({ event }: IJoinRequestsProps) => {
         pageSize: 25
       }
       const res = await api.post(
-        `/events/${event.id}/join-requests/query?search=${debouncedSearch}`,
+        `/events/${event.id}/join-requests/query?search=${encodeURIComponent(debouncedSearch)}`,
         {
           queryDocument
         }

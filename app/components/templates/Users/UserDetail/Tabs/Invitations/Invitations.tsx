@@ -36,9 +36,12 @@ const Invitations = ({ userId }: IInvitationsProps) => {
         page: pageParam,
         pageSize: 20
       }
-      const res = await api.post(`/users/${userId}/event-invitations?search=${debouncedSearch}`, {
-        queryDocument
-      })
+      const res = await api.post(
+        `/users/${userId}/event-invitations?search=${encodeURIComponent(debouncedSearch)}`,
+        {
+          queryDocument
+        }
+      )
       return res.data
     },
     {

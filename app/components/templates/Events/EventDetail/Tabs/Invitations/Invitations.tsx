@@ -51,7 +51,7 @@ const Invitations = ({ event }: IInvitationsProps) => {
         pageSize: 25
       }
       const res = await api.post(
-        `/events/${event.id}/invitations/query?search=${debouncedSearch}`,
+        `/events/${event.id}/invitations/query?search=${encodeURIComponent(debouncedSearch)}`,
         {
           queryDocument
         }
