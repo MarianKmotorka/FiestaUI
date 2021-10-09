@@ -39,9 +39,12 @@ const OrganizedEvents = ({ userId, isCurrentUser }: IOrganizedEventsProps) => {
         page: pageParam,
         pageSize: 20
       }
-      const res = await api.post(`/users/${userId}/organized-events?search=${debouncedSearch}`, {
-        queryDocument
-      })
+      const res = await api.post(
+        `/users/${userId}/organized-events?search=${encodeURIComponent(debouncedSearch)}`,
+        {
+          queryDocument
+        }
+      )
       return res.data
     },
     {

@@ -31,7 +31,9 @@ const NavbarSearch = ({ onClose }: INavbarSearchProps) => {
     ['selectors', 'events-and-users', debouncedSearch],
     async () => {
       if (debouncedSearch.length < MINIMUM_CHARS_TO_SEARCH) return []
-      return (await api.get(`/selectors/events-and-users?search=${debouncedSearch}`)).data
+      return (
+        await api.get(`/selectors/events-and-users?search=${encodeURIComponent(debouncedSearch)}`)
+      ).data
     },
     { initialData: [], keepPreviousData: true }
   )

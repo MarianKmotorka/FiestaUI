@@ -32,7 +32,11 @@ const AddInvitationModal = ({ eventId, onClose }: IAddInvitationModalProps) => {
   const { data, isFetching, error } = useQuery<IUserDto[], IApiError>(
     ['events', eventId, 'invitations', 'new', debouncedSearch],
     async () =>
-      await (await api.get(`/events/${eventId}/invitations/new?search=${debouncedSearch}`)).data,
+      await (
+        await api.get(
+          `/events/${eventId}/invitations/new?search=${encodeURIComponent(debouncedSearch)}`
+        )
+      ).data,
     { initialData: [], keepPreviousData: true }
   )
 

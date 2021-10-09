@@ -70,7 +70,9 @@ const SearchableDropdown = <
       } = initialOptions as IFetchOptions<TValue, TFormatted>
 
       setFetching(true)
-      const { data } = await api.get(`${url}?search=${debouncedSearch}`, { params })
+      const { data } = await api.get(`${url}?search=${encodeURIComponent(debouncedSearch || '')}`, {
+        params
+      })
       setFetching(false)
 
       const formatted = (data as TValue[]).map(formatter)

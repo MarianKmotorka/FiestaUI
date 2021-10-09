@@ -39,9 +39,12 @@ const AttendedEvents = ({ userId, isCurrentUser }: IAttendedEventsProps) => {
         page: pageParam,
         pageSize: 20
       }
-      const res = await api.post(`/users/${userId}/attended-events?search=${debouncedSearch}`, {
-        queryDocument
-      })
+      const res = await api.post(
+        `/users/${userId}/attended-events?search=${encodeURIComponent(debouncedSearch)}`,
+        {
+          queryDocument
+        }
+      )
       return res.data
     },
     {
