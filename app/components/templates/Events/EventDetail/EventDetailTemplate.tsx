@@ -109,6 +109,7 @@ const EventDetailTemplate = ({ eventId }: IProps) => {
   const event = data!
   const bannerUrl = event.bannerUrl || '/EventDefaultBanner.png'
   const isOrganizer = auth.isLoggedIn && auth.currentUser.id === event.organizer.id
+  const isAdmin = auth.isLoggedIn && auth.currentUser.isAdmin
 
   const handleSendRequestClick = async () => {
     try {
@@ -276,7 +277,7 @@ const EventDetailTemplate = ({ eventId }: IProps) => {
                 </MuiButton>
               )}
 
-              {isOrganizer && (
+              {(isOrganizer || isAdmin) && (
                 <>
                   <Link href={`/events/${eventId}/update`}>
                     <Button startIcon={<EditTwoTone />} color='default' variant='text'>
