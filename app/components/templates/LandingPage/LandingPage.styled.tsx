@@ -138,26 +138,26 @@ export const HeroSection = styled.section`
       text-align: center;
     }
   }
+`
 
-  #get-started-btn {
+export const ButtonsContainer = styled.div`
+  display: flex;
+  gap: 0.5rem;
+
+  @media (max-width: 600px) {
+    flex-direction: column;
+  }
+
+  button {
     width: 290px;
     height: 60px;
     border-radius: 4px;
-    box-shadow: 0 15px 30px rgba(0, 0, 0, 0.25);
     font-weight: 500;
     font-size: 1.3rem;
-    text-transform: uppercase;
     transition: transform 0.2s;
     svg {
-      font-size: 2rem;
-      transition: transform 0.2s;
+      font-size: 2rem !important;
       transform: translateX(10px);
-    }
-    :hover {
-      transform: scale(1.05);
-      svg {
-        transform: translateX(30px);
-      }
     }
 
     @media screen and (max-width: 800px) {
@@ -172,9 +172,8 @@ export const HeroSection = styled.section`
         display: flex;
       }
     }
-    @media screen and (max-width: 500px) {
-      font-size: 0.85rem;
-      width: 200px;
+    @media screen and (max-width: 600px) {
+      width: 100%;
     }
   }
 `

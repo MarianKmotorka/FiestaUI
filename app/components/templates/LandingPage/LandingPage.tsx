@@ -1,6 +1,6 @@
 import { useState } from 'react'
 import useObserver from '@hooks/useObserver'
-import { ChevronRight, Facebook, Instagram, Twitter } from '@material-ui/icons'
+import { ChevronRight, Explore, Facebook, Instagram, Twitter } from '@material-ui/icons'
 import { Cursor, useTypewriter } from 'react-simple-typewriter'
 
 import Button from '@elements/Button/Button'
@@ -19,7 +19,8 @@ import {
   Wrapper,
   StepsSection,
   TypewriterImage,
-  ImagesContainer
+  ImagesContainer,
+  ButtonsContainer
 } from './LandingPage.styled'
 
 const LandingPage = () => {
@@ -45,11 +46,16 @@ const LandingPage = () => {
             <Cursor />
           </h1>
 
-          <h3>ALPHA - still under development</h3>
+          <h3>This app is still under development ...</h3>
 
-          <Button endIcon={<ChevronRight />} id='get-started-btn' href='/signup'>
-            Get started
-          </Button>
+          <ButtonsContainer>
+            <Button endIcon={<ChevronRight />} href='/signup'>
+              Get started
+            </Button>
+            <Button variant='outlined' endIcon={<Explore />} href='/explore'>
+              Explore events
+            </Button>
+          </ButtonsContainer>
         </Container>
 
         <ImagesContainer>
