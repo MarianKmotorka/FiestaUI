@@ -24,7 +24,7 @@ const AppThemeContext = createContext<IAppThemeContextValue>(null!)
 export const useAppTheme = () => useContext(AppThemeContext)
 
 const AppThemeProvider: FC = ({ children }) => {
-  const [themeType, setThemeType] = useLocalStorage<PaletteType>('FIESTA.theme', 'light')
+  const [themeType, setThemeType] = useLocalStorage<PaletteType>('FIESTA.theme', 'dark')
   const [isMounted, setIsMounted] = useState(false)
   const windowSize = useWindowSize()
 
